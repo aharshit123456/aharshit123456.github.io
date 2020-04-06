@@ -15,19 +15,22 @@ body{
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #0e57f6; 
+  background: rgba(0,0,0,0); 
 }
  
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #FFF; 
+  background: #0e57f6; 
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #AAA; 
+  background: #0e35f6; 
 }
 
+.intro{
+    padding: 0 2em 0 2em;
+}
 
 .hero-bg{
     background: #0e57f6;
