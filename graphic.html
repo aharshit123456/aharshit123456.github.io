@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta charset="UTF-8">
+    <title>harshit.agarwal</title>
+    <link rel="stylesheet" href="main.css"/>
+</head>
+<body>
+    <div  class="hero-bg" id="hero-bg">
+        <section class="head">
+             <header>
+                    <a id="home" href="index.html">harshit.agarwal</a>
+                    <nav>
+                      <a href="#" class="hide-desktop">
+                          <img  src="menu.png" alt="menu" class="menu" id="menu">
+                      </a>
+                      
+                       <ul class="show-desktop hide-mobile" id="nav">
+                           <img src="back.png" alt="backbtn" class="back" id="backmenu">
+                           <img src="on.png"
+                           alt="light"
+                           class="light"
+                           id="light"
+                           >
+                           
+                            <li><a href="index.html#hero-bg"> Home </a></li>
+                            <li><a href="index.html#projects-bg"> Projects </a></li>
+                            <li><a href="index.html#skills-bg"> Skills </a></li>
+                            <li><a href="graphic.html"> Graphic Design </a></li>
+                            <li><a href="index.html#footer"> Contacts </a></li>
+                      </ul>
+                    </nav>
+            </header>
+            
+            <div class="mainintro">
+                <span class="intro">
+<!--
+                       <p>
+                        A 16 year old who loves to learn, anything from <a href="graphic.html"> Graphic Designing </a> to <a href="#skills-bg">Software Developement</a>to Physics and Researching.
+                    </p>
+                    <p>   
+                        This Site is dedicated to his Journey in Software Developement and accompanies.
+                    </p>
+                    <p>       
+                        Please Scroll Down to see all my projects.
+                    </p>
+-->
+               <div class="catalog">
+                   <div class="catalog-items">
+                       <img src="painting.png">
+                       <p>Exploring my life with Digital Art</p>
+                   </div>
+                   <div class="catalog-items">
+                       <img src="logo-design.png">
+                       <p>Exploring my life with Logo Designing</p>
+                   </div>
+                   <div class="catalog-items">
+                       <img src="ui-design.png">
+                       <p>Exploring my life with UI Designing</p>
+                   </div>
+               </div>
+               
+                </span>
+<!--                <img src="anime.png" alt="anime png">-->
+            </div>
+        </section>
+    </div>
+    <div class="gallery">
+        <div class="items digiart" id="items">
+            <span><img src="design/animepost.jpg"></span>
+            <span><img src="design/harry.jpg"></span>
+            <span><img src="design/dekupostwithname.jpg"></span>
+            <span><img src="design/portraitme.jpg"></span>
+            <span><img src="design/reemsameerpost.jpg"></span>
+            <span><img src="design/spacexpost.jpg"></span>
+        </div>
+        <div class="items logo" id="items">
+            <span><img src="design/4%20Hours%20Food.png"></span>
+            <span><img src="design/AAACADEMY.png"></span>
+            <span><img src="design/fIZZER%20inc.png"></span>
+            <span><img src="design/Flying%20Luna%20Fiverr%20Sample.png"></span>
+            <span><img src="design/HelloTennis.png"></span>
+            <span><img src="design/logoKonark.png"></span>
+            <span><img src="design/logoOAC.png"></span>
+        </div>
+    </div>
+     
+<!--
+    <div class="projects-bg" id="projects-bg">
+        <div class="projectbg">
+            <h2>PROJECT CHISEL</h2>
+            <h3>(Android Application)</h3>
+            <p>An Application which allows its users to keep track of their fitness life while also socializing with other people through the way.</p>
+            <input type="button" value="Learn More (In Progress)" class="getPro1" id="getPro1"/>
+        </div>
+        <div class="projectbg"> 
+            <h2>EAZY PROJECTS</h2>
+            <h3>(Python)</h3>
+            <p>A Project/Library which allows new developers to try out easy and basic programs to understand a learn basic python.</p>
+            <input type="button" value="Checkout the repo (Adding something new regularly)" class="getPro1" id="getPro2"/>
+        </div>
+        <div class="projectbg">
+            <h2>SHOTES</h2>
+            <h3>(Android Studio)</h3>
+            <p>An App which allows students of Grade 9-12, to socialize while learning and understanding academics and other things.</p>
+            <input type="button" value="App In Progress" class="getPro1" id="getPro3"/>
+        </div>
+    </div>
+-->
+    
+    <footer class="footer" id="footer">
+        <h2>Follow Me On Other Platforms</h2>
+        <ul id="socials">
+           <li>
+               <a href="https://www.linkedin.com/in/harshit-agarwal-928379195/" target="_blank">
+                   <img src="linkedin.png" alt="Linkedin">
+               </a>
+           </li>
+            <li>
+               <a href="https://www.twitter.com/aharshit123456" target="_blank">
+                   <img src="twitter.png" alt="Twitter">
+               </a>
+           </li>
+            <li>
+               <a href="https://www.instagram.com/aharshit123456" target="_blank">
+                   <img src="instagram.png" alt="Instagram">
+               </a>
+           </li>
+            <li>
+               <a href="https://www.github.com/HarshitAgarwal1" target="_blank">
+                   <img src="git.png" alt="Github">
+               </a>
+           </li>
+            <li>
+               <a href="mailto:aharshit123456@gmail.com" target="_blank">
+                   <img src="gmail.png" alt="Email">
+               </a>
+           </li>
+        </ul>
+        <p>Handicrafted by Harshit Agarwal - 2020</p>
+    </footer>
+    <script>
+    let nav = document.getElementById('nav');
+    let menu = document.getElementById('menu');
+    let backmenu = document.getElementById('backmenu');
+        menu.addEventListener('click', function(e)
+        {
+            nav.classList.toggle('hide-mobile')
+        }); 
+        backmenu.addEventListener('click', function(e)
+        {
+            nav.classList.toggle('hide-mobile')
+        }); 
+        
+        let items = document.getElementsByClassName('item');
+        
+        let digiart = document.getElementById('item');
+        menu.addEventListener('click', function(e)
+        {
+            items.classList.toggle('digiart')
+        }); 
+        
+        let logo = document.getElementById('item');
+        menu.addEventListener('click', function(e)
+        {
+            items.classList.toggle('logo')
+        }); 
+        
+        var toggle = false;
+        
+        let light = document.getElementById('light');
+        
+        light.addEventListener('click', function(e){
+            var element = document.body;
+            element.classList.toggle("dark-mode");
+            
+            if(toggle === false){
+                light.src = "off.png";
+            }
+            else if(toggle === true){
+                light.src = "on.png";
+            }
+            
+            toggle = !toggle;
+            
+        });
+        
+    </script>
+</body>
+</html>
