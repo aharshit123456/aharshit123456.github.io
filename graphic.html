@@ -8,7 +8,7 @@
 </head>
 <body>
     <div  class="hero-bg" id="hero-bg">
-        <section class="head">
+        <section class="head" id="head">
              <header>
                     <a id="home" href="index.html">harshit.agarwal</a>
                     <nav>
@@ -74,8 +74,10 @@
             <span><img src="design/portraitme.jpg"></span>
             <span><img src="design/reemsameerpost.jpg"></span>
             <span><img src="design/spacexpost.jpg"></span>
+<!--
         </div>
         <div class="items logo" id="items">
+-->
             <span><img src="design/4%20Hours%20Food.png"></span>
             <span><img src="design/AAACADEMY.png"></span>
             <span><img src="design/fIZZER%20inc.png"></span>
@@ -173,13 +175,19 @@
         
         light.addEventListener('click', function(e){
             var element = document.body;
-            element.classList.toggle("dark-mode");
+            var hero = document.getElementById('head');
             
             if(toggle === false){
                 light.src = "off.png";
+                element.style.background = "#000";
+                element.style.color = "#FFF";
+                hero.style.background = "#000";
             }
             else if(toggle === true){
                 light.src = "on.png";
+                element.style.background = "#FFF";
+                element.style.color = "#000";
+                hero.style.background = "#0e57f6";
             }
             
             toggle = !toggle;

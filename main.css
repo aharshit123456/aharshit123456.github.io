@@ -10,13 +10,10 @@ body{
 
 .dark-mode{
     background: black;
-    color: white;
-    
-    
+    color: white;    
 }
 
 .dark-mode .hero-bg {
-    
     background: #black;   
 }
 
@@ -49,7 +46,8 @@ body{
 }
 
 .head{
-        background: #0e57f6;
+    background: #0e57f6;
+    @extend .dark-mode;
 }
 
 .head a{

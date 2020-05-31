@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="main.css"/>
 </head>
 <body>
-    <div  class="hero-bg" id="hero-bg">
-        <section class="head">
-             <header>
+    <div  class="hero-bg " id="hero-bg">
+        <section class="head" id="head">
+             <header >
                     <a id="home" href="#h">harshit.agarwal</a>
                     <nav>
                       <a href="#" class="hide-desktop">
@@ -18,6 +18,11 @@
                       
                        <ul class="show-desktop hide-mobile" id="nav">
                            <img src="back.png" alt="backbtn" class="back" id="backmenu">
+                           <img src="on.png"
+                           alt="light"
+                           class="light"
+                           id="light"
+                           >
                             <li><a href="#hero-bg"> Home </a></li>
                             <li><a href="#projects-bg"> Projects </a></li>
                             <li><a href="#skills-bg"> Skills </a></li>
@@ -140,6 +145,42 @@
         pro3.addEventListener('click', function(){
             window.location.href = "https://github.com/aharshit123456/Shotes";
         });  
+        
+        var toggle = false;
+        
+        let light = document.getElementById('light');
+        
+        light.addEventListener('click', function(e){
+            var element = document.body;
+            var hero = document.getElementById('head');
+            var projectsbg = document.getElementById('projects-bg');
+            var skillsbg = document.getElementById('skills-bg');
+//            element.classList.toggle("dark-mode");
+            
+          
+            if(toggle === false){
+                light.src = "off.png";
+                element.style.background = "#000";
+                element.style.color = "#FFF";
+                hero.style.background = "#000";
+                projectsbg.style.background = "#000";
+                skillsbg.style.background = "#000";
+            }
+            else if(toggle === true){
+                light.src = "on.png";
+                element.style.background = "#FFF";
+                element.style.color = "#000";
+                hero.style.background = "#0e57f6";
+                projectsbg.style.background = "#FFF";
+                skillsbg.style.background = "#316DF0";
+            }
+            
+            toggle = !toggle;
+            
+        });
+        
+        
     </script>
+    
 </body>
 </html>
