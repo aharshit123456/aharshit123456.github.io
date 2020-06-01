@@ -37,6 +37,15 @@ body{
   background: #0e35f6; 
 }
 
+.lightlabel{
+    float: right;
+    width: 2em;
+    margin: 0.75em 2em 0em 0em;
+    height: auto;
+    color: black;
+    font-size: 0.5em;
+}
+
 .intro{
     padding: 0 2em 0 2em;
 }
@@ -76,6 +85,10 @@ nav ul {
   text-align: left;
   z-index:7;
   padding-top: 3em;
+}
+
+.hide{
+    display: none;
 }
 
 nav li{
@@ -210,7 +223,8 @@ footer{
 }
 
 .catalog-items:hover{
-    background: skyblue;
+/*    background: skyblue;*/
+    -webkit-filter: brightness(70%);
 }
 
 .catalog-items img{
@@ -243,6 +257,14 @@ footer{
 
 .items img:hover {
     -webkit-filter: brightness(70%);
+    max-height: 250px;
+}
+
+.items img:active{
+    -webkit-filter: brightness(100%);
+    max-height: 300px;
+    border: solid 2px black;
+    backface-visibility: hidden;
 }
 /*
 
@@ -343,6 +365,8 @@ footer{
     }
     
     .light{
-        display: none;
+        
     }
+    
+    
 }

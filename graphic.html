@@ -23,7 +23,8 @@
                            class="light"
                            id="light"
                            >
-                           
+                            <p class="lightlabel" id="lightlabel">Dark Mode</p>
+
                             <li><a href="index.html#hero-bg"> Home </a></li>
                             <li><a href="index.html#projects-bg"> Projects </a></li>
                             <li><a href="index.html#skills-bg"> Skills </a></li>
@@ -47,18 +48,18 @@
                     </p>
 -->
                <div class="catalog">
-                   <div class="catalog-items">
+                   <a href="#digiart"><div class="catalog-items" id="cdigiart">
                        <img src="painting.png">
                        <p>Exploring my life with Digital Art</p>
-                   </div>
-                   <div class="catalog-items">
+                   </div></a>
+                   <a href="#logo"><div class="catalog-items" id="clogo">
                        <img src="logo-design.png">
                        <p>Exploring my life with Logo Designing</p>
-                   </div>
-                   <div class="catalog-items">
+                       </div></a>
+                   <a href="#ui"><div class="catalog-items" id="cui">
                        <img src="ui-design.png">
                        <p>Exploring my life with UI Designing</p>
-                   </div>
+                       </div></a>
                </div>
                
                 </span>
@@ -66,25 +67,27 @@
             </div>
         </section>
     </div>
+    
+    
     <div class="gallery">
-        <div class="items digiart" id="items">
-            <span><img src="design/animepost.jpg"></span>
-            <span><img src="design/harry.jpg"></span>
-            <span><img src="design/dekupostwithname.jpg"></span>
-            <span><img src="design/portraitme.jpg"></span>
-            <span><img src="design/reemsameerpost.jpg"></span>
-            <span><img src="design/spacexpost.jpg"></span>
-<!--
-        </div>
-        <div class="items logo" id="items">
--->
-            <span><img src="design/4%20Hours%20Food.png"></span>
-            <span><img src="design/AAACADEMY.png"></span>
-            <span><img src="design/fIZZER%20inc.png"></span>
-            <span><img src="design/Flying%20Luna%20Fiverr%20Sample.png"></span>
-            <span><img src="design/HelloTennis.png"></span>
-            <span><img src="design/logoKonark.png"></span>
-            <span><img src="design/logoOAC.png"></span>
+        <div class="items digiart">
+            <span class="hide" id="digiart">
+                <span><img src="design/animepost.jpg"></span>
+                <span><img src="design/harry.jpg"></span>
+                <span><img src="design/dekupostwithname.jpg"></span>
+                <span><img src="design/portraitme.jpg"></span>
+                <span><img src="design/reemsameerpost.jpg"></span>
+                <span><img src="design/spacexpost.jpg"></span>
+            </span>
+            <span class="hide" id="logo">
+                <span><img src="design/4%20Hours%20Food.png"></span>
+                <span><img src="design/AAACADEMY.png"></span>
+                <span><img src="design/fIZZER%20inc.png"></span>
+                <span><img src="design/Flying%20Luna%20Fiverr%20Sample.png"></span>
+                <span><img src="design/HelloTennis.png"></span>
+                <span><img src="design/logoKonark.png"></span>
+                <span><img src="design/logoOAC.png"></span>
+            </span>
         </div>
     </div>
      
@@ -154,20 +157,21 @@
         {
             nav.classList.toggle('hide-mobile')
         }); 
+                
+        let cdigiart = document.getElementById('cdigiart');
         
-        let items = document.getElementsByClassName('item');
-        
-        let digiart = document.getElementById('item');
-        menu.addEventListener('click', function(e)
+        let digiart = document.getElementById('digiart');
+        cdigiart.addEventListener('click', function()
         {
-            items.classList.toggle('digiart')
+            digiart.classList.toggle('hide')
         }); 
-        
-        let logo = document.getElementById('item');
-        menu.addEventListener('click', function(e)
+        let clogo = document.getElementById('clogo');
+        let logo = document.getElementById('logo');
+        clogo.addEventListener('click', function()
         {
-            items.classList.toggle('logo')
+            logo.classList.toggle('hide')
         }); 
+    
         
         var toggle = false;
         
@@ -179,12 +183,14 @@
             
             if(toggle === false){
                 light.src = "off.png";
+                document.getElementById('lightlabel').style.color = "#FFF"
                 element.style.background = "#000";
                 element.style.color = "#FFF";
                 hero.style.background = "#000";
             }
             else if(toggle === true){
                 light.src = "on.png";
+                document.getElementById('lightlabel').style.color = "#000"                
                 element.style.background = "#FFF";
                 element.style.color = "#000";
                 hero.style.background = "#0e57f6";

@@ -23,6 +23,8 @@
                            class="light"
                            id="light"
                            >
+                            <p class="lightlabel" id="lightlabel">Dark Mode</p>
+                           
                             <li><a href="#hero-bg"> Home </a></li>
                             <li><a href="#projects-bg"> Projects </a></li>
                             <li><a href="#skills-bg"> Skills </a></li>
@@ -36,7 +38,7 @@
             <div class="mainintro">
                 <span class="intro">
                        <p>
-                           A 16 year old who loves to learn, anything from <a href="graphic.html">Graphic Designing </a> to Software Developement to Physics and Researching.
+                           A 16 year old who loves to learn, anything from <a id="gpds" href="graphic.html">Graphic Designing </a> to Software Developement to Physics and Researching.
                     </p>
                     <p>   
                         This Site is dedicated to his Journey in Software Developement and accompanies.
@@ -160,6 +162,8 @@
           
             if(toggle === false){
                 light.src = "off.png";
+                document.getElementById('gpds').style.color = "#0e57f6"
+                document.getElementById('lightlabel').style.color = "#FFF"
                 element.style.background = "#000";
                 element.style.color = "#FFF";
                 hero.style.background = "#000";
@@ -168,6 +172,8 @@
             }
             else if(toggle === true){
                 light.src = "on.png";
+                document.getElementById('gpds').style.color = "#FFF"                
+                document.getElementById('lightlabel').style.color = "#000"
                 element.style.background = "#FFF";
                 element.style.color = "#000";
                 hero.style.background = "#0e57f6";
