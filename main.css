@@ -247,12 +247,11 @@ footer{
 
 .items img{
     margin: 1em 1em 1em 1em;
-    max-height: 200px;
-/*    height: 30%;*/
+    height: 30%;
     width: auto;
     -webkit-filter: brightness(100%);
     text-align: center;
-    
+    max-height: 200px;
 }
 
 .items img:hover {
