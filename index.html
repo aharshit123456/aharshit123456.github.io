@@ -151,15 +151,15 @@
         var toggle = false;
         
         let light = document.getElementById('light');
-        
+        var audio = new Audio('click.mp3');
+            
         light.addEventListener('click', function(e){
             var element = document.body;
             var hero = document.getElementById('head');
             var projectsbg = document.getElementById('projects-bg');
             var skillsbg = document.getElementById('skills-bg');
 //            element.classList.toggle("dark-mode");
-            
-          
+            audio.play();
             if(toggle === false){
                 light.src = "off.png";
                 document.getElementById('gpds').style.color = "#0e57f6"
@@ -182,6 +182,9 @@
             }
             
             toggle = !toggle;
+            
+            
+            
             
         });
         

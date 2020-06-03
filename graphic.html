@@ -72,7 +72,7 @@
     <div class="gallery">
         <div class="items digiart">
             <span class="hide" id="digiart">
-                <span><img src="design/animepost.jpg"></span>
+                <span class="img"><img src="design/animepost.jpg"></span>
                 <span><img src="design/harry.jpg"></span>
                 <span><img src="design/dekupostwithname.jpg"></span>
                 <span><img src="design/portraitme.jpg"></span>
@@ -175,12 +175,15 @@
         
         var toggle = false;
         
-        let light = document.getElementById('light');
+        let img = document.getElementsByClassName('img');
         
+        let light = document.getElementById('light');
+        var audio = new Audio('click.mp3');
+
         light.addEventListener('click', function(e){
             var element = document.body;
             var hero = document.getElementById('head');
-            
+            audio.play()
             if(toggle === false){
                 light.src = "off.png";
                 document.getElementById('lightlabel').style.color = "#FFF"
@@ -200,6 +203,17 @@
             
         });
         
+//        let imgk = document.getElementsByClassName('img');
+//        
+//        imgk.addEventListener('click', function(){
+//            imgk.style.maxHeight = "14em";
+//            imgk.style.border = "solid 2px black";
+//            imgk.style.filter = "brightness(100%)"
+//        });
+        
+        console.log("Hello Sneakers!!");
+        console.log("Click on the link beside me to get to my code.");
+
     </script>
 </body>
 </html>
