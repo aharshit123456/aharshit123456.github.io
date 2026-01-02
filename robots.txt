@@ -1,2 +1,4 @@
-User-Agent:*
-Disallow:/dummy.html
+User-agent: *
+Allow: /
+
+Sitemap: https://aharshit123456.github.io/sitemap.xml
