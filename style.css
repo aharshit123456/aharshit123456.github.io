@@ -669,7 +669,54 @@ body.dark-mode .blog-item:hover {
     background: var(--code-comment);
 }
 
-/* Responsive */
+/* Production Modal Styles */
+.production-modal {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    color: var(--text-color);
+}
+
+.prod-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.prod-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--accent-color);
+}
+
+.prod-type {
+    background: var(--accent-color);
+    color: var(--window-bg);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+    background: #000;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.prod-desc {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
 @media (max-width: 768px) {
     .mac-window {
         height: 100vh;

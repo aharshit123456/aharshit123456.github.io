@@ -140,6 +140,56 @@ document.addEventListener('DOMContentLoaded', () => {
     const flipContainer = document.querySelector('.profile-flip-container');
     const flipper = document.querySelector('.flipper');
 
+    // Way Through Films Production Data
+    // Way Through Films Production Data
+    const productionData = {
+        omwt: {
+            title: "On My Way Through",
+            type: "Docu-Series",
+            description: "A raw and unpolished docuseries capturing the perspective of a 22-year-old navigating societal complexities. It seeks to understand the world by asking the difficult questions that demand answers.",
+            videoId: "" // Archive/Upcoming
+        },
+        pause: {
+            title: "Pause",
+            type: "Micro Film",
+            description: "A 75-second micro-film featuring the Honda SP 160. Through a deliberate interplay of right-heavy close-ups and distant, left-heavy compositions, the visual narrative explores the act of pausing to reflect amidst motion, telling a story without words.",
+            videoId: "10RxkMV5kwM?si=MMBf4eLxTUt9eZ7A"
+        },
+        morning: {
+            title: "Morning",
+            type: "Micro Film",
+            description: "A cinematic micro-film created in a single hour by a 15-year-old filmmaker. This experimental piece explores the entire pipeline from storyboarding to final rendering, transforming a simple morning routine into a visual experience.",
+            videoId: "0g_dcVBP0ms?si=yd_TVBa-QnD7-5v2"
+        }
+    };
+
+    window.openProductionTab = (key) => {
+        const data = productionData[key];
+        if (!data) return;
+
+        const id = `production-${key}`;
+        // Use a placeholder if no videoId provided
+        // Added standard YouTube attributes (referrerpolicy, title, web-share) to fix potential config errors
+        const videoEmbed = data.videoId
+            ? `<iframe width="100%" height="315" src="https://www.youtube.com/embed/${data.videoId}" title="${data.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+            : `<div style="width:100%; height:315px; background:#222; display:flex; align-items:center; justify-content:center; color:#666;">[Video Placeholder]</div>`;
+
+        const content = `
+            <div class="production-modal">
+                <div class="prod-header">
+                    <h2>${data.title}</h2>
+                    <span class="prod-type">${data.type}</span>
+                </div>
+                <div class="video-container">
+                    ${videoEmbed}
+                </div>
+                <p class="prod-desc">${data.description}</p>
+            </div>
+        `;
+
+        openTab(id, data.title, content);
+    };
+
     if (flipContainer && flipper) {
         flipContainer.addEventListener('click', () => {
             flipper.classList.toggle('flipped');
