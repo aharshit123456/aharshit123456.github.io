@@ -718,27 +718,155 @@ body.dark-mode .blog-item:hover {
 }
 
 @media (max-width: 768px) {
-    .mac-window {
-        height: 100vh;
-        border-radius: 0;
+    body {
+        padding: 0;
+        align-items: flex-start;
+        /* Remove vertical centering */
+        background: var(--window-bg);
+        /* Match window bg to avoid gaps */
     }
 
+    .mac-window {
+        height: 100vh;
+        /* Full viewport height */
+        max-width: 100%;
+        width: 100%;
+        border-radius: 0;
+        box-shadow: none;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .tab-bar {
+        padding-top: 10px;
+        /* Ensure distinct background for tab bar on mobile if needed */
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .tab {
+        padding: 10px 15px;
+        /* Larger touch targets */
+        min-width: auto;
+        /* Allow tabs to be smaller if needed, or flexible */
+        flex-shrink: 0;
+        /* Prevent squishing */
+    }
+
+    .content-container {
+        scrollbar-width: none;
+        /* Hide scrollbar Firefox */
+    }
+
+    .content-container::-webkit-scrollbar {
+        display: none;
+        /* Hide scrollbar Chrome/Safari */
+    }
+
+    .tab-content {
+        padding: 20px;
+        /* Reduced padding */
+        padding-bottom: 80px;
+        /* Extra space for bottom scrolling */
+    }
+
+    /* Hero adjustments */
     .hero-section {
         flex-direction: column;
         text-align: center;
-        gap: 20px;
+        gap: 25px;
+        margin-top: 20px;
     }
 
-    .hero-text .tagline {
-        border-left: none;
-        padding-left: 0;
-        margin-top: 15px;
+    .profile-flip-container {
+        margin: 0 auto 1.5rem auto;
+        width: 160px;
+        /* Slightly smaller profile pic */
+        height: 160px;
     }
 
+    .hero-text h1 {
+        font-size: 1.8rem;
+        /* Smaller heading */
+        word-break: break-word;
+    }
+
+    .hero-text h2 {
+        font-size: 1rem;
+    }
+
+    .hero-links {
+        justify-content: center;
+        gap: 12px;
+    }
+
+    /* Navigation */
     .nav-header {
         flex-direction: column;
-        align-items: center;
-        text-align: center;
+        align-items: stretch;
+        /* Full width items */
+        text-align: left;
         gap: 15px;
+        background: rgba(0, 0, 0, 0.03);
+        padding: 15px;
+        border-radius: 8px;
+    }
+
+    .nav-item {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        border-bottom: 1px dotted var(--border-color);
+        padding-bottom: 5px;
+    }
+
+    .nav-item:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .nav-item .label {
+        margin-bottom: 0;
+        font-size: 0.8rem;
+    }
+
+    /* Grids */
+    .skills-grid {
+        grid-template-columns: 1fr;
+        /* Stack skills */
+    }
+
+    .hobbies-grid {
+        justify-content: center;
+    }
+
+    .hobby-btn {
+        width: 100%;
+        /* Full width buttons for ease of tapping */
+        justify-content: center;
+    }
+
+    /* Modals/Dialogs */
+    .production-modal {
+        padding: 10px 0;
+        /* Maximize space */
+    }
+
+    .prod-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .video-container {
+        height: 200px;
+        /* Smaller video height */
+    }
+
+    .project-card,
+    .exp-item,
+    .vol-item {
+        padding: 15px;
+        /* Use internal padding if card style is used */
     }
 }
