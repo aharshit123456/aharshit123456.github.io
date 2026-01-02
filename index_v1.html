@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta charset="UTF-8">
+    <title>harshit.agarwal</title>
+    <link rel="stylesheet" href="main.css"/>
+</head>
+<body>
+    <div  class="hero-bg " id="hero-bg">
+        <section class="head" id="head">
+             <header >
+                    <a id="home" href="#h">harshit.agarwal</a>
+                    <nav>
+                      <a href="#" class="hide-desktop">
+                          <img  src="menu.png" alt="menu" class="menu" id="menu">
+                      </a>
+                      
+                       <ul class="show-desktop hide-mobile" id="nav">
+                           <img src="back.png" alt="backbtn" class="back" id="backmenu">
+                           <img src="on.png"
+                           alt="light"
+                           class="light"
+                           id="light"
+                           >
+                            <p class="lightlabel" id="lightlabel">Dark Mode</p>
+                           
+                            <li><a href="#hero-bg"> Home </a></li>
+                            <li><a href="#projects-bg"> Projects </a></li>
+                            <li><a href="#skills-bg"> Skills </a></li>
+                            <li><a href="graphic.html"> Graphic Design </a></li>
+                            <li><a href="#footer"> Contacts </a></li>
+                        
+                      </ul>
+                    </nav>
+            </header>
+            
+            <div class="mainintro">
+                <span class="intro">
+                       <p>
+                           A 16 year old who loves to learn, anything from <a id="gpds" href="graphic.html">Graphic Designing </a> to Software Developement to Physics and Researching.
+                    </p>
+                    <p>   
+                        This Site is dedicated to his Journey in Software Developement and accompanies.
+                    </p>
+                    <p>       
+                        Please Scroll Down to see all my projects.
+                    </p>
+                </span>
+                <img src="anime.png" alt="anime png">
+            </div>
+        </section>
+    </div>
+    <div class="projects-bg" id="projects-bg">
+        <div class="projectbg">
+            <h2>PROJECT CHISEL</h2>
+            <h3>(Android Application)</h3>
+            <p>An Application which allows its users to keep track of their fitness life while also socializing with other people through the way.</p>
+            <input type="button" value="Learn More (In Progress)" class="getPro1" id="getPro1"/>
+        </div>
+        <div class="projectbg"> 
+            <h2>EAZY PROJECTS</h2>
+            <h3>(Python)</h3>
+            <p>A Project/Library which allows new developers to try out easy and basic programs to understand a learn basic python.</p>
+            <input type="button" value="Checkout the repo (Adding something new regularly)" class="getPro1" id="getPro2"/>
+        </div>
+        <div class="projectbg">
+            <h2>SHOTES</h2>
+            <h3>(Android Studio)</h3>
+            <p>An App which allows students of Grade 9-12, to socialize while learning and understanding academics and other things.</p>
+            <input type="button" value="App In Progress" class="getPro1" id="getPro3"/>
+        </div>
+    </div>
+    <div class="skills-bg" id="skills-bg">
+        <div class="skills">
+            <h2>JAVA</h2>
+            <p>Has Been a part of my life since 5 years since i started typebased coding for the first time. The journey from Netbeans to Android Studio.</p>
+        </div>
+        <div class="skills">
+            <h2>WEB DEV</h2>
+            <p><span class="sk2bold">HTML5, CSS3, JS and PHP</span>The Basic Things a new "programmer" comes upto...</p>
+        </div>
+        <div class="skills">
+            <h2>PYTHON AND ARDUINO</h2>
+            <p>Basic Arduino Coding and breadboarding. Also started learning Python, quiet recently so that maybe on the top soon too!!</p>
+        </div>
+        <div class="skills">
+            <h2>OTHERS</h2>
+            <p> C++ & C<br/></br/>VBASIC & QBASIC<br/>(for no reason at all)<br/>COBOL.. XDD
+            </p>
+        </div>
+      </div>
+    <footer class="footer" id="footer">
+        <h2>Follow Me On Other Platforms</h2>
+        <ul id="socials">
+           <li>
+               <a href="https://www.linkedin.com/in/harshit-agarwal-928379195/" target="_blank">
+                   <img src="linkedin.png" alt="Linkedin">
+               </a>
+           </li>
+            <li>
+               <a href="https://www.twitter.com/aharshit123456" target="_blank">
+                   <img src="twitter.png" alt="Twitter">
+               </a>
+           </li>
+            <li>
+               <a href="https://www.instagram.com/aharshit123456" target="_blank">
+                   <img src="instagram.png" alt="Instagram">
+               </a>
+           </li>
+            <li>
+               <a href="https://www.github.com/HarshitAgarwal1" target="_blank">
+                   <img src="git.png" alt="Github">
+               </a>
+           </li>
+            <li>
+               <a href="mailto:aharshit123456@gmail.com" target="_blank">
+                   <img src="gmail.png" alt="Email">
+               </a>
+           </li>
+        </ul>
+        <p>Handicrafted by Harshit Agarwal - 2020</p>
+    </footer>
+    <script>
+    let nav = document.getElementById('nav');
+    let menu = document.getElementById('menu');
+    let backmenu = document.getElementById('backmenu');
+        menu.addEventListener('click', function(e)
+        {
+            nav.classList.toggle('hide-mobile')
+        }); 
+        backmenu.addEventListener('click', function(e)
+        {
+            nav.classList.toggle('hide-mobile')
+        }); 
+        let pro1 = document.getElementById('getPro1');
+        pro1.addEventListener('click', function(){
+            window.location.href = "https://github.com/aharshit123456/Project_Chisel";
+        });
+        
+        let pro2 = document.getElementById('getPro2');
+        pro2.addEventListener('click', function(){
+            window.location.href = "https://github.com/aharshit123456/Learning_Python";
+        }); 
+        
+        let pro3 = document.getElementById('getPro3');
+        pro3.addEventListener('click', function(){
+            window.location.href = "https://github.com/aharshit123456/Shotes";
+        });  
+        
+        var toggle = false;
+        
+        let light = document.getElementById('light');
+        var audio = new Audio('click.mp3');
+            
+        light.addEventListener('click', function(e){
+            var element = document.body;
+            var hero = document.getElementById('head');
+            var projectsbg = document.getElementById('projects-bg');
+            var skillsbg = document.getElementById('skills-bg');
+//            element.classList.toggle("dark-mode");
+            audio.play();
+            if(toggle === false){
+                light.src = "off.png";
+                document.getElementById('gpds').style.color = "#0e57f6"
+                document.getElementById('lightlabel').style.color = "#FFF"
+                element.style.background = "#000";
+                element.style.color = "#FFF";
+                hero.style.background = "#000";
+                projectsbg.style.background = "#000";
+                skillsbg.style.background = "#000";
+            }
+            else if(toggle === true){
+                light.src = "on.png";
+                document.getElementById('gpds').style.color = "#FFF"                
+                document.getElementById('lightlabel').style.color = "#000"
+                element.style.background = "#FFF";
+                element.style.color = "#000";
+                hero.style.background = "#0e57f6";
+                projectsbg.style.background = "#FFF";
+                skillsbg.style.background = "#316DF0";
+            }
+            
+            toggle = !toggle;
+            
+            
+            
+            
+        });
+        
+        
+    </script>
+    
+</body>
+</html>

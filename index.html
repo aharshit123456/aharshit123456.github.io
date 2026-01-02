@@ -1,195 +1,582 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta charset="UTF-8">
-    <title>harshit.agarwal</title>
-    <link rel="stylesheet" href="main.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harshit Agarwal // Portfolio v2</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
+
 <body>
-    <div  class="hero-bg " id="hero-bg">
-        <section class="head" id="head">
-             <header >
-                    <a id="home" href="#h">harshit.agarwal</a>
-                    <nav>
-                      <a href="#" class="hide-desktop">
-                          <img  src="menu.png" alt="menu" class="menu" id="menu">
-                      </a>
-                      
-                       <ul class="show-desktop hide-mobile" id="nav">
-                           <img src="back.png" alt="backbtn" class="back" id="backmenu">
-                           <img src="on.png"
-                           alt="light"
-                           class="light"
-                           id="light"
-                           >
-                            <p class="lightlabel" id="lightlabel">Dark Mode</p>
-                           
-                            <li><a href="#hero-bg"> Home </a></li>
-                            <li><a href="#projects-bg"> Projects </a></li>
-                            <li><a href="#skills-bg"> Skills </a></li>
-                            <li><a href="graphic.html"> Graphic Design </a></li>
-                            <li><a href="#footer"> Contacts </a></li>
-                        
-                      </ul>
-                    </nav>
-            </header>
-            
-            <div class="mainintro">
-                <span class="intro">
-                       <p>
-                           A 16 year old who loves to learn, anything from <a id="gpds" href="graphic.html">Graphic Designing </a> to Software Developement to Physics and Researching.
-                    </p>
-                    <p>   
-                        This Site is dedicated to his Journey in Software Developement and accompanies.
-                    </p>
-                    <p>       
-                        Please Scroll Down to see all my projects.
-                    </p>
-                </span>
-                <img src="anime.png" alt="anime png">
+    <div class="mac-window">
+        <div class="title-bar">
+            <div class="buttons">
+                <div class="close"></div>
+                <div class="minimize"></div>
+                <div class="maximize"></div>
             </div>
-        </section>
+            <div class="window-title">harshit_agarwal.exe</div>
+            <div class="theme-toggle" title="Toggle Dark Mode">
+                <i class="fas fa-moon"></i>
+            </div>
+        </div>
+
+        <div class="tab-bar">
+            <div class="tab active" data-id="main" onclick="switchTab('main')">
+                <span class="tab-title">harshit_agarwal.dev</span>
+                <!-- No close button for main tab -->
+            </div>
+        </div>
+
+        <div class="content-container">
+            <!-- Main Content Tab -->
+            <div class="tab-content active" id="content-main">
+                <header class="nav-header">
+                    <div class="nav-item">
+                        <span class="label">//portfolio</span>
+                        <a href="#" class="link">harshit_agarwal.dev</a>
+                    </div>
+                    <div class="nav-item">
+                        <span class="label">//contact</span>
+                        <a href="mailto:aharshit123456@gmail.com" class="link">aharshit123456@gmail.com</a>
+                    </div>
+                    <div class="nav-item">
+                        <span class="label">//github</span>
+                        <a href="https://github.com/aharshit123456" target="_blank"
+                            class="link">github.com/aharshit123456</a>
+                    </div>
+                    <div class="nav-item">
+                        <span class="label">//linkedin</span>
+                        <a href="https://www.linkedin.com/in/aharshit123456/" target="_blank"
+                            class="link">linkedin.com/in/aharshit123456</a>
+                    </div>
+                </header>
+
+                <main>
+                    <section class="hero-section">
+                        <div class="profile-flip-container">
+                            <div class="flipper">
+                                <div class="front">
+                                    <img src="profile_new.jpg" alt="Harshit Agarwal" class="profile-pic"
+                                        draggable="false">
+                                </div>
+                                <div class="back">
+                                    <img src="anime.png" alt="Anime Avatar" class="profile-pic" draggable="false">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hero-text">
+                            <h1>&lt;Harshit Agarwal&gt;</h1>
+                            <h2>// Fullstack Developer & Researcher</h2>
+                            <p class="tagline">"Hard work betrays none, but dreams betray many." - Genji Kamogawa</p>
+                            <div class="hero-links">
+                                <a href="#about">//about</a>
+                                <a href="#experience">//experience</a>
+                                <a href="#projects">//projects</a>
+                                <a href="#hackathons">//hackathons</a>
+                                <a href="#skills">//skills</a>
+                            </div>
+                        </div>
+                    </section>
+
+                    <hr class="divider">
+
+                    <section class="about-section" id="about">
+                        <h3>//about</h3>
+                        <p class="code-block">
+                            class Harshit: <br>
+                            &nbsp;&nbsp;def __init__(self):<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;self.role = "Founding SDE & Researcher"<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;self.location = "India"<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;self.education = "B.Tech CSE @ KIIT (9.3 CGPA)"<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;self.loves = ["Building Scalable Systems", "AI/ML", "Hajime no
+                            Ippo"]<br>
+                            <br>
+                            &nbsp;&nbsp;def goals(self):<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;return "Building intuitive experiences that constantly grow."
+                        </p>
+                        <p class="bio">
+                            Hi, I'm Harshit. I enjoy building dynamic, creative products from start to finish.
+                            Currently an undergrad at KIIT, I've built AI systems for fashion at scale and developed
+                            drone sensor calibration systems.
+                            I'm a heavyweight coder with a reach extending from low-level C++ to high-level Distributed
+                            Systems.
+                        </p>
+                    </section>
+
+                    <hr class="divider">
+
+                    <section class="skills-section" id="skills">
+                        <h3>//tale_of_the_tape (skills)</h3>
+                        <div class="skills-grid">
+                            <div class="skill-category">
+                                <strong>Languages:</strong><br> [Python, C/C++, Java, Go, JS/TS, Kotlin, C#]
+                            </div>
+                            <div class="skill-category">
+                                <strong>Frameworks:</strong><br> [NextJS, React, Flutter, FastAPI, PyTorch, TensorFlow]
+                            </div>
+                            <div class="skill-category">
+                                <strong>Cloud/DevOps:</strong><br> [AWS, Docker, K8s, Terraform, CI/CD]
+                            </div>
+                            <div class="skill-category">
+                                <strong>Databases:</strong><br> [PostgreSQL, MongoDB, Redis, Firebase]
+                            </div>
+                            <div class="skill-category">
+                                <strong>Tools:</strong><br> [Git, Linux, Unity, ROS]
+                            </div>
+                        </div>
+                    </section>
+
+                    <hr class="divider">
+
+                    <section class="experience-section" id="experience">
+                        <h3>//work_experience</h3>
+
+                        <div class="exp-item">
+                            <div class="time">Dec 2024 - Nov 2025</div>
+                            <div class="details">
+                                <h4><a href="https://shoppin.app" style="color: #ff4d4d;">shoppin'</a> — USAR Commerce
+                                    Technologies <span class="role">//Founding ML Engineer
+                                        (AI/Infra)</span></h4>
+                                <ul>
+                                    <li><strong>Multimodal AI</strong>: Developed scalable ML pipelines (3-4 crore
+                                        items). Deployed CLIP/VLLM systems for search & recs. Led end-to-end visual AI
+                                        stack (YOLO, RT-DETR, MaskRCNN, Diffusion-based VTON).</li>
+                                    <li><strong>Scalable Infra</strong>: Built distributed image/video preprocessing
+                                        pipelines. Dockerized and served models on AWS SageMaker.</li>
+                                    <li><strong>Backend & Automation</strong>: Designed CRUD APIs, integrated
+                                        Redis/Alembic. Created high-throughput scraping agents for 200+ partner stores.
+                                    </li>
+                                    <li><strong>Cloud & DevOps</strong>: Architected AWS EKS clusters with GitOps
+                                        (Terraform, CI/CD). Enabled disaster recovery setups.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="exp-item">
+                            <div class="time">Jan 2025 - Present</div>
+                            <div class="details">
+                                <h4>Alohomora Labs <span class="role">//Research
+                                        Lead <a style="font-size: 0.8rem; color: var(--accent-color);"
+                                            href="https://alohomora-labs.me">[Link]</a> </span></h4>
+
+                                <ul>
+                                    <li><strong>gaitSetPy:</strong> Implemented Python package for gait analysis (10k+
+                                        samples). Added 50+ preprocessing functions, reducing processing time by 40%.
+                                    </li>
+                                    <li><strong>Parkinson's Research:</strong> Worked with Dr. Jayeeta Chakraborty.
+                                        Applied CNNs/LSTMs/GNNs to predict FOG events and gait imbalances. (Paper
+                                        submitted to Health and Technology).</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="exp-item">
+                            <div class="time">May 2024 - Nov 2024</div>
+                            <div class="details">
+                                <h4>SMLab, NISER <span class="role">//Research Intern</span> <a href="#"
+                                        onclick="openImageTab('NISER Certificate', 'niser_cert.jpg'); return false;"
+                                        style="font-size: 0.8rem; color: var(--accent-color);">[Certificate]</a></h4>
+                                <ul>
+                                    <li>Crafted iPhone-Drone Sensor Calibration & ARKit 3D Modeling system (180Hz data
+                                        via TCP).</li>
+                                    <li>Built Web Console for self-driving motorcycle (ROS2) handling 25+ sensors with
+                                        0.2ms latency.</li>
+                                    <li>Created SLAM-based toolkits (Kalman Filters, NeRFs, Gaussian Mapping).</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="exp-item">
+                            <div class="time">2023 - Present</div>
+                            <div class="details">
+                                <h4>Android Development & Graphic Design <span class="role">//Freelancer</span></h4>
+                                <ul>
+                                    <li>Developed Native and Flutter/Dart Android applications.</li>
+                                    <li>Curated graphic designs for Ads, Social Media, Print Media, T-Shirts, etc.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="exp-item">
+                            <div class="time">Sep 2022 - Nov 2022</div>
+                            <div class="details">
+                                <h4>Mind Harmonics Pvt. Ltd. <span class="role">//Content Writing Expert</span></h4>
+                                <ul>
+                                    <li>Authored 100+ pieces of technical and creative content for the company.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <hr class="divider">
+
+                    <section class="projects-section" id="projects">
+                        <h3>//projects & publications</h3>
+
+                        <div class="project-card">
+                            <div class="project-header">
+                                <h4>gaitSetPy <a href="https://github.com/Alohomora-Labs/gaitSetPy">[GitHub]</a> <a
+                                        href="https://www.alohomora-labs.me">[Web]</a></h4>
+                                <span class="tech-stack">Python, C</span>
+                            </div>
+                            <ul>
+                                <li>Implemented Python package for gait analysis (10k+ samples). Features 50+
+                                    preprocessing functions.</li>
+                                <li>Reduced processing time by 40%. Achieved 97% accuracy on Daphnet with RF/CNN/LSTM.
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-header">
+                                <h4>NVD Exploitability Toolkit <a
+                                        href="https://github.com/aharshit123456/nvd_epss_pred">[GitHub]</a></h4>
+                                <span class="tech-stack">Hugging Face, PyTorch</span>
+                            </div>
+                            <ul>
+                                <li>Exploitability prediction using DistilBERT/GPT2 fine-tuned on 56k+ vulnerabilities.
+                                </li>
+                                <li>Achieved 85.6% accuracy. <strong>Paper accepted in ICANTCI 2025.</strong></li>
+                            </ul>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-header">
+                                <h4>Sensing and Computing Lab</h4>
+                                <span class="tech-stack">MATLAB, Python</span>
+                            </div>
+                            <ul>
+                                <li>Analyzing public EEG Data-Sets and Lexicon Loop data using Emotiv EEG Band.</li>
+                                <li>Working on Emotion detection project predicting algorithms using ML/DL.</li>
+                            </ul>
+                        </div>
+
+
+                        <!-- Attorney Juniors, Vehicle Rental, Pentathon moved to Hackathons -->
+
+
+                        <div class="project-card">
+                            <div class="project-header">
+                                <h4>Parkinson's Gait Analysis</h4>
+                                <span class="tech-stack">CNN, LSTM, GNNs</span>
+                            </div>
+                            <p>Studied FOG events/gait imbalances. Reviewed 50+ papers on DL applications for
+                                Parkinson's. Paper submitted to Health and Technology.</p>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-header">
+                                <h4>Small Projects Collection</h4>
+                                <span class="tech-stack">Kotlin, Flutter, Android SDK</span>
+                            </div>
+                            <ul>
+                                <li><strong>Instagram Clone:</strong> Native Android (Kotlin) app with profile, posts,
+                                    reels.</li>
+                                <li><strong>To-Do List:</strong> Flutter app for daily tracking.</li>
+                                <li><strong>Inspirations/Trip Location:</strong> Flutter apps for daily quotes and
+                                    travel recommendations.</li>
+                            </ul>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-header">
+                                <h4>Community/Environment Project</h4>
+                                <span class="tech-stack">SPSS, Data Analysis</span>
+                            </div>
+                            <p>Surveyed institutional home children. Conducted descriptive analysis of
+                                psychological/physiological well-being.</p>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-header">
+                                <h4>CS Fundamentals Implementations</h4>
+                                <span class="tech-stack">C++, Python</span>
+                            </div>
+                            <ul>
+                                <li><strong>DSA:</strong> Stacks, Queues, Linked Lists, etc. from scratch.</li>
+                                <li><strong>Numerical Methods:</strong> Linear/Non-linear equations,
+                                    Differentiation/Integration, Interpolation.</li>
+                            </ul>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-header">
+                                <h4>Eazy Python & Project Chisel</h4>
+                                <span class="tech-stack">Python, Java, Android</span>
+                            </div>
+                            <ul>
+                                <li><strong>Eazy Python:</strong> 12-14 sub-projects (Selenium scrapers, YT Downloader).
+                                </li>
+                                <li><strong>Project Chisel:</strong> ML-enabled workout assistant app with Firebase DB
+                                    and daily COVID updates.</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <hr class="divider">
+
+                    <section class="hackathons-section" id="hackathons">
+                        <h3>//hackathons</h3>
+
+                        <div class="project-card">
+                            <div class="project-header">
+                                <h4>Moonshadows (SIH 2024)</h4>
+                                <span class="tech-stack">Team Lead</span>
+                            </div>
+                            <p>Worked on enhancement of shadowed lunar regions.</p>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-header">
+                                <h4>Vehicle Rental Service (Drive Pal) <a
+                                        href="https://drive-pal.vercel.app/">[Link]</a></h4>
+                                <span class="tech-stack">NextJS, WebGL, Supabase</span>
+                            </div>
+                            <p>Reactive web app for renting vehicles using AR/VR and Photogrammetry. Built for Tutedude
+                                Hackathon.</p>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-header">
+                                <h4>Attorney Juniors (SIH 2023)</h4>
+                                <span class="tech-stack">Unity, C#, Python</span>
+                            </div>
+                            <ul>
+                                <li>Gamified platform with GenAI mini-games for legal awareness.</li>
+                                <li>Role: Team Lead ("Acropolis"). Built ML Architecture.</li>
+                            </ul>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-header">
+                                <h4>Pentathon 1.0 2024 (CTF)</h4>
+                                <span class="tech-stack">Linux, Burpsuite</span>
+                            </div>
+                            <p>Ranked 95/5500+ in nationwide government CTF. Web/API exploitation & Forensics.</p>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-header">
+                                <h4>SecurixLabs (Securix Ethos - IITG) <a
+                                        href="https://unstop.com/certificate-preview/09cef8a0-b43d-4918-b57e-b04a7389d34e"
+                                        target="_blank">[Certificate]</a></h4>
+                                <span class="tech-stack">Hackathon</span>
+                            </div>
+                            <p>Security and exploitation project.</p>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-header">
+                                <h4>Anupama (EY Hackathon) <a
+                                        href="https://unstop.com/certificate-preview/8070e9db-6de0-4b00-a35c-cfb22feaf4a7"
+                                        target="_blank">[Certificate]</a></h4>
+                                <span class="tech-stack">Generative AI</span>
+                            </div>
+                            <p>Innovative solution developed for EY Hackathon.</p>
+                        </div>
+
+                        <div class="project-card">
+                            <div class="project-header">
+                                <h4>Mayday (Tech Nova - ESSPL) <a
+                                        href="https://unstop.com/certificate-preview/c3d743c6-43dc-4bff-a921-1682e9b91358"
+                                        target="_blank">[Certificate]</a></h4>
+                                <span class="tech-stack">Bubble Network App</span>
+                            </div>
+                            <p>Project built after qualifying Round 1. A bubble network based application.</p>
+                        </div>
+                    </section>
+
+                    <hr class="divider">
+
+                    <section class="certificates-section" id="certificates">
+                        <h3>//certificates</h3>
+                        <ul>
+                            <li><strong>Hands-on experience in Quantum Computing (NPTEL)</strong>: Offline workshop on
+                                Pennylane by Dr. Ankur Raina (IISER Bhopal). <a
+                                    href="https://drive.google.com/file/d/1FNU5gj5U9vl8FV7W_rpla5_g2aSokM86/view?usp=drivesdk"
+                                    target="_blank" style="color: var(--accent-color);">[Certificate]</a></li>
+                        </ul>
+                    </section>
+
+                    <hr class="divider">
+
+                    <section class="volunteering-section" id="volunteering">
+                        <h3>//leadership & volunteering</h3>
+
+                        <div class="vol-item">
+                            <h4>Microsoft Learn Student Ambassador - KIIT Chapter <span class="role">//AI-ML
+                                    Domain</span></h4>
+                            <ul>
+                                <li>Wrote DDPM implementation (training/inference). Led <strong>ForgeTube</strong> (AI
+                                    video gen).</li>
+                                <li>Created lecture series on DDPM/Backprop. Mentored 10+ juniors. Built
+                                    <strong>learndiffusion.vercel.app</strong>.
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="vol-item">
+                            <h4>KIIT E-Cell <span class="role">//RnD Intern & POC</span></h4>
+                            <ul>
+                                <li>Organized hackathons ($150K prize pool); Managed 120+ teams for Hult Prize. Secured
+                                    top VC speakers.</li>
+                            </ul>
+                        </div>
+
+                        <div class="vol-item">
+                            <h4>The Period Society <span class="role">//Odisha Chapter Sub Lead</span></h4>
+                            <ul>
+                                <li>Led 35-member team on menstrual health projects. Established Centre for Menstrual
+                                    Studies.</li>
+                            </ul>
+                        </div>
+
+                        <div class="vol-item">
+                            <h4>Odisha Anime Club <span class="role">//Technical Administrator</span></h4>
+                            <ul>
+                                <li>Managed major events with 1000+ footfall. Produced high-quality events on low
+                                    budgets.</li>
+                                <li>Headed volunteer teams and designed highest-selling merchandise.</li>
+                            </ul>
+                        </div>
+
+                        <div class="vol-item">
+                            <h4>KIIT Film Society <span class="role">//Animation Domain</span></h4>
+                            <p>Active member since Nov 2024.</p>
+                        </div>
+                    </section>
+
+                    <hr class="divider">
+
+                    <section class="awards-section" id="awards">
+                        <h3>//championship_titles (awards)</h3>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li>
+                                <span style="color: var(--accent-color); font-weight: bold;">[Winner]</span>
+                                <strong>Kickboxing</strong>: Bronze Medal - Kicklite Open Weight
+                            </li>
+                            <li>
+                                <span style="color: var(--accent-color); font-weight: bold;">[Winner]</span>
+                                <strong>KIIT Merit Scholarship</strong>: Top 1000 Rank (99%tile)
+                            </li>
+                            <li>
+                                <span style="color: var(--accent-color); font-weight: bold;">[Winner]</span>
+                                <strong>Immerse Oxford-Cambridge Research Scholarship</strong>: Awarded for essay on
+                                Child Development
+                            </li>
+                            <li>
+                                <span style="color: var(--accent-color); font-weight: bold;">[Winner]</span>
+                                <strong>Mono Mousumi - Essay Competition</strong>: Senior Category Prize for essay on
+                                "Environment and Festivals in India".
+                            </li>
+                            <li>
+                                <span style="color: var(--accent-color); font-weight: bold;">[Qualified]</span>
+                                <strong>Competitive Exams</strong>: JEE Mains, JEE Advanced, SNUSAT, NEET UG, IISER
+                                Aptitude Test.
+                            </li>
+                        </ul>
+                    </section>
+
+                    <hr class="divider">
+
+                    <section class="side-quests-section" id="side-quests">
+                        <h3>//side_quests</h3>
+                        <div class="project-card">
+                            <div class="project-header">
+                                <h4>CosQ Entertainments Pvt Limited <a href="https://cosq.in"
+                                        target="_blank">[cosq.in]</a></h4>
+                                <span class="role">//Founder & CTO</span>
+                            </div>
+                            <ul>
+                                <li>Organized pop-culture events and Comic Conventions with 1000+ gatherings.</li>
+                                <li>Managed tech and community operations for large scale events.</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <hr class="divider">
+
+                    <section class="hobbies-section" id="hobbies">
+                        <h3>//hobbies (interactive)</h3>
+                        <div class="hobbies-grid">
+                            <button class="hobby-btn"
+                                onclick="openTab('guitar', 'Guitar', '<h3>Guitar</h3><p>Played in rock band performances. I love creating distorted riffs and melodic solos.</p>')">
+                                <i class="fas fa-guitar"></i> Guitar
+                            </button>
+                            <button class="hobby-btn"
+                                onclick="openTab('art', 'Artwork', '<h3>Artwork & Design</h3><p>Traditional Sketching, Inking. Digital Art (Krita, Photoshop). Exploring the boundaries of visual storytelling.</p>')">
+                                <i class="fas fa-palette"></i> Artwork
+                            </button>
+                            <button class="hobby-btn"
+                                onclick="openTab('philosophy', 'Philosophy', '<h3>Philosophy</h3><p>Skeptic at heart. Interested in Epistemology, Metaphysics. Reading Plato, Nietzsche, Dostoevsky, Camus.</p>')">
+                                <i class="fas fa-book"></i> Philosophy
+                            </button>
+                            <button class="hobby-btn"
+                                onclick="openTab('vfx', 'VFX/Film', '<h3>VFX & Film Making</h3><p>Video Editing (Premiere Pro), VFX (After Effects), 3D Modeling (Blender). I love directing the viewer\'s eye.</p>')">
+                                <i class="fas fa-video"></i> VFX
+                            </button>
+                            <button class="hobby-btn"
+                                onclick="openTab('cooking', 'Cooking', '<h3>Cooking</h3><p>From Hyderabadi Dum Biryani to Italian Pasta. Cooking is chemistry with soul.</p>')">
+                                <i class="fas fa-utensils"></i> Cooking
+                            </button>
+                            <button class="hobby-btn"
+                                onclick="openTab('anime', 'Anime', '<h3>Anime</h3><p>Hajime no Ippo, Steins;Gate, Monster. Stories that move the soul.</p>')">
+                                <i class="fas fa-tv"></i> Anime
+                            </button>
+                            <button class="hobby-btn"
+                                onclick="openTab('dance', 'Dance', '<h3>Dance</h3><p>Hip-hop and Acro-dance. Expressing rhythm through movement.</p>')">
+                                <i class="fas fa-music"></i> Dance
+                            </button>
+                            <button class="hobby-btn"
+                                onclick="openTab('volleyball', 'Volleyball', '<h3>Volleyball</h3><p>Libero / Middle Blocker. It\'s all about the team dynamic and the spike.</p>')">
+                                <i class="fas fa-volleyball-ball"></i> Volleyball
+                            </button>
+                            <button class="hobby-btn"
+                                onclick="openTab('cybersec', 'Cyber Security', '<h3>Cyber Security</h3><p>Network Security, Penetration Testing (Metasploit, NMAP, Wireshark). CTF enthusiast.</p>')">
+                                <i class="fas fa-user-secret"></i> Cyber Security
+                            </button>
+                            <button class="hobby-btn"
+                                onclick="openTab('physics', 'Theoretical Physics', '<h3>Theoretical Physics</h3><p>Studied Classical/Quantum Mechanics, Electrodynamics (Susskind\'s Minimum).</p>')">
+                                <i class="fas fa-atom"></i> Theoretical Physics
+                            </button>
+                            <button class="hobby-btn"
+                                onclick="openTab('youtube', 'YouTube', '<h3>YouTube Channel</h3><p>Produced videos on Coding, Maths, Gaming (2017-2019).</p>')">
+                                <i class="fab fa-youtube"></i> YouTube
+                            </button>
+                        </div>
+                    </section>
+
+                    <hr class="divider">
+
+                    <section class="writings-section" id="writings">
+                        <h3>//writings & pdfs</h3>
+                        <div class="blog-list">
+                            <div class="blog-item">
+                                <span class="date">--</span>
+                                <div style="display: flex; gap: 15px; align-items: center;">
+                                    <a href="#" onclick="openResumeTab(); return false;" class="blog-link">Resume.pdf
+                                        (View)</a>
+                                    <a href="resume.pdf" download class="blog-link" title="Download PDF"><i
+                                            class="fas fa-download"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <footer class="footer">
+                        <p>// made with <i class="fas fa-heart"></i> and <i class="fas fa-code"></i> by Harshit</p>
+                        <p class="copyright">&copy; 2025 Harshit Agarwal. All rights reserved.</p>
+                    </footer>
+                </main>
+            </div>
+            <!-- Dynamic Tabs will be appended here -->
+        </div>
     </div>
-    <div class="projects-bg" id="projects-bg">
-        <div class="projectbg">
-            <h2>PROJECT CHISEL</h2>
-            <h3>(Android Application)</h3>
-            <p>An Application which allows its users to keep track of their fitness life while also socializing with other people through the way.</p>
-            <input type="button" value="Learn More (In Progress)" class="getPro1" id="getPro1"/>
-        </div>
-        <div class="projectbg"> 
-            <h2>EAZY PROJECTS</h2>
-            <h3>(Python)</h3>
-            <p>A Project/Library which allows new developers to try out easy and basic programs to understand a learn basic python.</p>
-            <input type="button" value="Checkout the repo (Adding something new regularly)" class="getPro1" id="getPro2"/>
-        </div>
-        <div class="projectbg">
-            <h2>SHOTES</h2>
-            <h3>(Android Studio)</h3>
-            <p>An App which allows students of Grade 9-12, to socialize while learning and understanding academics and other things.</p>
-            <input type="button" value="App In Progress" class="getPro1" id="getPro3"/>
-        </div>
-    </div>
-    <div class="skills-bg" id="skills-bg">
-        <div class="skills">
-            <h2>JAVA</h2>
-            <p>Has Been a part of my life since 5 years since i started typebased coding for the first time. The journey from Netbeans to Android Studio.</p>
-        </div>
-        <div class="skills">
-            <h2>WEB DEV</h2>
-            <p><span class="sk2bold">HTML5, CSS3, JS and PHP</span>The Basic Things a new "programmer" comes upto...</p>
-        </div>
-        <div class="skills">
-            <h2>PYTHON AND ARDUINO</h2>
-            <p>Basic Arduino Coding and breadboarding. Also started learning Python, quiet recently so that maybe on the top soon too!!</p>
-        </div>
-        <div class="skills">
-            <h2>OTHERS</h2>
-            <p> C++ & C<br/></br/>VBASIC & QBASIC<br/>(for no reason at all)<br/>COBOL.. XDD
-            </p>
-        </div>
-      </div>
-    <footer class="footer" id="footer">
-        <h2>Follow Me On Other Platforms</h2>
-        <ul id="socials">
-           <li>
-               <a href="https://www.linkedin.com/in/harshit-agarwal-928379195/" target="_blank">
-                   <img src="linkedin.png" alt="Linkedin">
-               </a>
-           </li>
-            <li>
-               <a href="https://www.twitter.com/aharshit123456" target="_blank">
-                   <img src="twitter.png" alt="Twitter">
-               </a>
-           </li>
-            <li>
-               <a href="https://www.instagram.com/aharshit123456" target="_blank">
-                   <img src="instagram.png" alt="Instagram">
-               </a>
-           </li>
-            <li>
-               <a href="https://www.github.com/HarshitAgarwal1" target="_blank">
-                   <img src="git.png" alt="Github">
-               </a>
-           </li>
-            <li>
-               <a href="mailto:aharshit123456@gmail.com" target="_blank">
-                   <img src="gmail.png" alt="Email">
-               </a>
-           </li>
-        </ul>
-        <p>Handicrafted by Harshit Agarwal - 2020</p>
-    </footer>
-    <script>
-    let nav = document.getElementById('nav');
-    let menu = document.getElementById('menu');
-    let backmenu = document.getElementById('backmenu');
-        menu.addEventListener('click', function(e)
-        {
-            nav.classList.toggle('hide-mobile')
-        }); 
-        backmenu.addEventListener('click', function(e)
-        {
-            nav.classList.toggle('hide-mobile')
-        }); 
-        let pro1 = document.getElementById('getPro1');
-        pro1.addEventListener('click', function(){
-            window.location.href = "https://github.com/aharshit123456/Project_Chisel";
-        });
-        
-        let pro2 = document.getElementById('getPro2');
-        pro2.addEventListener('click', function(){
-            window.location.href = "https://github.com/aharshit123456/Learning_Python";
-        }); 
-        
-        let pro3 = document.getElementById('getPro3');
-        pro3.addEventListener('click', function(){
-            window.location.href = "https://github.com/aharshit123456/Shotes";
-        });  
-        
-        var toggle = false;
-        
-        let light = document.getElementById('light');
-        var audio = new Audio('click.mp3');
-            
-        light.addEventListener('click', function(e){
-            var element = document.body;
-            var hero = document.getElementById('head');
-            var projectsbg = document.getElementById('projects-bg');
-            var skillsbg = document.getElementById('skills-bg');
-//            element.classList.toggle("dark-mode");
-            audio.play();
-            if(toggle === false){
-                light.src = "off.png";
-                document.getElementById('gpds').style.color = "#0e57f6"
-                document.getElementById('lightlabel').style.color = "#FFF"
-                element.style.background = "#000";
-                element.style.color = "#FFF";
-                hero.style.background = "#000";
-                projectsbg.style.background = "#000";
-                skillsbg.style.background = "#000";
-            }
-            else if(toggle === true){
-                light.src = "on.png";
-                document.getElementById('gpds').style.color = "#FFF"                
-                document.getElementById('lightlabel').style.color = "#000"
-                element.style.background = "#FFF";
-                element.style.color = "#000";
-                hero.style.background = "#0e57f6";
-                projectsbg.style.background = "#FFF";
-                skillsbg.style.background = "#316DF0";
-            }
-            
-            toggle = !toggle;
-            
-            
-            
-            
-        });
-        
-        
-    </script>
-    
+    <script src="script.js"></script>
 </body>
+
 </html>
