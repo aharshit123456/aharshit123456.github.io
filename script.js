@@ -194,6 +194,25 @@ document.addEventListener('DOMContentLoaded', () => {
         flipContainer.addEventListener('click', () => {
             flipper.classList.toggle('flipped');
         });
+        flipper.classList.toggle('flipped');
+    }
+
+    // Profile Flip Hint Logic
+    const hintEl = document.querySelector('.flip-hint');
+    if (hintEl) {
+        const showHint = () => {
+            hintEl.classList.add('visible');
+            setTimeout(() => {
+                hintEl.classList.remove('visible');
+            }, 4000); // Stays for 4 seconds
+        };
+
+        // Initial delay of 4 seconds
+        setTimeout(() => {
+            showHint();
+            // Then repeat every 60 seconds
+            setInterval(showHint, 60000);
+        }, 4000);
     }
 
     // Read More Logic (Generalized)
