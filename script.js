@@ -291,5 +291,90 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    window.openShoppinStats = () => {
+        const id = 'shoppin-stats';
+        const title = 'Shoppin\' Progression';
+
+        // Data Points
+        // Data Points
+        const milestones = [
+            { x: 5, y: 3, label: 'Dec \'24', title: 'Multimodal AI', desc: 'Starting Intern. CLIP/VLLM systems.' },
+            { x: 30, y: 4, label: 'Apr \'25', title: 'Backend APIs', desc: 'CRUD APIs, Robust Patterns.' },
+            { x: 42, y: 5, label: 'May \'25', title: 'Aesthetic Agents', desc: 'Classifying Stores (Human Params) & Redis.' },
+            { x: 55, y: 6, label: 'Jul \'25', title: 'Internal Tools', desc: 'Techblogs, Dashboards & On-Call Reliability.' },
+            { x: 70, y: 7, label: 'Aug \'25', title: 'Order Agents', desc: 'Shopify Order Placement & Automations.' },
+            { x: 80, y: 8, label: 'Sep \'25', title: 'Scale & Rancher', desc: 'Rancher Expansion & 200+ Store Scrapers.' },
+            { x: 95, y: 10, label: 'Nov \'25', title: 'Microservices', desc: 'Event-Driven SQS/DLQ Architecture.' }
+        ];
+
+        // Generate SVG Path
+        // Map x (0-100) to width (0-800) and y (0-10) to height (400-0)
+        const formatPoints = milestones.map(m => {
+            const px = m.x * 8; // 800px width
+            const py = 400 - (m.y * 35); // Scale y. Max 10 * 35 = 350. Bottom padding 50.
+            return `${px},${py}`;
+        }).join(' ');
+
+        // Generate Circles & Tooltips
+        const circles = milestones.map((m, i) => {
+            const px = m.x * 8;
+            const py = 400 - (m.y * 35);
+            return `
+                <g class="point-group" 
+                   onmouseenter="document.getElementById('tooltip-${i}').style.opacity=1; document.getElementById('tooltip-${i}').style.top='${py - 60}px'; document.getElementById('tooltip-${i}').style.left='${px - 100}px';"
+                   onmouseleave="document.getElementById('tooltip-${i}').style.opacity=0;">
+                    <circle cx="${px}" cy="${py}" r="5" class="graph-point" />
+                    <text x="${px}" y="420" text-anchor="middle" class="graph-text">${m.label}</text>
+                </g>
+            `;
+        }).join('');
+
+        const tooltips = milestones.map((m, i) => {
+            return `
+                <div id="tooltip-${i}" class="graph-tooltip" style="top:0; left:0;">
+                    <strong>${m.title} (Lvl ${m.y})</strong><br/>
+                    ${m.desc}
+                </div>
+            `;
+        }).join('');
+
+        const content = `
+            <div class="timeline-container">
+                <div class="stats-header">
+                    <h2>Stats: shoppin'</h2>
+                    <p>Level Progression (Dec '24 - Nov '25)</p>
+                    <p class="mobile-hint" style="font-size: 0.75rem; opacity: 0.8; margin-top: 5px; display: none;"> <i class="fas fa-arrows-alt-h"></i> Scroll to view full timeline</p>
+                </div>
+                
+                <div class="graph-scroll-wrapper" style="width: 100%; overflow-x: auto; padding-bottom: 30px; -webkit-overflow-scrolling: touch;">
+                    <div style="position: relative; width: 800px; margin: 0 auto;">
+                        <svg class="graph-svg" viewBox="0 0 850 450" preserveAspectRatio="xMidYMid meet">
+                            <!-- Grid Lines -->
+                            <line x1="0" y1="365" x2="800" y2="365" class="grid-line" /> <!-- Base -->
+                            <line x1="0" y1="190" x2="800" y2="190" class="grid-line" /> <!-- Mid -->
+                            <line x1="0" y1="15" x2="800" y2="15" class="grid-line" /> <!-- Top -->
+                            
+                            <!-- Axes -->
+                            <line x1="0" y1="400" x2="800" y2="400" class="graph-axis" />
+                            <line x1="0" y1="400" x2="0" y2="0" class="graph-axis" />
+                            
+                            <!-- Path -->
+                            <polyline points="${formatPoints}" class="graph-line" />
+                            
+                            <!-- Points -->
+                            ${circles}
+                        </svg>
+                        ${tooltips}
+                    </div>
+                </div>
+                <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.7;">
+                    *Y-Axis represents Technical Complexity & Responsibility
+                </p>
+            </div>
+        `;
+
+        openTab(id, title, content);
+    };
+
     initReadMore();
 });

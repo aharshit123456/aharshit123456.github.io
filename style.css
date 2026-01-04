@@ -894,3 +894,123 @@ body.dark-mode .blog-item:hover {
         /* Use internal padding if card style is used */
     }
 }
+/* Timeline Graph Styles */
+.timeline-container {
+    padding: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text-color);
+}
+
+.graph-svg {
+    width: 100%;
+    height: 400px;
+    overflow: visible;
+    margin-top: 20px;
+}
+
+.graph-axis {
+    stroke: var(--border-color);
+    stroke-width: 1;
+}
+
+.graph-text {
+    fill: var(--code-comment);
+    font-size: 10px;
+    font-family: var(--font-mono);
+}
+
+.graph-line {
+    fill: none;
+    stroke: var(--accent-color);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 0 5px var(--accent-color));
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: drawLine 2s ease-out forwards;
+}
+
+@keyframes drawLine {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+.graph-point {
+    fill: var(--window-bg);
+    stroke: var(--accent-color);
+    stroke-width: 2;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.graph-point:hover {
+    r: 8;
+    fill: var(--accent-color);
+    stroke: #fff;
+}
+
+.graph-tooltip {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+    border: 1px solid var(--accent-color);
+    max-width: 250px;
+    z-index: 100;
+}
+
+.grid-line {
+    stroke: var(--border-color);
+    stroke-opacity: 0.2;
+    stroke-dasharray: 4;
+}
+
+.stats-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.stats-header h2 {
+    font-size: 1.8rem;
+    color: var(--accent-color);
+}
+
+.stats-header p {
+    color: var(--code-comment);
+}
+
+/* Mobile Optimization for Timeline */
+@media (max-width: 768px) {
+    .mobile-hint {
+        display: block !important;
+    }
+    
+    .graph-scroll-wrapper {
+        border: 1px dashed var(--border-color);
+        border-radius: 8px;
+        background: rgba(0,0,0,0.02);
+    }
+    
+    /* Adjust tooltip position logic if possible, or ensure z-index is high */
+    .graph-tooltip {
+        position: fixed; /* Fix to screen on mobile to avoid overflow issues */
+        top: auto !important;
+        left: 50% !important;
+        bottom: 20px !important;
+        transform: translateX(-50%);
+        width: 90%;
+        text-align: center;
+        z-index: 1000;
+        pointer-events: none;
+    }
+}
