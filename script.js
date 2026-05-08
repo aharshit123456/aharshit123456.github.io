@@ -376,5 +376,66 @@ document.addEventListener('DOMContentLoaded', () => {
         openTab(id, title, content);
     };
 
+    window.openFamcareNotes = () => {
+        const id = 'famcare-notes';
+        const title = 'FamCARE Architecture Notes';
+        const content = `
+            <div class="personal-notes">
+                <h1>Architecting for the Hyper-Local Economy: Building the FamCARE Distributed Marketplace</h1>
+                <p><em>By Harshit Agarwal, System Architect & Lead</em></p>
+                <p>Building a service marketplace isn't just about matching supply and demand; it’s about managing a high-fidelity "Physical World State" in digital real-time. At <strong>FamCARE</strong>, we faced a classic distributed systems challenge: how to coordinate users, caretakers, and administrators across a modular ecosystem while maintaining strict transactional integrity and sub-second latency.</p>
+                <p>In this post, I’ll dive into the architectural decisions and engineering patterns I implemented to scale FamCARE from a prototype to a production-ready engine handling thousands of requests.</p>
+                <hr>
+                <h2>1. The Modular Monolith: Balancing Velocity and Domain Isolation</h2>
+                <p>Early-stage startups often fall into the "Microservices Trap" too soon. For FamCARE, I opted for a <strong>Modular Monolith</strong> architecture using <strong>FastAPI</strong> and <strong>PostgreSQL (SQLAlchemy/AsyncPG)</strong>.</p>
+                <p>By enforcing strict domain boundaries within a single repository (<strong>Sutram</strong>), we avoided the overhead of network-level service discovery while ensuring that the <code>payments</code>, <code>riders</code>, and <code>assignments</code> modules remained decoupled. This allowed us to maintain a shared database schema with ACID guarantees—critical when handling wallet deductions and service bookings.</p>
+                <h2>2. Solving the Distributed State Problem: The Request Lifecycle</h2>
+                <p>The core of FamCARE is the <strong>Service Request Engine</strong>. The complexity lies in the state machine: a request isn't just "Created"; it is a living entity that transitions through <code>proposing</code>, <code>accepting</code>, <code>ongoing</code>, and <code>settling</code>.</p>
+                <h3>The "Ghost Assignment" Challenge</h3>
+                <p>A common failure mode in marketplaces is the "Ghost Assignment"—where a rider is proposed a task but remains "available" to other systems. I implemented a <strong>locking and timeout reservation pattern</strong>:</p>
+                <ul>
+                    <li><strong>Atomic Proposals:</strong> When a rider is proposed, they are marked as <code>busy</code> in a Redis-backed cache layer.</li>
+                    <li><strong>Background Schedulers:</strong> Using <code>APScheduler</code>, I built a reaper service that monitors pending proposals and automatically expires them after 180 seconds, re-injecting the request into the assignment queue.</li>
+                </ul>
+                <h2>3. Real-Time Synchronization via Redis Pub/Sub</h2>
+                <p>To achieve a "live" feel, we couldn't rely on polling. We needed a unified broadcasting system.</p>
+                <p>We used <strong>WebSockets</strong> for the frontends, but scaling WebSockets across multiple server instances requires a shared backplane. I architected a <strong>Redis Pub/Sub relay</strong>:</p>
+                <ul>
+                    <li>When a state change occurs (e.g., Rider accepts a job), the backend publishes a message to a Redis channel.</li>
+                    <li>Every active FastAPI worker listens to this channel and broadcasts the update only to the relevant connected clients (User, Caretaker, or Admin).</li>
+                    <li><strong>Result:</strong> We achieved sub-300ms propagation of status updates across the entire ecosystem.</li>
+                </ul>
+                <h2>4. Engineering the Dynamic Operational Slot Engine</h2>
+                <p>Perhaps the most mathematically complex piece was the <strong>Hub-Aware Slot Engine</strong>. Unlike a standard calendar, our "slots" are dynamic functions of:</p>
+                <ul>
+                    <li><strong>Operational Windows:</strong> Hub-specific start/end times.</li>
+                    <li><strong>Rider Density:</strong> Real-time count of active vs. assigned riders in a specific geofence.</li>
+                    <li><strong>Service Duration:</strong> A 4-hour dog-walking service cannot be booked 2 hours before a hub closes.</li>
+                </ul>
+                <p>I implemented this using a <strong>Duration-Aware Lookahead Algorithm</strong> that calculates availability by intersecting the requested service duration with the remaining operational window and the concurrent booking capacity of the local hub.</p>
+                <h2>5. Stress Testing: Proving the Architecture</h2>
+                <p>An architecture is only as good as its breaking point. I developed a custom asynchronous benchmarking suite to simulate high-load scenarios.</p>
+                <p><strong>The Findings:</strong></p>
+                <ul>
+                    <li><strong>Concurrency:</strong> The system maintained a <strong>100% success rate</strong> at 50 concurrent users.</li>
+                    <li><strong>Throughput:</strong> Handled <strong>2,000+ requests/minute</strong> with an average latency of ~950ms.</li>
+                    <li><strong>Bottleneck Identification:</strong> Under extreme load (100+ concurrent users), the P95 latency shifted to 8s, identifying the database connection pool as the primary scaling target. This data-driven approach allowed us to pre-emptively optimize our RDS instance sizing.</li>
+                </ul>
+                <h2>6. Deployment & The Developer Experience</h2>
+                <p>Speed of delivery is a feature. I automated the entire mobile deployment pipeline using <strong>Fastlane and GitHub Actions</strong>.</p>
+                <ul>
+                    <li><strong>CI/CD:</strong> Automated builds for three different Flutter apps (User, Caretaker, Admin) are triggered on merge to <code>staging</code>, reducing deployment overhead by <strong>70%</strong>.</li>
+                    <li><strong>Observability:</strong> Integrated <strong>Sentry</strong> with custom breadcrumbs to track distributed traces—allowing us to debug a failed payment in the User app by tracing it back to a specific async task in the backend.</li>
+                </ul>
+                <hr>
+                <h2>Conclusion</h2>
+                <p>Building FamCARE was an exercise in balancing "High Performance" with "High Reliability." By focusing on a robust state machine, a real-time event-driven backplane, and rigorous performance benchmarking, we created a system that doesn't just match services—it manages the physical world with digital precision.</p>
+                <p><em>If you’re interested in the code behind these patterns, reach out to discuss distributed systems.</em></p>
+            </div>
+        `;
+
+        openTab(id, title, content);
+    };
+
     initReadMore();
 });
