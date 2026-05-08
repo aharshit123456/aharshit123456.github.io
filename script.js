@@ -386,9 +386,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p>Building a service marketplace isn't just about matching supply and demand; it’s about managing a high-fidelity "Physical World State" in digital real-time. At <strong>FamCARE</strong>, we faced a classic distributed systems challenge: how to coordinate users, caretakers, and administrators across a modular ecosystem while maintaining strict transactional integrity and sub-second latency.</p>
                 <p>In this post, I’ll dive into the architectural decisions and engineering patterns I implemented to scale FamCARE from a prototype to a production-ready engine handling thousands of requests.</p>
                 <hr>
-                <h2>1. The Modular Monolith: Balancing Velocity and Domain Isolation</h2>
-                <p>Early-stage startups often fall into the "Microservices Trap" too soon. For FamCARE, I opted for a <strong>Modular Monolith</strong> architecture using <strong>FastAPI</strong> and <strong>PostgreSQL (SQLAlchemy/AsyncPG)</strong>.</p>
-                <p>By enforcing strict domain boundaries within a single repository (<strong>Sutram</strong>), we avoided the overhead of network-level service discovery while ensuring that the <code>payments</code>, <code>riders</code>, and <code>assignments</code> modules remained decoupled. This allowed us to maintain a shared database schema with ACID guarantees—critical when handling wallet deductions and service bookings.</p>
+                <h2>1. The Modular Monolith: Designing for the Strangler Pattern</h2>
+                <p>Early-stage startups often fall into the "Microservices Trap" too soon. For FamCARE, I opted for a <strong>Modular Monolith</strong> architecture using <strong>FastAPI</strong> and <strong>PostgreSQL</strong>. However, the system is architected with future scale in mind:</p>
+                <ul>
+                    <li><strong>Service Isolation:</strong> I engineered <strong>15+ decoupled services</strong> (modules) within the monolith (e.g., <code>payments</code>, <code>riders</code>, <code>notifications</code>, <code>assignments</code>).</li>
+                    <li><strong>The Strangler Pattern:</strong> Each module is strictly isolated with its own domain logic and data access patterns, allowing any individual service to be "strangled" out into a standalone microservice with minimal friction as traffic scales.</li>
+                    <li><strong>Benefit:</strong> This approach combines the deployment simplicity of a monolith with the architectural flexibility of microservices.</li>
+                </ul>
                 <h2>2. Solving the Distributed State Problem: The Request Lifecycle</h2>
                 <p>The core of FamCARE is the <strong>Service Request Engine</strong>. The complexity lies in the state machine: a request isn't just "Created"; it is a living entity that transitions through <code>proposing</code>, <code>accepting</code>, <code>ongoing</code>, and <code>settling</code>.</p>
                 <h3>The "Ghost Assignment" Challenge</h3>
@@ -421,7 +425,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <li><strong>Throughput:</strong> Handled <strong>2,000+ requests/minute</strong> with an average latency of ~950ms.</li>
                     <li><strong>Bottleneck Identification:</strong> Under extreme load (100+ concurrent users), the P95 latency shifted to 8s, identifying the database connection pool as the primary scaling target. This data-driven approach allowed us to pre-emptively optimize our RDS instance sizing.</li>
                 </ul>
-                <h2>6. Deployment & The Developer Experience</h2>
+                <h2>6. Multi-Channel Notifications & External Integrations</h2>
+                <p>A reliable marketplace requires constant communication. I engineered a unified notification engine that abstracts over multiple providers:</p>
+                <ul>
+                    <li><strong>Real-Time:</strong> <strong>FCM (Firebase Cloud Messaging)</strong> for instant push notifications on order status changes.</li>
+                    <li><strong>Fallback & Auth:</strong> Integrated <strong>Fast2SMS</strong> and <strong>MSG91</strong> for transactional SMS and OTP verification.</li>
+                    <li><strong>Service Decoupling:</strong> The notification service is entirely decoupled; it consumes events from the order system, ensuring that adding a new provider (e.g., WhatsApp or Email) requires zero changes to the core business logic.</li>
+                </ul>
+                <h2>7. Deployment & The Developer Experience</h2>
                 <p>Speed of delivery is a feature. I automated the entire mobile deployment pipeline using <strong>Fastlane and GitHub Actions</strong>.</p>
                 <ul>
                     <li><strong>CI/CD:</strong> Automated builds for three different Flutter apps (User, Caretaker, Admin) are triggered on merge to <code>staging</code>, reducing deployment overhead by <strong>70%</strong>.</li>
