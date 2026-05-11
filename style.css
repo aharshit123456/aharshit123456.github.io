@@ -1082,3 +1082,99 @@ body.dark-mode .personal-notes code {
     border-top: 1px solid var(--border-color);
     margin: 30px 0;
 }
+/* Screenshot Viewer */
+.screenshot-viewer {
+    margin-top: 15px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    animation: slideDown 0.3s ease-out;
+}
+
+body.dark-mode .screenshot-viewer {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.screenshot-scroller {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-color) transparent;
+}
+
+.screenshot-scroller::-webkit-scrollbar {
+    height: 6px;
+}
+
+.screenshot-scroller::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.screenshot-scroller::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 3px;
+}
+
+.screenshot-scroller img {
+    height: 350px;
+    width: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.2s;
+    border: 1px solid var(--border-color);
+}
+
+.screenshot-scroller img:hover {
+    transform: scale(1.02);
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.screenshot-toggle {
+    background: transparent;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    font-size: 0.75rem;
+    padding: 2px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 15px;
+    transition: all 0.2s;
+    vertical-align: middle;
+    font-family: var(--font-mono);
+}
+
+.screenshot-toggle:hover {
+    background: var(--accent-color);
+    color: white;
+}
+
+.screenshot-toggle.active {
+    background: var(--accent-color);
+    color: white;
+}
+
+.store-link {
+    color: var(--text-color);
+    font-size: 1.1rem;
+    margin-left: 15px;
+    opacity: 0.6;
+    transition: all 0.2s;
+    vertical-align: middle;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.store-link:hover {
+    color: var(--accent-color);
+    opacity: 1;
+    transform: scale(1.2);
+}

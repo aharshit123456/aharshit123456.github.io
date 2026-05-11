@@ -449,4 +449,26 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     initReadMore();
+
+    window.toggleScreenshots = (id, btn) => {
+        const viewer = document.getElementById(id);
+        if (!viewer) return;
+        
+        const isOpen = viewer.style.display !== 'none';
+        
+        if (isOpen) {
+            viewer.style.display = 'none';
+            btn.classList.remove('active');
+            btn.innerHTML = '<i class="fas fa-images"></i> Screenshots';
+        } else {
+            viewer.style.display = 'block';
+            btn.classList.add('active');
+            btn.innerHTML = '<i class="fas fa-times"></i> Hide';
+            
+            // Scroll to viewer if it's not fully in view
+            setTimeout(() => {
+                viewer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
+        }
+    };
 });
