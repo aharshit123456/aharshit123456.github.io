@@ -442,6 +442,52 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h2>Conclusion</h2>
                 <p>Building FamCARE was an exercise in balancing "High Performance" with "High Reliability." By focusing on a robust state machine, a real-time event-driven backplane, and rigorous performance benchmarking, we created a system that doesn't just match services—it manages the physical world with digital precision.</p>
                 <p><em>If you’re interested in the code behind these patterns, reach out to discuss distributed systems.</em></p>
+                <hr style="margin: 40px 0; border-top: 2px solid var(--border-color);">
+                <h1>Technical Blog: Architecting a Multi-Tiered Promotional Engine & Reactive Session Extensions</h1>
+                <p>In the latest evolution of the <strong>FamCare</strong> platform, we moved beyond standard CRUD operations to implement two complex, high-impact features: a <strong>Hierarchical Introductory Pricing Engine</strong> and a <strong>Parent-Child Reactive Extension Flow</strong>.</p>
+                <p>Here is the "deep tech" breakdown of how these systems were engineered to handle scale, edge cases, and real-time state synchronization.</p>
+
+                <h2>1. The Hierarchical Promotional Engine (The "Try at" System)</h2>
+                <h3>The Challenge</h3>
+                <p>Standard discount systems are usually flat. For a service marketplace, this is insufficient. Different services have different margins, and a 1-hour session has a different value proposition than a 1-hour session. We needed a way to offer "Entry-Level" pricing that could be overridden at any level of the service hierarchy.</p>
+
+                <h3>The Genius: A Resolution-Priority Fallback Engine</h3>
+                <p>We engineered a <strong>Resolution-Priority Strategy</strong> across the entire stack. Instead of a hardcoded "First Order Price," the system now performs a recursive lookup to find the most specific price defined by the admin.</p>
+                <ul>
+                    <li><strong>The Hierarchy:</strong> Pricing Tier (Most Specific) &rarr; Sub-Service &rarr; Service Category &rarr; Original Price (Fallback).</li>
+                    <li><strong>Deep Tech Implementation:</strong>
+                        <ul>
+                            <li><strong>Database Schema:</strong> Extended the <code>services</code> and <code>pricing_tiers</code> tables via <strong>Alembic</strong> migrations to support nullable promotional fields.</li>
+                            <li><strong>Frontend Resolution Logic:</strong> In Flutter, we implemented a memoized resolution helper <code>_getTrialPrice(sub, tier)</code> that calculates the "Best Available Promotion" in <i>O(1)</i> time during the build cycle, ensuring zero UI lag.</li>
+                            <li><strong>Eligibility Guard:</strong> A reactive <code>_isTrialEligible</code> state that synchronizes guest-mode heuristics with authenticated <code>booking_count</code> checks.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h2>2. Parent-Child Reactive Service Extensions</h2>
+                <h3>The Challenge</h3>
+                <p>In-home services are unpredictable. A 2-hour babysitting session often needs a 1-hour extension. Re-booking from scratch creates friction and breaks the "Live Tracking" experience.</p>
+
+                <h3>The Genius: Atomic Linked Request Mapping</h3>
+                <p>Instead of modifying the original request, we implemented a <strong>Linked-Node Architecture</strong>.</p>
+                <ul>
+                    <li><strong>Relational Logic:</strong> When an extension is requested, the system spawns a new <code>Request</code> object with a <code>parent_request_id</code> pointer. This creates an "Extension Chain."</li>
+                    <li><strong>State Merging:</strong> Once the extension (the child) is paid, a background trigger adds those hours back to the Parent task. The user's live tracker "absorbs" the new time seamlessly.</li>
+                    <li><strong>UI Synchronization:</strong> The <code>LiveTrackingScreen</code> was refactored into a state-aware consumer. It listens for child-requests and dynamically shifts the UI from a "Tracking State" to a "Payment-Gated Extension State" without a page reload.</li>
+                </ul>
+
+                <h2>3. The "Genius" in the Full-Stack Connection</h2>
+                <ol>
+                    <li><strong>Admin Panel (Next.js):</strong> Built a dynamic form system that allows admins to set these prices at any level.</li>
+                    <li><strong>Sutram (FastAPI/PostgreSQL):</strong> The backend serves as the "Source of Truth," preventing any frontend price manipulation.</li>
+                    <li><strong>Praja (Flutter):</strong> Implemented a "Premium Aesthetics" UI overhaul with <strong>Vertical Intrinsic Dividers</strong>, <strong>Slashed-Price Visuals</strong>, and <strong>Micro-animations</strong> for the "Try at" badge.</li>
+                </ol>
+
+                <h3>Summary of Impact</h3>
+                <ul>
+                    <li><strong>Conversion:</strong> Lowered the entry barrier for the most popular services.</li>
+                    <li><strong>Revenue Continuity:</strong> Ensuring caregivers are paid for every extra minute while providing a seamless one-tap payment experience.</li>
+                </ul>
             </div>
         `;
 
@@ -453,9 +499,9 @@ document.addEventListener('DOMContentLoaded', () => {
     window.toggleScreenshots = (id, btn) => {
         const viewer = document.getElementById(id);
         if (!viewer) return;
-        
+
         const isOpen = viewer.style.display !== 'none';
-        
+
         if (isOpen) {
             viewer.style.display = 'none';
             btn.classList.remove('active');
@@ -464,7 +510,7 @@ document.addEventListener('DOMContentLoaded', () => {
             viewer.style.display = 'block';
             btn.classList.add('active');
             btn.innerHTML = '<i class="fas fa-times"></i> Hide';
-            
+
             // Scroll to viewer if it's not fully in view
             setTimeout(() => {
                 viewer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
