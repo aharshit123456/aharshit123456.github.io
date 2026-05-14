@@ -8,6 +8,10 @@ import FreelanceExperience from '@/components/portfolio/FreelanceExperience';
 import TerminalView from '@/components/portfolio/TerminalView';
 import MatrixRain from '@/components/portfolio/MatrixRain';
 import DMGInstaller from '@/components/portfolio/DMGInstaller';
+import Dock from '@/components/portfolio/Dock';
+import ControlCenter from '@/components/portfolio/ControlCenter';
+import Spotlight from '@/components/portfolio/Spotlight';
+import WallpaperSwitcher from '@/components/portfolio/WallpaperSwitcher';
 
 type Tab = {
   id: string;
@@ -44,6 +48,10 @@ export default function Portfolio() {
   const [isMatrixActive, setIsMatrixActive] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
+  const [isControlCenterOpen, setIsControlCenterOpen] = useState(false);
+  const [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
+  const [isWallpaperSwitcherOpen, setIsWallpaperSwitcherOpen] = useState(false);
+  const [wallpaper, setWallpaper] = useState('https://w.wallhaven.cc/full/8o/wallhaven-8o35vy.jpg');
   const [isDMGOpen, setIsDMGOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState<{ src: string, alt: string } | null>(null);
   const [windowPositions, setWindowPositions] = useState({
@@ -224,12 +232,21 @@ export default function Portfolio() {
       activeDragWindow.current = null;
     };
 
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.code === 'Space') {
+        e.preventDefault();
+        setIsSpotlightOpen(prev => !prev);
+      }
+    };
+
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseup', handleMouseUp);
-
+    window.addEventListener('keydown', handleKeyDown);
+    
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
 
@@ -407,6 +424,59 @@ export default function Portfolio() {
                 <div className="skill-category"><strong>Cloud/DevOps:</strong><br /> [AWS, Docker, K8s, Terraform, CI/CD]</div>
                 <div className="skill-category"><strong>Databases:</strong><br /> [PostgreSQL, MongoDB, Redis, Firebase]</div>
                 <div className="skill-category"><strong>Tools:</strong><br /> [Git, Linux, Unity, ROS]</div>
+              </div>
+            </section>
+
+            <hr className="divider" />
+
+            <section className="curations-section" id="curations">
+              <h3>//digital_presence (socials & curations)</h3>
+              <div className="skills-grid">
+                <div className="skill-category">
+                  <strong><i className="fas fa-list"></i> Curations:</strong><br />
+                  <div style={{ marginTop: '10px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <a href="https://letterboxd.com/aharshit123456/" target="_blank" rel="noopener noreferrer" className="blog-link">
+                      <i className="fas fa-film"></i> Letterboxd (Movies)
+                    </a>
+                    <a href="https://previouslyon.cosq.in/user/aharshit123456" target="_blank" rel="noopener noreferrer" className="blog-link">
+                      <i className="fas fa-tv"></i> Previously On (Shows)
+                    </a>
+                    <a href="https://www.goodreads.com/user/show/55541393-harshit-agarwal" target="_blank" rel="noopener noreferrer" className="blog-link">
+                      <i className="fas fa-book"></i> Goodreads (Books)
+                    </a>
+                  </div>
+                </div>
+                <div className="skill-category">
+                  <strong><i className="fas fa-share-alt"></i> Socials:</strong><br />
+                  <div style={{ marginTop: '10px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <a href="https://instagram.com/aharshit123456" target="_blank" rel="noopener noreferrer" className="blog-link">
+                      <i className="fab fa-instagram"></i> Instagram
+                    </a>
+                    <a href="https://x.com/aharshit123456" target="_blank" rel="noopener noreferrer" className="blog-link">
+                      <i className="fab fa-twitter"></i> X / Twitter
+                    </a>
+                    <a href="https://account.xbox.com/en-us/profile?gamertag=aharsht12345" target="_blank" rel="noopener noreferrer" className="blog-link">
+                      <i className="fab fa-xbox"></i> Xbox (aharsht12345)
+                    </a>
+                    <a href="https://www.twitch.tv/aharsh123456" target="_blank" rel="noopener noreferrer" className="blog-link">
+                      <i className="fab fa-twitch"></i> Twitch
+                    </a>
+                    <a href="https://open.spotify.com/user/aharshit123456" target="_blank" rel="noopener noreferrer" className="blog-link">
+                      <i className="fab fa-spotify"></i> Spotify
+                    </a>
+                    <div style={{ marginTop: '10px' }}>
+                      <iframe 
+                        style={{ borderRadius: '12px', border: 'none' }}
+                        src="https://open.spotify.com/embed/playlist/37i9dQZEVXdjx1ziQCmPxM?utm_source=generator&theme=0"
+                        width="100%" 
+                        height="152" 
+                        allowFullScreen 
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                        loading="lazy"
+                      ></iframe>
+                    </div>
+                  </div>
+                </div>
               </div>
             </section>
 
@@ -747,6 +817,7 @@ export default function Portfolio() {
             </footer>
           </main>
         </div>
+      </div>
 
         {/* Dynamic Tab Content */}
         {tabs.map(tab => tab.id !== 'main' && (
@@ -763,13 +834,12 @@ export default function Portfolio() {
             )}
           </div>
         ))}
-      </div>
-    </>
-  );
+      </>
+    );
 
   if (!isLoggedIn) {
     return (
-      <div className="login-screen">
+      <div className="login-screen" style={{ backgroundImage: `url(${wallpaper})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
         <div className="login-container">
           <div className="login-profile">
             <img src="profile_new.jpg" alt="Harshit Agarwal" />
@@ -797,7 +867,7 @@ export default function Portfolio() {
   }
 
   return (
-    <div className="workspace-wrapper">
+    <div className="workspace-wrapper" style={{ backgroundImage: `url(${wallpaper})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
       <div className="workspace-container" style={{ transform: `translateX(-${activeSpace * 100}vw)` }}>
         {/* Space 1: Desktop */}
         <div className="space desktop-space" onContextMenu={handleContextMenu}>
@@ -815,6 +885,9 @@ export default function Portfolio() {
             <div className="right">
               <span className="menu-item"><i className="fas fa-wifi"></i></span>
               <span className="menu-item"><i className="fas fa-battery-full"></i></span>
+              <span className="menu-item" onClick={() => setIsControlCenterOpen(!isControlCenterOpen)}>
+                <i className="fas fa-sliders-h"></i>
+              </span>
               <span className="menu-item"><i className="fas fa-search"></i></span>
               <span className="menu-item" suppressHydrationWarning>
                 {hasMounted ? new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '--:--'}
@@ -1093,7 +1166,44 @@ export default function Portfolio() {
             </div>
           )}
         </div>
+        <WallpaperSwitcher 
+          isOpen={isWallpaperSwitcherOpen}
+          onClose={() => setIsWallpaperSwitcherOpen(false)}
+          currentWallpaper={wallpaper}
+          setWallpaper={setWallpaper}
+        />
       </div>
+
+      {/* Fixed UI Components (Outside transformed container) */}
+      <Dock 
+        items={[
+          { id: 'main', name: 'Finder', icon: '/apps_icon.png', onClick: () => { setIsMinimized(false); setActiveTabId('main'); }, isOpen: !isMinimized },
+          { id: 'terminal', name: 'Terminal', icon: '/terminal_icon.png', onClick: () => setIsTerminalOpen(true), isOpen: isTerminalOpen },
+          { id: 'resume', name: 'Resume DMG', icon: '/dmg_icon.png', onClick: () => setIsDMGOpen(true), isOpen: isDMGOpen },
+          { id: 'settings', name: 'System Settings', icon: '/apps_icon.png', onClick: () => setIsWallpaperSwitcherOpen(true) },
+          { id: 'github', name: 'GitHub', icon: '/git.png', onClick: () => window.open('https://github.com/aharshit123456', '_blank') },
+          { id: 'linkedin', name: 'LinkedIn', icon: '/linkedin.png', onClick: () => window.open('https://www.linkedin.com/in/aharshit123456/', '_blank') },
+        ]}
+      />
+
+      <ControlCenter 
+        isOpen={isControlCenterOpen} 
+        onClose={() => setIsControlCenterOpen(false)}
+        isDarkMode={isDarkMode}
+        toggleTheme={toggleTheme}
+      />
+
+      <Spotlight 
+        isOpen={isSpotlightOpen} 
+        onClose={() => setIsSpotlightOpen(false)}
+        apps={[
+          { id: 'finder', name: 'Finder', icon: '/apps_icon.png', onClick: () => { setIsMinimized(false); setActiveTabId('main'); } },
+          { id: 'terminal', name: 'Terminal', icon: '/terminal_icon.png', onClick: () => setIsTerminalOpen(true) },
+          { id: 'resume', name: 'Resume DMG', icon: '/dmg_icon.png', onClick: () => setIsDMGOpen(true) },
+          { id: 'settings', name: 'System Settings', icon: '/apps_icon.png', onClick: () => setIsWallpaperSwitcherOpen(true) },
+          { id: 'github', name: 'GitHub', icon: '/git.png', onClick: () => window.open('https://github.com/aharshit123456', '_blank') },
+        ]}
+      />
     </div>
   );
 

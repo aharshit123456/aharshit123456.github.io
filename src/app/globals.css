@@ -62,14 +62,11 @@
 
 .desktop-space {
     z-index: 1;
-    background-image: url('/macos_sonoma_wallpaper.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background: transparent;
 }
 
 .fullscreen-space {
-    background: #000;
+    background: transparent;
 }
 
 .mac-window.fullscreen-view {
@@ -845,7 +842,7 @@ h3 {
 .login-screen {
     height: 100vh;
     width: 100vw;
-    background: url('https://w.wallhaven.cc/full/8o/wallhaven-8o35vy.jpg') center/cover no-repeat;
+    background: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
