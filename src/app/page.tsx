@@ -12,6 +12,7 @@ import Dock from '@/components/portfolio/Dock';
 import ControlCenter from '@/components/portfolio/ControlCenter';
 import Spotlight from '@/components/portfolio/Spotlight';
 import WallpaperSwitcher from '@/components/portfolio/WallpaperSwitcher';
+import GuestbookWidget from '@/components/portfolio/GuestbookWidget';
 
 type Tab = {
   id: string;
@@ -34,15 +35,15 @@ export default function Portfolio() {
   const [isMinimized, setIsMinimized] = useState(false);
   const [iconPosition, setIconPosition] = useState({ x: 40, y: 40 });
   const [isDragging, setIsDragging] = useState(false);
-  
+
   const [isFreelanceOpen, setIsFreelanceOpen] = useState(false);
   const [isFreelanceMinimized, setIsFreelanceMinimized] = useState(false);
-  const [freelanceIconPosition, setFreelanceIconPosition] = useState({ x: 40, y: 140 }); 
-  
+  const [freelanceIconPosition, setFreelanceIconPosition] = useState({ x: 40, y: 140 });
+
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const [isTerminalMinimized, setIsTerminalMinimized] = useState(false);
   const [terminalIconPosition, setTerminalIconPosition] = useState({ x: 40, y: 240 });
-  
+
   const [resumeIconPosition, setResumeIconPosition] = useState({ x: 40, y: 340 });
 
   const [isMatrixActive, setIsMatrixActive] = useState(false);
@@ -51,7 +52,15 @@ export default function Portfolio() {
   const [isControlCenterOpen, setIsControlCenterOpen] = useState(false);
   const [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
   const [isWallpaperSwitcherOpen, setIsWallpaperSwitcherOpen] = useState(false);
-  const [wallpaper, setWallpaper] = useState('https://w.wallhaven.cc/full/8o/wallhaven-8o35vy.jpg');
+  const [wallpaper, setWallpaper] = useState('/wallpapers/space.jpg');
+  const [brightness, setBrightness] = useState(100);
+  const [volume, setVolume] = useState(60);
+  const [isAppleMenuOpen, setIsAppleMenuOpen] = useState(false);
+  const [isWifiMenuOpen, setIsWifiMenuOpen] = useState(false);
+  const [activeWifi, setActiveWifi] = useState('aharshit123456.space');
+  const [isBatteryMenuOpen, setIsBatteryMenuOpen] = useState(false);
+  const [batteryLevel, setBatteryLevel] = useState(12);
+  const [isClockMenuOpen, setIsClockMenuOpen] = useState(false);
   const [isDMGOpen, setIsDMGOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState<{ src: string, alt: string } | null>(null);
   const [windowPositions, setWindowPositions] = useState({
@@ -127,6 +136,15 @@ export default function Portfolio() {
     };
   }, []);
 
+  // Battery Drain Simulation
+  useEffect(() => {
+    if (!hasMounted) return;
+    const interval = setInterval(() => {
+      setBatteryLevel(prev => (prev > 1 ? prev - 1 : 100));
+    }, 60000); // 1% per minute for demo
+    return () => clearInterval(interval);
+  }, [hasMounted]);
+
   // Sections with Read More
   const toggleSection = (id: string) => {
     setExpandedSections(prev => ({ ...prev, [id]: !prev[id] }));
@@ -179,13 +197,13 @@ export default function Portfolio() {
     if (type === 'terminal' && isTerminalOpen && !isTerminalMinimized) return;
 
     activeDragIcon.current = type;
-    const pos = type === 'main' ? iconPosition : 
-                type === 'freelance' ? freelanceIconPosition : 
-                type === 'terminal' ? terminalIconPosition :
-                resumeIconPosition;
-    
-    setIsDragging(true); 
-    
+    const pos = type === 'main' ? iconPosition :
+      type === 'freelance' ? freelanceIconPosition :
+        type === 'terminal' ? terminalIconPosition :
+          resumeIconPosition;
+
+    setIsDragging(true);
+
     dragStartTime.current = Date.now();
     dragOffset.current = {
       x: e.clientX - pos.x,
@@ -208,13 +226,13 @@ export default function Portfolio() {
         return;
       }
       if (!activeDragIcon.current) return;
-      
+
       const newX = e.clientX - dragOffset.current.x;
       const newY = (window.innerHeight - e.clientY) - dragOffset.current.y;
-      
+
       const boundedX = Math.max(10, Math.min(window.innerWidth - 80, newX));
       const boundedY = Math.max(10, Math.min(window.innerHeight - 100, newY));
-      
+
       if (activeDragIcon.current === 'main') {
         setIconPosition({ x: boundedX, y: boundedY });
       } else if (activeDragIcon.current === 'freelance') {
@@ -242,7 +260,7 @@ export default function Portfolio() {
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseup', handleMouseUp);
     window.addEventListener('keydown', handleKeyDown);
-    
+
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
@@ -465,12 +483,12 @@ export default function Portfolio() {
                       <i className="fab fa-spotify"></i> Spotify
                     </a>
                     <div style={{ marginTop: '10px' }}>
-                      <iframe 
+                      <iframe
                         style={{ borderRadius: '12px', border: 'none' }}
                         src="https://open.spotify.com/embed/playlist/37i9dQZEVXdjx1ziQCmPxM?utm_source=generator&theme=0"
-                        width="100%" 
-                        height="152" 
-                        allowFullScreen 
+                        width="100%"
+                        height="152"
+                        allowFullScreen
                         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                         loading="lazy"
                       ></iframe>
@@ -819,23 +837,23 @@ export default function Portfolio() {
         </div>
       </div>
 
-        {/* Dynamic Tab Content */}
-        {tabs.map(tab => tab.id !== 'main' && (
-          <div
-            key={tab.id}
-            className={`tab-content ${activeTabId === tab.id ? 'active' : ''}`}
-            id={`content-${tab.id}`}
-            style={tab.id === 'resume' ? { padding: '0', height: '100%', overflow: 'hidden' } : {}}
-          >
-            {typeof tab.content === 'string' ? (
-              <div dangerouslySetInnerHTML={{ __html: tab.content }} />
-            ) : (
-              tab.content
-            )}
-          </div>
-        ))}
-      </>
-    );
+      {/* Dynamic Tab Content */}
+      {tabs.map(tab => tab.id !== 'main' && (
+        <div
+          key={tab.id}
+          className={`tab-content ${activeTabId === tab.id ? 'active' : ''}`}
+          id={`content-${tab.id}`}
+          style={tab.id === 'resume' ? { padding: '0', height: '100%', overflow: 'hidden' } : {}}
+        >
+          {typeof tab.content === 'string' ? (
+            <div dangerouslySetInnerHTML={{ __html: tab.content }} />
+          ) : (
+            tab.content
+          )}
+        </div>
+      ))}
+    </>
+  );
 
   if (!isLoggedIn) {
     return (
@@ -847,9 +865,9 @@ export default function Portfolio() {
           <h1>Harshit Agarwal</h1>
           <p className="login-domain">aharshit123456.space</p>
           <div className="login-input-group">
-            <input 
-              type="password" 
-              placeholder="Enter Password" 
+            <input
+              type="password"
+              placeholder="Enter Password"
               autoFocus
               suppressHydrationWarning
               onKeyDown={(e) => {
@@ -871,9 +889,30 @@ export default function Portfolio() {
       <div className="workspace-container" style={{ transform: `translateX(-${activeSpace * 100}vw)` }}>
         {/* Space 1: Desktop */}
         <div className="space desktop-space" onContextMenu={handleContextMenu}>
+          <div style={{ position: 'absolute', right: '40px', bottom: '120px', zIndex: 10 }}>
+            <GuestbookWidget />
+          </div>
           <div className="top-menubar">
             <div className="left">
-              <i className="fab fa-apple apple-icon"></i>
+              <i
+                className="fab fa-apple apple-icon"
+                onClick={() => setIsAppleMenuOpen(!isAppleMenuOpen)}
+              ></i>
+              {isAppleMenuOpen && (
+                <div className="apple-dropdown">
+                  <div className="menu-item-drop">About This Mac</div>
+                  <hr />
+                  <div className="menu-item-drop">System Settings...</div>
+                  <div className="menu-item-drop">App Store...</div>
+                  <hr />
+                  <div className="menu-item-drop">Sleep</div>
+                  <div className="menu-item-drop">Restart...</div>
+                  <div className="menu-item-drop">Shut Down...</div>
+                  <hr />
+                  <div className="menu-item-drop" onClick={() => setIsLoggedIn(false)}>Lock Screen</div>
+                  <div className="menu-item-drop" onClick={() => setIsLoggedIn(false)}>Log Out Harshit...</div>
+                </div>
+              )}
               <span className="app-name" style={{ fontWeight: '700' }}>aharshit123456.space</span>
               <span className="menu-item">File</span>
               <span className="menu-item">Edit</span>
@@ -883,18 +922,79 @@ export default function Portfolio() {
               <span className="menu-item">Help</span>
             </div>
             <div className="right">
-              <span className="menu-item"><i className="fas fa-wifi"></i></span>
-              <span className="menu-item"><i className="fas fa-battery-full"></i></span>
+              <span className="menu-item" onClick={() => setIsWifiMenuOpen(!isWifiMenuOpen)}>
+                <i className="fas fa-wifi"></i>
+              </span>
+              {isWifiMenuOpen && (
+                <div className="apple-dropdown" style={{ right: '120px', left: 'auto', width: '220px' }}>
+                  <div style={{ padding: '6px 15px', fontSize: '11px', opacity: 0.5, fontWeight: '700', color: 'white' }}>WIFI NETWORKS</div>
+                  {[
+                    'aharshit123456.space',
+                    'Pretty Fly for a Wi-Fi',
+                    'Tell My WiFi Love Her',
+                    'FBI Surveillance Van #4',
+                    'Abraham Linksys',
+                    'The Promised LAN',
+                    'Mom, click here for internet'
+                  ].map(name => (
+                    <div
+                      key={name}
+                      className="menu-item-drop"
+                      onClick={() => { setActiveWifi(name); setIsWifiMenuOpen(false); }}
+                      style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+                    >
+                      <span>{name}</span>
+                      {activeWifi === name && <i className="fas fa-check" style={{ fontSize: '10px', marginLeft: '10px' }}></i>}
+                    </div>
+                  ))}
+                  <hr />
+                  <div className="menu-item-drop">Wi-Fi Settings...</div>
+                </div>
+              )}
+              <span className="menu-item" onClick={() => setIsBatteryMenuOpen(!isBatteryMenuOpen)}>
+                <i className={`fas fa-battery-${batteryLevel > 80 ? 'full' : batteryLevel > 50 ? 'three-quarters' : batteryLevel > 20 ? 'half' : 'quarter'}`}></i>
+              </span>
+              {isBatteryMenuOpen && (
+                <div className="apple-dropdown" style={{ right: '100px', left: 'auto', width: '250px' }}>
+                  <div style={{ padding: '6px 15px', fontSize: '11px', opacity: 0.5, fontWeight: '700', color: 'white' }}>BATTERY</div>
+                  <div className="menu-item-drop" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span>Power Source: Battery</span>
+                  </div>
+                  <div className="menu-item-drop">{batteryLevel}% Remaining</div>
+                  <hr />
+                  <div style={{ padding: '6px 15px', fontSize: '11px', opacity: 0.5, fontWeight: '700', color: 'white' }}>APPS USING SIGNIFICANT ENERGY</div>
+                  <div className="menu-item-drop" style={{ opacity: 0.5 }}>No Apps Using Significant Energy</div>
+                  <hr />
+                  <div className="menu-item-drop">Battery Settings...</div>
+                </div>
+              )}
               <span className="menu-item" onClick={() => setIsControlCenterOpen(!isControlCenterOpen)}>
                 <i className="fas fa-sliders-h"></i>
               </span>
-              <span className="menu-item"><i className="fas fa-search"></i></span>
-              <span className="menu-item" suppressHydrationWarning>
+              <span className="menu-item" onClick={() => setIsSpotlightOpen(true)}>
+                <i className="fas fa-search"></i>
+              </span>
+              <span className="menu-item" onClick={() => setIsClockMenuOpen(!isClockMenuOpen)} suppressHydrationWarning>
                 {hasMounted ? new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '--:--'}
               </span>
+              {isClockMenuOpen && (
+                <div className="apple-dropdown" style={{ right: '10px', left: 'auto', width: '280px' }}>
+                  <div style={{ padding: '15px', textAlign: 'center', color: 'white' }}>
+                    <div style={{ fontSize: '1.1rem', fontWeight: '500', opacity: 0.8 }}>
+                      {hasMounted ? new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' }) : ''}
+                    </div>
+                    <div style={{ fontSize: '2.5rem', fontWeight: '700', marginTop: '5px' }}>
+                      {hasMounted ? new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}
+                    </div>
+                  </div>
+                  <hr />
+                  <div className="menu-item-drop">Open Calendar...</div>
+                  <div className="menu-item-drop">Clock Settings...</div>
+                </div>
+              )}
             </div>
           </div>
-          <div 
+          <div
             className={`mac-window portfolio-window ${isMinimized ? 'minimized' : ''}`}
             style={{
               position: 'absolute',
@@ -924,11 +1024,11 @@ export default function Portfolio() {
 
           {/* Freelance Window */}
           {isFreelanceOpen && (
-            <div className={`mac-window freelance-window ${isFreelanceMinimized ? 'minimized' : ''}`} style={{ 
-              position: 'absolute', 
-              top: `${windowPositions.freelance.y}px`, 
-              left: `${windowPositions.freelance.x}px`, 
-              zIndex: 50 
+            <div className={`mac-window freelance-window ${isFreelanceMinimized ? 'minimized' : ''}`} style={{
+              position: 'absolute',
+              top: `${windowPositions.freelance.y}px`,
+              left: `${windowPositions.freelance.x}px`,
+              zIndex: 50
             }}>
               <div className="title-bar" onMouseDown={(e) => handleWindowMouseDown(e, 'freelance')}>
                 <div className="buttons">
@@ -946,10 +1046,10 @@ export default function Portfolio() {
 
           {/* Terminal Window */}
           {isTerminalOpen && (
-            <div className={`mac-window terminal-window ${isTerminalMinimized ? 'minimized' : ''}`} style={{ 
-              position: 'absolute', 
-              top: `${windowPositions.terminal.y}px`, 
-              left: `${windowPositions.terminal.x}px`, 
+            <div className={`mac-window terminal-window ${isTerminalMinimized ? 'minimized' : ''}`} style={{
+              position: 'absolute',
+              top: `${windowPositions.terminal.y}px`,
+              left: `${windowPositions.terminal.x}px`,
               zIndex: 60,
               width: '700px',
               height: '450px'
@@ -985,10 +1085,10 @@ export default function Portfolio() {
 
           {/* DMG Installer Window */}
           {isDMGOpen && (
-            <div className="mac-window dmg-window" style={{ 
-              position: 'absolute', 
-              top: `${windowPositions.dmg.y}px`, 
-              left: `${windowPositions.dmg.x}px`, 
+            <div className="mac-window dmg-window" style={{
+              position: 'absolute',
+              top: `${windowPositions.dmg.y}px`,
+              left: `${windowPositions.dmg.x}px`,
               zIndex: 100,
               width: 'auto',
               height: 'auto',
@@ -1002,26 +1102,26 @@ export default function Portfolio() {
                 </div>
                 <div className="window-title">resume.dmg</div>
               </div>
-              <DMGInstaller 
-                onClose={() => setIsDMGOpen(false)} 
+              <DMGInstaller
+                onClose={() => setIsDMGOpen(false)}
                 onInstallComplete={() => {
                   const link = document.createElement('a');
                   link.href = 'resume.pdf';
                   link.download = 'Harshit_Agarwal_Resume.pdf';
                   link.click();
                   setIsDMGOpen(false);
-                }} 
+                }}
               />
             </div>
           )}
 
           {/* QuickLook Image Viewer */}
           {selectedImage && (
-            <div className="image-quicklook" style={{ 
-              position: 'fixed', 
-              top: 0, 
+            <div className="image-quicklook" style={{
+              position: 'fixed',
+              top: 0,
               left: 0,
-              transform: `translate(${windowPositions.ql.x - 400}px, ${windowPositions.ql.y - 300}px)`, 
+              transform: `translate(${windowPositions.ql.x - 400}px, ${windowPositions.ql.y - 300}px)`,
               zIndex: 1000,
               width: '800px',
               maxWidth: '90vw',
@@ -1048,12 +1148,12 @@ export default function Portfolio() {
           )}
 
           {/* Desktop Icons */}
-          <div 
-            className={`minimized-icon ${activeDragIcon.current === 'main' ? 'dragging' : ''}`} 
+          <div
+            className={`minimized-icon ${activeDragIcon.current === 'main' ? 'dragging' : ''}`}
             onMouseDown={(e) => handleMouseDown(e, 'main')}
             onClick={() => handleIconClick('main')}
-            style={{ 
-              left: `${iconPosition.x}px`, 
+            style={{
+              left: `${iconPosition.x}px`,
               bottom: `${iconPosition.y}px`,
               position: 'absolute',
               display: isMinimized ? 'flex' : 'none'
@@ -1066,7 +1166,7 @@ export default function Portfolio() {
             <div className="icon-label">harshit_agarwal.dmg</div>
           </div>
 
-{/* 
+          {/* 
           <div 
             className={`minimized-icon ${activeDragIcon.current === 'freelance' ? 'dragging' : ''}`} 
             onMouseDown={(e) => handleMouseDown(e, 'freelance')}
@@ -1085,12 +1185,12 @@ export default function Portfolio() {
           </div>
           */}
 
-          <div 
-            className={`minimized-icon ${activeDragIcon.current === 'terminal' ? 'dragging' : ''}`} 
+          <div
+            className={`minimized-icon ${activeDragIcon.current === 'terminal' ? 'dragging' : ''}`}
             onMouseDown={(e) => handleMouseDown(e, 'terminal')}
             onClick={() => handleIconClick('terminal')}
-            style={{ 
-              left: `${terminalIconPosition.x}px`, 
+            style={{
+              left: `${terminalIconPosition.x}px`,
               bottom: `${terminalIconPosition.y}px`,
               position: 'absolute'
             }}
@@ -1102,12 +1202,12 @@ export default function Portfolio() {
             <div className="icon-label">terminal.app</div>
           </div>
 
-          <div 
-            className={`minimized-icon ${activeDragIcon.current === 'resume' ? 'dragging' : ''}`} 
+          <div
+            className={`minimized-icon ${activeDragIcon.current === 'resume' ? 'dragging' : ''}`}
             onMouseDown={(e) => handleMouseDown(e, 'resume')}
             onClick={() => handleIconClick('resume')}
-            style={{ 
-              left: `${resumeIconPosition.x}px`, 
+            style={{
+              left: `${resumeIconPosition.x}px`,
               bottom: `${resumeIconPosition.y}px`,
               position: 'absolute'
             }}
@@ -1123,50 +1223,50 @@ export default function Portfolio() {
         {/* Space 2: Fullscreen App */}
         <div className="space fullscreen-space">
           {fullscreenWindow === 'main' && (
-             <div className="mac-window fullscreen-view">
-                <div className="title-bar">
-                  <div className="buttons">
-                    <div className="close" title="Close"></div>
-                    <div className="minimize" title="Minimize" onClick={() => setActiveSpace(0)}></div>
-                    <div className="maximize" title="Exit Fullscreen" onClick={() => setActiveSpace(0)}></div>
-                  </div>
-                  <div className="window-title">harshit_agarwal.dmg — Fullscreen</div>
+            <div className="mac-window fullscreen-view">
+              <div className="title-bar">
+                <div className="buttons">
+                  <div className="close" title="Close"></div>
+                  <div className="minimize" title="Minimize" onClick={() => setActiveSpace(0)}></div>
+                  <div className="maximize" title="Exit Fullscreen" onClick={() => setActiveSpace(0)}></div>
                 </div>
-                {renderMainContent()}
-             </div>
+                <div className="window-title">harshit_agarwal.dmg — Fullscreen</div>
+              </div>
+              {renderMainContent()}
+            </div>
           )}
           {fullscreenWindow === 'freelance' && (
             <div className="mac-window fullscreen-view">
-               <div className="title-bar">
-                 <div className="buttons">
-                   <div className="close" title="Close" onClick={() => { setIsFreelanceOpen(false); setActiveSpace(0); }}></div>
-                   <div className="minimize" title="Minimize" onClick={() => setActiveSpace(0)}></div>
-                   <div className="maximize" title="Exit Fullscreen" onClick={() => setActiveSpace(0)}></div>
-                 </div>
-                 <div className="window-title">freelance_experience.dmg — Fullscreen</div>
-               </div>
-               <div className="content-container" style={{ background: 'var(--window-bg)' }}>
-                 <FreelanceExperience />
-               </div>
+              <div className="title-bar">
+                <div className="buttons">
+                  <div className="close" title="Close" onClick={() => { setIsFreelanceOpen(false); setActiveSpace(0); }}></div>
+                  <div className="minimize" title="Minimize" onClick={() => setActiveSpace(0)}></div>
+                  <div className="maximize" title="Exit Fullscreen" onClick={() => setActiveSpace(0)}></div>
+                </div>
+                <div className="window-title">freelance_experience.dmg — Fullscreen</div>
+              </div>
+              <div className="content-container" style={{ background: 'var(--window-bg)' }}>
+                <FreelanceExperience />
+              </div>
             </div>
           )}
           {fullscreenWindow === 'terminal' && (
             <div className="mac-window fullscreen-view">
-               <div className="title-bar">
-                 <div className="buttons">
-                   <div className="close" title="Close" onClick={() => { setIsTerminalOpen(false); setActiveSpace(0); }}></div>
-                   <div className="minimize" title="Minimize" onClick={() => setActiveSpace(0)}></div>
-                   <div className="maximize" title="Exit Fullscreen" onClick={() => setActiveSpace(0)}></div>
-                 </div>
-                 <div className="window-title">terminal — Fullscreen</div>
-               </div>
-               <div className="content-container" style={{ background: '#0c0c0c' }}>
-                 <TerminalView onCommand={handleTerminalCommand} />
-               </div>
+              <div className="title-bar">
+                <div className="buttons">
+                  <div className="close" title="Close" onClick={() => { setIsTerminalOpen(false); setActiveSpace(0); }}></div>
+                  <div className="minimize" title="Minimize" onClick={() => setActiveSpace(0)}></div>
+                  <div className="maximize" title="Exit Fullscreen" onClick={() => setActiveSpace(0)}></div>
+                </div>
+                <div className="window-title">terminal — Fullscreen</div>
+              </div>
+              <div className="content-container" style={{ background: '#0c0c0c' }}>
+                <TerminalView onCommand={handleTerminalCommand} />
+              </div>
             </div>
           )}
         </div>
-        <WallpaperSwitcher 
+        <WallpaperSwitcher
           isOpen={isWallpaperSwitcherOpen}
           onClose={() => setIsWallpaperSwitcherOpen(false)}
           currentWallpaper={wallpaper}
@@ -1175,7 +1275,7 @@ export default function Portfolio() {
       </div>
 
       {/* Fixed UI Components (Outside transformed container) */}
-      <Dock 
+      <Dock
         items={[
           { id: 'main', name: 'Finder', icon: '/apps_icon.png', onClick: () => { setIsMinimized(false); setActiveTabId('main'); }, isOpen: !isMinimized },
           { id: 'terminal', name: 'Terminal', icon: '/terminal_icon.png', onClick: () => setIsTerminalOpen(true), isOpen: isTerminalOpen },
@@ -1186,15 +1286,36 @@ export default function Portfolio() {
         ]}
       />
 
-      <ControlCenter 
-        isOpen={isControlCenterOpen} 
+      <ControlCenter
+        isOpen={isControlCenterOpen}
         onClose={() => setIsControlCenterOpen(false)}
         isDarkMode={isDarkMode}
         toggleTheme={toggleTheme}
+        brightness={brightness}
+        setBrightness={setBrightness}
+        volume={volume}
+        setVolume={setVolume}
+        activeWifi={activeWifi}
       />
 
-      <Spotlight 
-        isOpen={isSpotlightOpen} 
+      {/* Global Brightness Overlay with Vignette */}
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          background: `radial-gradient(circle, transparent 20%, rgba(0,0,0,${(100 - brightness) / 150}))`,
+          backgroundColor: `rgba(0,0,0,${(100 - brightness) / 250})`, // Subtle base dimming
+          pointerEvents: 'none',
+          zIndex: 999999,
+          transition: 'background 0.2s ease-out'
+        }}
+      />
+
+      <Spotlight
+        isOpen={isSpotlightOpen}
         onClose={() => setIsSpotlightOpen(false)}
         apps={[
           { id: 'finder', name: 'Finder', icon: '/apps_icon.png', onClick: () => { setIsMinimized(false); setActiveTabId('main'); } },

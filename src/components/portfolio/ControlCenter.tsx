@@ -1,16 +1,44 @@
 'use client';
 
-import React from 'react';
+import React, { useRef } from 'react';
 
 interface ControlCenterProps {
   isOpen: boolean;
   onClose: () => void;
   isDarkMode: boolean;
   toggleTheme: () => void;
+  brightness: number;
+  setBrightness: (val: number) => void;
+  volume: number;
+  setVolume: (val: number) => void;
+  activeWifi: string;
 }
 
-export default function ControlCenter({ isOpen, onClose, isDarkMode, toggleTheme }: ControlCenterProps) {
+export default function ControlCenter({ 
+  isOpen, 
+  onClose, 
+  isDarkMode, 
+  toggleTheme,
+  brightness,
+  setBrightness,
+  volume,
+  setVolume,
+  activeWifi
+}: ControlCenterProps) {
+  const brightnessRef = useRef<HTMLDivElement>(null);
+  const volumeRef = useRef<HTMLDivElement>(null);
+
   if (!isOpen) return null;
+
+  const handleSliderClick = (e: React.MouseEvent, type: 'brightness' | 'volume', ref: React.RefObject<HTMLDivElement | null>) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const percentage = Math.round(Math.min(Math.max((x / rect.width) * 100, 0), 100));
+    
+    if (type === 'brightness') setBrightness(percentage);
+    else setVolume(percentage);
+  };
 
   return (
     <div className="control-center-wrapper" onClick={onClose}>
@@ -21,7 +49,7 @@ export default function ControlCenter({ isOpen, onClose, isDarkMode, toggleTheme
               <i className="fas fa-wifi"></i>
               <div className="control-info">
                 <span className="label">Wi-Fi</span>
-                <span className="value">aharshit123456.space</span>
+                <span className="value">{activeWifi}</span>
               </div>
             </div>
             <div className="control-item active">
@@ -54,32 +82,51 @@ export default function ControlCenter({ isOpen, onClose, isDarkMode, toggleTheme
           <div className="control-block slider-controls">
             <div className="slider-item">
               <span className="label">Display</span>
-              <div className="slider-bg">
-                <div className="slider-fill" style={{ width: '85%' }}></div>
+              <div 
+                className="slider-bg" 
+                ref={brightnessRef} 
+                onClick={(e) => handleSliderClick(e, 'brightness', brightnessRef)}
+              >
+                <div className="slider-fill" style={{ width: `${brightness}%` }}></div>
                 <i className="fas fa-sun slider-icon"></i>
               </div>
             </div>
             <div className="slider-item">
               <span className="label">Sound</span>
-              <div className="slider-bg">
-                <div className="slider-fill" style={{ width: '60%' }}></div>
+              <div 
+                className="slider-bg" 
+                ref={volumeRef} 
+                onClick={(e) => handleSliderClick(e, 'volume', volumeRef)}
+              >
+                <div className="slider-fill" style={{ width: `${volume}%` }}></div>
                 <i className="fas fa-volume-up slider-icon"></i>
               </div>
             </div>
           </div>
 
-          <div className="control-block now-playing">
-            <i className="fas fa-music"></i>
-            <div className="music-info">
-              <span className="song">Starlight</span>
-              <span className="artist">Muse</span>
-            </div>
-            <i className="fas fa-play"></i>
+          <div className="control-block now-playing-spotify">
+            <iframe 
+              style={{ borderRadius: '12px', border: 'none' }} 
+              src="https://open.spotify.com/embed/track/776AftMmFFAWUIEAb3lHhw?utm_source=generator&theme=0" 
+              width="100%" 
+              height="152" 
+              allowFullScreen 
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+              loading="lazy"
+            ></iframe>
           </div>
         </div>
       </div>
 
       <style jsx>{`
+        .now-playing-spotify {
+          grid-column: span 2;
+          background: transparent !important;
+          border: none !important;
+          padding: 0 !important;
+          height: 152px;
+          overflow: hidden;
+        }
         .control-center-wrapper {
           position: fixed;
           top: 0;
@@ -93,12 +140,12 @@ export default function ControlCenter({ isOpen, onClose, isDarkMode, toggleTheme
           top: 35px;
           right: 10px;
           width: 320px;
-          background: rgba(255, 255, 255, 0.1);
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
           backdrop-filter: blur(40px);
           -webkit-backdrop-filter: blur(40px);
           border-radius: 20px;
           border: 1px solid rgba(255, 255, 255, 0.2);
-          box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.1);
           padding: 15px;
           animation: panelSlide 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -197,11 +244,13 @@ export default function ControlCenter({ isOpen, onClose, isDarkMode, toggleTheme
           border-radius: 14px;
           position: relative;
           overflow: hidden;
+          cursor: pointer;
         }
         .slider-fill {
           height: 100%;
           background: #fff;
           opacity: 0.8;
+          transition: width 0.1s ease-out;
         }
         .slider-icon {
           position: absolute;
@@ -211,22 +260,8 @@ export default function ControlCenter({ isOpen, onClose, isDarkMode, toggleTheme
           font-size: 12px;
           color: #000;
           opacity: 0.5;
+          pointer-events: none;
         }
-
-        .now-playing {
-          grid-column: span 2;
-          display: flex;
-          align-items: center;
-          gap: 15px;
-        }
-        .now-playing i { font-size: 18px; opacity: 0.8; }
-        .music-info {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-        }
-        .song { font-size: 11px; font-weight: 600; }
-        .artist { font-size: 10px; opacity: 0.6; }
       `}</style>
     </div>
   );

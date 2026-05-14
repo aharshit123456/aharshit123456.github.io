@@ -131,6 +131,38 @@
     border-radius: 4px;
 }
 
+.apple-dropdown {
+    position: absolute;
+    top: 30px;
+    left: 10px;
+    background: rgba(28, 28, 30, 0.9);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    width: 250px;
+    padding: 5px 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    z-index: 10000;
+}
+
+.menu-item-drop {
+    padding: 4px 15px;
+    font-size: 0.85rem;
+    color: white;
+    cursor: pointer;
+}
+
+.menu-item-drop:hover {
+    background: var(--accent-color);
+}
+
+.apple-dropdown hr {
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 5px 0;
+}
+
 body {
     font-family: var(--font-mono);
     min-height: 100vh;
@@ -855,14 +887,14 @@ h3 {
 }
 
 .login-container {
-    background: rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.08));
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
     padding: 40px;
     border-radius: 24px;
     text-align: center;
     width: 350px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255,255,255,0.2);
     animation: fadeIn 0.8s ease-out;
 }

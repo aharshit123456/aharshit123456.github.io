@@ -85,7 +85,7 @@ export default function Dock({ items }: DockProps) {
         }
         .dock-container {
           pointer-events: auto;
-          background: rgba(255, 255, 255, 0.1);
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.08));
           backdrop-filter: blur(25px);
           -webkit-backdrop-filter: blur(25px);
           padding: 8px;
@@ -94,7 +94,7 @@ export default function Dock({ items }: DockProps) {
           align-items: flex-end;
           gap: 10px;
           border: 1px solid rgba(255, 255, 255, 0.2);
-          box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+          box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255, 255, 255, 0.1);
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .dock-item-wrapper {
