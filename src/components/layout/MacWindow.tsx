@@ -1,14 +1,38 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
+import { useRef, useEffect } from 'react';
 
 export const MacWindow = ({ children, isDarkMode, toggleTheme, tabs, activeTabId, switchTab, closeTab }: any) => {
+  const windowRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (windowRef.current) {
+        const rect = windowRef.current.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        windowRef.current.style.setProperty('--mouse-x', `${x}%`);
+        windowRef.current.style.setProperty('--mouse-y', `${y}%`);
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   return (
     <motion.div
+      ref={windowRef}
       className="mac-window"
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5 }}
+      initial={{ opacity: 0, scale: 0.8, y: 50, rotateX: 20 }}
+      animate={{ opacity: 1, scale: 1, y: 0, rotateX: 0 }}
+      transition={{ 
+        type: "spring", 
+        damping: 15, 
+        stiffness: 100,
+        duration: 0.8 
+      }}
     >
       <div className="title-bar">
         <div className="buttons">
@@ -18,7 +42,12 @@ export const MacWindow = ({ children, isDarkMode, toggleTheme, tabs, activeTabId
         </div>
         <div className="window-title">harshit_agarwal.dmg</div>
         <div className="theme-toggle" onClick={toggleTheme}>
-          <i className={isDarkMode ? "fas fa-sun" : "fas fa-moon"}></i>
+          <motion.i 
+            key={isDarkMode ? 'sun' : 'moon'}
+            initial={{ scale: 0, rotate: -180 }}
+            animate={{ scale: 1, rotate: 0 }}
+            className={isDarkMode ? "fas fa-sun" : "fas fa-moon"}
+          />
         </div>
       </div>
 
@@ -28,9 +57,10 @@ export const MacWindow = ({ children, isDarkMode, toggleTheme, tabs, activeTabId
             <motion.div
               key={tab.id}
               layout
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 10 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              whileHover={{ y: -2 }}
               className={`tab ${activeTabId === tab.id ? 'active' : ''}`}
               onClick={() => switchTab(tab.id)}
             >
