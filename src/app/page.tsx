@@ -1,6 +1,9 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import FamcareNotes from '@/components/portfolio/FamcareNotes';
+import ShoppinStats from '@/components/portfolio/ShoppinStats';
+import ProductionContent, { ProductionKey } from '@/components/portfolio/ProductionContent';
 
 type Tab = {
   id: string;
@@ -109,7 +112,7 @@ export default function Portfolio() {
           <div className="maximize"></div>
         </div>
         <div className="window-title">harshit_agarwal.exe</div>
-        <div className="theme-toggle" onClick={toggleTheme}>
+        <div className="theme-toggle" id="theme-toggle-btn" onClick={toggleTheme} aria-label={`Switch to ${isDarkMode ? 'light' : 'dark'} mode`} role="button">
           <i className={isDarkMode ? "fas fa-sun" : "fas fa-moon"}></i>
         </div>
       </div>
@@ -137,23 +140,23 @@ export default function Portfolio() {
           <header className="nav-header">
             <div className="nav-item">
               <span className="label">//portfolio</span>
-              <a href="#" className="link">harshit_agarwal.dev</a>
+              <a href="#" className="link" id="nav-portfolio">harshit_agarwal.dev</a>
             </div>
             <div className="nav-item">
               <span className="label">//contact</span>
-              <a href="mailto:aharshit123456@gmail.com" className="link">aharshit123456@gmail.com</a>
+              <a href="mailto:aharshit123456@gmail.com" className="link" id="nav-contact" aria-label="Email Harshit Agarwal">aharshit123456@gmail.com</a>
             </div>
             <div className="nav-item">
               <span className="label">//github</span>
-              <a href="https://github.com/aharshit123456" target="_blank" className="link">github.com/aharshit123456</a>
+              <a href="https://github.com/aharshit123456" target="_blank" rel="noopener noreferrer" className="link" id="nav-github" aria-label="Harshit's GitHub Profile">github.com/aharshit123456</a>
             </div>
             <div className="nav-item">
               <span className="label">//linkedin</span>
-              <a href="https://www.linkedin.com/in/aharshit123456/" target="_blank" className="link">linkedin.com/in/aharshit123456</a>
+              <a href="https://www.linkedin.com/in/aharshit123456/" target="_blank" rel="noopener noreferrer" className="link" id="nav-linkedin" aria-label="Harshit's LinkedIn Profile">linkedin.com/in/aharshit123456</a>
             </div>
             <div className="nav-item">
               <span className="label">//archive</span>
-              <a href="index_v1.html" className="link">v1.0 (Old Version)</a>
+              <a href="index_v1.html" className="link" id="nav-archive" aria-label="View previous version of portfolio">v1.0 (Old Version)</a>
             </div>
           </header>
 
@@ -228,15 +231,15 @@ export default function Portfolio() {
                   <div className="time">April 2026 - Present</div>
                   <div className="details">
                     <h4>
-                      <a href="https://famcare.co.in" style={{ color: '#ff4d4d' }}>Famcare</a>
+                      <a href="https://famcare.co.in" style={{ color: '#ff4d4d' }} id="exp-famcare-link">Famcare</a>
                       <span className="role">//Fullstack Architect & Lead</span>
-                      <button className={`screenshot-toggle ${famcareScreenshotsVisible ? 'active' : ''}`} onClick={() => setFamcareScreenshotsVisible(!famcareScreenshotsVisible)}>
+                      <button className={`screenshot-toggle ${famcareScreenshotsVisible ? 'active' : ''}`} id="btn-famcare-screenshots" onClick={() => setFamcareScreenshotsVisible(!famcareScreenshotsVisible)} aria-expanded={famcareScreenshotsVisible}>
                         <i className={famcareScreenshotsVisible ? "fas fa-times" : "fas fa-images"}></i> {famcareScreenshotsVisible ? 'Hide' : 'Screenshots'}
                       </button>
-                      <a href="https://play.google.com/store/apps/details?id=com.famcare.praja&pcampaignid=web_share" target="_blank" className="store-link" title="Play Store">
+                      <a href="https://play.google.com/store/apps/details?id=com.famcare.praja&pcampaignid=web_share" target="_blank" rel="noopener noreferrer" className="store-link" title="Play Store" aria-label="Famcare on Google Play Store">
                         <i className="fab fa-google-play"></i>
                       </a>
-                      <a href="https://apps.apple.com/in/app/famcare-caregiver-in-minutes/id6761720384" target="_blank" className="store-link" title="App Store">
+                      <a href="https://apps.apple.com/in/app/famcare-caregiver-in-minutes/id6761720384" target="_blank" rel="noopener noreferrer" className="store-link" title="App Store" aria-label="Famcare on Apple App Store">
                         <i className="fab fa-apple"></i>
                       </a>
                     </h4>
@@ -280,15 +283,15 @@ export default function Portfolio() {
                   <div className="time">Dec 2024 - Nov 2025</div>
                   <div className="details">
                     <h4>
-                      <a href="https://shoppin.app" style={{ color: '#ff4d4d' }}>shoppin'</a> — USAR Commerce Technologies
+                      <a href="https://shoppin.app" style={{ color: '#ff4d4d' }} id="exp-shoppin-link">shoppin'</a> — USAR Commerce Technologies
                       <span className="role">//Founding ML Engineer (AI/Infra)</span>
-                      <button className={`screenshot-toggle ${shoppinScreenshotsVisible ? 'active' : ''}`} onClick={() => setShoppinScreenshotsVisible(!shoppinScreenshotsVisible)}>
+                      <button className={`screenshot-toggle ${shoppinScreenshotsVisible ? 'active' : ''}`} id="btn-shoppin-screenshots" onClick={() => setShoppinScreenshotsVisible(!shoppinScreenshotsVisible)} aria-expanded={shoppinScreenshotsVisible}>
                         <i className={shoppinScreenshotsVisible ? "fas fa-times" : "fas fa-images"}></i> {shoppinScreenshotsVisible ? 'Hide' : 'Screenshots'}
                       </button>
-                      <a href="https://play.google.com/store/apps/details?id=app.shoppin.ios" target="_blank" className="store-link" title="Play Store">
+                      <a href="https://play.google.com/store/apps/details?id=app.shoppin.ios" target="_blank" rel="noopener noreferrer" className="store-link" title="Play Store" aria-label="Shoppin' on Google Play Store">
                         <i className="fab fa-google-play"></i>
                       </a>
-                      <a href="https://apps.apple.com/in/app/shoppin-ai-discovery-try-on/id6738202299" target="_blank" className="store-link" title="App Store">
+                      <a href="https://apps.apple.com/in/app/shoppin-ai-discovery-try-on/id6738202299" target="_blank" rel="noopener noreferrer" className="store-link" title="App Store" aria-label="Shoppin' on Apple App Store">
                         <i className="fab fa-apple"></i>
                       </a>
                     </h4>
@@ -319,7 +322,7 @@ export default function Portfolio() {
                 <div className="exp-item" key="alohomora">
                   <div className="time">Jan 2025 - Present</div>
                   <div className="details">
-                    <h4>Alohomora Labs <span className="role">//Research Lead <a style={{ fontSize: '0.8rem', color: 'var(--accent-color)' }} href="https://alohomora-labs.me">[Link]</a> </span></h4>
+                    <h4>Alohomora Labs <span className="role">//Research Lead <a style={{ fontSize: '0.8rem', color: 'var(--accent-color)' }} href="https://alohomora-labs.me" target="_blank" rel="noopener noreferrer" aria-label="Visit Alohomora Labs website">[Link]</a> </span></h4>
                     <ul>
                       <li><strong>gaitSetPy:</strong> Implemented Python package for gait analysis (10k+ samples). Added 50+ preprocessing functions, reducing processing time by 40%.</li>
                       <li><strong>Parkinson's Research:</strong> Worked with Dr. Jayeeta Chakraborty. Applied CNNs/LSTMs/GNNs to predict FOG events and gait imbalances. (Paper submitted to Health and Technology).</li>
@@ -347,7 +350,7 @@ export default function Portfolio() {
               {renderSectionItems([
                 <div className="project-card" key="wham">
                   <div className="project-header">
-                    <h4>WHAM! OTT <a href="https://wham.cosq.in/">[Web]</a></h4>
+                    <h4>WHAM! OTT <a href="https://wham.cosq.in/" target="_blank" rel="noopener noreferrer" aria-label="Visit WHAM! OTT website">[Web]</a></h4>
                     <span className="tech-stack">React 18, Vite, FastAPI, Supabase, HLS/M3U8. CapacitorJS</span>
                   </div>
                   <ul>
@@ -358,14 +361,14 @@ export default function Portfolio() {
                 </div>,
                 <div className="project-card" key="previously">
                   <div className="project-header">
-                    <h4>PreviouslyOn <a href="https://github.com/aharshit123456/previouslyon">[GitHub]</a> <a href="http://previouslyon.cosq.in/">[Web]</a></h4>
+                    <h4>PreviouslyOn <a href="https://github.com/aharshit123456/previouslyon" target="_blank" rel="noopener noreferrer" aria-label="View PreviouslyOn source code on GitHub">[GitHub]</a> <a href="http://previouslyon.cosq.in/" target="_blank" rel="noopener noreferrer" aria-label="Visit PreviouslyOn website">[Web]</a></h4>
                     <span className="tech-stack">Next.js, Supabase</span>
                   </div>
                   <p>"Developed a full-stack social TV tracking application using Next.js and Supabase, featuring real-time user activity feeds, custom list curation, and polymorphic review systems. Integrated Gemini AI for personalized content recommendations."</p>
                 </div>,
                 <div className="project-card" key="gaitset">
                   <div className="project-header">
-                    <h4>gaitSetPy <a href="https://github.com/Alohomora-Labs/gaitSetPy">[GitHub]</a> <a href="https://www.alohomora-labs.me">[Web]</a></h4>
+                    <h4>gaitSetPy <a href="https://github.com/Alohomora-Labs/gaitSetPy" target="_blank" rel="noopener noreferrer" aria-label="View gaitSetPy on GitHub">[GitHub]</a> <a href="https://www.alohomora-labs.me" target="_blank" rel="noopener noreferrer" aria-label="Visit Alohomora Labs website">[Web]</a></h4>
                     <span className="tech-stack">Python, C</span>
                   </div>
                   <ul>
@@ -390,7 +393,7 @@ export default function Portfolio() {
                 </div>,
                 <div className="project-card" key="drivepal">
                   <div className="project-header">
-                    <h4>Vehicle Rental Service (Drive Pal) <a href="https://drive-pal.vercel.app/">[Link]</a></h4>
+                    <h4>Vehicle Rental Service (Drive Pal) <a href="https://drive-pal.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Visit Drive Pal website">[Link]</a></h4>
                     <span className="tech-stack">NextJS, WebGL, Supabase</span>
                   </div>
                   <p>Reactive web app for renting vehicles using AR/VR and Photogrammetry. Built for Tutedude Hackathon.</p>
@@ -407,6 +410,100 @@ export default function Portfolio() {
 
             <hr className="divider" />
 
+            <section className="side-quests-section" id="side-quests">
+              <h3>//side_quests</h3>
+              <div className="project-card">
+                <div className="project-header">
+                  <h4>CosQ Entertainments Pvt Limited <a href="https://cosq.in" target="_blank" rel="noopener noreferrer" aria-label="Visit CosQ website">[cosq.in]</a></h4>
+                  <span className="role">//Founder & CTO</span>
+                </div>
+                <ul>
+                  <li>Organized pop-culture events and Comic Conventions with 1000+ gatherings.</li>
+                  <li>Managed tech and community operations for large scale events.</li>
+                </ul>
+              </div>
+
+              <div className="project-card">
+                <div className="project-header">
+                  <h4>Way Through Films</h4>
+                  <span className="role">//Founder</span>
+                </div>
+                <ul>
+                  <li><strong>Production House:</strong> Established an independent production studio.</li>
+                  <li><strong>Docu Series:</strong> <button onClick={() => openProductionTab('omwt')} className="inline-link" style={{ color: 'var(--accent-color)', background: 'none', border: 'none', padding: 0, cursor: 'pointer', textDecoration: 'underline' }} aria-label="View On My Way Through docu-series">On My Way Through</button> - A docuseries exploring society through an unpolished lens.</li>
+                  <li><strong>Micro Experiments:</strong> 
+                    <button onClick={() => openProductionTab('pause')} className="inline-link" style={{ color: 'var(--accent-color)', background: 'none', border: 'none', padding: 0, cursor: 'pointer', textDecoration: 'underline' }} aria-label="View Pause micro-film">Pause</button> / 
+                    <button onClick={() => openProductionTab('morning')} className="inline-link" style={{ color: 'var(--accent-color)', background: 'none', border: 'none', padding: 0, cursor: 'pointer', textDecoration: 'underline' }} aria-label="View Morning micro-film">Morning</button>
+                  </li>
+                </ul>
+              </div>
+            </section>
+
+            <hr className="divider" />
+
+            <section className="volunteering-section" id="volunteering">
+              <h3>//leadership & volunteering</h3>
+              <div className="vol-item">
+                <h4>Microsoft Learn Student Ambassador - KIIT Chapter <span className="role">//AI-ML Domain</span></h4>
+                <ul>
+                  <li>Wrote DDPM implementation (training/inference). Led <strong>ForgeTube</strong> (AI video gen).</li>
+                  <li>Created lecture series on DDPM/Backprop. Mentored 10+ juniors. Built <strong>learndiffusion.vercel.app</strong>.</li>
+                </ul>
+              </div>
+
+              <div className="vol-item">
+                <h4>KIIT E-Cell <span className="role">//RnD Intern & POC</span></h4>
+                <ul>
+                  <li>Organized hackathons ($150K prize pool); Managed 120+ teams for Hult Prize. Secured top VC speakers.</li>
+                </ul>
+              </div>
+
+              <div className="vol-item">
+                <h4>The Period Society <span className="role">//Odisha Chapter Sub Lead</span></h4>
+                <ul>
+                  <li>Led 35-member team on menstrual health projects. Established Centre for Menstrual Studies.</li>
+                </ul>
+              </div>
+
+              <div className="vol-item">
+                <h4>Odisha Anime Club <span className="role">//Technical Administrator</span></h4>
+                <ul>
+                  <li>Managed major events with 1000+ footfall. Produced high-quality events on low budgets.</li>
+                  <li>Headed volunteer teams and designed highest-selling merchandise.</li>
+                </ul>
+              </div>
+            </section>
+
+            <hr className="divider" />
+
+            <section className="awards-section" id="awards">
+              <h3>//championship_titles (awards)</h3>
+              <ul style={{ listStyle: 'none', paddingLeft: 0 }}>
+                <li>
+                  <span style={{ color: 'var(--accent-color)', fontWeight: 'bold' }}>[Winner]</span>
+                  <strong> Kickboxing</strong>: Bronze Medal - Kicklite Open Weight
+                </li>
+                <li>
+                  <span style={{ color: 'var(--accent-color)', fontWeight: 'bold' }}>[Winner]</span>
+                  <strong> KIIT Merit Scholarship</strong>: Top 1000 Rank (99%tile)
+                </li>
+                <li>
+                  <span style={{ color: 'var(--accent-color)', fontWeight: 'bold' }}>[Winner]</span>
+                  <strong> Immerse Oxford-Cambridge Research Scholarship</strong>: Awarded for essay on Child Development
+                </li>
+                <li>
+                  <span style={{ color: 'var(--accent-color)', fontWeight: 'bold' }}>[Winner]</span>
+                  <strong> Mono Mousumi - Essay Competition</strong>: Senior Category Prize for essay on "Environment and Festivals in India".
+                </li>
+                <li>
+                  <span style={{ color: 'var(--accent-color)', fontWeight: 'bold' }}>[Qualified]</span>
+                  <strong> Competitive Exams</strong>: JEE Mains, JEE Advanced, SNUSAT, NEET UG, IISER Aptitude Test.
+                </li>
+              </ul>
+            </section>
+
+            <hr className="divider" />
+
             <section className="hobbies-section" id="hobbies">
               <h3>//hobbies (interactive)</h3>
               <div className="hobbies-grid">
@@ -419,7 +516,17 @@ export default function Portfolio() {
                 <button className="hobby-btn" onClick={() => openTab('philosophy', 'Philosophy', '<h3>Philosophy</h3><p>Skeptic at heart. Interested in Epistemology, Metaphysics. Reading Plato, Nietzsche, Dostoevsky, Camus.</p><h4>Reading List:</h4><ul><li>The Brothers Karamazov - Dostoevsky</li><li>Crime and Punishment - Dostoevsky</li><li>Notes from Underground - Dostoevsky</li></ul>')}>
                   <i className="fas fa-book"></i> Philosophy
                 </button>
-                <button className="hobby-btn" onClick={() => openTab('vfx', 'VFX/Film', '<h3>VFX & Film Making</h3><p>Video Editing (Premiere Pro), VFX (After Effects), 3D Modeling (Blender). I love directing the viewer\'s eye.</p>')}>
+                <button className="hobby-btn" onClick={() => openTab('vfx', 'VFX/Film', (
+                  <div className="vfx-selection">
+                    <h3>VFX & Film Making</h3>
+                    <p>Video Editing (Premiere Pro), VFX (After Effects), 3D Modeling (Blender). I love directing the viewer's eye.</p>
+                    <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+                      <button className="hobby-btn" onClick={() => openProductionTab('omwt')}>On My Way Through</button>
+                      <button className="hobby-btn" onClick={() => openProductionTab('pause')}>Pause</button>
+                      <button className="hobby-btn" onClick={() => openProductionTab('morning')}>Morning</button>
+                    </div>
+                  </div>
+                ))}>
                   <i className="fas fa-video"></i> VFX
                 </button>
                 <button className="hobby-btn" onClick={() => openTab('cooking', 'Cooking', '<h3>Cooking</h3><p>From Hyderabadi Dum Biryani to Italian Pasta. Cooking is chemistry with soul.</p>')}>
@@ -487,12 +594,19 @@ export default function Portfolio() {
   }
 
   function openFamcareNotes() {
-    // Content truncated for brevity in this example, but would include full text
-    openTab('famcare-notes', 'FamCARE Architecture Notes', <div className="personal-notes"><h1>Architecting for the Hyper-Local Economy</h1><p>Full content would go here...</p></div>);
+    openTab('famcare-notes', 'FamCARE Architecture Notes', <FamcareNotes />);
   }
 
   function openShoppinStats() {
-    // Simplified progression graph for now
-    openTab('shoppin-stats', 'Shoppin\' Progression', <div className="timeline-container"><h2>Shoppin\' Stats</h2><p>Progression timeline...</p></div>);
+    openTab('shoppin-stats', 'Shoppin\' Progression', <ShoppinStats />);
+  }
+
+  function openProductionTab(key: ProductionKey) {
+    const titles: Record<ProductionKey, string> = {
+      omwt: 'On My Way Through',
+      pause: 'Pause (Micro Film)',
+      morning: 'Morning (Micro Film)'
+    };
+    openTab(`production-${key}`, titles[key], <ProductionContent prodKey={key} />);
   }
 }
