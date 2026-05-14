@@ -747,6 +747,136 @@ h3 {
 .store-link { color: var(--text-color); font-size: 1.1rem; margin-left: 15px; opacity: 0.6; transition: all 0.2s; vertical-align: middle; text-decoration: none; display: inline-block; }
 .store-link:hover { color: var(--accent-color); opacity: 1; transform: scale(1.2); }
 
+/* Phone Emulator Styles */
+.phone-emulator {
+    position: relative;
+    width: 280px;
+    height: 580px;
+    background: #000;
+    border-radius: 40px;
+    border: 10px solid #1a1a1a;
+    box-shadow: 0 50px 100px rgba(0,0,0,0.8), 0 0 0 2px rgba(255,255,255,0.05);
+    overflow: hidden;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+}
+
+.phone-emulator::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 30px;
+    border: 1px solid rgba(255,255,255,0.1);
+    pointer-events: none;
+    z-index: 10;
+}
+
+.dynamic-island {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 22px;
+    background: #000;
+    border-radius: 20px;
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dynamic-island::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: #1a1a1a;
+    border-radius: 50%;
+    margin-left: 40px;
+}
+
+.phone-screen {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    background: #000;
+}
+
+.phone-screen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.emulator-controls {
+    position: absolute;
+    top: 50%;
+    left: -60px;
+    right: -60px;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    pointer-events: none;
+    z-index: 30;
+}
+
+.nav-btn {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: all 0.2s ease;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+.nav-btn:hover {
+    background: var(--accent-color);
+    transform: scale(1.1);
+    border-color: transparent;
+    box-shadow: 0 0 20px var(--accent-color);
+}
+
+.nav-btn i {
+    font-size: 1.2rem;
+}
+
+.quicklook-footer {
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.dot.active {
+    background: var(--accent-color);
+    transform: scale(1.3);
+}
+
 /* Desktop and Minimize Logic */
 .desktop {
     width: 100vw;
@@ -1015,4 +1145,126 @@ h3 {
     border: 0;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     margin: 5px 0;
+}
+
+/* Windows 95 Retro Theme */
+.win95-theme {
+    --bg-color: #008080 !important;
+    --bg-gradient: none !important;
+    --window-bg: #c0c0c0 !important;
+    --text-color: #000 !important;
+    --accent-color: #000080 !important;
+    --border-color: #000 !important;
+    --font-mono: 'MS Sans Serif', 'Courier New', monospace;
+}
+
+.win95-theme .workspace-wrapper {
+    background: #008080 !important;
+}
+
+.win95-theme .mac-window {
+    border: 2px solid;
+    border-color: #dfdfdf #0a0a0a #0a0a0a #dfdfdf !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+.win95-theme .title-bar {
+    background: linear-gradient(90deg, #000080, #1084d0) !important;
+    color: #fff !important;
+    border: none !important;
+    padding: 3px 6px !important;
+}
+
+.win95-theme .window-title {
+    color: #fff !important;
+    opacity: 1 !important;
+    left: 10px !important;
+    transform: none !important;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.win95-theme .buttons {
+    order: 2;
+    margin-left: auto;
+    gap: 2px;
+}
+
+.win95-theme .buttons div {
+    border-radius: 0 !important;
+    width: 16px;
+    height: 14px;
+    background: #c0c0c0 !important;
+    border: 1px solid;
+    border-color: #fff #808080 #808080 #fff !important;
+    position: relative;
+}
+
+.win95-theme .buttons .close::before { content: '×'; color: #000; position: absolute; top: -4px; left: 2px; font-weight: bold; font-size: 14px; }
+.win95-theme .buttons .minimize::before { content: '_'; color: #000; position: absolute; top: -6px; left: 3px; font-weight: bold; }
+.win95-theme .buttons .maximize::before { content: '□'; color: #000; position: absolute; top: -4px; left: 2px; font-weight: bold; }
+
+.win95-theme .tab-bar {
+    background: #c0c0c0 !important;
+    padding: 2px 2px 0 2px !important;
+}
+
+.win95-theme .tab {
+    border-radius: 0 !important;
+    border: 1px solid;
+    border-color: #fff #808080 #808080 #fff !important;
+    background: #c0c0c0 !important;
+    margin-right: 0 !important;
+    font-size: 11px !important;
+}
+
+.win95-theme .tab.active {
+    border-bottom: none !important;
+    padding-bottom: 9px !important;
+    margin-top: -2px !important;
+}
+
+.win95-theme .top-menubar {
+    background: #c0c0c0 !important;
+    border-bottom: 2px solid #808080 !important;
+    color: #000 !important;
+    font-family: 'MS Sans Serif', sans-serif !important;
+}
+
+.win95-theme .top-menubar .menu-item:hover {
+    background: #000080 !important;
+    color: #fff !important;
+}
+
+.win95-theme .dock-container {
+    background: #c0c0c0 !important;
+    border-top: 2px solid #fff !important;
+    border-radius: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 40px !important;
+    padding: 2px !important;
+    gap: 4px !important;
+    justify-content: flex-start !important;
+    padding-left: 10px !important;
+}
+
+.win95-theme .dock-item {
+    border: 1px solid;
+    border-color: #fff #808080 #808080 #fff !important;
+    border-radius: 0 !important;
+    background: #c0c0c0 !important;
+    padding: 0 10px !important;
+    width: auto !important;
+    height: 30px !important;
+}
+
+.win95-theme .dock-item img {
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.win95-theme .dock-item::after {
+    display: none !important;
 }

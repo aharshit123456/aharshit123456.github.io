@@ -15,6 +15,9 @@ import WallpaperSwitcher from '@/components/portfolio/WallpaperSwitcher';
 import GuestbookWidget from '@/components/portfolio/GuestbookWidget';
 import Launchpad from '@/components/portfolio/Launchpad';
 import ClapButton from '@/components/portfolio/ClapButton';
+import SiriAssistant from '@/components/portfolio/SiriAssistant';
+import DocumentsManager from '../components/portfolio/DocumentsManager';
+import SecretBoss from '../components/portfolio/SecretBoss';
 
 type Tab = {
   id: string;
@@ -49,6 +52,9 @@ export default function Portfolio() {
   const [resumeIconPosition, setResumeIconPosition] = useState({ x: 40, y: 340 });
 
   const [isMatrixActive, setIsMatrixActive] = useState(false);
+  const [isDocsOpen, setIsDocsOpen] = useState(false);
+  const [isDocsMinimized, setIsDocsMinimized] = useState(false);
+  const [docsIconPosition, setDocsIconPosition] = useState({ x: 40, y: 140 });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
   const [isControlCenterOpen, setIsControlCenterOpen] = useState(false);
@@ -66,21 +72,24 @@ export default function Portfolio() {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [isLaunchpadOpen, setIsLaunchpadOpen] = useState(false);
   const [isDMGOpen, setIsDMGOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<{ src: string, alt: string } | null>(null);
+  const [selectedImage, setSelectedImage] = useState<{ images: string[], currentIndex: number, altPrefix: string } | null>(null);
+  const [isWin95, setIsWin95] = useState(false);
+  const [isBossActive, setIsBossActive] = useState(false);
   const [windowPositions, setWindowPositions] = useState({
     terminal: { x: 100, y: 100 },
     freelance: { x: 150, y: 150 },
     dmg: { x: 300, y: 200 },
     main: { x: 50, y: 50 },
+    docs: { x: 120, y: 120 },
     ql: { x: 0, y: 0 }
   });
-  const activeDragWindow = useRef<'terminal' | 'freelance' | 'dmg' | 'main' | 'ql' | null>(null);
+  const activeDragWindow = useRef<'terminal' | 'freelance' | 'dmg' | 'main' | 'docs' | 'ql' | null>(null);
   const windowDragOffset = useRef({ x: 0, y: 0 });
   const [contextMenu, setContextMenu] = useState<{ visible: boolean; x: number; y: number }>({ visible: false, x: 0, y: 0 });
 
   const dragOffset = useRef({ x: 0, y: 0 });
   const dragStartTime = useRef(0);
-  const activeDragIcon = useRef<'main' | 'freelance' | 'terminal' | 'resume' | null>(null);
+  const activeDragIcon = useRef<'main' | 'freelance' | 'terminal' | 'resume' | 'docs' | null>(null);
 
   const [activeSpace, setActiveSpace] = useState(0); // 0: Desktop, 1: Fullscreen
   const [fullscreenWindow, setFullscreenWindow] = useState<'main' | 'freelance' | 'terminal' | null>(null);
@@ -149,14 +158,24 @@ export default function Portfolio() {
     return () => clearInterval(interval);
   }, [hasMounted]);
 
-  const playSound = (sound: 'startup' | 'funk' | 'tink') => {
+  const playSound = (sound: 'startup' | 'funk' | 'tink' | 'click') => {
     const urls = {
-      startup: 'https://raw.githubusercontent.com/Anshul-99/macos-web/master/public/sounds/startup.mp3',
-      funk: 'https://raw.githubusercontent.com/Anshul-99/macos-web/master/public/sounds/funk.mp3',
-      tink: 'https://raw.githubusercontent.com/Anshul-99/macos-web/master/public/sounds/tink.mp3'
+      startup: 'https://raw.githubusercontent.com/extratone/macOSsystemsounds/main/mp3/Hero.mp3',
+      funk: 'https://raw.githubusercontent.com/extratone/macOSsystemsounds/main/mp3/Funk.mp3',
+      tink: 'https://raw.githubusercontent.com/extratone/macOSsystemsounds/main/mp3/Tink.mp3',
+      click: '/click.mp3'
     };
+    
     const audio = new Audio(urls[sound]);
-    audio.play().catch(e => console.log('Audio playback blocked'));
+    audio.volume = 0.5;
+    audio.play().catch(e => {
+      console.log('Audio playback blocked or failed, trying local click fallback');
+      if (sound !== 'click') {
+        const fallback = new Audio('/click.mp3');
+        fallback.volume = 0.3;
+        fallback.play().catch(() => {});
+      }
+    });
   };
 
   useEffect(() => {
@@ -211,16 +230,18 @@ export default function Portfolio() {
   }, [selectedImage]);
 
   // Dragging logic
-  const handleMouseDown = (e: React.MouseEvent, type: 'main' | 'freelance' | 'terminal' | 'resume') => {
+  const handleMouseDown = (e: React.MouseEvent, type: 'main' | 'freelance' | 'terminal' | 'resume' | 'docs') => {
     if (type === 'main' && !isMinimized) return;
     if (type === 'freelance' && isFreelanceOpen && !isFreelanceMinimized) return;
     if (type === 'terminal' && isTerminalOpen && !isTerminalMinimized) return;
+    if (type === 'docs' && isDocsOpen && !isDocsMinimized) return;
 
     activeDragIcon.current = type;
     const pos = type === 'main' ? iconPosition :
       type === 'freelance' ? freelanceIconPosition :
         type === 'terminal' ? terminalIconPosition :
-          resumeIconPosition;
+          type === 'docs' ? docsIconPosition :
+            resumeIconPosition;
 
     setIsDragging(true);
 
@@ -259,6 +280,8 @@ export default function Portfolio() {
         setFreelanceIconPosition({ x: boundedX, y: boundedY });
       } else if (activeDragIcon.current === 'terminal') {
         setTerminalIconPosition({ x: boundedX, y: boundedY });
+      } else if (activeDragIcon.current === 'docs') {
+        setDocsIconPosition({ x: boundedX, y: boundedY });
       } else if (activeDragIcon.current === 'resume') {
         setResumeIconPosition({ x: boundedX, y: boundedY });
       }
@@ -289,13 +312,56 @@ export default function Portfolio() {
   }, []);
 
   useEffect(() => {
+    if (!selectedImage) return;
+
+    const handleViewerKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') {
+        setSelectedImage(prev => prev ? { ...prev, currentIndex: (prev.currentIndex - 1 + prev.images.length) % prev.images.length } : null);
+      } else if (e.key === 'ArrowRight') {
+        setSelectedImage(prev => prev ? { ...prev, currentIndex: (prev.currentIndex + 1) % prev.images.length } : null);
+      } else if (e.key === 'Escape') {
+        setSelectedImage(null);
+      }
+    };
+
+    window.addEventListener('keydown', handleViewerKeyDown);
+    return () => window.removeEventListener('keydown', handleViewerKeyDown);
+  }, [selectedImage]);
+
+  useEffect(() => {
     setHasMounted(true);
+    // Check for nontech mode bypass
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('mode') === 'nontech') {
+      setIsLoggedIn(true);
+    }
   }, []);
 
   const handleContextMenu = (e: React.MouseEvent) => {
     e.preventDefault();
     setContextMenu({ visible: true, x: e.clientX, y: e.clientY });
   };
+
+  useEffect(() => {
+    const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+    let index = 0;
+
+    const handleKonamiKeydown = (e: KeyboardEvent) => {
+      if (e.key === konamiCode[index]) {
+        index++;
+        if (index === konamiCode.length) {
+          setIsWin95(prev => !prev);
+          setIsBossActive(true);
+          index = 0;
+        }
+      } else {
+        index = 0;
+      }
+    };
+
+    window.addEventListener('keydown', handleKonamiKeydown);
+    return () => window.removeEventListener('keydown', handleKonamiKeydown);
+  }, []);
 
   useEffect(() => {
     const closeMenu = () => setContextMenu({ visible: false, x: 0, y: 0 });
@@ -306,6 +372,10 @@ export default function Portfolio() {
   const handleTerminalCommand = (cmd: string) => {
     if (cmd === 'matrix-start') setIsMatrixActive(true);
     if (cmd === 'matrix-stop') setIsMatrixActive(false);
+  };
+
+  const openQuickLook = (images: string[], index: number, altPrefix: string) => {
+    setSelectedImage({ images, currentIndex: index, altPrefix });
   };
 
   const handleMaximize = (type: 'main' | 'freelance' | 'terminal') => {
@@ -554,11 +624,14 @@ export default function Portfolio() {
                     {famcareScreenshotsVisible && (
                       <div className="screenshot-viewer">
                         <div className="screenshot-scroller">
-                          <img src="assets/famcare/1.webp" alt="Famcare 1" onClick={() => setSelectedImage({ src: 'assets/famcare/1.webp', alt: 'Famcare 1' })} />
-                          <img src="assets/famcare/2.webp" alt="Famcare 2" onClick={() => setSelectedImage({ src: 'assets/famcare/2.webp', alt: 'Famcare 2' })} />
-                          <img src="assets/famcare/3.webp" alt="Famcare 3" onClick={() => setSelectedImage({ src: 'assets/famcare/3.webp', alt: 'Famcare 3' })} />
-                          <img src="assets/famcare/4.webp" alt="Famcare 4" onClick={() => setSelectedImage({ src: 'assets/famcare/4.webp', alt: 'Famcare 4' })} />
-                          <img src="assets/famcare/5.webp" alt="Famcare 5" onClick={() => setSelectedImage({ src: 'assets/famcare/5.webp', alt: 'Famcare 5' })} />
+                          {[1, 2, 3, 4, 5].map((num, i) => (
+                            <img
+                              key={num}
+                              src={`assets/famcare/${num}.webp`}
+                              alt={`Famcare ${num}`}
+                              onClick={() => openQuickLook(['assets/famcare/1.webp', 'assets/famcare/2.webp', 'assets/famcare/3.webp', 'assets/famcare/4.webp', 'assets/famcare/5.webp'], i, 'Famcare')}
+                            />
+                          ))}
                         </div>
                       </div>
                     )}
@@ -606,11 +679,14 @@ export default function Portfolio() {
                     {shoppinScreenshotsVisible && (
                       <div className="screenshot-viewer">
                         <div className="screenshot-scroller">
-                          <img src="assets/shoppin/1.webp" alt="shoppin 1" onClick={() => setSelectedImage({ src: 'assets/shoppin/1.webp', alt: 'shoppin 1' })} />
-                          <img src="assets/shoppin/2.webp" alt="shoppin 2" onClick={() => setSelectedImage({ src: 'assets/shoppin/2.webp', alt: 'shoppin 2' })} />
-                          <img src="assets/shoppin/3.webp" alt="shoppin 3" onClick={() => setSelectedImage({ src: 'assets/shoppin/3.webp', alt: 'shoppin 3' })} />
-                          <img src="assets/shoppin/4.webp" alt="shoppin 4" onClick={() => setSelectedImage({ src: 'assets/shoppin/4.webp', alt: 'shoppin 4' })} />
-                          <img src="assets/shoppin/5.webp" alt="shoppin 5" onClick={() => setSelectedImage({ src: 'assets/shoppin/5.webp', alt: 'shoppin 5' })} />
+                          {[1, 2, 3, 4, 5].map((num, i) => (
+                            <img
+                              key={num}
+                              src={`assets/shoppin/${num}.webp`}
+                              alt={`shoppin ${num}`}
+                              onClick={() => openQuickLook(['assets/shoppin/1.webp', 'assets/shoppin/2.webp', 'assets/shoppin/3.webp', 'assets/shoppin/4.webp', 'assets/shoppin/5.webp'], i, 'Shoppin')}
+                            />
+                          ))}
                         </div>
                       </div>
                     )}
@@ -906,7 +982,7 @@ export default function Portfolio() {
   }
 
   return (
-    <div className="workspace-wrapper" style={{ backgroundImage: `url(${wallpaper})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+    <div className={`workspace-wrapper ${isWin95 ? 'win95-theme' : ''}`} style={{ backgroundImage: isWin95 ? 'none' : `url(${wallpaper})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
       <div className="workspace-container" style={{ transform: `translateX(-${activeSpace * 100}vw)` }}>
         {/* Space 1: Desktop */}
         <div className="space desktop-space" onContextMenu={handleContextMenu}>
@@ -990,7 +1066,7 @@ export default function Portfolio() {
                     <div className="menu-item-drop">Enclosing Folder</div>
                     <hr />
                     <div className="menu-item-drop">Recents</div>
-                    <div className="menu-item-drop">Documents</div>
+                    <div className="menu-item-drop" onClick={() => { setIsDocsOpen(true); setIsDocsMinimized(false); setActiveMenu(null); }}>Documents</div>
                     <div className="menu-item-drop">Desktop</div>
                     <div className="menu-item-drop">Downloads</div>
                   </div>
@@ -1067,6 +1143,7 @@ export default function Portfolio() {
                   <div className="menu-item-drop">Battery Settings...</div>
                 </div>
               )}
+              <SiriAssistant batteryLevel={batteryLevel} isDarkMode={isDarkMode} />
               <span className="menu-item" onClick={() => setIsControlCenterOpen(!isControlCenterOpen)}>
                 <i className="fas fa-sliders-h"></i>
               </span>
@@ -1139,6 +1216,30 @@ export default function Portfolio() {
               </div>
               <div className="content-container" style={{ background: 'var(--window-bg)' }}>
                 <FreelanceExperience />
+              </div>
+            </div>
+          )}
+
+          {/* Documents Window */}
+          {isDocsOpen && (
+            <div className={`mac-window docs-window ${isDocsMinimized ? 'minimized' : ''}`} style={{
+              position: 'absolute',
+              top: `${windowPositions.docs.y}px`,
+              left: `${windowPositions.docs.x}px`,
+              zIndex: 55,
+              width: '800px',
+              height: '550px'
+            }}>
+              <div className="title-bar" onMouseDown={(e) => handleWindowMouseDown(e, 'docs')}>
+                <div className="buttons">
+                  <div className="close" title="Close" onClick={(e) => { e.stopPropagation(); setIsDocsOpen(false); }}></div>
+                  <div className="minimize" title="Minimize" onClick={(e) => { e.stopPropagation(); setIsDocsMinimized(true); }}></div>
+                  <div className="maximize" title="Maximize"></div>
+                </div>
+                <div className="window-title">Documents</div>
+              </div>
+              <div className="content-container" style={{ padding: 0, height: 'calc(100% - 35px)' }}>
+                <DocumentsManager isDarkMode={isDarkMode} />
               </div>
             </div>
           )}
@@ -1220,28 +1321,103 @@ export default function Portfolio() {
               position: 'fixed',
               top: 0,
               left: 0,
-              transform: `translate(${windowPositions.ql.x - 400}px, ${windowPositions.ql.y - 300}px)`,
+              transform: `translate(${windowPositions.ql.x - 200}px, ${windowPositions.ql.y - 325}px)`,
               zIndex: 1000,
-              width: '800px',
-              maxWidth: '90vw',
-              background: '#1a1a1a',
-              borderRadius: '10px',
-              overflow: 'hidden',
-              boxShadow: '0 30px 100px rgba(0,0,0,0.8)',
+              width: '400px',
+              maxWidth: '95vw',
+              background: 'transparent',
+              borderRadius: '12px',
+              overflow: 'visible',
               display: 'flex',
               flexDirection: 'column',
-              border: '1px solid rgba(255,255,255,0.1)'
+              pointerEvents: 'none'
             }}>
-              <div className="title-bar" onMouseDown={(e) => handleWindowMouseDown(e, 'ql')} style={{ cursor: 'move' }}>
+              <div className="title-bar" onMouseDown={(e) => handleWindowMouseDown(e, 'ql')} style={{ 
+                cursor: 'move', 
+                pointerEvents: 'auto',
+                background: 'rgba(30, 30, 30, 0.95)',
+                borderRadius: '12px 12px 0 0',
+                border: '1px solid rgba(255,255,255,0.1)',
+                width: '100%',
+                marginBottom: '10px'
+              }}>
                 <div className="buttons">
                   <div className="close" title="Close" onClick={(e) => { e.stopPropagation(); setSelectedImage(null); }}></div>
                   <div className="minimize" title="Minimize" onClick={(e) => { e.stopPropagation(); setSelectedImage(null); }}></div>
                   <div className="maximize" title="Maximize"></div>
                 </div>
-                <div className="window-title">Quick Look — {selectedImage.alt}</div>
+                <div className="window-title" style={{ color: '#fff', opacity: 1 }}>{selectedImage.altPrefix} — {selectedImage.currentIndex + 1}/{selectedImage.images.length}</div>
               </div>
-              <div className="quicklook-content" style={{ background: '#000', overflow: 'hidden', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', minHeight: '300px' }}>
-                <img src={selectedImage.src} alt={selectedImage.alt} style={{ maxWidth: '100%', maxHeight: 'calc(85vh - 35px)', objectFit: 'contain' }} />
+              
+              <div className="quicklook-content" style={{ 
+                background: 'transparent', 
+                overflow: 'visible', 
+                display: 'flex', 
+                justifyContent: 'center', 
+                alignItems: 'center', 
+                height: '600px',
+                position: 'relative',
+                pointerEvents: 'auto'
+              }}>
+                {/* Navigation Buttons */}
+                <div className="emulator-controls" style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '0px',
+                  right: '0px',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  transform: 'translateY(-50%)',
+                  zIndex: 100,
+                  pointerEvents: 'none'
+                }}>
+                  <div className="nav-btn" onClick={(e) => {
+                    e.stopPropagation();
+                    const newIdx = (selectedImage.currentIndex - 1 + selectedImage.images.length) % selectedImage.images.length;
+                    setSelectedImage({ ...selectedImage, currentIndex: newIdx });
+                  }} style={{ pointerEvents: 'auto' }}>
+                    <i className="fas fa-chevron-left"></i>
+                  </div>
+                  <div className="nav-btn" onClick={(e) => {
+                    e.stopPropagation();
+                    const newIdx = (selectedImage.currentIndex + 1) % selectedImage.images.length;
+                    setSelectedImage({ ...selectedImage, currentIndex: newIdx });
+                  }} style={{ pointerEvents: 'auto' }}>
+                    <i className="fas fa-chevron-right"></i>
+                  </div>
+                </div>
+
+                {/* Emulator Frame */}
+                <div className="phone-emulator" style={{ margin: 0 }}>
+                  <div className="dynamic-island"></div>
+                  <div className="phone-screen">
+                    <img 
+                      src={selectedImage.images[selectedImage.currentIndex]} 
+                      alt={`${selectedImage.altPrefix} ${selectedImage.currentIndex + 1}`} 
+                      key={selectedImage.images[selectedImage.currentIndex]} 
+                      style={{ animation: 'fadeIn 0.3s ease' }}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Dot Indicators */}
+              <div className="quicklook-footer" style={{ 
+                background: 'rgba(0,0,0,0.6)', 
+                borderRadius: '20px', 
+                margin: '10px auto', 
+                padding: '6px 12px',
+                pointerEvents: 'auto',
+                border: '1px solid rgba(255,255,255,0.1)',
+                backdropFilter: 'blur(10px)'
+              }}>
+                {selectedImage.images.map((_, i) => (
+                  <div 
+                    key={i} 
+                    className={`dot ${selectedImage.currentIndex === i ? 'active' : ''}`}
+                    onClick={() => setSelectedImage({ ...selectedImage, currentIndex: i })}
+                  ></div>
+                ))}
               </div>
             </div>
           )}
@@ -1299,6 +1475,26 @@ export default function Portfolio() {
               <img src="/terminal_icon.png" alt="Terminal" draggable="false" />
             </div>
             <div className="icon-label">terminal.app</div>
+          </div>
+
+          <div
+            className={`minimized-icon ${activeDragIcon.current === 'docs' ? 'dragging' : ''}`}
+            onMouseDown={(e) => handleMouseDown(e, 'docs')}
+            onClick={() => {
+              setIsDocsOpen(true);
+              setIsDocsMinimized(false);
+            }}
+            style={{
+              left: `${docsIconPosition.x}px`,
+              bottom: `${docsIconPosition.y}px`,
+              position: 'absolute'
+            }}
+            title="Documents"
+          >
+            <div className="icon-image">
+              <img src="/apps_icon.png" alt="Documents" draggable="false" />
+            </div>
+            <div className="icon-label">Documents</div>
           </div>
 
           <div
@@ -1446,6 +1642,8 @@ export default function Portfolio() {
           { id: 'github', name: 'GitHub', icon: '/git.png', onClick: () => window.open('https://github.com/aharshit123456', '_blank') },
         ]}
       />
+
+      <SecretBoss isActive={isBossActive} onClose={() => setIsBossActive(false)} />
     </div>
   );
 
