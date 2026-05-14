@@ -11,8 +11,7 @@ interface TerminalProps {
 
 const TerminalView: React.FC<TerminalProps> = ({ onCommand }) => {
   const [history, setHistory] = useState<TerminalLine[]>([
-    { text: 'Harshit-OS v1.0.4 build 2026', type: 'system' },
-    { text: 'Type "help" to see available commands.', type: 'system' },
+    { text: 'Welcome to Harshit\'s Space [aharshit123456.space]\nType "help" to see available commands.\nSystem status: All systems operational.\n', type: 'system' },
   ]);
   const [inputValue, setInputValue] = useState('');
   const scrollRef = useRef<HTMLDivElement>(null);

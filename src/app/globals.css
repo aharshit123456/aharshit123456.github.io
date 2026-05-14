@@ -84,6 +84,56 @@
     height: calc(100vh - 35px); /* title bar is ~35px */
 }
 
+.top-menubar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+    font-size: 0.85rem;
+    color: white;
+    z-index: 9999;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.dark-mode .top-menubar {
+    background: rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.top-menubar .left, .top-menubar .right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.top-menubar .apple-icon {
+    font-size: 1.1rem;
+    margin-right: 5px;
+}
+
+.top-menubar .app-name {
+    font-weight: 700;
+}
+
+.top-menubar .menu-item {
+    cursor: default;
+    font-weight: 500;
+}
+
+.top-menubar .menu-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
 body {
     font-family: var(--font-mono);
     min-height: 100vh;

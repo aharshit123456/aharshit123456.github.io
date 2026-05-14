@@ -42,6 +42,7 @@ export default function Portfolio() {
   const [resumeIconPosition, setResumeIconPosition] = useState({ x: 40, y: 340 });
 
   const [isMatrixActive, setIsMatrixActive] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isDMGOpen, setIsDMGOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState<{ src: string, alt: string } | null>(null);
   const [windowPositions, setWindowPositions] = useState({
@@ -761,11 +762,133 @@ export default function Portfolio() {
     </>
   );
 
+  if (!isLoggedIn) {
+    return (
+      <div className="login-screen">
+        <div className="login-container">
+          <div className="login-profile">
+            <img src="profile_new.jpg" alt="Harshit Agarwal" />
+          </div>
+          <h1>Harshit Agarwal</h1>
+          <p className="login-domain">aharshit123456.space</p>
+          <div className="login-input-group">
+            <input 
+              type="password" 
+              placeholder="Enter Password" 
+              autoFocus
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') setIsLoggedIn(true);
+              }}
+            />
+            <button onClick={() => setIsLoggedIn(true)}>
+              <i className="fas fa-arrow-right"></i>
+            </button>
+          </div>
+          <p className="login-hint">Hint: Just press Enter (or any key)</p>
+        </div>
+        <style jsx>{`
+          .login-screen {
+            height: 100vh;
+            width: 100vw;
+            background: url('https://w.wallhaven.cc/full/8o/wallhaven-8o35vy.jpg') center/cover no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            z-index: 9999;
+            position: fixed;
+            top: 0;
+            left: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          }
+          .login-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(25px);
+            padding: 40px;
+            border-radius: 24px;
+            text-align: center;
+            width: 350px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.2);
+            animation: fadeIn 0.8s ease-out;
+          }
+          .login-profile {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px auto;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid rgba(255,255,255,0.3);
+          }
+          .login-profile img { width: 100%; height: 100%; object-fit: cover; }
+          h1 { font-size: 1.5rem; font-weight: 600; margin: 0; }
+          .login-domain { font-size: 0.9rem; opacity: 0.7; margin: 5px 0 25px 0; font-family: monospace; }
+          .login-input-group {
+            display: flex;
+            background: rgba(255,255,255,0.15);
+            border-radius: 30px;
+            padding: 5px 5px 5px 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s;
+          }
+          .login-input-group:focus-within {
+            background: rgba(255,255,255,0.25);
+            box-shadow: 0 0 0 4px rgba(255,255,255,0.1);
+          }
+          input {
+            background: none;
+            border: none;
+            color: white;
+            flex: 1;
+            padding: 8px 0;
+            outline: none;
+            font-size: 0.9rem;
+          }
+          input::placeholder { color: rgba(255,255,255,0.5); }
+          button {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.2s;
+          }
+          button:hover { background: rgba(255,255,255,0.4); }
+          .login-hint { font-size: 0.75rem; margin-top: 20px; opacity: 0.5; }
+          @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+        `}</style>
+      </div>
+    );
+  }
+
   return (
     <div className="workspace-wrapper">
       <div className="workspace-container" style={{ transform: `translateX(-${activeSpace * 100}vw)` }}>
         {/* Space 1: Desktop */}
         <div className="space desktop-space" onContextMenu={handleContextMenu}>
+          <div className="top-menubar">
+            <div className="left">
+              <i className="fab fa-apple apple-icon"></i>
+              <span className="app-name" style={{ fontWeight: '700' }}>aharshit123456.space</span>
+              <span className="menu-item">File</span>
+              <span className="menu-item">Edit</span>
+              <span className="menu-item">View</span>
+              <span className="menu-item">Go</span>
+              <span className="menu-item">Window</span>
+              <span className="menu-item">Help</span>
+            </div>
+            <div className="right">
+              <span className="menu-item"><i className="fas fa-wifi"></i></span>
+              <span className="menu-item"><i className="fas fa-battery-full"></i></span>
+              <span className="menu-item"><i className="fas fa-search"></i></span>
+              <span className="menu-item">{new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+            </div>
+          </div>
           <div 
             className={`mac-window portfolio-window ${isMinimized ? 'minimized' : ''}`}
             style={{
