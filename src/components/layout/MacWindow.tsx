@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export const MacWindow = ({ children, isDarkMode, toggleTheme, tabs, activeTabId, switchTab, closeTab }: any) => {
   return (
-    <motion.div 
+    <motion.div
       className="mac-window"
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -16,7 +16,7 @@ export const MacWindow = ({ children, isDarkMode, toggleTheme, tabs, activeTabId
           <div className="minimize"></div>
           <div className="maximize"></div>
         </div>
-        <div className="window-title">harshit_agarwal.exe</div>
+        <div className="window-title">harshit_agarwal.dmg</div>
         <div className="theme-toggle" onClick={toggleTheme}>
           <i className={isDarkMode ? "fas fa-sun" : "fas fa-moon"}></i>
         </div>
