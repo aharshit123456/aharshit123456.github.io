@@ -1061,6 +1061,7 @@ export default function Portfolio() {
             <div className="icon-label">harshit_agarwal.dmg</div>
           </div>
 
+{/* 
           <div 
             className={`minimized-icon ${activeDragIcon.current === 'freelance' ? 'dragging' : ''}`} 
             onMouseDown={(e) => handleMouseDown(e, 'freelance')}
@@ -1077,6 +1078,7 @@ export default function Portfolio() {
             </div>
             <div className="icon-label">freelance_exp.dmg</div>
           </div>
+          */}
 
           <div 
             className={`minimized-icon ${activeDragIcon.current === 'terminal' ? 'dragging' : ''}`} 
