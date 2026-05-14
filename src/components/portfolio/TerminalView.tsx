@@ -7,9 +7,10 @@ interface TerminalLine {
 
 interface TerminalProps {
   onCommand?: (cmd: string) => void;
+  isMobile?: boolean;
 }
 
-const TerminalView: React.FC<TerminalProps> = ({ onCommand }) => {
+const TerminalView: React.FC<TerminalProps> = ({ onCommand, isMobile }) => {
   const [history, setHistory] = useState<TerminalLine[]>([
     { text: 'Welcome to Harshit\'s Space [aharshit123456.space]\nType "help" to see available commands.\nSystem status: All systems operational.\n', type: 'system' },
   ]);
@@ -25,7 +26,8 @@ const TerminalView: React.FC<TerminalProps> = ({ onCommand }) => {
 
   const handleCommand = (cmd: string) => {
     const cleanCmd = cmd.trim().toLowerCase();
-    const newLines: TerminalLine[] = [{ text: `guest@harshit_agarwal:~$ ${cmd}`, type: 'input' }];
+    const prompt = isMobile ? 'guest:~$ ' : 'guest@harshit_agarwal:~$ ';
+    const newLines: TerminalLine[] = [{ text: `${prompt}${cmd}`, type: 'input' }];
 
     switch (cleanCmd) {
       case 'help':
@@ -97,7 +99,8 @@ const TerminalView: React.FC<TerminalProps> = ({ onCommand }) => {
         newLines.push({ text: '418 I\'m a teapot (But I function on espresso).', type: 'system' });
         break;
       case 'wget-resume':
-        setHistory(prev => [...prev, { text: `guest@harshit_agarwal:~$ ${cmd}`, type: 'input' }]);
+        const startPrompt = isMobile ? 'guest:~$ ' : 'guest@harshit_agarwal:~$ ';
+        setHistory(prev => [...prev, { text: `${startPrompt}${cmd}`, type: 'input' }]);
         simulateWget();
         return;
       default:
@@ -173,7 +176,7 @@ const TerminalView: React.FC<TerminalProps> = ({ onCommand }) => {
         ))}
       </div>
       <form onSubmit={handleSubmit} className="terminal-input-row">
-        <span className="prompt">guest@harshit_agarwal:~$</span>
+        <span className="prompt">{isMobile ? 'guest:~$ ' : 'guest@harshit_agarwal:~$ '}</span>
         <input
           ref={inputRef}
           type="text"
@@ -193,8 +196,8 @@ const TerminalView: React.FC<TerminalProps> = ({ onCommand }) => {
           height: 100%;
           display: flex;
           flex-direction: column;
-          padding: 15px;
-          font-size: 0.9rem;
+          padding: ${isMobile ? '10px' : '15px'};
+          font-size: ${isMobile ? '0.8rem' : '0.9rem'};
           cursor: text;
         }
         .terminal-history {

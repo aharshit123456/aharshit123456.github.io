@@ -1268,3 +1268,203 @@ h3 {
 .win95-theme .dock-item::after {
     display: none !important;
 }
+/* iOS Mobile Overrides */
+@media (max-width: 768px) {
+    :root {
+        --ios-bg: rgba(255, 255, 255, 0.1);
+        --ios-blur: blur(25px);
+    }
+
+    .top-menubar {
+        height: 44px; /* iOS Standard */
+        background: transparent !important;
+        border: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        padding: 0 25px;
+    }
+
+    .top-menubar .left {
+        font-weight: 600;
+        font-size: 15px;
+        letter-spacing: -0.2px;
+    }
+
+    .top-menubar .right {
+        gap: 8px;
+    }
+
+    .top-menubar .app-name, .top-menubar .menu-item {
+        display: none;
+    }
+
+    /* Dynamic Island */
+    .dynamic-island-mobile {
+        position: fixed;
+        top: 11px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 120px;
+        height: 35px;
+        background: #000;
+        border-radius: 20px;
+        z-index: 10000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        color: white;
+        font-size: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .dynamic-island-mobile.expanded {
+        width: calc(100% - 40px); /* Better centering than 90% */
+        height: 80px;
+        border-radius: 35px;
+    }
+
+    /* iOS Home Screen Grid */
+    .desktop-icons-mobile {
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 25px 15px !important;
+        padding: 80px 20px !important;
+        width: 100% !important;
+        height: 100% !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+    }
+
+    .minimized-icon {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
+        animation: none !important;
+    }
+
+    .icon-image {
+        width: 65px !important;
+        height: 65px !important;
+        border-radius: 16px !important;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
+    }
+
+    .icon-label {
+        background: transparent !important;
+        backdrop-filter: none !important;
+        font-size: 11px !important;
+        font-weight: 500 !important;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.8) !important;
+    }
+
+    /* Floating iOS Dock */
+    .dock-wrapper {
+        bottom: 20px !important;
+        padding: 0 15px !important;
+        display: flex !important;
+        justify-content: center !important;
+    }
+
+    .dock-container {
+        width: auto !important; /* Fit content to center better */
+        min-width: 220px;
+        max-width: 320px;
+        background: rgba(255, 255, 255, 0.25) !important;
+        backdrop-filter: blur(30px) !important;
+        -webkit-backdrop-filter: blur(30px) !important;
+        border-radius: 30px !important;
+        height: 70px !important;
+        padding: 0 15px !important;
+        gap: 15px !important; /* Snugger spacing for 3 items */
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.3) !important;
+        justify-content: center !important;
+        margin: 0 auto !important;
+    }
+
+    .dock-item {
+        width: 48px !important;
+        height: 48px !important;
+        --scale: 1 !important;
+    }
+
+    /* iOS App View */
+    .mac-window.fullscreen-view {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        background: var(--window-bg) !important;
+        border-radius: 0 !important;
+        z-index: 10000 !important;
+    }
+
+    .mac-window.fullscreen-view .title-bar {
+        display: none !important; /* iOS doesn't have mac title bars */
+    }
+
+    .mac-window.fullscreen-view .content-container {
+        height: 100vh !important;
+        padding-top: 60px !important; /* Avoid Dynamic Island overlap */
+        padding-bottom: 120px !important; /* Avoid Dock overlap (20px bottom + 85px height + buffer) */
+        overflow-y: auto !important;
+    }
+
+    .mac-window.fullscreen-view .tab-content.active {
+        display: block !important;
+        height: auto !important;
+        min-height: 100%;
+    }
+    
+    .mac-window.fullscreen-view .title-bar {
+        display: none !important;
+    }
+
+    /* Home Indicator */
+    .home-indicator {
+        position: fixed;
+        bottom: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 135px;
+        height: 5px;
+        background: white;
+        border-radius: 10px;
+        z-index: 100000;
+        opacity: 0.8;
+    }
+
+    /* Control Center Mobile */
+    .control-center-panel {
+        top: 0 !important;
+        right: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        border-radius: 0 !important;
+        padding: 60px 30px !important;
+        background: rgba(0, 0, 0, 0.4) !important;
+        backdrop-filter: blur(50px) !important;
+        -webkit-backdrop-filter: blur(50px) !important;
+    }
+
+    .control-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 20px !important;
+    }
+
+    /* App Transition Animation */
+    .app-open-animation {
+        animation: iosAppOpen 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    @keyframes iosAppOpen {
+        from { transform: scale(0.9) translateY(20px); opacity: 0; }
+        to { transform: scale(1) translateY(0); opacity: 1; }
+    }
+}
