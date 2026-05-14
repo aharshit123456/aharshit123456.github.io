@@ -35,6 +35,55 @@
     box-sizing: border-box;
 }
 
+.workspace-wrapper {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    background: #0a0a0b;
+}
+
+.workspace-container {
+    display: flex;
+    width: 200vw;
+    height: 100vh;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+}
+
+.space {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.desktop-space {
+    z-index: 1;
+    background-image: url('/macos_sonoma_wallpaper.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.fullscreen-space {
+    background: #000;
+}
+
+.mac-window.fullscreen-view {
+    width: 100vw;
+    height: 100vh;
+    max-width: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.mac-window.fullscreen-view .content-container {
+    height: calc(100vh - 35px); /* title bar is ~35px */
+}
+
 body {
     font-family: var(--font-mono);
     min-height: 100vh;
@@ -45,15 +94,7 @@ body {
     margin: 0;
     color: var(--text-color);
     transition: background 0.5s ease;
-    background-color: #0a0a0b;
-    background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-    background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
-    background-position: center center;
-    overflow: hidden;
+    background: #0a0a0b;
 }
 
 body::after {
@@ -98,6 +139,12 @@ body::after {
     align-items: center;
     position: relative;
     border-bottom: 1px solid var(--border-color);
+    cursor: grab;
+    user-select: none;
+}
+
+.title-bar:active {
+    cursor: grabbing;
 }
 
 .buttons {
@@ -123,6 +170,7 @@ body::after {
     font-size: 0.85rem;
     color: var(--code-comment);
     opacity: 0.7;
+    pointer-events: none;
 }
 
 .theme-toggle {
@@ -638,7 +686,7 @@ h3 {
     align-items: center;
     cursor: grab;
     animation: iconPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-    z-index: 1000;
+    z-index: 5;
     user-select: none;
 }
 
@@ -697,6 +745,70 @@ h3 {
         from { transform: scale(0) translate(-50%, 50px); opacity: 0; }
         to { transform: scale(1) translate(-50%, 0); opacity: 1; }
     }
+}
+
+.screenshot-viewer {
+    margin-top: 15px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    animation: slideDown 0.3s ease-out;
+}
+
+.dark-mode .screenshot-viewer { background: rgba(255, 255, 255, 0.05); }
+
+.screenshot-scroller {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding: 5px 0 10px 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-color) transparent;
+}
+
+.screenshot-scroller::-webkit-scrollbar { height: 6px; }
+.screenshot-scroller::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
+
+.screenshot-scroller img {
+    height: 350px;
+    border-radius: 6px;
+    cursor: zoom-in;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    animation: fadeIn 0.5s ease forwards;
+}
+
+.screenshot-scroller img:hover {
+    transform: scale(1.02) translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+}
+
+.image-quicklook {
+    animation: windowOpen 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    background: #000 !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    box-shadow: 0 30px 100px rgba(0,0,0,0.8) !important;
+}
+
+.quicklook-content {
+    animation: fadeIn 0.4s ease 0.1s forwards;
+    opacity: 0;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes windowOpen {
+    from { opacity: 0; transform: translate(-50%, -45%) scale(0.95); }
+    to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }
 
 .custom-context-menu {

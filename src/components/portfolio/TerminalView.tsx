@@ -30,7 +30,7 @@ const TerminalView: React.FC<TerminalProps> = ({ onCommand }) => {
 
     switch (cleanCmd) {
       case 'help':
-        newLines.push({ text: 'Available commands: help, ls, cat <file>, whoami, clear, date, echo <text>\n\nSpecialized Commands:\n- neofetch         : System information\n- matrix --start   : Enter the matrix\n- matrix --stop    : Exit the matrix\n- famcare --stats  : View project metrics\n- shoppin --vibe   : Vibe check\n- career --speedrun: Achievement breakdown\n- sudo hack_the_mainframes: Access root\n- brainrot         : GenZ mode\n- coffee           : Fuel check', type: 'output' });
+        newLines.push({ text: 'Available commands: help, ls, cat <file>, whoami, clear, date, echo <text>\n\nSpecialized Commands:\n- neofetch         : System information\n- matrix --start   : Enter the matrix\n- matrix --stop    : Exit the matrix\n- wget-resume      : Securely download resume.pdf\n- famcare --stats  : View project metrics\n- shoppin --vibe   : Vibe check\n- career --speedrun: Achievement breakdown\n- sudo hack_the_mainframes: Access root\n- brainrot         : GenZ mode\n- coffee           : Fuel check', type: 'output' });
         break;
       case 'neofetch':
         newLines.push({ text: `
@@ -97,6 +97,10 @@ const TerminalView: React.FC<TerminalProps> = ({ onCommand }) => {
       case 'coffee':
         newLines.push({ text: '418 I\'m a teapot (But I function on espresso).', type: 'system' });
         break;
+      case 'wget-resume':
+        setHistory(prev => [...prev, { text: `guest@harshit_agarwal:~$ ${cmd}`, type: 'input' }]);
+        simulateWget();
+        return;
       default:
         if (cleanCmd.startsWith('echo ')) {
           newLines.push({ text: cmd.substring(5), type: 'output' });
@@ -108,6 +112,48 @@ const TerminalView: React.FC<TerminalProps> = ({ onCommand }) => {
     }
 
     setHistory(prev => [...prev, ...newLines]);
+  };
+
+  const simulateWget = async () => {
+    const lines: { text: string; type: TerminalLine['type'] }[] = [
+      { text: '--2026-05-15 00:06:42--  https://servers.nasa.gov/internal/harshit_agarwal_resume_v4.pkg', type: 'output' },
+      { text: 'Resolving servers.nasa.gov (servers.nasa.gov)... 198.118.196.147', type: 'output' },
+      { text: 'Connecting to servers.nasa.gov (servers.nasa.gov)|198.118.196.147|:443... connected.', type: 'output' },
+      { text: 'HTTP request sent, awaiting response... 200 OK', type: 'output' },
+      { text: 'Length: 2,451,023 (2.3M) [application/octet-stream]', type: 'output' },
+      { text: 'Saving to: ‘harshit_agarwal_resume_v4.pkg’\n', type: 'output' },
+    ];
+
+    for (const line of lines) {
+      await new Promise(r => setTimeout(r, 600));
+      setHistory(prev => [...prev, line]);
+    }
+
+    // Progress Bar Simulation
+    for (let i = 0; i <= 100; i += 5) {
+      await new Promise(r => setTimeout(r, 400));
+      const barLength = 20;
+      const filledLength = Math.round((i / 100) * barLength);
+      const bar = '='.repeat(filledLength) + '>'.repeat(i < 100 ? 1 : 0) + '.'.repeat(barLength - filledLength - (i < 100 ? 1 : 0));
+      const progressLine = ` ${i}% [${bar}] ${i === 100 ? '2.3M' : (i * 23).toFixed(0) + 'K'}/s  eta 0s`;
+      
+      setHistory(prev => {
+        const lastLine = prev[prev.length - 1];
+        if (lastLine.text.includes('% [')) {
+          return [...prev.slice(0, -1), { text: progressLine, type: 'output' }];
+        }
+        return [...prev, { text: progressLine, type: 'output' }];
+      });
+    }
+
+    await new Promise(r => setTimeout(r, 500));
+    setHistory(prev => [...prev, { text: '\n2026-05-15 00:06:55 (156 KB/s) - ‘harshit_agarwal_resume_v4.pkg’ saved [2451023/2451023]\n', type: 'system' }]);
+    
+    // Trigger real download
+    const link = document.createElement('a');
+    link.href = 'resume.pdf';
+    link.download = 'Harshit_Agarwal_Resume.pdf';
+    link.click();
   };
 
   const handleSubmit = (e: React.FormEvent) => {
