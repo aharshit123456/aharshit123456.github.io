@@ -299,7 +299,7 @@ export default function Portfolio() {
                       <li><strong>Cloud & DevOps</strong>: Architected AWS EKS clusters with GitOps (Terraform, CI/CD). Enabled disaster recovery setups.</li>
                       <li style={{ listStyle: 'none', marginLeft: '-20px', marginTop: '10px' }}>
                         <button onClick={() => openShoppinStats()} className="hobby-btn" style={{ fontSize: '0.8rem', padding: '5px 15px' }}>
-                          <i className="fas fa-chart-line"></i> View Progression (Lv. 1 -> Lv. 10)
+                          <i className="fas fa-chart-line"></i> View Progression (Lv. 1 &rarr; Lv. 10)
                         </button>
                       </li>
                     </ul>
@@ -438,7 +438,7 @@ export default function Portfolio() {
               <div className="blog-list">
                 <div className="blog-item">
                   <span className="date">--</span>
-                  <div style={{ display: 'flex', gap: '15px', align-items: 'center' }}>
+                  <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
                     <a href="#" onClick={(e) => { e.preventDefault(); openResumeTab(); }} className="blog-link">Resume.pdf (View)</a>
                     <a href="resume.pdf" download className="blog-link" title="Download PDF"><i className="fas fa-download"></i></a>
                   </div>

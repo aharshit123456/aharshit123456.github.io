@@ -1,12 +1,15 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
+
+export const viewport: Viewport = {
+  themeColor: "#1e1e1e",
+};
 
 export const metadata: Metadata = {
   title: "Harshit Agarwal | Fullstack Developer & AI Researcher",
   description: "Harshit Agarwal: Fullstack Developer, AI Researcher & Lead at Famcare. Expert in FastAPI, Flutter, and Scalable Systems. Creator of WHAM! OTT and PreviouslyOn. Based in India.",
   keywords: "Harshit Agarwal, Fullstack Developer, AI Researcher, Famcare, WHAM! OTT, PreviouslyOn, shoppin', Alohomora Labs, Python, React, FastAPI, Flutter, Software Engineer Portfolio",
   authors: [{ name: "Harshit Agarwal" }],
-  themeColor: "#1e1e1e",
   openGraph: {
     type: "website",
     url: "https://aharshit123456.github.io/",
