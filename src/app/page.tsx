@@ -13,6 +13,8 @@ import ControlCenter from '@/components/portfolio/ControlCenter';
 import Spotlight from '@/components/portfolio/Spotlight';
 import WallpaperSwitcher from '@/components/portfolio/WallpaperSwitcher';
 import GuestbookWidget from '@/components/portfolio/GuestbookWidget';
+import Launchpad from '@/components/portfolio/Launchpad';
+import ClapButton from '@/components/portfolio/ClapButton';
 
 type Tab = {
   id: string;
@@ -61,6 +63,8 @@ export default function Portfolio() {
   const [isBatteryMenuOpen, setIsBatteryMenuOpen] = useState(false);
   const [batteryLevel, setBatteryLevel] = useState(12);
   const [isClockMenuOpen, setIsClockMenuOpen] = useState(false);
+  const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const [isLaunchpadOpen, setIsLaunchpadOpen] = useState(false);
   const [isDMGOpen, setIsDMGOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState<{ src: string, alt: string } | null>(null);
   const [windowPositions, setWindowPositions] = useState({
@@ -144,6 +148,22 @@ export default function Portfolio() {
     }, 60000); // 1% per minute for demo
     return () => clearInterval(interval);
   }, [hasMounted]);
+
+  const playSound = (sound: 'startup' | 'funk' | 'tink') => {
+    const urls = {
+      startup: 'https://raw.githubusercontent.com/Anshul-99/macos-web/master/public/sounds/startup.mp3',
+      funk: 'https://raw.githubusercontent.com/Anshul-99/macos-web/master/public/sounds/funk.mp3',
+      tink: 'https://raw.githubusercontent.com/Anshul-99/macos-web/master/public/sounds/tink.mp3'
+    };
+    const audio = new Audio(urls[sound]);
+    audio.play().catch(e => console.log('Audio playback blocked'));
+  };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      playSound('startup');
+    }
+  }, [isLoggedIn]);
 
   // Sections with Read More
   const toggleSection = (id: string) => {
@@ -508,6 +528,7 @@ export default function Portfolio() {
                   <div className="details">
                     <h4>
                       <a href="https://famcare.co.in" style={{ color: '#ff4d4d' }} id="exp-famcare-link">Famcare</a>
+                      <ClapButton projectId="famcare" />
                       <span className="role">//Fullstack Architect & Lead</span>
                       <button className={`screenshot-toggle ${famcareScreenshotsVisible ? 'active' : ''}`} id="btn-famcare-screenshots" onClick={() => setFamcareScreenshotsVisible(!famcareScreenshotsVisible)} aria-expanded={famcareScreenshotsVisible}>
                         <i className={famcareScreenshotsVisible ? "fas fa-times" : "fas fa-images"}></i> {famcareScreenshotsVisible ? 'Hide' : 'Screenshots'}
@@ -546,7 +567,7 @@ export default function Portfolio() {
                 <div className="exp-item" key="endorphind">
                   <div className="time">Jan 2026 - Present</div>
                   <div className="details">
-                    <h4><a href="http://endorphind.com/" style={{ color: '#ff4d4d' }}>endorphind</a> <span className="role">//Founding SDE (AI & Systems)</span></h4>
+                    <h4><a href="http://endorphind.com/" style={{ color: '#ff4d4d' }}>endorphind</a> <ClapButton projectId="endorphind" /> <span className="role">//Founding SDE (AI & Systems)</span></h4>
                     <ul>
                       <li><strong>Generative Video AI:</strong> Engineered SOTA lip-sync and video generation pipelines using Wan 2.2/2.6, LatentSync, and InfiniteTalk (GGUF). Integrated ElevenLabs and F5 for high-fidelity voice cloning.</li>
                       <li><strong>Workflow Automation:</strong> Developed custom ComfyUI nodes and automated media generation tools for high-throughput digital avatar production.</li>
@@ -559,7 +580,7 @@ export default function Portfolio() {
                   <div className="time">Dec 2024 - Nov 2025</div>
                   <div className="details">
                     <h4>
-                      <a href="https://shoppin.app" style={{ color: '#ff4d4d' }} id="exp-shoppin-link">shoppin'</a> — USAR Commerce Technologies
+                      <a href="https://shoppin.app" style={{ color: '#ff4d4d' }} id="exp-shoppin-link">shoppin'</a> <ClapButton projectId="shoppin" /> — USAR Commerce Technologies
                       <span className="role">//Founding ML Engineer (AI/Infra)</span>
                       <button className={`screenshot-toggle ${shoppinScreenshotsVisible ? 'active' : ''}`} id="btn-shoppin-screenshots" onClick={() => setShoppinScreenshotsVisible(!shoppinScreenshotsVisible)} aria-expanded={shoppinScreenshotsVisible}>
                         <i className={shoppinScreenshotsVisible ? "fas fa-times" : "fas fa-images"}></i> {shoppinScreenshotsVisible ? 'Hide' : 'Screenshots'}
@@ -626,7 +647,7 @@ export default function Portfolio() {
               {renderSectionItems([
                 <div className="project-card" key="wham">
                   <div className="project-header">
-                    <h4>WHAM! OTT <a href="https://wham.cosq.in/" target="_blank" rel="noopener noreferrer" aria-label="Visit WHAM! OTT website">[Web]</a></h4>
+                    <h4>WHAM! OTT <ClapButton projectId="wham" /> <a href="https://wham.cosq.in/" target="_blank" rel="noopener noreferrer" aria-label="Visit WHAM! OTT website">[Web]</a></h4>
                     <span className="tech-stack">React 18, Vite, FastAPI, Supabase, HLS/M3U8. CapacitorJS</span>
                   </div>
                   <ul>
@@ -637,14 +658,14 @@ export default function Portfolio() {
                 </div>,
                 <div className="project-card" key="previously">
                   <div className="project-header">
-                    <h4>PreviouslyOn <a href="https://github.com/aharshit123456/previouslyon" target="_blank" rel="noopener noreferrer" aria-label="View PreviouslyOn source code on GitHub">[GitHub]</a> <a href="http://previouslyon.cosq.in/" target="_blank" rel="noopener noreferrer" aria-label="Visit PreviouslyOn website">[Web]</a></h4>
+                    <h4>PreviouslyOn <ClapButton projectId="previouslyon" /> <a href="https://github.com/aharshit123456/previouslyon" target="_blank" rel="noopener noreferrer" aria-label="View PreviouslyOn source code on GitHub">[GitHub]</a> <a href="http://previouslyon.cosq.in/" target="_blank" rel="noopener noreferrer" aria-label="Visit PreviouslyOn website">[Web]</a></h4>
                     <span className="tech-stack">Next.js, Supabase</span>
                   </div>
                   <p>"Developed a full-stack social TV tracking application using Next.js and Supabase, featuring real-time user activity feeds, custom list curation, and polymorphic review systems. Integrated Gemini AI for personalized content recommendations."</p>
                 </div>,
                 <div className="project-card" key="gaitset">
                   <div className="project-header">
-                    <h4>gaitSetPy <a href="https://github.com/Alohomora-Labs/gaitSetPy" target="_blank" rel="noopener noreferrer" aria-label="View gaitSetPy on GitHub">[GitHub]</a> <a href="https://www.alohomora-labs.me" target="_blank" rel="noopener noreferrer" aria-label="Visit Alohomora Labs website">[Web]</a></h4>
+                    <h4>gaitSetPy <ClapButton projectId="gaitsetpy" /> <a href="https://github.com/Alohomora-Labs/gaitSetPy" target="_blank" rel="noopener noreferrer" aria-label="View gaitSetPy on GitHub">[GitHub]</a> <a href="https://www.alohomora-labs.me" target="_blank" rel="noopener noreferrer" aria-label="Visit Alohomora Labs website">[Web]</a></h4>
                     <span className="tech-stack">Python, C</span>
                   </div>
                   <ul>
@@ -914,12 +935,90 @@ export default function Portfolio() {
                 </div>
               )}
               <span className="app-name" style={{ fontWeight: '700' }}>aharshit123456.space</span>
-              <span className="menu-item">File</span>
-              <span className="menu-item">Edit</span>
-              <span className="menu-item">View</span>
-              <span className="menu-item">Go</span>
-              <span className="menu-item">Window</span>
-              <span className="menu-item">Help</span>
+              
+              <div style={{ position: 'relative' }}>
+                <span className="menu-item" onClick={() => setActiveMenu(activeMenu === 'File' ? null : 'File')}>File</span>
+                {activeMenu === 'File' && (
+                  <div className="apple-dropdown" style={{ left: 0 }}>
+                    <div className="menu-item-drop">New Window</div>
+                    <div className="menu-item-drop">New Folder</div>
+                    <hr />
+                    <div className="menu-item-drop">Open</div>
+                    <div className="menu-item-drop">Open With...</div>
+                    <hr />
+                    <div className="menu-item-drop">Get Info</div>
+                    <div className="menu-item-drop">Compress</div>
+                  </div>
+                )}
+              </div>
+
+              <div style={{ position: 'relative' }}>
+                <span className="menu-item" onClick={() => setActiveMenu(activeMenu === 'Edit' ? null : 'Edit')}>Edit</span>
+                {activeMenu === 'Edit' && (
+                  <div className="apple-dropdown" style={{ left: 0 }}>
+                    <div className="menu-item-drop">Undo</div>
+                    <div className="menu-item-drop">Redo</div>
+                    <hr />
+                    <div className="menu-item-drop">Cut</div>
+                    <div className="menu-item-drop">Copy</div>
+                    <div className="menu-item-drop">Paste</div>
+                    <div className="menu-item-drop">Select All</div>
+                  </div>
+                )}
+              </div>
+
+              <div style={{ position: 'relative' }}>
+                <span className="menu-item" onClick={() => setActiveMenu(activeMenu === 'View' ? null : 'View')}>View</span>
+                {activeMenu === 'View' && (
+                  <div className="apple-dropdown" style={{ left: 0 }}>
+                    <div className="menu-item-drop">as Icons</div>
+                    <div className="menu-item-drop">as List</div>
+                    <div className="menu-item-drop">as Columns</div>
+                    <hr />
+                    <div className="menu-item-drop">Show Sidebar</div>
+                    <div className="menu-item-drop">Show Preview</div>
+                  </div>
+                )}
+              </div>
+
+              <div style={{ position: 'relative' }}>
+                <span className="menu-item" onClick={() => setActiveMenu(activeMenu === 'Go' ? null : 'Go')}>Go</span>
+                {activeMenu === 'Go' && (
+                  <div className="apple-dropdown" style={{ left: 0 }}>
+                    <div className="menu-item-drop">Back</div>
+                    <div className="menu-item-drop">Forward</div>
+                    <div className="menu-item-drop">Enclosing Folder</div>
+                    <hr />
+                    <div className="menu-item-drop">Recents</div>
+                    <div className="menu-item-drop">Documents</div>
+                    <div className="menu-item-drop">Desktop</div>
+                    <div className="menu-item-drop">Downloads</div>
+                  </div>
+                )}
+              </div>
+
+              <div style={{ position: 'relative' }}>
+                <span className="menu-item" onClick={() => setActiveMenu(activeMenu === 'Window' ? null : 'Window')}>Window</span>
+                {activeMenu === 'Window' && (
+                  <div className="apple-dropdown" style={{ left: 0 }}>
+                    <div className="menu-item-drop">Minimize</div>
+                    <div className="menu-item-drop">Zoom</div>
+                    <hr />
+                    <div className="menu-item-drop">Bring All to Front</div>
+                  </div>
+                )}
+              </div>
+
+              <div style={{ position: 'relative' }}>
+                <span className="menu-item" onClick={() => setActiveMenu(activeMenu === 'Help' ? null : 'Help')}>Help</span>
+                {activeMenu === 'Help' && (
+                  <div className="apple-dropdown" style={{ left: 0 }}>
+                    <div className="menu-item-drop">Search</div>
+                    <hr />
+                    <div className="menu-item-drop">macOS Help</div>
+                  </div>
+                )}
+              </div>
             </div>
             <div className="right">
               <span className="menu-item" onClick={() => setIsWifiMenuOpen(!isWifiMenuOpen)}>
@@ -1277,12 +1376,34 @@ export default function Portfolio() {
       {/* Fixed UI Components (Outside transformed container) */}
       <Dock
         items={[
-          { id: 'main', name: 'Finder', icon: '/apps_icon.png', onClick: () => { setIsMinimized(false); setActiveTabId('main'); }, isOpen: !isMinimized },
-          { id: 'terminal', name: 'Terminal', icon: '/terminal_icon.png', onClick: () => setIsTerminalOpen(true), isOpen: isTerminalOpen },
-          { id: 'resume', name: 'Resume DMG', icon: '/dmg_icon.png', onClick: () => setIsDMGOpen(true), isOpen: isDMGOpen },
+          { id: 'main', name: 'Finder', icon: '/apps_icon.png', onClick: () => { playSound('funk'); setIsMinimized(false); setActiveTabId('main'); }, isOpen: !isMinimized },
+          { id: 'launchpad', name: 'Launchpad', icon: 'https://img.icons8.com/color/512/launchpad.png', onClick: () => { playSound('funk'); setIsLaunchpadOpen(true); }, isOpen: false },
+          { id: 'terminal', name: 'Terminal', icon: '/terminal_icon.png', onClick: () => { playSound('funk'); setIsTerminalOpen(true); }, isOpen: isTerminalOpen },
+          { id: 'resume', name: 'Resume DMG', icon: '/dmg_icon.png', onClick: () => { playSound('funk'); setIsDMGOpen(true); }, isOpen: isDMGOpen },
+          { id: 'settings', name: 'System Settings', icon: '/apps_icon.png', onClick: () => { playSound('funk'); setIsWallpaperSwitcherOpen(true); } },
+          { id: 'github', name: 'GitHub', icon: '/git.png', onClick: () => window.open('https://github.com/aharshit123456', '_blank') },
+          { id: 'linkedin', name: 'LinkedIn', icon: '/linkedin.png', onClick: () => window.open('https://www.linkedin.com/in/aharshit123456/', '_blank') },
+        ]}
+      />
+
+      <Launchpad 
+        isOpen={isLaunchpadOpen}
+        onClose={() => setIsLaunchpadOpen(false)}
+        apps={[
+          { id: 'finder', name: 'Finder', icon: '/apps_icon.png', onClick: () => { setIsMinimized(false); setActiveTabId('main'); } },
+          { id: 'terminal', name: 'Terminal', icon: '/terminal_icon.png', onClick: () => setIsTerminalOpen(true) },
+          { id: 'resume', name: 'Resume DMG', icon: '/dmg_icon.png', onClick: () => setIsDMGOpen(true) },
           { id: 'settings', name: 'System Settings', icon: '/apps_icon.png', onClick: () => setIsWallpaperSwitcherOpen(true) },
           { id: 'github', name: 'GitHub', icon: '/git.png', onClick: () => window.open('https://github.com/aharshit123456', '_blank') },
           { id: 'linkedin', name: 'LinkedIn', icon: '/linkedin.png', onClick: () => window.open('https://www.linkedin.com/in/aharshit123456/', '_blank') },
+          { id: 'spotify', name: 'Spotify', icon: 'https://img.icons8.com/color/512/spotify--v1.png', onClick: () => { 
+            setActiveTabId('main'); 
+            setIsMinimized(false); 
+            setTimeout(() => {
+              const el = document.getElementById('curations');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+          } }
         ]}
       />
 
