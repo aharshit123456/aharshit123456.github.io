@@ -6,6 +6,110 @@ import Link from 'next/link';
 export default function AboutPage() {
   return (
     <div className="about-wrapper">
+      <style>{`
+        .about-wrapper {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background: #050505;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          padding: 20px;
+          color: #f0f0f0;
+          font-family: 'Fira Code', monospace;
+          z-index: 9999;
+          overflow: hidden;
+        }
+        .nebula {
+          position: absolute;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle at center, rgba(142, 45, 226, 0.1) 0%, transparent 40%),
+                      radial-gradient(circle at 30% 30%, rgba(74, 0, 224, 0.1) 0%, transparent 40%);
+          animation: drift 20s linear infinite;
+          pointer-events: none;
+        }
+        .about-content {
+          z-index: 10;
+          width: 100%;
+          max-width: 600px;
+          animation: slideUp 0.6s ease-out;
+        }
+        .terminal-card {
+          background: rgba(13, 13, 13, 0.8);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border-radius: 12px;
+          border: 1px solid rgba(255,255,255,0.1);
+          box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+          overflow: hidden;
+        }
+        .terminal-header {
+          background: rgba(255,255,255,0.05);
+          padding: 10px 15px;
+          display: flex;
+          align-items: center;
+          border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .dots { display: flex; gap: 8px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+        .terminal-title {
+          flex: 1;
+          text-align: center;
+          font-size: 0.75rem;
+          opacity: 0.5;
+          color: white !important;
+        }
+        .terminal-body {
+          padding: 25px;
+          font-size: 0.95rem;
+          line-height: 1.6;
+        }
+        .line { color: #27c93f !important; margin-bottom: 5px; }
+        .prompt { color: #ff7b72 !important; }
+        .response { color: #a5d6ff !important; margin-bottom: 20px; }
+        .bio-text {
+          margin-top: 30px;
+          padding-top: 20px;
+          border-top: 1px solid rgba(255,255,255,0.1);
+          color: #ccc !important;
+          font-family: sans-serif;
+        }
+        .bio-text p { margin-bottom: 15px; color: #ccc !important; }
+        .blink { animation: blink 1s step-end infinite; }
+        
+        .back-btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          margin-top: 40px;
+          text-decoration: none !important;
+          color: #888 !important;
+          font-size: 0.9rem;
+          transition: color 0.2s;
+        }
+        .back-btn:hover { color: #fff !important; }
+        
+        @keyframes drift {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        @keyframes slideUp {
+          from { opacity: 0; transform: translateY(30px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes blink {
+          50% { opacity: 0; }
+        }
+      `}</style>
       <div className="nebula"></div>
       <div className="about-content">
         <div className="terminal-card">
@@ -40,104 +144,6 @@ export default function AboutPage() {
           <i className="fas fa-arrow-left"></i> Return to the OS
         </Link>
       </div>
-
-      <style jsx>{`
-        .about-wrapper {
-          min-height: 100vh;
-          background: #050505;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          padding: 20px;
-          position: relative;
-          overflow: hidden;
-          color: #f0f0f0;
-          font-family: 'Fira Code', monospace;
-        }
-        .nebula {
-          position: absolute;
-          width: 200%;
-          height: 200%;
-          background: radial-gradient(circle at center, rgba(142, 45, 226, 0.1) 0%, transparent 40%),
-                      radial-gradient(circle at 30% 30%, rgba(74, 0, 224, 0.1) 0%, transparent 40%);
-          animation: drift 20s linear infinite;
-        }
-        .about-content {
-          z-index: 1;
-          width: 100%;
-          max-width: 600px;
-          animation: slideUp 0.6s ease-out;
-        }
-        .terminal-card {
-          background: rgba(13, 13, 13, 0.8);
-          backdrop-filter: blur(20px);
-          border-radius: 12px;
-          border: 1px solid rgba(255,255,255,0.1);
-          box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-          overflow: hidden;
-        }
-        .terminal-header {
-          background: rgba(255,255,255,0.05);
-          padding: 10px 15px;
-          display: flex;
-          align-items: center;
-          border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .dots { display: flex; gap: 8px; }
-        .dot { width: 10px; height: 10px; border-radius: 50%; }
-        .red { background: #ff5f56; }
-        .yellow { background: #ffbd2e; }
-        .green { background: #27c93f; }
-        .terminal-title {
-          flex: 1;
-          text-align: center;
-          font-size: 0.75rem;
-          opacity: 0.5;
-        }
-        .terminal-body {
-          padding: 25px;
-          font-size: 0.95rem;
-          line-height: 1.6;
-        }
-        .line { color: #27c93f; margin-bottom: 5px; }
-        .prompt { color: #ff7b72; }
-        .response { color: #a5d6ff; margin-bottom: 20px; }
-        .bio-text {
-          margin-top: 30px;
-          padding-top: 20px;
-          border-top: 1px solid rgba(255,255,255,0.1);
-          color: #ccc;
-          font-family: sans-serif;
-        }
-        .bio-text p { margin-bottom: 15px; }
-        .blink { animation: blink 1s step-end infinite; }
-        
-        .back-btn {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 10px;
-          margin-top: 40px;
-          text-decoration: none;
-          color: #888;
-          font-size: 0.9rem;
-          transition: color 0.2s;
-        }
-        .back-btn:hover { color: #fff; }
-        
-        @keyframes drift {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        @keyframes slideUp {
-          from { opacity: 0; transform: translateY(30px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes blink {
-          50% { opacity: 0; }
-        }
-      `}</style>
     </div>
   );
 }
