@@ -1,0 +1,206 @@
+%-------------------------
+% Resume in Latex
+% Author : Matty
+% Based on: https://github.com/jakegut/resume
+% License : MIT
+%------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{fontawesome5}
+\usepackage{graphicx}
+
+\input{glyphtounicode}
+
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.6in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1.19in}
+\addtolength{\topmargin}{-0.8in}
+\addtolength{\textheight}{1.7in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Section formatting
+\titleformat{\section}{
+  \scshape\raggedright\large\bfseries
+}{}{0em}{}[\color{black}\titlerule \vspace{-10pt}]
+
+% Ensure that generate pdf is machine readable/ATS parsable
+\pdfgentounicode=1
+
+% -------------------- CUSTOM COMMANDS --------------------
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}
+}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}\vspace{-5pt}}
+\newcommand{\resumeItemListStart}{\begin{itemize}[leftmargin=*, nosep]}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\begin{document}
+
+% % -------------------- HEADING --------------------
+\begin{center}
+    \textbf{\Huge \scshape Harshit Agarwal} \\ \vspace{3pt}
+    \small
+    \href{mailto:aharshit123456@gmail.com}{\underline{aharshit123456@gmail.com}} $|$ 
+    \href{tel:+919776076583}{\underline{+91-9776076583}} $|$ 
+    \href{https://www.linkedin.com/in/aharshit123456/}{\underline{linkedin.com/in/aharshit123456}} $|$
+    \href{https://github.com/aharshit123456}{\underline{github.com/aharshit123456}} \\ \vspace{2pt}
+    \small
+    \href{https://aharshit123456.github.io}{\underline{aharshit123456.github.io}}
+\end{center}
+
+% \begin{center}
+% \begin{minipage}{0.75\textwidth}
+%     \textbf{\Huge \scshape Harshit Agarwal} \\ \vspace{3pt}
+%     \small
+%     % \hspace{-4pt}
+%     \href{mailto:aharshit123456@gmail.com}{\underline{aharshit123456@gmail.com}} $|$ 
+%     \href{tel:+919776076583}{\underline{+91-9776076583}} $|$ 
+%     \href{https://www.linkedin.com/in/aharshit123456/}{\underline{linkedin.com/in/aharshit123456}} 
+%     \href{https://github.com/aharshit123456}{\underline{github.com/aharshit123456}} $|$ 
+%     \href{https://aharshit123456.github.io}{\underline{aharshit123456.github.io}}
+% \end{minipage}
+% \hfill
+% \begin{minipage}{0.2\textwidth}
+%     \includegraphics[width=3cm]{photo.jpg}
+% \end{minipage}
+% \end{center}
+
+
+% -------------------- EDUCATION --------------------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Kalinga Institute of Industrial Technology}{May 2027}
+      {B.Tech. Computer Science and Engineering}{CGPA: 9.30}
+    \resumeSubheading
+      {Delhi Public School Kalinga / NIOS}{June 2022}
+      {High School}{86.2\%}
+  \resumeSubHeadingListEnd
+
+% -------------------- SKILLS --------------------
+\vspace{-18pt}
+\section{Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Languages}{: C/C++, Python, Java, JS/TS, C\#, Kotlin, Go, .NET, SQL} $|$ 
+     \textbf{DevOps}{: AWS, Docker, K8s, CI/CD, Terraform} \\
+     \textbf{Frameworks}{: Flutter, React, NextJS, FastAPI, PyTorch, TensorFlow} $|$ 
+     \textbf{Tools}{: Git, Linux, Unity, ROS, Redis, Supabase}
+    }}
+ \end{itemize}
+
+% -------------------- EXPERIENCE --------------------
+\vspace{-16pt}
+\section{Experience}
+  \resumeSubHeadingListStart
+
+    \resumeProjectHeading
+      {\textbf{Olive Ridley Media} $|$ \emph{Freelance SDE (AI \& Product Strategy)}}{Feb 2026 -- Present}
+      \resumeItemListStart
+        \resumeItem{Architected \textbf{Vedic Daily} backend, achieving \textbf{<150ms latency} for AI guidance using \textbf{FastAPI} and \textbf{Gemini}; implemented caching to reduce external API costs by \textbf{30\%}.}
+        \resumeItem{Developed \textbf{3 cross-platform Flutter widgets} (2x2, 4x2, 4x4), resulting in a \textbf{12\% boost} in DAU via deep-linking.}
+        \resumeItem{Designed a \textbf{3-phase product roadmap} (Text $\to$ Comics $\to$ Video) for an Indic-first platform, optimizing content ingestion throughput by \textbf{40\%} via automated LLM-driven summarization.}
+        \resumeItem{Engineered a \textbf{10-question structured onboarding flow}, increasing profile completion rates by \textbf{30\%} and enabling hyper-personalized predictions for 500+ active users.}
+      \resumeItemListEnd
+
+    \resumeProjectHeading
+      {\textbf{Famcare} $|$ \emph{Lead Full-Stack Developer} $|$ Koramangala, Bangalore $|$ Onsite}{Mar 2026 -- Present}
+      \resumeItemListStart
+        \resumeItem{Architected full-stack ecosystem (\textbf{FastAPI}, \textbf{3 Flutter apps}) from MVP to production with 500+ commits; scaled API to handle \textbf{2,000+ req/min} with 100\% success rate.}
+        \resumeItem{Developed a business logic engine for \textbf{15+ service categories} with dynamic pricing and \textbf{Razorpay/FCM} integration.}
+        \resumeItem{Optimized deployment velocity by \textbf{70\%} using \textbf{Fastlane CI/CD} and automated caregiver verification via \textbf{SpringVerify API}.}
+      \resumeItemListEnd
+
+  
+    \resumeProjectHeading
+      {\textbf{Endorphind} $|$ \emph{Founding SDE (AI \& Systems)} $|$ Indiranagar, Bangalore $|$ Onsite}{Jan 2026 -- Present}
+      \resumeItemListStart
+        \resumeItem{Engineered generative video pipelines using Wan 2.6 and LatentSync; optimized digital avatar production by \textbf{60\%} through custom \textbf{ComfyUI} node automation and media generation tools.}
+        \resumeItem{Architected "LangLearn," an LLM-driven platform; managed the end-to-end \textbf{4-month project lifecycle} from technical roadmap to delivery for 3 major client architectures.}
+        \resumeItem{Leading a team of \textbf{3 SDE interns} via Agile/Scrum; delivering Decision-as-a-Service chatbots for the hospitality sector.}
+      \resumeItemListEnd
+
+    \resumeProjectHeading
+      {\textbf{shoppin' — USAR Commerce Technologies} $|$ \emph{Founding SDE} $|$ Gurgaon, Haryana $|$ Onsite}{Dec 2024 -- Nov 2025}
+      \resumeItemListStart
+        \resumeItem{Productionized AI systems for fashion search at scale (\textbf{3-4 crore items}) using CLIP/VLLM and diffusion-based VTON.}
+        \resumeItem{Engineered distributed image/video pipelines; Dockerized models on SageMaker; developed backend with Redis caching.}
+        \resumeItem{Architected AWS EKS infrastructure with Terraform, GitOps, CI/CD, and high-throughput scraping agents.}
+      \resumeItemListEnd
+
+    \resumeProjectHeading
+      {\textbf{CosQ.in Ecosystem} $|$ \emph{Full-Stack \& AI Product Lead}}{Jan 2024 -- Present}
+      \resumeItemListStart
+        \resumeItem{\textbf{WHAM! OTT:} Built a comic-themed streaming platform with a custom hybrid video engine (\textbf{HLS}); implemented cross-origin watch synchronization via \textbf{postMessage} and immersive UI animations.}
+        \resumeItem{\textbf{MemoChan:} Engineered an AI SaaS for automated transcription/summarization using GPU-accelerated \textbf{Whisper models} and speaker diarization to streamline long-form audio documentation.}
+        \resumeItem{\textbf{PreviouslyOn:} Developed an LLM-driven content discovery platform using \textbf{Gemini AI} and \textbf{Next.js}; implemented advanced SEO with JSON-LD to maximize organic visibility.}
+      \resumeItemListEnd
+      
+  \resumeSubHeadingListEnd
+
+% -------------------- PROJECTS & PUBLICATIONS --------------------
+\vspace{-12pt}
+\section{Projects \& Publications}
+\resumeSubHeadingListStart
+  \resumeProjectHeading{\textbf{Dual-head Transformer-LSTM for Physiotherapy Exercise Recognition}}{FACEIT 2026}
+  \resumeProjectHeading{\textbf{Open-source Python Library for Human Gait Analysis and Recognition}}{FICTA 2026}
+  \resumeProjectHeading{\textbf{Systematic Review of Deep Neural Frameworks for Fall Risk Assessment}}{Elsevier 2025}
+  \resumeProjectHeading{\textbf{NVD Exploitability Toolkit} $|$ \emph{Fine-tuned DistilBERT/GPT2 on 56k vulnerabilities}}{85.6\% Accuracy}
+\resumeSubHeadingListEnd
+  
+\vspace{-12pt}
+\section{Leadership \& Awards}
+  \resumeSubHeadingListStart
+    \resumeProjectHeading{\textbf{Microsoft Learn Student Ambassador} $|$ \emph{AI-ML Volunteer}}{Jan 2025 -- Present}
+    \resumeProjectHeading{\textbf{KIIT E-Cell} $|$ \emph{RnD Intern} $|$ Organized \$150K Hackathons}{2023 -- 2024}
+    \resumeProjectHeading{\textbf{Awards} $|$ \emph{KIIT Merit Scholarship (Top 1\%); Immerse Oxford Research Scholarship}}{}
+  \resumeSubHeadingListEnd
+
+\enlargethispage{4\baselineskip}
+\end{document}
