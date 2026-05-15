@@ -18,6 +18,12 @@ interface LaunchpadProps {
 export default function Launchpad({ isOpen, onClose, apps }: LaunchpadProps) {
   const [searchQuery, setSearchQuery] = useState('');
 
+  const triggerHaptic = (pattern: number | number[] = 10) => {
+    if (typeof window !== 'undefined' && window.navigator && window.navigator.vibrate) {
+      window.navigator.vibrate(pattern);
+    }
+  };
+
   const filteredApps = useMemo(() => {
     return apps.filter(app => 
       app.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -42,7 +48,11 @@ export default function Launchpad({ isOpen, onClose, apps }: LaunchpadProps) {
 
         <div className="apps-grid">
           {filteredApps.map(app => (
-            <div key={app.id} className="launchpad-app" onClick={() => { app.onClick(); onClose(); }}>
+            <div key={app.id} className="launchpad-app" onClick={() => { 
+              triggerHaptic(20);
+              app.onClick(); 
+              onClose(); 
+            }}>
               <div className="app-icon-wrapper">
                 <img src={app.icon} alt={app.name} />
               </div>

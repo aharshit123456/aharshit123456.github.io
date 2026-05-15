@@ -28,6 +28,12 @@ export default function ControlCenter({
   const brightnessRef = useRef<HTMLDivElement>(null);
   const volumeRef = useRef<HTMLDivElement>(null);
 
+  const triggerHaptic = (pattern: number | number[] = 10) => {
+    if (typeof window !== 'undefined' && window.navigator && window.navigator.vibrate) {
+      window.navigator.vibrate(pattern);
+    }
+  };
+
   if (!isOpen) return null;
 
   const handleSliderClick = (e: React.MouseEvent, type: 'brightness' | 'volume', ref: React.RefObject<HTMLDivElement | null>) => {
@@ -38,6 +44,7 @@ export default function ControlCenter({
     
     if (type === 'brightness') setBrightness(percentage);
     else setVolume(percentage);
+    triggerHaptic(5);
   };
 
   return (

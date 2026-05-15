@@ -13,6 +13,12 @@ export default function ClapButton({ projectId }: ClapButtonProps) {
   
   const SUPABASE_URL = 'https://kolqskhjijhzghnrteqi.supabase.co/rest/v1/project_claps';
   const SUPABASE_KEY = 'sb_publishable_yUihxNM1P39vLWQ5jS0Y-Q_mCby5zgz';
+  
+  const triggerHaptic = (pattern: number | number[] = 10) => {
+    if (typeof window !== 'undefined' && window.navigator && window.navigator.vibrate) {
+      window.navigator.vibrate(pattern);
+    }
+  };
 
   const fetchClaps = async () => {
     try {
@@ -28,6 +34,7 @@ export default function ClapButton({ projectId }: ClapButtonProps) {
 
   const handleClap = async () => {
     if (userClaps >= 50) return;
+    triggerHaptic(15);
 
     // Visual feedback
     setIsAnimating(true);

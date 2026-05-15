@@ -98,6 +98,12 @@ export default function Portfolio() {
 
   const dragOffset = useRef({ x: 0, y: 0 });
   const dragStartTime = useRef(0);
+
+  const triggerHaptic = (pattern: number | number[] = 10) => {
+    if (typeof window !== 'undefined' && window.navigator && window.navigator.vibrate) {
+      window.navigator.vibrate(pattern);
+    }
+  };
   const activeDragIcon = useRef<'main' | 'freelance' | 'terminal' | 'resume' | 'docs' | null>(null);
 
   const [activeSpace, setActiveSpace] = useState(0); // 0: Desktop, 1: Fullscreen
@@ -520,7 +526,11 @@ export default function Portfolio() {
                 <div className={`flip-hint ${showHint ? 'visible' : ''}`}>Click to flip</div>
               </div>
               <div className="hero-text">
-                <h1>&lt;Harshit Agarwal&gt;</h1>
+                <h1>
+                  <span style={{ color: 'var(--code-comment)', opacity: 0.5 }}>&lt;</span>
+                  Harshit Agarwal
+                  <span style={{ color: 'var(--code-comment)', opacity: 0.5 }}>&gt;</span>
+                </h1>
                 <h2>// Fullstack Developer & Researcher</h2>
                 <p className="tagline">"Not everyone who works hard is rewarded, but all those who succeed have worked hard." - Genji Kamogawa</p>
                 <div className="hero-links">
@@ -1625,20 +1635,23 @@ export default function Portfolio() {
       {/* Fixed UI Components (Outside transformed container) */}
       <Dock
         items={isMobile ? [
-          { id: 'messages', name: 'Messages', icon: 'https://img.icons8.com/?size=512&id=KDCVy1maVpEi&format=png&color=000000', onClick: () => { 
+          { id: 'messages', name: 'Messages', icon: 'https://img.icons8.com/color/512/imessage.png', onClick: () => { 
             playSound('funk'); 
-            minimizeAllWindows(); // Use the global helper I created earlier
+            triggerHaptic(15);
+            minimizeAllWindows(); 
             setIsMessagesOpen(true); 
             setIsMessagesMinimized(false);
           }, isOpen: isMessagesOpen && !isMessagesMinimized },
-          { id: 'main', name: 'harshit_agarwal.dmg', icon: 'https://img.icons8.com/?size=512&id=p8UFrp2VUgHR&format=png&color=000000', onClick: () => { 
+          { id: 'main', name: 'harshit_agarwal.dmg', icon: '/apps_icon.png', onClick: () => { 
             playSound('funk'); 
+            triggerHaptic(15);
             minimizeAllWindows();
             setIsMinimized(false); 
             setActiveTabId('main'); 
           }, isOpen: !isMinimized },
-          { id: 'terminal', name: 'Terminal', icon: 'https://img.icons8.com/?size=512&id=10250&format=png&color=000000', onClick: () => { 
+          { id: 'terminal', name: 'Terminal', icon: '/terminal_icon.png', onClick: () => { 
             playSound('funk'); 
+            triggerHaptic(15);
             minimizeAllWindows();
             setIsTerminalOpen(true); 
             setIsTerminalMinimized(false);
@@ -1664,7 +1677,7 @@ export default function Portfolio() {
           { id: 'settings', name: 'System Settings', icon: '/apps_icon.png', onClick: () => setIsWallpaperSwitcherOpen(true) },
           { id: 'github', name: 'GitHub', icon: '/git.png', onClick: () => window.open('https://github.com/aharshit123456', '_blank') },
           { id: 'linkedin', name: 'LinkedIn', icon: '/linkedin.png', onClick: () => window.open('https://www.linkedin.com/in/aharshit123456/', '_blank') },
-          { id: 'spotify', name: 'Spotify', icon: 'https://img.icons8.com/color/512/spotify--v1.png', onClick: () => { 
+          { id: 'spotify', name: 'Spotify', icon: 'https://img.icons8.com/color/512/spotify.png', onClick: () => { 
             setActiveTabId('main'); 
             setIsMinimized(false); 
             setTimeout(() => {
@@ -1724,13 +1737,27 @@ export default function Portfolio() {
           onClick={() => setIsIslandExpanded(!isIslandExpanded)}
         >
           {isIslandExpanded ? (
-            <div style={{ padding: '20px', textAlign: 'center', width: '100%' }}>
-              <div style={{ fontSize: '10px', opacity: 0.6 }}>Now Playing</div>
-              <div style={{ fontWeight: '600' }}>{islandText}</div>
-              <div style={{ fontSize: '10px', marginTop: '5px' }}>Siri Roast Mode: Active</div>
+            <div style={{ padding: '0px', textAlign: 'center', width: '100%', animation: 'fadeIn 0.3s ease' }}>
+              <div style={{ fontSize: '10px', opacity: 0.6, marginBottom: '2px' }}>Now Playing</div>
+              <div style={{ fontWeight: '700', fontSize: '14px', letterSpacing: '-0.3px' }}>{islandText}</div>
+              <div style={{ 
+                fontSize: '10px', 
+                marginTop: '8px', 
+                color: 'var(--accent-color)', 
+                fontWeight: '600',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '5px'
+              }}>
+                <span className="pulse-dot"></span> Siri Roast Mode: Active
+              </div>
             </div>
           ) : (
-            <span>{islandText}</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <div className="island-icon"></div>
+              <span>{islandText}</span>
+            </div>
           )}
         </div>
       )}
