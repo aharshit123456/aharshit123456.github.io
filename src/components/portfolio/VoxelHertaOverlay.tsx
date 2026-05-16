@@ -141,7 +141,6 @@ export default function VoxelHertaOverlay({ isOpen, onClose }: VoxelHertaOverlay
                 flexDirection: 'column',
                 alignItems: 'center',
                 gap: '8px',
-                pointerEvents: 'none',
                 textAlign: 'center',
                 fontFamily: 'system-ui, sans-serif'
               }}
@@ -172,6 +171,42 @@ export default function VoxelHertaOverlay({ isOpen, onClose }: VoxelHertaOverlay
               }}>
                 Genius Society #83
               </p>
+
+              {/* Original Creator Credit Link */}
+              <motion.a
+                href="https://www.reddit.com/r/HonkaiStarRail/comments/14o3t7s/pixel_art_herta_by_me/"
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.55 }}
+                exit={{ opacity: 0 }}
+                transition={{ delay: 1.3 }}
+                style={{
+                  marginTop: '16px',
+                  color: '#c084fc',
+                  fontSize: '12px',
+                  textDecoration: 'none',
+                  letterSpacing: '0.5px',
+                  borderBottom: '1px dashed rgba(192, 132, 252, 0.4)',
+                  paddingBottom: '2px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  zIndex: 20
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.opacity = '1';
+                  e.currentTarget.style.color = '#e9d5ff';
+                  e.currentTarget.style.borderBottom = '1px solid #e9d5ff';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.opacity = '0.55';
+                  e.currentTarget.style.color = '#c084fc';
+                  e.currentTarget.style.borderBottom = '1px dashed rgba(192, 132, 252, 0.4)';
+                }}
+                onClick={(e) => e.stopPropagation()} // Prevent backdrop click from closing modal
+              >
+                Original Herta Pixel Art by /u/ButrChiknMan (Reddit)
+              </motion.a>
             </motion.div>
           </div>
         </motion.div>
