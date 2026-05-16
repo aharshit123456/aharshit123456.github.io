@@ -46,16 +46,71 @@ const CrabSVG = ({ state }: { state: PetState }) => (
 );
 
 const CatSVG = ({ state }: { state: PetState }) => (
-  <motion.svg viewBox="0 0 20 20" width="64" height="64" style={{ imageRendering: 'pixelated' }}>
-    <ellipse cx="10" cy="18" rx="6" ry="2" fill="rgba(0,0,0,0.1)" />
-    <motion.rect x="2" y="10" width="4" height="2" fill="white" stroke="#000" strokeWidth="0.5" animate={{ rotate: [0, 20, 0] }} transition={{ repeat: Infinity, duration: 1 }} />
-    <rect x="5" y="8" width="10" height="8" rx="1" fill="white" stroke="#000" strokeWidth="0.5" />
-    <rect x="7" y="4" width="8" height="7" rx="1" fill="white" stroke="#000" strokeWidth="0.5" />
-    <path d="M7 4 L7 2 L9 4 Z" fill="white" stroke="#000" strokeWidth="0.5" />
-    <path d="M13 4 L15 2 L15 4 Z" fill="white" stroke="#000" strokeWidth="0.5" />
-    <rect x="9" y="7" width="1.5" height="1.5" fill="#000" />
-    <rect x="12" y="7" width="1.5" height="1.5" fill="#000" />
-    <motion.path d="M10 9 Q11 10 12 9" fill="none" stroke="#000" strokeWidth="0.5" animate={{ d: state === 'action' ? "M10 9 Q11 11 12 9" : "M10 9 Q11 10 12 9" }} />
+  <motion.svg viewBox="0 0 24 24" width="80" height="80" style={{ imageRendering: 'pixelated' }}>
+    {/* Shadow */}
+    <ellipse cx="12" cy="20" rx="7" ry="1.5" fill="rgba(0,0,0,0.1)" />
+
+    {/* Tail - Waggier 3-part tail */}
+    <motion.g 
+      style={{ originX: '18px', originY: '14px' }}
+      animate={{ rotate: [0, 20, -10, 0] }} 
+      transition={{ repeat: Infinity, duration: 2 }}
+    >
+      <rect x="18" y="12" width="4" height="2" rx="1" fill="#f9fafb" stroke="#000" strokeWidth="0.5" />
+      <motion.rect x="20" y="9" width="2" height="4" rx="1" fill="#f9fafb" stroke="#000" strokeWidth="0.5" animate={{ rotate: [0, 30, -30, 0] }} />
+    </motion.g>
+
+    {/* Body */}
+    <motion.g animate={{ y: state === 'walking' ? [0, -0.5, 0] : 0 }} transition={{ repeat: Infinity, duration: 0.4 }}>
+      <rect x="6" y="11" width="12" height="7" rx="3" fill="#f9fafb" stroke="#000" strokeWidth="0.5" />
+      
+      {/* Red Collar - Now placed between head and body */}
+      <rect x="7" y="10.5" width="10" height="1.5" fill="#ef4444" stroke="#000" strokeWidth="0.2" />
+      <motion.circle cx="12" cy="12" r="1.2" fill="#facc15" stroke="#854d0e" strokeWidth="0.3" animate={{ scale: [1, 1.2, 1] }} />
+    </motion.g>
+
+    {/* Head - Slightly larger and rounder */}
+    <motion.g animate={{ y: state === 'walking' ? [-0.5, 0.5, -0.5] : 0 }} transition={{ repeat: Infinity, duration: 0.4 }}>
+      <rect x="7" y="4" width="10" height="8" rx="4" fill="#f9fafb" stroke="#000" strokeWidth="0.5" />
+      
+      {/* Ears */}
+      <path d="M7 6 L7 2 L10 5 Z" fill="#f9fafb" stroke="#000" strokeWidth="0.5" />
+      <path d="M14 5 L17 2 L17 6 Z" fill="#f9fafb" stroke="#000" strokeWidth="0.5" />
+      
+      {/* Whiskers */}
+      <motion.g animate={{ rotate: [-1, 1, -1] }} transition={{ repeat: Infinity, duration: 0.8 }}>
+        <line x1="5" y1="9" x2="8" y2="9.5" stroke="#9ca3af" strokeWidth="0.5" />
+        <line x1="5" y1="10" x2="8" y2="10" stroke="#9ca3af" strokeWidth="0.5" />
+        <line x1="16" y1="9.5" x2="19" y2="9" stroke="#9ca3af" strokeWidth="0.5" />
+        <line x1="16" y1="10" x2="19" y2="10" stroke="#9ca3af" strokeWidth="0.5" />
+      </motion.g>
+
+      {/* Eyes - Rounder and more expressive */}
+      <motion.g animate={{ scaleY: [1, 1, 0.1, 1, 1] }} transition={{ repeat: Infinity, duration: 4, times: [0, 0.9, 0.95, 0.98, 1] }}>
+        <rect x="9" y="7" width="2" height="2" rx="0.5" fill="#000" />
+        <rect x="13" y="7" width="2" height="2" rx="0.5" fill="#000" />
+        {/* Eye Shine */}
+        <rect x="9.2" y="7.2" width="0.6" height="0.6" fill="#fff" />
+        <rect x="13.2" y="7.2" width="0.6" height="0.6" fill="#fff" />
+      </motion.g>
+
+      {/* Blush */}
+      <rect x="8" y="9.5" width="1.5" height="1" rx="0.5" fill="#fecaca" opacity="0.8" />
+      <rect x="14.5" y="9.5" width="1.5" height="1" rx="0.5" fill="#fecaca" opacity="0.8" />
+
+      {/* Mouth */}
+      <motion.path 
+        d="M11 10 Q12 11 13 10" 
+        fill="none" stroke="#000" strokeWidth="0.5" 
+        animate={{ d: state === 'action' ? "M11 10 Q12 12 13 10" : "M11 10 Q12 11 13 10" }}
+      />
+    </motion.g>
+
+    {/* 4 Legs - Stubby and cute */}
+    <motion.rect x="7" y="16.5" width="2" height="3" rx="1" fill="#f9fafb" stroke="#000" strokeWidth="0.5" animate={{ y: state === 'walking' ? [0, -2, 0] : 0 }} transition={{ repeat: Infinity, duration: 0.4, delay: 0 }} />
+    <motion.rect x="10" y="16.5" width="2" height="3" rx="1" fill="#f9fafb" stroke="#000" strokeWidth="0.5" animate={{ y: state === 'walking' ? [0, -2, 0] : 0 }} transition={{ repeat: Infinity, duration: 0.4, delay: 0.2 }} />
+    <motion.rect x="12" y="16.5" width="2" height="3" rx="1" fill="#f9fafb" stroke="#000" strokeWidth="0.5" animate={{ y: state === 'walking' ? [0, -2, 0] : 0 }} transition={{ repeat: Infinity, duration: 0.4, delay: 0.1 }} />
+    <motion.rect x="15" y="16.5" width="2" height="3" rx="1" fill="#f9fafb" stroke="#000" strokeWidth="0.5" animate={{ y: state === 'walking' ? [0, -2, 0] : 0 }} transition={{ repeat: Infinity, duration: 0.4, delay: 0.3 }} />
   </motion.svg>
 );
 
