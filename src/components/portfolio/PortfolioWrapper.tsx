@@ -23,6 +23,7 @@ import MessagesView from '@/components/portfolio/MessagesView';
 import BrowserView from '@/components/portfolio/BrowserView';
 import DesktopPet from '@/components/portfolio/DesktopPet';
 import BubbleWrap from '@/components/portfolio/BubbleWrap';
+import PixelCharacter from '@/components/portfolio/PixelCharacter';
 
 
 type Tab = {
@@ -1211,6 +1212,9 @@ export default function Portfolio() {
       <div className="login-screen" style={{ backgroundImage: `url(${wallpaper})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
         <div className="login-container">
           <div className="login-profile">
+            <div style={{ position: 'absolute', top: '-110px', left: '50%', transform: 'translateX(-50%)' }}>
+              <PixelCharacter />
+            </div>
             <img src="profile_new.jpg" alt="Harshit Agarwal" />
           </div>
           <h1>Harshit Agarwal</h1>
@@ -1913,6 +1917,15 @@ export default function Portfolio() {
       </div>
 
       {/* Fixed UI Components (Outside transformed container) */}
+      {/* Herta floating above the Dock */}
+      {isLoggedIn && !isMobile && (
+        <div style={{ position: 'fixed', left: '50%', bottom: '95px', transform: 'translateX(-50%)', zIndex: 10001, pointerEvents: 'none' }}>
+          <div style={{ pointerEvents: 'auto' }}>
+            <PixelCharacter />
+          </div>
+        </div>
+      )}
+
       <Dock
         items={isMobile ? [
           { id: 'messages', name: 'Messages', icon: 'https://img.icons8.com/color/512/imessage.png', onClick: () => { 
