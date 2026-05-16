@@ -25,6 +25,7 @@ import BrowserView from '@/components/portfolio/BrowserView';
 import DesktopPet from '@/components/portfolio/DesktopPet';
 import BubbleWrap from '@/components/portfolio/BubbleWrap';
 import PixelCharacter from '@/components/portfolio/PixelCharacter';
+import VoxelHertaOverlay from '@/components/portfolio/VoxelHertaOverlay';
 
 
 type Tab = {
@@ -98,6 +99,14 @@ export default function Portfolio() {
   const [isMobile, setIsMobile] = useState(false);
   const [islandText, setIslandText] = useState('Unlocked');
   const [isIslandExpanded, setIsIslandExpanded] = useState(false);
+  const [hertaMenuPos, setHertaMenuPos] = useState<{ x: number, y: number } | null>(null);
+  const [showVoxelHerta, setShowVoxelHerta] = useState(false);
+
+  useEffect(() => {
+    const handleGlobalClick = () => setHertaMenuPos(null);
+    window.addEventListener('click', handleGlobalClick);
+    return () => window.removeEventListener('click', handleGlobalClick);
+  }, []);
   const [windowPositions, setWindowPositions] = useState({
     terminal: { x: 100, y: 100 },
     freelance: { x: 150, y: 150 },
@@ -1934,7 +1943,13 @@ export default function Portfolio() {
           style={{ position: 'fixed', zIndex: 100001, pointerEvents: 'none' }}
         >
           <div style={{ pointerEvents: 'auto' }}>
-            <PixelCharacter isWalking={isHertaWalking} flip={!isLoggedIn} />
+            <PixelCharacter 
+              isWalking={isHertaWalking} 
+              flip={!isLoggedIn} 
+              onContextMenu={(e) => {
+                setHertaMenuPos({ x: e.clientX, y: e.clientY });
+              }}
+            />
           </div>
         </motion.div>
       )}
@@ -2250,6 +2265,48 @@ export default function Portfolio() {
         )}
         </>
       )}
+
+      {/* Context Menu for Herta */}
+      {hertaMenuPos && (
+        <div
+          style={{
+            position: 'fixed',
+            top: hertaMenuPos.y,
+            left: hertaMenuPos.x,
+            background: 'rgba(30, 30, 30, 0.95)',
+            border: '1px solid rgba(255,255,255,0.1)',
+            borderRadius: '8px',
+            padding: '4px',
+            zIndex: 1000000,
+            backdropFilter: 'blur(10px)',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
+            color: 'white',
+            fontFamily: 'system-ui, sans-serif',
+            fontSize: '14px',
+            minWidth: '150px'
+          }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div 
+            style={{ padding: '8px 12px', cursor: 'pointer', borderRadius: '4px' }}
+            onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
+            onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
+            onClick={() => {
+              setShowVoxelHerta(true);
+              setHertaMenuPos(null);
+            }}
+          >
+            Checkout Character
+          </div>
+        </div>
+      )}
+
+      {/* Fullscreen Voxel Overlay */}
+      <VoxelHertaOverlay 
+        isOpen={showVoxelHerta} 
+        onClose={() => setShowVoxelHerta(false)} 
+      />
+
     </div>
   );
 

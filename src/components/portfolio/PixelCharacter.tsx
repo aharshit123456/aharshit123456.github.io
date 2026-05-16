@@ -6,9 +6,10 @@ import { motion } from 'framer-motion';
 interface PixelCharacterProps {
   isWalking?: boolean;
   flip?: boolean;
+  onContextMenu?: (e: React.MouseEvent) => void;
 }
 
-export default function PixelCharacter({ isWalking = false, flip = false }: PixelCharacterProps) {
+export default function PixelCharacter({ isWalking = false, flip = false, onContextMenu }: PixelCharacterProps) {
   const [blink, setBlink] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isSpinning, setIsSpinning] = useState(false);
@@ -70,6 +71,10 @@ export default function PixelCharacter({ isWalking = false, flip = false }: Pixe
         scale: { duration: 1.5, ease: "backOut" }
       }}
       onClick={triggerClick}
+      onContextMenu={(e) => {
+        e.preventDefault();
+        if (onContextMenu) onContextMenu(e);
+      }}
       style={{
         width: '140px',
         height: isMature ? '200px' : '140px',
