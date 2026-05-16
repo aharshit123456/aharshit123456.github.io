@@ -6,7 +6,8 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://aharshit123456.space/"),
+  metadataBase: new URL("https://aharshit123456.space"),
+
   title: {
     default: "Harshit Agarwal | Fullstack Engineer & AI Researcher",
     template: "%s | Harshit Agarwal"
@@ -28,8 +29,9 @@ export const metadata: Metadata = {
     telephone: false,
   },
   alternates: {
-    canonical: "https://aharshit123456.space/",
+    canonical: "https://aharshit123456.space",
   },
+
   openGraph: {
     type: "website",
     locale: "en_US",

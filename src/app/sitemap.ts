@@ -7,11 +7,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   
   const staticRoutes: MetadataRoute.Sitemap = [
     {
-      url: `${baseUrl}/`,
+      url: baseUrl, // Remove trailing slash
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 1,
     },
+
     {
       url: `${baseUrl}/links`,
       lastModified: new Date(),
