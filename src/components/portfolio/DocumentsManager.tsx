@@ -2,6 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
+import remarkGfm from 'remark-gfm';
+import remarkAlert from 'remark-github-alerts';
 
 
 type Blog = {
@@ -22,29 +25,36 @@ export default function DocumentsManager({ isDarkMode }: { isDarkMode: boolean }
   useEffect(() => {
     const fetchPublicBlogs = async () => {
       try {
-        const response = await fetch('/blogs/blog1.md');
-        const content = await response.text();
-        const publicBlog: Blog = {
-          id: 'blog1',
-          title: 'The Sigma Grindset',
-          date: '2026-05-16',
-          content: content,
-          author: 'Sigma Editor'
-        };
+        const manifestResponse = await fetch('/blogs/blogs.json');
+        const manifest = await manifestResponse.json();
         
-        const savedBlogs = localStorage.getItem('harshit_blogs');
-        let allBlogs = savedBlogs ? JSON.parse(savedBlogs) : [];
+        const publicBlogs: Blog[] = await Promise.all(manifest.map(async (item: any) => {
+          const contentResponse = await fetch(item.file);
+          const content = await contentResponse.text();
+          return {
+            id: item.id,
+            title: item.title,
+            date: item.date,
+            content: content,
+            author: item.author
+          };
+        }));
         
-        // Add public blog if it doesn't exist in the list
-        if (!allBlogs.find((b: Blog) => b.id === 'blog1')) {
-          allBlogs = [publicBlog, ...allBlogs];
-        } else {
-          // Update content if it changed
-          allBlogs = allBlogs.map((b: Blog) => b.id === 'blog1' ? publicBlog : b);
-        }
+        const savedBlogsStr = localStorage.getItem('harshit_blogs');
+        let allBlogs = savedBlogsStr ? JSON.parse(savedBlogsStr) : [];
         
-        setBlogs(allBlogs);
-        localStorage.setItem('harshit_blogs', JSON.stringify(allBlogs));
+        // Filter out existing versions of public blogs to avoid duplicates
+        const publicIds = publicBlogs.map(pb => pb.id);
+        // Specifically remove the old 'blog1' sigma blog and any public IDs
+        allBlogs = allBlogs.filter((b: Blog) => b.id !== 'blog1' && !publicIds.includes(b.id));
+        
+        // Combine and sort
+        const finalBlogs = [...publicBlogs, ...allBlogs].sort((a, b) => 
+          new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
+        
+        setBlogs(finalBlogs);
+        localStorage.setItem('harshit_blogs', JSON.stringify(finalBlogs));
       } catch (error) {
         console.error("Failed to fetch public blogs:", error);
       }
@@ -52,6 +62,7 @@ export default function DocumentsManager({ isDarkMode }: { isDarkMode: boolean }
 
     fetchPublicBlogs();
   }, []);
+
 
 
   const handleUpload = (e: React.FormEvent) => {
@@ -124,7 +135,7 @@ export default function DocumentsManager({ isDarkMode }: { isDarkMode: boolean }
                   <h1>{selectedBlog.title}</h1>
                   <button 
                     className="open-blog-btn"
-                    onClick={() => window.open(`/blog/${selectedBlog.id === 'blog1' ? 'blog1' : 'preview'}`, '_blank')}
+                    onClick={() => window.open(`/blog/${selectedBlog.id}`, '_blank')}
                   >
                     <i className="fas fa-external-link-alt"></i> Open Blog
                   </button>
@@ -132,7 +143,9 @@ export default function DocumentsManager({ isDarkMode }: { isDarkMode: boolean }
                 <div className="blog-meta">
                   <span><i className="fas fa-user"></i> {selectedBlog.author}</span>
                   <span><i className="fas fa-calendar"></i> {selectedBlog.date}</span>
-                  {selectedBlog.id !== 'blog1' && (
+                  {selectedBlog.id !== 'famcare-marketplace' && 
+                   selectedBlog.id !== 'famcare-pricing-engine' && 
+                   selectedBlog.id !== 'orb-slam3' && (
                     <button className="delete-btn" onClick={() => deleteBlog(selectedBlog.id)}>
                       <i className="fas fa-trash"></i>
                     </button>
@@ -140,7 +153,12 @@ export default function DocumentsManager({ isDarkMode }: { isDarkMode: boolean }
                 </div>
               </div>
               <div className="blog-body markdown-preview">
-                <ReactMarkdown>{selectedBlog.content}</ReactMarkdown>
+                <ReactMarkdown 
+                  remarkPlugins={[remarkGfm, remarkAlert]}
+                  rehypePlugins={[rehypeRaw]}
+                >
+                  {selectedBlog.content}
+                </ReactMarkdown>
               </div>
             </div>
           ) : (
@@ -362,6 +380,18 @@ export default function DocumentsManager({ isDarkMode }: { isDarkMode: boolean }
         }
         .markdown-preview :global(li) {
           margin-bottom: 5px;
+        }
+        .markdown-preview :global(blockquote) {
+          padding: 10px 15px;
+          border-left: 4px solid #34c759;
+          background: ${isDarkMode ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)'};
+          margin-bottom: 15px;
+          border-radius: 4px;
+        }
+        .markdown-preview :global(blockquote p) {
+          margin-bottom: 0;
+          font-size: 14px;
+          font-style: italic;
         }
 
 

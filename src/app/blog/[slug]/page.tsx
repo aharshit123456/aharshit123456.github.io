@@ -5,6 +5,9 @@ import fs from 'fs';
 import path from 'path';
 import './../blog.css';
 import { Metadata } from 'next';
+import rehypeRaw from 'rehype-raw';
+import remarkGfm from 'remark-gfm';
+import remarkAlert from 'remark-github-alerts';
 
 // This function tells Next.js which paths to pre-render at build time
 export async function generateStaticParams() {
@@ -65,7 +68,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       siteName: 'Harshit Agarwal Portfolio',
       images: [
         {
-          url: '/og-image.png', // Fallback to a general OG image
+          url: '/og-image.png',
           width: 1200,
           height: 630,
         },
@@ -106,7 +109,12 @@ export default async function BlogPage({ params }: { params: Promise<{ slug: str
       
       <main className="blog-content">
         <article className="article-card markdown-body">
-          <ReactMarkdown>{content}</ReactMarkdown>
+          <ReactMarkdown 
+            remarkPlugins={[remarkGfm, remarkAlert]}
+            rehypePlugins={[rehypeRaw]}
+          >
+            {content}
+          </ReactMarkdown>
         </article>
       </main>
 
