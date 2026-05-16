@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import FamcareNotes from '@/components/portfolio/FamcareNotes';
 import ShoppinStats from '@/components/portfolio/ShoppinStats';
 import ProductionContent, { ProductionKey } from '@/components/portfolio/ProductionContent';
@@ -114,6 +115,7 @@ export default function Portfolio() {
   const [isPetTriggered, setIsPetTriggered] = useState(false); // Cat
   const [terminalCmdCount, setTerminalCmdCount] = useState(0);
   const [isCrabTriggered, setIsCrabTriggered] = useState(false); // Crab
+  const [isHertaWalking, setIsHertaWalking] = useState(false);
   const [isShutDown, setIsShutDown] = useState(false);
   const [showLowBatteryWarning, setShowLowBatteryWarning] = useState(false);
 
@@ -249,6 +251,9 @@ export default function Portfolio() {
   useEffect(() => {
     if (isLoggedIn) {
       playSound('startup');
+      setIsHertaWalking(true);
+      const timer = setTimeout(() => setIsHertaWalking(false), 2000);
+      return () => clearTimeout(timer);
     }
   }, [isLoggedIn]);
 
@@ -1207,41 +1212,35 @@ export default function Portfolio() {
     </>
   );
 
-  if (!isLoggedIn) {
-    return (
-      <div className="login-screen" style={{ backgroundImage: `url(${wallpaper})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-        <div className="login-container">
-          <div className="login-profile">
-            <div style={{ position: 'absolute', top: '-110px', left: '50%', transform: 'translateX(-50%)' }}>
-              <PixelCharacter />
-            </div>
-            <img src="profile_new.jpg" alt="Harshit Agarwal" />
-          </div>
-          <h1>Harshit Agarwal</h1>
-          <p className="login-domain">aharshit123456.space</p>
-          <div className="login-input-group">
-            <input
-              type="password"
-              placeholder="Enter Password"
-              autoFocus
-              suppressHydrationWarning
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') setIsLoggedIn(true);
-              }}
-            />
-            <button onClick={() => setIsLoggedIn(true)} suppressHydrationWarning>
-              <i className="fas fa-arrow-right"></i>
-            </button>
-          </div>
-          <p className="login-hint">Hint: Just press Enter (or any key)</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className={`workspace-wrapper ${isWin95 ? 'win95-theme' : ''}`} style={{ backgroundImage: isWin95 ? 'none' : `url(${wallpaper})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-      <div className="workspace-container" style={{ transform: `translateX(-${activeSpace * 100}vw)` }}>
+      {!isLoggedIn ? (
+        <div className="login-screen" style={{ backgroundImage: `url(${wallpaper})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+          <div className="login-container">
+            <div className="login-profile">
+              <img src="profile_new.jpg" alt="Harshit Agarwal" />
+            </div>
+            <h1>Harshit Agarwal</h1>
+            <p className="login-domain">aharshit123456.space</p>
+            <div className="login-input-group">
+              <input
+                type="password"
+                placeholder="Enter Password"
+                autoFocus
+                suppressHydrationWarning
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') setIsLoggedIn(true);
+                }}
+              />
+              <button onClick={() => setIsLoggedIn(true)} suppressHydrationWarning>
+                <i className="fas fa-arrow-right"></i>
+              </button>
+            </div>
+            <p className="login-hint">Hint: Just press Enter (or any key)</p>
+          </div>
+        </div>
+      ) : (
+        <div className="workspace-container" style={{ transform: `translateX(-${activeSpace * 100}vw)` }}>
         {/* Space 1: Desktop */}
         <div className="space desktop-space" onContextMenu={handleContextMenu}>
           <div style={{ position: 'absolute', right: '40px', bottom: '120px', zIndex: 10 }}>
@@ -1915,18 +1914,34 @@ export default function Portfolio() {
           setWallpaper={setWallpaper}
         />
       </div>
-
-      {/* Fixed UI Components (Outside transformed container) */}
-      {/* Herta floating above the Dock */}
-      {isLoggedIn && !isMobile && (
-        <div style={{ position: 'fixed', left: '50%', bottom: '95px', transform: 'translateX(-50%)', zIndex: 10001, pointerEvents: 'none' }}>
-          <div style={{ pointerEvents: 'auto' }}>
-            <PixelCharacter />
-          </div>
-        </div>
       )}
 
-      <Dock
+      {/* Fixed UI Components (Outside transformed container) */}
+      
+      {/* Persistent Herta with Walking Transition */}
+      {!isMobile && (
+        <motion.div
+          initial={false}
+          animate={{
+            left: isLoggedIn ? '50%' : 'calc(100% - 100px)',
+            bottom: isLoggedIn ? '95px' : '40px',
+            x: '-50%',
+          }}
+          transition={{
+            duration: 2,
+            ease: "easeInOut"
+          }}
+          style={{ position: 'fixed', zIndex: 100001, pointerEvents: 'none' }}
+        >
+          <div style={{ pointerEvents: 'auto' }}>
+            <PixelCharacter isWalking={isHertaWalking} flip={!isLoggedIn} />
+          </div>
+        </motion.div>
+      )}
+
+      {isLoggedIn && (
+        <>
+          <Dock
         items={isMobile ? [
           { id: 'messages', name: 'Messages', icon: 'https://img.icons8.com/color/512/imessage.png', onClick: () => { 
             playSound('funk'); 
@@ -2232,6 +2247,8 @@ export default function Portfolio() {
             }
           `}</style>
         </div>
+        )}
+        </>
       )}
     </div>
   );
