@@ -21,6 +21,7 @@ import SecretBoss from '../components/portfolio/SecretBoss';
 import MessagesView from '@/components/portfolio/MessagesView';
 import BrowserView from '@/components/portfolio/BrowserView';
 import DesktopPet from '@/components/portfolio/DesktopPet';
+import BubbleWrap from '@/components/portfolio/BubbleWrap';
 
 
 type Tab = {
@@ -67,6 +68,8 @@ export default function Portfolio() {
 
   const [isBrowserOpen, setIsBrowserOpen] = useState(false);
   const [isBrowserMinimized, setIsBrowserMinimized] = useState(false);
+  const [isBubbleWrapOpen, setIsBubbleWrapOpen] = useState(false);
+  const [isBubbleWrapMinimized, setIsBubbleWrapMinimized] = useState(false);
   const [browserIconPosition, setBrowserIconPosition] = useState({ x: 40, y: 440 });
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -100,6 +103,7 @@ export default function Portfolio() {
     docs: { x: 120, y: 120 },
     messages: { x: 100, y: 100 },
     browser: { x: 80, y: 80 },
+    bubblewrap: { x: 200, y: 150 },
     ql: { x: 0, y: 0 }
   });
 
@@ -108,6 +112,8 @@ export default function Portfolio() {
   const [isPetTriggered, setIsPetTriggered] = useState(false); // Cat
   const [terminalCmdCount, setTerminalCmdCount] = useState(0);
   const [isCrabTriggered, setIsCrabTriggered] = useState(false); // Crab
+  const [isShutDown, setIsShutDown] = useState(false);
+  const [showLowBatteryWarning, setShowLowBatteryWarning] = useState(false);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -126,7 +132,7 @@ export default function Portfolio() {
     }
     return () => clearInterval(timer);
   }, [isReadingArticle, isPetTriggered]);
-  const activeDragWindow = useRef<'terminal' | 'freelance' | 'dmg' | 'main' | 'docs' | 'messages' | 'browser' | 'ql' | null>(null);
+  const activeDragWindow = useRef<'terminal' | 'freelance' | 'dmg' | 'main' | 'docs' | 'messages' | 'browser' | 'bubblewrap' | 'ql' | null>(null);
 
   const windowDragOffset = useRef({ x: 0, y: 0 });
   const [contextMenu, setContextMenu] = useState<{ visible: boolean; x: number; y: number }>({ visible: false, x: 0, y: 0 });
@@ -204,7 +210,16 @@ export default function Portfolio() {
   useEffect(() => {
     if (!hasMounted) return;
     const interval = setInterval(() => {
-      setBatteryLevel(prev => (prev > 1 ? prev - 1 : 100));
+      setBatteryLevel(prev => {
+        if (prev <= 1) {
+          setIsShutDown(true);
+          return 0;
+        }
+        if (prev === 6) { // Going to hit 5 next
+          setShowLowBatteryWarning(true);
+        }
+        return prev - 1;
+      });
     }, 60000); // 1% per minute for demo
     return () => clearInterval(interval);
   }, [hasMounted]);
@@ -516,6 +531,9 @@ export default function Portfolio() {
       } else if (type === 'browser') {
         if (!isBrowserOpen) setIsBrowserOpen(true);
         else setIsBrowserMinimized(!isBrowserMinimized);
+      } else if (type === 'bubblewrap') {
+        if (!isBubbleWrapOpen) setIsBubbleWrapOpen(true);
+        else setIsBubbleWrapMinimized(!isBubbleWrapMinimized);
       }
     }
   };
@@ -1424,6 +1442,30 @@ export default function Portfolio() {
             </div>
           )}
 
+          {/* PopIt Window */}
+          {isBubbleWrapOpen && (
+            <div className={`mac-window bubblewrap-window ${isBubbleWrapMinimized ? 'minimized' : ''} ${isMobile ? 'fullscreen-view' : ''}`} style={!isMobile ? {
+              position: 'absolute',
+              top: `${windowPositions.bubblewrap.y}px`,
+              left: `${windowPositions.bubblewrap.x}px`,
+              zIndex: 66,
+              width: '400px',
+              height: '500px'
+            } : { zIndex: 66 }}>
+              <div className="title-bar" onMouseDown={(e) => handleWindowMouseDown(e, 'bubblewrap')}>
+                <div className="buttons">
+                  <div className="close" title="Close" onClick={(e) => { e.stopPropagation(); setIsBubbleWrapOpen(false); }}></div>
+                  <div className="minimize" title="Minimize" onClick={(e) => { e.stopPropagation(); setIsBubbleWrapMinimized(true); }}></div>
+                  <div className="maximize" title="Maximize"></div>
+                </div>
+                <div className="window-title">PopIt.app</div>
+              </div>
+              <div className="content-container" style={{ padding: 0, height: 'calc(100% - 35px)' }}>
+                <BubbleWrap />
+              </div>
+            </div>
+          )}
+
           {/* Desktop Context Menu */}
           {contextMenu.visible && (
             <div className="custom-context-menu" style={{ top: contextMenu.y, left: contextMenu.x }}>
@@ -1752,12 +1794,20 @@ export default function Portfolio() {
             setIsTerminalOpen(true); 
             setIsTerminalMinimized(false);
           }, isOpen: isTerminalOpen && !isTerminalMinimized },
+          { id: 'bubblewrap', name: 'PopIt', icon: 'https://img.icons8.com/fluency/512/bubble.png', onClick: () => { 
+            playSound('funk'); 
+            triggerHaptic(15);
+            minimizeAllWindows(); 
+            setIsBubbleWrapOpen(true); 
+            setIsBubbleWrapMinimized(false);
+          }, isOpen: isBubbleWrapOpen && !isBubbleWrapMinimized },
         ] : [
           { id: 'main', name: 'Finder', icon: '/apps_icon.png', onClick: () => { playSound('funk'); setIsMinimized(false); setActiveTabId('main'); }, isOpen: !isMinimized },
           { id: 'launchpad', name: 'Launchpad', icon: 'https://img.icons8.com/color/512/launchpad.png', onClick: () => { playSound('funk'); setIsLaunchpadOpen(true); }, isOpen: false },
           { id: 'terminal', name: 'Terminal', icon: '/terminal_icon.png', onClick: () => { playSound('funk'); setIsTerminalOpen(true); }, isOpen: isTerminalOpen },
           { id: 'resume', name: 'Resume DMG', icon: '/dmg_icon.png', onClick: () => { playSound('funk'); setIsDMGOpen(true); }, isOpen: isDMGOpen },
-          { id: 'browser', name: 'Safari', icon: 'https://img.icons8.com/color/512/safari.png', onClick: () => { playSound('funk'); setIsBrowserOpen(true); setIsBrowserMinimized(false); }, isOpen: isBrowserOpen && !isBrowserMinimized },
+          {id: 'browser', name: 'Safari', icon: 'https://img.icons8.com/color/512/safari.png', onClick: () => { playSound('funk'); setIsBrowserOpen(true); setIsBrowserMinimized(false); }, isOpen: isBrowserOpen && !isBrowserMinimized },
+          { id: 'bubblewrap', name: 'PopIt', icon: 'https://img.icons8.com/fluency/512/bubble.png', onClick: () => { playSound('funk'); setIsBubbleWrapOpen(true); setIsBubbleWrapMinimized(false); }, isOpen: isBubbleWrapOpen && !isBubbleWrapMinimized },
           { id: 'settings', name: 'System Settings', icon: '/apps_icon.png', onClick: () => { playSound('funk'); setIsWallpaperSwitcherOpen(true); } },
 
           { id: 'github', name: 'GitHub', icon: '/git.png', onClick: () => window.open('https://github.com/aharshit123456', '_blank') },
@@ -1869,6 +1919,165 @@ export default function Portfolio() {
       <DesktopPet type="cat" trigger={isPetTriggered} />
       <DesktopPet type="frog" trigger={isMatrixActive} />
       <DesktopPet type="crab" trigger={isCrabTriggered} />
+
+      {/* Low Battery Warning Notification */}
+      {showLowBatteryWarning && !isShutDown && (
+        <div className="low-battery-notification">
+          <div className="notif-header">
+            <div className="notif-icon-container">
+              <i className="fas fa-battery-quarter"></i>
+            </div>
+            <span className="notif-title">Low Battery</span>
+            <button className="notif-close" onClick={() => setShowLowBatteryWarning(false)}>
+              <i className="fas fa-times"></i>
+            </button>
+          </div>
+          <div className="notif-body">
+            <p>Your battery is at 5%.</p>
+            <p className="roast-text">as usual harshit is gonna ignore this warning and keep working</p>
+          </div>
+          <style jsx>{`
+            .low-battery-notification {
+              position: fixed;
+              top: 50px;
+              right: 20px;
+              width: 320px;
+              background: rgba(255, 255, 255, 0.7);
+              backdrop-filter: blur(20px);
+              -webkit-backdrop-filter: blur(20px);
+              border: 1px solid rgba(255, 255, 255, 0.3);
+              border-radius: 18px;
+              padding: 15px;
+              z-index: 10000;
+              box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+              animation: slideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+              color: #1d1d1f;
+              font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            }
+            @keyframes slideIn {
+              from { transform: translateX(120%); }
+              to { transform: translateX(0); }
+            }
+            .notif-header {
+              display: flex;
+              align-items: center;
+              gap: 10px;
+              margin-bottom: 10px;
+            }
+            .notif-icon-container {
+              width: 32px;
+              height: 32px;
+              background: #ff4d4d;
+              color: white;
+              border-radius: 8px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 14px;
+            }
+            .notif-title {
+              flex: 1;
+              font-weight: 700;
+              font-size: 14px;
+            }
+            .notif-close {
+              background: none;
+              border: none;
+              color: #8e8e93;
+              cursor: pointer;
+              font-size: 12px;
+            }
+            .notif-body {
+              font-size: 13px;
+              line-height: 1.4;
+            }
+            .roast-text {
+              margin-top: 5px;
+              font-weight: 500;
+              color: #ff3b30;
+              font-style: italic;
+            }
+          `}</style>
+        </div>
+      )}
+
+      {/* Shutdown Overlay */}
+      {isShutDown && (
+        <div className="shutdown-overlay">
+          <div className="shutdown-content">
+            <i className="fas fa-battery-empty shutdown-icon"></i>
+            <p className="shutdown-message">
+              as usual harshit's battery is over.
+            </p>
+            <p className="shutdown-submessage">
+              refresh to gift him a powerbank and a better battery
+            </p>
+            <button className="refresh-btn" onClick={() => window.location.reload()}>
+              <i className="fas fa-redo"></i> Refresh & Recharge
+            </button>
+          </div>
+          <style jsx>{`
+            .shutdown-overlay {
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100vw;
+              height: 100vh;
+              background: #000;
+              z-index: 999999;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: white;
+              font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            }
+            .shutdown-content {
+              text-align: center;
+              max-width: 400px;
+              padding: 20px;
+            }
+            .shutdown-icon {
+              font-size: 64px;
+              color: #ff4d4d;
+              margin-bottom: 20px;
+              animation: blink 1s infinite;
+            }
+            @keyframes blink {
+              0% { opacity: 1; }
+              50% { opacity: 0.3; }
+              100% { opacity: 1; }
+            }
+            .shutdown-message {
+              font-size: 24px;
+              font-weight: 700;
+              margin-bottom: 15px;
+            }
+            .shutdown-submessage {
+              font-size: 16px;
+              opacity: 0.6;
+              margin-bottom: 30px;
+              line-height: 1.5;
+            }
+            .refresh-btn {
+              background: #fff;
+              color: #000;
+              border: none;
+              padding: 12px 24px;
+              border-radius: 8px;
+              font-weight: 600;
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              gap: 10px;
+              margin: 0 auto;
+              transition: transform 0.2s;
+            }
+            .refresh-btn:hover {
+              transform: scale(1.05);
+            }
+          `}</style>
+        </div>
+      )}
     </div>
   );
 
