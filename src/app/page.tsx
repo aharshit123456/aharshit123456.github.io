@@ -704,6 +704,50 @@ export default function Portfolio() {
 
             <hr className="divider" />
 
+            <section className="skills-section" id="skills">
+              <h3>//tale_of_the_tape (skills)</h3>
+              <div className="skills-grid">
+                <div className="skill-category">
+                  <strong>Languages:</strong><br /> [Python, C/C++, Java, Go, JS/TS, Kotlin, C#]
+                </div>
+                <div className="skill-category">
+                  <strong>Frameworks:</strong><br /> [NextJS, React, Flutter, FastAPI, PyTorch, TensorFlow]
+                </div>
+                <div className="skill-category">
+                  <strong>Cloud/DevOps:</strong><br /> [AWS, Docker, K8s, Terraform, CI/CD]
+                </div>
+                <div className="skill-category">
+                  <strong>Databases:</strong><br /> [PostgreSQL, MongoDB, Redis, Firebase]
+                </div>
+                <div className="skill-category">
+                  <strong>Tools:</strong><br /> [Git, Linux, Unity, ROS]
+                </div>
+              </div>
+              <style jsx>{`
+                .skills-grid {
+                  display: grid;
+                  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                  gap: 20px;
+                  margin-top: 20px;
+                }
+                .skill-category {
+                  background: rgba(255,255,255,0.05);
+                  padding: 15px;
+                  border-radius: 8px;
+                  border: 1px solid rgba(255,255,255,0.1);
+                  font-family: 'Fira Code', monospace;
+                  font-size: 0.9rem;
+                }
+                .skill-category strong {
+                  color: var(--accent-color);
+                  display: block;
+                  margin-bottom: 5px;
+                }
+              `}</style>
+            </section>
+
+            <hr className="divider" />
+
             <section className="experience-section" id="experience">
               <h3>//work_experience</h3>
               {renderSectionItems([
@@ -826,6 +870,25 @@ export default function Portfolio() {
                       <li>Created SLAM-based toolkits (Kalman Filters, NeRFs, Gaussian Mapping).</li>
                     </ul>
                   </div>
+                </div>,
+                <div className="exp-item" key="freelance">
+                  <div className="time">2023 - Present</div>
+                  <div className="details">
+                    <h4>Android Development & Graphic Design <span className="role">//Freelancer</span></h4>
+                    <ul>
+                      <li>Developed Native and Flutter/Dart Android applications.</li>
+                      <li>Curated graphic designs for Ads, Social Media, Print Media, T-Shirts, etc.</li>
+                    </ul>
+                  </div>
+                </div>,
+                <div className="exp-item" key="mindharmonics">
+                  <div className="time">Sep 2022 - Nov 2022</div>
+                  <div className="details">
+                    <h4>Mind Harmonics Pvt. Ltd. <span className="role">//Content Writing Expert</span></h4>
+                    <ul>
+                      <li>Authored 100+ pieces of technical and creative content for the company.</li>
+                    </ul>
+                  </div>
                 </div>
               ], 'experience')}
             </section>
@@ -862,6 +925,50 @@ export default function Portfolio() {
                     <li>Implemented Python package for gait analysis (10k+ samples). Features 50+ preprocessing functions.</li>
                     <li>Reduced processing time by 40%. Achieved 97% accuracy on Daphnet with RF/CNN/LSTM.</li>
                   </ul>
+                </div>,
+                <div className="project-card" key="nvd">
+                  <div className="project-header">
+                    <h4>NVD Exploitability Toolkit <a href="https://github.com/aharshit123456/nvd_epss_pred" target="_blank" rel="noopener noreferrer">[GitHub]</a></h4>
+                    <span className="tech-stack">Hugging Face, PyTorch</span>
+                  </div>
+                  <ul>
+                    <li>Exploitability prediction using DistilBERT/GPT2 fine-tuned on 56k+ vulnerabilities.</li>
+                    <li>Achieved 85.6% accuracy. <strong>Paper accepted in ICANTCI 2025.</strong></li>
+                  </ul>
+                </div>,
+                <div className="project-card" key="eeg">
+                  <div className="project-header">
+                    <h4>EEG Sensing Lab — KIIT (Dr. S.K. Sabut)</h4>
+                    <span className="tech-stack">MATLAB, Python, Emotiv EEG</span>
+                  </div>
+                  <ul>
+                    <li>Collected working-memory and lexical-processing trials; extracted features for emotion-detection.</li>
+                    <li>Implemented signal-processing pipelines (ICA, filtering) and DL models for affective-state classification.</li>
+                  </ul>
+                </div>,
+                <div className="project-card" key="parkinson">
+                  <div className="project-header">
+                    <h4>Parkinson's Gait Analysis</h4>
+                    <span className="tech-stack">CNN, LSTM, GNNs</span>
+                  </div>
+                  <p>Studied FOG events/gait imbalances. Reviewed 50+ papers on DL applications. Paper submitted to Health and Technology.</p>
+                </div>,
+                <div className="project-card" key="small-projects">
+                  <div className="project-header">
+                    <h4>Small Projects Collection</h4>
+                    <span className="tech-stack">Kotlin, Flutter, Android SDK</span>
+                  </div>
+                  <ul>
+                    <li><strong>Instagram Clone:</strong> Native Android (Kotlin) app with reels/posts.</li>
+                    <li><strong>To-Do List:</strong> Flutter app for daily tracking.</li>
+                  </ul>
+                </div>,
+                <div className="project-card" key="fundamentals">
+                  <div className="project-header">
+                    <h4>CS Fundamentals Implementations</h4>
+                    <span className="tech-stack">C++, Python</span>
+                  </div>
+                  <p>DSA (Stacks, Queues, Lists) from scratch. Numerical methods for linear/non-linear equations.</p>
                 </div>
               ], 'projects')}
             </section>
@@ -891,6 +998,20 @@ export default function Portfolio() {
                     <span className="tech-stack">Unity, C#, Python</span>
                   </div>
                   <p>Gamified platform with GenAI mini-games for legal awareness. Team Lead ("Acropolis").</p>
+                </div>,
+                <div className="project-card" key="pentathon">
+                  <div className="project-header">
+                    <h4>Pentathon 1.0 2024 (CTF)</h4>
+                    <span className="tech-stack">Linux, Burpsuite</span>
+                  </div>
+                  <p>Ranked 95/5500+ in nationwide government CTF. Web/API exploitation & Forensics.</p>
+                </div>,
+                <div className="project-card" key="mayday">
+                  <div className="project-header">
+                    <h4>Mayday (Tech Nova - ESSPL)</h4>
+                    <span className="tech-stack">Bubble Network App</span>
+                  </div>
+                  <p>Qualified Round 1. A bubble network based application (The inspiration for PopIt!).</p>
                 </div>
               ], 'hackathons')}
             </section>
@@ -991,6 +1112,17 @@ export default function Portfolio() {
 
             <hr className="divider" />
 
+            <section className="certificates-section" id="certificates">
+              <h3>//certificates</h3>
+              <ul>
+                <li>
+                  <strong>Hands-on experience in Quantum Computing (NPTEL)</strong>: Offline workshop on Pennylane by Dr. Ankur Raina (IISER Bhopal). 
+                </li>
+              </ul>
+            </section>
+
+            <hr className="divider" />
+
             <section className="hobbies-section" id="hobbies">
               <h3>//hobbies (interactive)</h3>
               <div className="hobbies-grid">
@@ -1021,6 +1153,15 @@ export default function Portfolio() {
                 </button>
                 <button className="hobby-btn" onClick={() => openTab('anime', 'Anime', '<div style="width:100%; height:400px;"><iframe src="https://myanimelist.net/animelist/aharshit123456" style="width:100%; height:100%; border:none;"></iframe></div>')}>
                   <i className="fas fa-tv"></i> Anime
+                </button>
+                <button className="hobby-btn" onClick={() => openTab('sports', 'Sports', '<h3>Sports</h3><p><strong>Volleyball:</strong> Libero / Middle Blocker. It\'s all about the team dynamic.</p><p><strong>Triathlon Prep:</strong> Swimming (25m lap in ~30s), Track, and Cycling.</p><p><strong>Combat Sports:</strong> Kickboxing & Wushu.</p>')}>
+                  <i className="fas fa-running"></i> Sports
+                </button>
+                <button className="hobby-btn" onClick={() => openTab('cyber', 'Cyber Security', '<h3>Cyber Security</h3><p>Network Security, Penetration Testing. Learning Maltego & Metasploit basics.</p>')}>
+                  <i className="fas fa-user-secret"></i> Cyber Security
+                </button>
+                <button className="hobby-btn" onClick={() => openTab('physics', 'Theoretical Physics', '<h3>Theoretical Physics</h3><p>Studied Classical/Quantum Mechanics, Electrodynamics (Susskind\'s Minimum).</p>')}>
+                  <i className="fas fa-atom"></i> Theoretical Physics
                 </button>
               </div>
             </section>
