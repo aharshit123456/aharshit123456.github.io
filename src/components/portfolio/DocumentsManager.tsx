@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
+
 
 type Blog = {
   id: string;
@@ -16,26 +18,41 @@ export default function DocumentsManager({ isDarkMode }: { isDarkMode: boolean }
   const [isUploading, setIsUploading] = useState(false);
   const [newBlog, setNewBlog] = useState({ title: '', content: '', author: 'Harshit Agarwal' });
 
-  // Load blogs from localStorage on mount
+  // Load blogs from localStorage and public folder
   useEffect(() => {
-    const savedBlogs = localStorage.getItem('harshit_blogs');
-    if (savedBlogs) {
-      setBlogs(JSON.parse(savedBlogs));
-    } else {
-      // Default blogs
-      const defaultBlogs: Blog[] = [
-        { 
-          id: '1', 
-          title: 'Welcome to my Documents', 
-          date: '2026-05-15', 
-          content: 'This is where I store my thoughts and technical write-ups. Feel free to explore!', 
-          author: 'Harshit Agarwal' 
+    const fetchPublicBlogs = async () => {
+      try {
+        const response = await fetch('/blogs/blog1.md');
+        const content = await response.text();
+        const publicBlog: Blog = {
+          id: 'blog1',
+          title: 'The Sigma Grindset',
+          date: '2026-05-16',
+          content: content,
+          author: 'Sigma Editor'
+        };
+        
+        const savedBlogs = localStorage.getItem('harshit_blogs');
+        let allBlogs = savedBlogs ? JSON.parse(savedBlogs) : [];
+        
+        // Add public blog if it doesn't exist in the list
+        if (!allBlogs.find((b: Blog) => b.id === 'blog1')) {
+          allBlogs = [publicBlog, ...allBlogs];
+        } else {
+          // Update content if it changed
+          allBlogs = allBlogs.map((b: Blog) => b.id === 'blog1' ? publicBlog : b);
         }
-      ];
-      setBlogs(defaultBlogs);
-      localStorage.setItem('harshit_blogs', JSON.stringify(defaultBlogs));
-    }
+        
+        setBlogs(allBlogs);
+        localStorage.setItem('harshit_blogs', JSON.stringify(allBlogs));
+      } catch (error) {
+        console.error("Failed to fetch public blogs:", error);
+      }
+    };
+
+    fetchPublicBlogs();
   }, []);
+
 
   const handleUpload = (e: React.FormEvent) => {
     e.preventDefault();
@@ -103,19 +120,27 @@ export default function DocumentsManager({ isDarkMode }: { isDarkMode: boolean }
           {selectedBlog ? (
             <div className="blog-view">
               <div className="blog-header">
-                <h1>{selectedBlog.title}</h1>
+                <div className="header-top">
+                  <h1>{selectedBlog.title}</h1>
+                  <button 
+                    className="open-blog-btn"
+                    onClick={() => window.open(`/blog/${selectedBlog.id === 'blog1' ? 'blog1' : 'preview'}`, '_blank')}
+                  >
+                    <i className="fas fa-external-link-alt"></i> Open Blog
+                  </button>
+                </div>
                 <div className="blog-meta">
                   <span><i className="fas fa-user"></i> {selectedBlog.author}</span>
                   <span><i className="fas fa-calendar"></i> {selectedBlog.date}</span>
-                  <button className="delete-btn" onClick={() => deleteBlog(selectedBlog.id)}>
-                    <i className="fas fa-trash"></i>
-                  </button>
+                  {selectedBlog.id !== 'blog1' && (
+                    <button className="delete-btn" onClick={() => deleteBlog(selectedBlog.id)}>
+                      <i className="fas fa-trash"></i>
+                    </button>
+                  )}
                 </div>
               </div>
-              <div className="blog-body">
-                {selectedBlog.content.split('\n').map((para, i) => (
-                  <p key={i}>{para}</p>
-                ))}
+              <div className="blog-body markdown-preview">
+                <ReactMarkdown>{selectedBlog.content}</ReactMarkdown>
               </div>
             </div>
           ) : (
@@ -266,11 +291,39 @@ export default function DocumentsManager({ isDarkMode }: { isDarkMode: boolean }
           margin: 0 auto;
         }
 
-        .blog-header h1 {
-          font-size: 28px;
-          margin: 0 0 15px 0;
-          font-weight: 700;
+        .blog-header .header-top {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          gap: 20px;
+          margin-bottom: 15px;
         }
+        .blog-header h1 {
+          font-size: 24px;
+          margin: 0;
+          font-weight: 700;
+          line-height: 1.2;
+        }
+        .open-blog-btn {
+          background: #34c759;
+          color: white;
+          border: none;
+          padding: 8px 16px;
+          border-radius: 20px;
+          font-size: 12px;
+          font-weight: 600;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          white-space: nowrap;
+          transition: transform 0.2s;
+        }
+        .open-blog-btn:hover {
+          transform: translateY(-2px);
+          background: #28a745;
+        }
+
 
         .blog-meta {
           display: flex;
@@ -297,6 +350,20 @@ export default function DocumentsManager({ isDarkMode }: { isDarkMode: boolean }
           margin-bottom: 15px;
           font-size: 15px;
         }
+        
+        .markdown-preview :global(h1), .markdown-preview :global(h2), .markdown-preview :global(h3) {
+          margin-top: 20px;
+          margin-bottom: 10px;
+          color: ${isDarkMode ? '#fff' : '#000'};
+        }
+        .markdown-preview :global(ul) {
+          margin-bottom: 15px;
+          padding-left: 20px;
+        }
+        .markdown-preview :global(li) {
+          margin-bottom: 5px;
+        }
+
 
         .viewer-empty {
           display: flex;
