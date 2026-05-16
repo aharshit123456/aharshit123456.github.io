@@ -293,7 +293,7 @@ export default function Portfolio() {
   }, [selectedImage]);
 
   // Dragging logic
-  const handleMouseDown = (e: React.MouseEvent, type: 'main' | 'freelance' | 'terminal' | 'resume' | 'docs') => {
+  const handleMouseDown = (e: React.MouseEvent, type: 'main' | 'freelance' | 'terminal' | 'resume' | 'docs' | 'browser') => {
     if (type === 'main' && !isMinimized) return;
     if (type === 'freelance' && isFreelanceOpen && !isFreelanceMinimized) return;
     if (type === 'terminal' && isTerminalOpen && !isTerminalMinimized) return;
@@ -501,7 +501,7 @@ export default function Portfolio() {
     };
   }, [activeSpace, fullscreenWindow]);
 
-  const handleIconClick = (type: 'main' | 'freelance' | 'terminal' | 'resume') => {
+  const handleIconClick = (type: 'main' | 'freelance' | 'terminal' | 'resume' | 'browser') => {
     const dragDuration = Date.now() - dragStartTime.current;
     if (dragDuration < 200) {
       if (type === 'main') toggleMinimize();

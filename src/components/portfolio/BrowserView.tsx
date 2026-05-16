@@ -403,7 +403,7 @@ export default function BrowserView({ onArticleView }: BrowserViewProps) {
               {isArticlePage && currentArticle ? (
                 <div className="article-page">
                   <div className="breadcrumb">
-                    <span>wikiHow</span> &gt; <span>{currentArticle.category}</span> &gt; <span>{currentArticle.title}</span>
+                    <span>wikiHow</span> {' > '} <span>{currentArticle.category}</span> {' > '} <span>{currentArticle.title}</span>
                   </div>
                   <h1>{currentArticle.title}</h1>
                   <div className="article-author-info">
