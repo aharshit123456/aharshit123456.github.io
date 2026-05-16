@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { WISHLIST_BOOKS } from './WishlistData';
+
 
 interface Article {
   id: number;
@@ -201,11 +203,12 @@ interface BrowserViewProps {
 
 export default function BrowserView({ onArticleView }: BrowserViewProps) {
   const [tabs, setTabs] = useState<Tab[]>([
-    { id: '1', url: 'https://www.wikihow.com', history: ['https://www.wikihow.com'], historyIndex: 0, title: 'wikiHow' }
+    { id: '1', url: 'safari://home', history: ['safari://home'], historyIndex: 0, title: 'Start Page' }
   ]);
   const [activeTabId, setActiveTabId] = useState('1');
-  const [inputUrl, setInputUrl] = useState('https://www.wikihow.com');
+  const [inputUrl, setInputUrl] = useState('safari://home');
   const [isRefreshing, setIsRefreshing] = useState(false);
+
   const [contextMenu, setContextMenu] = useState<{ visible: boolean; x: number; y: number; articleId: number | null }>({ visible: false, x: 0, y: 0, articleId: null });
 
   const activeTab = tabs.find(t => t.id === activeTabId)!;
@@ -226,22 +229,37 @@ export default function BrowserView({ onArticleView }: BrowserViewProps) {
     }
     
     const newHistory = [...activeTab.history.slice(0, activeTab.historyIndex + 1), newUrl];
+    let title = newUrl;
+    if (newUrl === 'safari://home') title = 'Start Page';
+    else if (newUrl.includes('wikihow.com')) title = 'wikiHow';
+    else if (newUrl.includes('amazon.in/hz/wishlist')) title = 'Amazon Wishlist';
+
     updateTab(activeTabId, {
       url: newUrl,
       history: newHistory,
       historyIndex: newHistory.length - 1,
-      title: newUrl.includes('wikihow.com') ? 'wikiHow' : newUrl
+      title: title
     });
   };
+
+  const updateTabInfo = (newUrl: string) => {
+    let title = newUrl;
+    if (newUrl === 'safari://home') title = 'Start Page';
+    else if (newUrl.includes('wikihow.com')) title = 'wikiHow';
+    else if (newUrl.includes('amazon.in/hz/wishlist')) title = 'Amazon Wishlist';
+    return { url: newUrl, title };
+  };
+
 
   const goBack = () => {
     if (activeTab.historyIndex > 0) {
       const newIndex = activeTab.historyIndex - 1;
       const newUrl = activeTab.history[newIndex];
+      const { title } = updateTabInfo(newUrl);
       updateTab(activeTabId, {
         historyIndex: newIndex,
         url: newUrl,
-        title: newUrl.includes('wikihow.com') ? 'wikiHow' : newUrl
+        title: title
       });
     }
   };
@@ -250,26 +268,29 @@ export default function BrowserView({ onArticleView }: BrowserViewProps) {
     if (activeTab.historyIndex < activeTab.history.length - 1) {
       const newIndex = activeTab.historyIndex + 1;
       const newUrl = activeTab.history[newIndex];
+      const { title } = updateTabInfo(newUrl);
       updateTab(activeTabId, {
         historyIndex: newIndex,
         url: newUrl,
-        title: newUrl.includes('wikihow.com') ? 'wikiHow' : newUrl
+        title: title
       });
     }
   };
 
-  const openNewTab = (url: string = 'https://www.wikihow.com') => {
+  const openNewTab = (url: string = 'safari://home') => {
     const newId = Math.random().toString(36).substr(2, 9);
+    const { title } = updateTabInfo(url);
     const newTab: Tab = {
       id: newId,
       url,
       history: [url],
       historyIndex: 0,
-      title: url.includes('wikihow.com') ? 'wikiHow' : url
+      title: title
     };
     setTabs([...tabs, newTab]);
     setActiveTabId(newId);
   };
+
 
   const closeTab = (e: React.MouseEvent, id: string) => {
     e.stopPropagation();
@@ -318,9 +339,16 @@ export default function BrowserView({ onArticleView }: BrowserViewProps) {
   };
 
   const isWikiHow = activeTab.url.includes('wikihow.com');
+  const isWishlist = activeTab.url.includes('amazon.in/hz/wishlist');
+  const isAmazonProduct = activeTab.url.includes('amazon.in/dp/');
+  const isHome = activeTab.url === 'safari://home' || activeTab.url === '';
+
   const isArticlePage = activeTab.url.includes('/article/');
   const currentArticleId = isArticlePage ? parseInt(activeTab.url.split('/').pop() || '0') : null;
   const currentArticle = BRAINROT_ARTICLES.find(a => a.id === currentArticleId);
+  const currentBook = isAmazonProduct ? WISHLIST_BOOKS.find(b => activeTab.url.includes(b.amazonUrl.split('/').pop() || 'NONE')) : null;
+
+
 
   useEffect(() => {
     if (onArticleView) {
@@ -382,7 +410,165 @@ export default function BrowserView({ onArticleView }: BrowserViewProps) {
       </div>
 
       <div className="browser-content">
-        {isWikiHow ? (
+        {isHome ? (
+          <div className="safari-home">
+            <div className="home-background"></div>
+            <div className="home-content">
+              <h1>Favorites</h1>
+              <div className="favorites-grid">
+                <div className="favorite-item" onClick={() => {
+                  const url = 'https://www.wikihow.com';
+                  const newHistory = [...activeTab.history.slice(0, activeTab.historyIndex + 1), url];
+                  updateTab(activeTabId, { url, title: 'wikiHow', history: newHistory, historyIndex: newHistory.length - 1 });
+                }}>
+                  <div className="favorite-icon wikihow">
+                    <span className="wiki">w</span><span className="how">H</span>
+                  </div>
+                  <span className="favorite-title">wikiHow</span>
+                </div>
+                <div className="favorite-item" onClick={() => {
+                  const url = 'https://www.amazon.in/hz/wishlist/ls/39LPBNBPJ6FGJ';
+                  const newHistory = [...activeTab.history.slice(0, activeTab.historyIndex + 1), url];
+                  updateTab(activeTabId, { url, title: 'Amazon Wishlist', history: newHistory, historyIndex: newHistory.length - 1 });
+                }}>
+                  <div className="favorite-icon amazon">
+                    <i className="fab fa-amazon"></i>
+                  </div>
+                  <span className="favorite-title">Wishlist</span>
+                </div>
+                <div className="favorite-item">
+                  <div className="favorite-icon mewing">
+                    <i className="fas fa-grimace"></i>
+                  </div>
+                  <span className="favorite-title">Mewing.com</span>
+                </div>
+                <div className="favorite-item">
+                  <div className="favorite-icon aurapoints">
+                    <i className="fas fa-chart-line"></i>
+                  </div>
+                  <span className="favorite-title">Aura Points</span>
+                </div>
+                <div className="favorite-item">
+                  <div className="favorite-icon fanum">
+                    <i className="fas fa-cookie-bite"></i>
+                  </div>
+                  <span className="favorite-title">Fanum Tax</span>
+                </div>
+                <div className="favorite-item">
+                  <div className="favorite-icon ohio">
+                    <i className="fas fa-map-marked-alt"></i>
+                  </div>
+                  <span className="favorite-title">Ohio Maps</span>
+                </div>
+              </div>
+
+              <div className="recent-searches">
+                <h2>Recent Searches</h2>
+                <div className="search-history-list">
+                  <div className="search-history-item">
+                    <i className="fas fa-search"></i>
+                    <span>how to rizz up the IRS to avoid tax (Fanum Method)</span>
+                  </div>
+                  <div className="search-history-item">
+                    <i className="fas fa-search"></i>
+                    <span>is it illegal to mew during a job interview?</span>
+                  </div>
+                  <div className="search-history-item">
+                    <i className="fas fa-search"></i>
+                    <span>Kai Cenat workout routine for Level 5 Gyatt</span>
+                  </div>
+                  <div className="search-history-item">
+                    <i className="fas fa-search"></i>
+                    <span>Skibidi Toilet lore explained (4-hour documentary)</span>
+                  </div>
+                  <div className="search-history-item">
+                    <i className="fas fa-search"></i>
+                    <span>average price of a blue raspberry prime in Ohio</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="privacy-report">
+
+                <i className="fas fa-shield-alt"></i>
+                <div className="report-text">
+                  <strong>Privacy Report</strong>
+                  <span>In the last seven days, Safari has prevented 42 trackers from profiling you in Ohio.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : isWishlist ? (
+          <div className="amazon-wishlist-container">
+            <header className="amazon-header">
+              <div className="amazon-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon" />
+                <span>.in</span>
+              </div>
+              <div className="amazon-search">
+                <input type="text" placeholder="Search Amazon.in" />
+                <button><i className="fas fa-search"></i></button>
+              </div>
+              <div className="amazon-nav">
+                <div className="nav-item">Account</div>
+                <div className="nav-item">Orders</div>
+                <div className="nav-item cart">
+                  <i className="fas fa-shopping-cart"></i>
+                  <span>Cart</span>
+                </div>
+              </div>
+            </header>
+            
+            <div className="wishlist-content">
+              <div className="wishlist-sidebar">
+                <h3>Your Lists</h3>
+                <div className="list-item active">Books <i className="fas fa-lock"></i></div>
+                <div className="create-list">+ Create a List</div>
+              </div>
+              
+              <main className="wishlist-main">
+                <div className="wishlist-header">
+                  <h2>Books</h2>
+                  <div className="wishlist-actions">
+                    <span>Public</span>
+                    <button 
+                      className="invite-btn"
+                      onClick={() => window.open('https://www.amazon.in/hz/wishlist/ls/39LPBNBPJ6FGJ', '_blank')}
+                    >
+                      View Real Wishlist
+                    </button>
+                    <button className="more-btn">...</button>
+                  </div>
+                </div>
+
+                <div className="wishlist-items-grid">
+                  {WISHLIST_BOOKS.map(book => (
+                    <div key={book.id} className="book-card">
+                      <div className="book-image">
+                        <img src={book.image} alt={book.title} />
+                      </div>
+                      <div className="book-details">
+                        <h4 className="book-title">{book.title}</h4>
+                        <p className="book-author">by {book.author} ({book.format})</p>
+                        <div className="book-price">{book.price}</div>
+                        <div className="book-meta">
+                          <span>Qty: {book.quantity}</span>
+                          <span>Has: {book.has}</span>
+                        </div>
+                        <button 
+                          className="add-to-cart-btn"
+                          onClick={() => window.open(book.amazonUrl, '_blank')}
+                        >
+                          Add to Cart
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </main>
+            </div>
+          </div>
+        ) : isWikiHow ? (
           <div className="wikihow-wrapper">
             <header className="wikihow-header">
               <div className="wikihow-logo">
@@ -510,7 +696,66 @@ export default function BrowserView({ onArticleView }: BrowserViewProps) {
               <p>© 2026 wikiHow, Inc. All rights reserved.</p>
             </footer>
           </div>
+        ) : isAmazonProduct ? (
+          <div className="amazon-product-page">
+            <header className="amazon-header">
+              <div className="amazon-logo" onClick={() => {
+                const url = 'safari://home';
+                updateTab(activeTabId, { url, title: 'Start Page', history: [...activeTab.history, url], historyIndex: activeTab.history.length });
+              }}>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon" />
+                <span>.in</span>
+              </div>
+              <div className="amazon-search">
+                <input type="text" placeholder="Search Amazon.in" />
+                <button><i className="fas fa-search"></i></button>
+              </div>
+            </header>
+
+            <main className="product-main">
+              {currentBook ? (
+                <div className="product-container">
+                  <div className="product-left">
+                    <img src={currentBook.image} alt={currentBook.title} />
+                  </div>
+                  <div className="product-right">
+                    <h1 className="product-title">{currentBook.title}</h1>
+                    <p className="product-brand">Brand: {currentBook.author}</p>
+                    <div className="product-rating">
+                      <i className="fas fa-star"></i>
+                      <i className="fas fa-star"></i>
+                      <i className="fas fa-star"></i>
+                      <i className="fas fa-star"></i>
+                      <i className="fas fa-star-half-alt"></i>
+                      <span>4,281 ratings</span>
+                    </div>
+                    <hr />
+                    <div className="product-price-section">
+                      <span className="price-label">Price:</span>
+                      <span className="price-value">{currentBook.price}</span>
+                      <p className="price-shipping">Inclusive of all taxes</p>
+                    </div>
+                    <div className="product-delivery">
+                      <strong>FREE delivery</strong> Wednesday, May 20. Order within 12 hrs 4 mins.
+                    </div>
+                    <div className="product-status">In stock</div>
+                    <div className="product-cta">
+                      <button className="buy-now-btn" onClick={() => window.open(currentBook.amazonUrl, '_blank')}>Buy Now</button>
+                      <button className="add-to-cart-btn-large" onClick={() => window.open(currentBook.amazonUrl, '_blank')}>Add to Cart</button>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="product-not-found">
+                  <h2>Product Details</h2>
+                  <p>Searching Amazon servers in Ohio...</p>
+                  <div className="loading-spinner"></div>
+                </div>
+              )}
+            </main>
+          </div>
         ) : (
+
           <div className="generic-page">
             <div className="error-content">
               <i className="fas fa-globe-americas"></i>
@@ -523,6 +768,7 @@ export default function BrowserView({ onArticleView }: BrowserViewProps) {
             </div>
           </div>
         )}
+
       </div>
 
       {contextMenu.visible && (
@@ -993,6 +1239,438 @@ export default function BrowserView({ onArticleView }: BrowserViewProps) {
           cursor: pointer;
           font-weight: 600;
         }
+
+        /* Safari Home Hub Styles */
+        .safari-home {
+          height: 100%;
+          position: relative;
+          background: #fff;
+          overflow: hidden;
+        }
+        .home-background {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 300px;
+          background: linear-gradient(180deg, #f0f0f5 0%, #ffffff 100%);
+          z-index: 0;
+        }
+        .home-content {
+          position: relative;
+          z-index: 1;
+          padding: 60px 40px;
+          max-width: 900px;
+          margin: 0 auto;
+        }
+        .home-content h1 {
+          font-size: 22px;
+          font-weight: 700;
+          margin-bottom: 20px;
+          color: #1a1a1a;
+        }
+        .favorites-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+          gap: 30px;
+          margin-bottom: 60px;
+        }
+        .favorite-item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 10px;
+          cursor: pointer;
+          transition: transform 0.2s;
+        }
+        .favorite-item:hover {
+          transform: scale(1.05);
+        }
+        .favorite-icon {
+          width: 64px;
+          height: 64px;
+          background: #fff;
+          border-radius: 14px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 24px;
+        }
+        .favorite-icon.wikihow {
+          background: #fff;
+        }
+        .favorite-icon.wikihow .wiki { color: #333; font-weight: 800; }
+        .favorite-icon.wikihow .how { color: #93be3d; font-weight: 800; }
+        .favorite-icon.amazon {
+          background: #232f3e;
+          color: #ff9900;
+        }
+        .favorite-icon.mewing {
+          background: #fff;
+          color: #ff6b6b;
+        }
+        .favorite-icon.aurapoints {
+          background: #000;
+          color: #ffd700;
+        }
+        .favorite-icon.fanum {
+          background: #fff;
+          color: #e67e22;
+        }
+        .favorite-icon.ohio {
+          background: #fff;
+          color: #3498db;
+        }
+        .favorite-title {
+          font-size: 12px;
+          color: #333;
+          font-weight: 500;
+          white-space: nowrap;
+        }
+        .recent-searches {
+          margin-bottom: 40px;
+        }
+        .recent-searches h2 {
+          font-size: 18px;
+          font-weight: 700;
+          margin-bottom: 15px;
+          color: #1a1a1a;
+        }
+        .search-history-list {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+        .search-history-item {
+          display: flex;
+          align-items: center;
+          gap: 15px;
+          padding: 8px 0;
+          border-bottom: 1px solid #f0f0f0;
+          cursor: pointer;
+          color: #555;
+          font-size: 14px;
+        }
+        .search-history-item i {
+          color: #999;
+          font-size: 12px;
+        }
+        .search-history-item:hover span {
+          text-decoration: underline;
+        }
+        .privacy-report {
+
+          background: #f5f5f7;
+          border-radius: 12px;
+          padding: 20px;
+          display: flex;
+          align-items: center;
+          gap: 20px;
+        }
+        .privacy-report i {
+          font-size: 28px;
+          color: #34c759;
+        }
+        .report-text {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+        .report-text strong {
+          font-size: 16px;
+        }
+        .report-text span {
+          font-size: 13px;
+          color: #666;
+        }
+
+        /* Amazon Wishlist Styles */
+        .amazon-wishlist-container {
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          background: #fff;
+        }
+        .amazon-header {
+          background: #232f3e;
+          color: white;
+          padding: 10px 20px;
+          display: flex;
+          align-items: center;
+          gap: 20px;
+        }
+        .amazon-logo {
+          display: flex;
+          align-items: baseline;
+        }
+        .amazon-logo img {
+          height: 25px;
+          filter: brightness(0) invert(1);
+        }
+        .amazon-logo span {
+          font-size: 14px;
+          margin-left: 2px;
+        }
+        .amazon-search {
+          flex: 1;
+          display: flex;
+          max-width: 600px;
+        }
+        .amazon-search input {
+          flex: 1;
+          padding: 10px 15px;
+          border-radius: 4px 0 0 4px;
+          border: none;
+          outline: none;
+        }
+        .amazon-search button {
+          background: #febd69;
+          border: none;
+          padding: 0 15px;
+          border-radius: 0 4px 4px 0;
+          cursor: pointer;
+          color: #333;
+        }
+        .amazon-nav {
+          display: flex;
+          gap: 20px;
+          font-size: 14px;
+          font-weight: 700;
+        }
+        .cart {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+        }
+        .wishlist-content {
+          display: flex;
+          flex: 1;
+          overflow: hidden;
+        }
+        .wishlist-sidebar {
+          width: 250px;
+          padding: 20px;
+          border-right: 1px solid #ddd;
+          background: #f6f6f6;
+        }
+        .wishlist-sidebar h3 {
+          font-size: 16px;
+          margin-bottom: 20px;
+        }
+        .list-item {
+          padding: 10px;
+          font-size: 14px;
+          cursor: pointer;
+          border-radius: 4px;
+        }
+        .list-item.active {
+          background: #fff;
+          font-weight: 700;
+          border: 1px solid #ddd;
+        }
+        .create-list {
+          margin-top: 20px;
+          color: #007185;
+          font-size: 13px;
+          cursor: pointer;
+        }
+        .wishlist-main {
+          flex: 1;
+          padding: 30px;
+          overflow-y: auto;
+        }
+        .wishlist-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 30px;
+          padding-bottom: 20px;
+          border-bottom: 1px solid #eee;
+        }
+        .wishlist-actions {
+          display: flex;
+          align-items: center;
+          gap: 15px;
+          font-size: 13px;
+        }
+        .invite-btn {
+          background: #fff;
+          border: 1px solid #adb1b8;
+          padding: 5px 15px;
+          border-radius: 20px;
+          cursor: pointer;
+        }
+        .wishlist-items-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+          gap: 20px;
+        }
+        .book-card {
+          display: flex;
+          gap: 20px;
+          padding: 20px;
+          border: 1px solid #eee;
+          border-radius: 8px;
+        }
+        .book-image img {
+          width: 100px;
+          height: 140px;
+          object-fit: contain;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .book-details {
+          flex: 1;
+        }
+        .book-title {
+          font-size: 16px;
+          font-weight: 700;
+          color: #007185;
+          margin-bottom: 5px;
+        }
+        .book-author {
+          font-size: 13px;
+          color: #565959;
+          margin-bottom: 10px;
+        }
+        .book-price {
+          font-size: 18px;
+          font-weight: 700;
+          color: #B12704;
+          margin-bottom: 10px;
+        }
+        .book-meta {
+          font-size: 12px;
+          color: #565959;
+          display: flex;
+          gap: 15px;
+          margin-bottom: 15px;
+        }
+        .add-to-cart-btn {
+          background: #ffd814;
+          border: 1px solid #fcd200;
+          padding: 6px 20px;
+          border-radius: 20px;
+          font-size: 13px;
+          cursor: pointer;
+          box-shadow: 0 2px 5px rgba(213,217,217,.5);
+        }
+        .add-to-cart-btn:hover {
+          background: #f7ca00;
+        }
+
+        /* Amazon Product Page Styles */
+        .amazon-product-page {
+          height: 100%;
+          background: #fff;
+          display: flex;
+          flex-direction: column;
+        }
+        .product-main {
+          padding: 40px;
+          flex: 1;
+          overflow-y: auto;
+        }
+        .product-container {
+          display: flex;
+          gap: 60px;
+          max-width: 1000px;
+          margin: 0 auto;
+        }
+        .product-left img {
+          max-width: 300px;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+          border-radius: 4px;
+        }
+        .product-right {
+          flex: 1;
+        }
+        .product-title {
+          font-size: 24px;
+          font-weight: 500;
+          margin-bottom: 10px;
+          line-height: 1.2;
+        }
+        .product-brand {
+          color: #007185;
+          font-size: 14px;
+          margin-bottom: 10px;
+        }
+        .product-rating {
+          color: #ffa41c;
+          font-size: 14px;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          margin-bottom: 20px;
+        }
+        .product-rating span {
+          color: #007185;
+          margin-left: 10px;
+        }
+        .product-price-section {
+          margin: 20px 0;
+        }
+        .price-label {
+          color: #565959;
+          font-size: 14px;
+          margin-right: 10px;
+        }
+        .price-value {
+          color: #B12704;
+          font-size: 22px;
+          font-weight: 500;
+        }
+        .price-shipping {
+          font-size: 12px;
+          color: #565959;
+        }
+        .product-delivery {
+          font-size: 14px;
+          margin-bottom: 15px;
+        }
+        .product-status {
+          color: #007600;
+          font-size: 18px;
+          font-weight: 700;
+          margin-bottom: 30px;
+        }
+        .product-cta {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          max-width: 250px;
+        }
+        .buy-now-btn, .add-to-cart-btn-large {
+          padding: 10px;
+          border-radius: 20px;
+          border: none;
+          font-size: 14px;
+          cursor: pointer;
+          font-weight: 500;
+        }
+        .buy-now-btn {
+          background: #ffa41c;
+        }
+        .add-to-cart-btn-large {
+          background: #ffd814;
+        }
+        .product-not-found {
+          text-align: center;
+          padding: 100px;
+          color: #666;
+        }
+        .loading-spinner {
+          width: 40px;
+          height: 40px;
+          border: 4px solid #f3f3f3;
+          border-top: 4px solid #febd69;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+          margin: 20px auto;
+        }
+
+
       `}</style>
     </div>
   );
