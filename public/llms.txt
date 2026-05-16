@@ -1,0 +1,61 @@
+# Harshit Agarwal | Portfolio & Research
+
+> Fullstack Developer & System Architect specialized in AI, Scalable Systems, and Immersive Web Experiences.
+
+## Profile
+- **Role**: Founding SDE & System Architect
+- **Location**: India
+- **Education**: B.Tech CSE @ KIIT (9.3 CGPA)
+- **Specialties**: Distributed Systems, Generative AI, Computer Vision, Cross-platform Mobile (Flutter).
+
+## Core Experience
+
+### FamCARE (April 2026 - Present)
+**Fullstack Architect & Lead**
+- Architected a modular FastAPI backend and 3 Flutter apps.
+- Engineered modular monolith with 15+ decoupled services.
+- Optimized deployment velocity by 70% via CI/CD.
+- Handled 2,000+ requests/minute with 100% success rate.
+
+### endorphind (Jan 2026 - Present)
+**Founding SDE (AI & Systems)**
+- Engineered Generative Video AI pipelines (Wan 2.1, LatentSync).
+- Developed custom ComfyUI nodes for automated media production.
+- Leading platform technical scoping and managing SDE teams.
+
+### shoppin' (Dec 2024 - Nov 2025)
+**Founding ML Engineer (AI/Infra)**
+- Built multimodal ML pipelines for 3-4 crore items.
+- Deployed CLIP/VLLM systems on AWS SageMaker.
+- Architected AWS EKS clusters with Terraform and GitOps.
+
+## Key Projects
+
+### WHAM! OTT
+- Hybrid video engine (H264/HLS) with immersive "Living Comic Book" design.
+- Tech: React 18, Vite, FastAPI, Supabase.
+
+### PreviouslyOn
+- Social TV tracking app with Gemini AI recommendations.
+- Tech: Next.js, Supabase.
+
+### ORB-SLAM3 Research
+- Accurate Open-Source Library for Visual, Visual-Inertial and Multi-Map SLAM.
+- Presented at NISER SMLAB TALKS.
+
+## Technical Skills
+- **Languages**: Python, C/C++, Go, JS/TS, Kotlin, C#.
+- **Frameworks**: NextJS, React, Flutter, FastAPI, PyTorch, TensorFlow.
+- **Cloud/DevOps**: AWS, Docker, K8s, Terraform, CI/CD.
+- **Databases**: PostgreSQL, MongoDB, Redis, Firebase.
+
+## Contact & Links
+- **Website**: https://aharshit123456.space
+- **GitHub**: https://github.com/aharshit123456
+- **LinkedIn**: https://www.linkedin.com/in/aharshit123456/
+- **Email**: aharshit123456@gmail.com
+
+## Latest Blogs
+- [FamCARE Distributed Marketplace](https://aharshit123456.space/blog/famcare-marketplace)
+- [FamCARE Pricing Engine](https://aharshit123456.space/blog/famcare-pricing-engine)
+- [ORB-SLAM3: Accurate Open-Source SLAM](https://aharshit123456.space/blog/orb-slam3)
