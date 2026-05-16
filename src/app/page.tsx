@@ -105,7 +105,9 @@ export default function Portfolio() {
 
   const [isReadingArticle, setIsReadingArticle] = useState(false);
   const [articleTimer, setArticleTimer] = useState(0);
-  const [isPetTriggered, setIsPetTriggered] = useState(false);
+  const [isPetTriggered, setIsPetTriggered] = useState(false); // Cat
+  const [terminalCmdCount, setTerminalCmdCount] = useState(0);
+  const [isCrabTriggered, setIsCrabTriggered] = useState(false); // Crab
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -453,6 +455,12 @@ export default function Portfolio() {
   const handleTerminalCommand = (cmd: string) => {
     if (cmd === 'matrix-start') setIsMatrixActive(true);
     if (cmd === 'matrix-stop') setIsMatrixActive(false);
+    
+    setTerminalCmdCount(prev => {
+      const next = prev + 1;
+      if (next >= 5) setIsCrabTriggered(true);
+      return next;
+    });
   };
 
   const openQuickLook = (images: string[], index: number, altPrefix: string) => {
@@ -1858,7 +1866,9 @@ export default function Portfolio() {
       {isMobile && (
         <div className="home-indicator" onClick={minimizeAllWindows}></div>
       )}
-      <DesktopPet trigger={isPetTriggered} />
+      <DesktopPet type="cat" trigger={isPetTriggered} />
+      <DesktopPet type="frog" trigger={isMatrixActive} />
+      <DesktopPet type="crab" trigger={isCrabTriggered} />
     </div>
   );
 
