@@ -23,7 +23,7 @@ export default function BubbleWrap() {
     setPopCount(prev => prev + 1);
 
     if (typeof window !== 'undefined' && window.navigator && window.navigator.vibrate) {
-      window.navigator.vibrate(10);
+      window.navigator.vibrate([20, 10, 30]); // Stronger, "crunchy" pop pattern
     }
   };
 
