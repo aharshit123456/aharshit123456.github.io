@@ -51,7 +51,7 @@ export default function PixelCharacter({ isWalking = false, flip = false }: Pixe
     }
 
     setIsSpinning(true);
-    setTimeout(() => setIsSpinning(false), 1000);
+    setTimeout(() => setIsSpinning(false), 1500);
   };
 
   return (
@@ -62,7 +62,7 @@ export default function PixelCharacter({ isWalking = false, flip = false }: Pixe
         opacity: 1,
         rotate: isWalking ? [0, -2, 2, 0] : 0,
         scaleX: flip ? -1 : 1,
-        scale: isMature ? 1.4 : 1, // Grow big
+        scale: isMature ? 1.4 : 1,
       }}
       transition={{ 
         y: { repeat: isWalking ? Infinity : 0, duration: 0.4 },
@@ -76,123 +76,102 @@ export default function PixelCharacter({ isWalking = false, flip = false }: Pixe
         position: 'relative',
         filter: 'drop-shadow(0 10px 15px rgba(0,0,0,0.3))',
         cursor: 'pointer',
-        transformOrigin: 'bottom center'
+        transformOrigin: 'bottom center',
+        perspective: '1000px',
+        transformStyle: 'preserve-3d'
       }}
     >
-      <motion.svg
-        viewBox={isMature ? "0 0 32 48" : "0 0 32 32"}
+      <motion.div
         animate={{ 
-          rotate: isSpinning ? 360 : 0,
+          rotateY: isSpinning ? 720 : 0,
         }}
         transition={{ 
-          duration: 1, 
+          duration: 1.5, 
           ease: "easeInOut" 
         }}
         style={{
           width: '100%',
           height: '100%',
-          imageRendering: 'pixelated'
+          position: 'relative',
+          transformStyle: 'preserve-3d'
         }}
       >
-        {!isMature ? (
-          <>
-            {/* Chibi Herta (Existing Design) */}
-            <rect x="6" y="10" width="20" height="14" fill="#6b7280" />
-            <rect x="5" y="12" width="22" height="10" fill="#6b7280" />
-            <rect x="10" y="20" width="12" height="8" fill="#1e293b" />
-            <rect x="9" y="22" width="14" height="6" fill="#1e293b" />
-            <rect x="11" y="24" width="10" height="6" fill="#f8fafc" />
-            <motion.g animate={{ rotate: isSpinning ? [0, 20, -20, 0] : (isWalking ? [0, 10, -10, 0] : 0) }} transition={{ repeat: isWalking ? Infinity : 0, duration: 0.4 }}>
-              <rect x="6" y="21" width="5" height="3" fill="#1e293b" />
-              <rect x="21" y="21" width="5" height="3" fill="#1e293b" />
-              <rect x="5" y="21" width="1" height="3" fill="#f8fafc" />
-              <rect x="26" y="21" width="1" height="3" fill="#f8fafc" />
-            </motion.g>
-            <rect x="8" y="8" width="16" height="14" rx="2" fill="#fff1f2" />
-            <rect x="7" y="7" width="18" height="5" fill="#94a3b8" />
-            <rect x="7" y="12" width="3" height="6" fill="#94a3b8" />
-            <rect x="22" y="12" width="3" height="6" fill="#94a3b8" />
-            <rect x="10" y="7" width="12" height="2" fill="#475569" />
-            <rect x="20" y="9" width="4" height="2" fill="#a855f7" opacity="0.6" />
-            <rect x="9" y="5" width="14" height="4" rx="1" fill="#0f172a" />
-            <rect x="15" y="4" width="2" height="2" fill="#a855f7" />
-            <motion.g animate={{ x: mousePos.x, y: mousePos.y }}>
-              {!blink ? (
-                <>
-                  <rect x="11" y="14" width="3" height="4" fill="#7e22ce" />
-                  <rect x="18" y="14" width="3" height="4" fill="#7e22ce" />
-                  <rect x="11" y="14" width="1" height="1" fill="#fff" opacity="0.8" />
-                  <rect x="18" y="14" width="1" height="1" fill="#fff" opacity="0.8" />
-                </>
-              ) : (
-                <>
-                  <rect x="11" y="16" width="3" height="1" fill="#7e22ce" />
-                  <rect x="18" y="16" width="3" height="1" fill="#7e22ce" />
-                </>
-              )}
-              <rect x="15" y="19" width="2" height="1" fill="#475569" opacity="0.5" />
-            </motion.g>
-            <rect x="9" y="18" width="2" height="1" fill="#fda4af" opacity="0.6" />
-            <rect x="21" y="18" width="2" height="1" fill="#fda4af" opacity="0.6" />
-            <rect x="14" y="21" width="4" height="1" fill="#eab308" />
-            <rect x="15" y="22" width="2" height="2" fill="#eab308" />
-          </>
-        ) : (
-          <>
-            {/* Mature Madam Herta Design */}
-            
-            {/* Long Hair (Back) */}
-            <rect x="6" y="18" width="20" height="25" fill="#6b7280" />
-            <rect x="4" y="22" width="24" height="20" fill="#4b5563" />
+        {/* FRONT SIDE */}
+        <div style={{ position: 'absolute', inset: 0, backfaceVisibility: 'hidden', transformStyle: 'preserve-3d', transform: 'translateZ(1px)' }}>
+          <svg viewBox={isMature ? "0 0 32 48" : "0 0 32 32"} style={{ width: '100%', height: '100%', imageRendering: 'pixelated' }}>
+            {!isMature ? (
+              <>
+                {/* Chibi Herta Front */}
+                <rect x="6" y="10" width="20" height="14" fill="#6b7280" />
+                <rect x="5" y="12" width="22" height="10" fill="#6b7280" />
+                <rect x="10" y="20" width="12" height="8" fill="#1e293b" />
+                <rect x="11" y="24" width="10" height="6" fill="#f8fafc" />
+                <motion.g animate={{ rotate: isWalking ? [0, 10, -10, 0] : 0 }} transition={{ repeat: isWalking ? Infinity : 0, duration: 0.4 }}>
+                  <rect x="6" y="21" width="5" height="3" fill="#1e293b" />
+                  <rect x="21" y="21" width="5" height="3" fill="#1e293b" />
+                </motion.g>
+                <rect x="8" y="8" width="16" height="14" rx="2" fill="#fff1f2" />
+                <rect x="7" y="7" width="18" height="5" fill="#94a3b8" />
+                <rect x="7" y="12" width="3" height="6" fill="#94a3b8" />
+                <rect x="22" y="12" width="3" height="6" fill="#94a3b8" />
+                <rect x="9" y="5" width="14" height="4" rx="1" fill="#0f172a" />
+                <rect x="15" y="4" width="2" height="2" fill="#a855f7" />
+                <motion.g animate={{ x: mousePos.x, y: mousePos.y }}>
+                  {!blink ? (
+                    <><rect x="11" y="14" width="3" height="4" fill="#7e22ce" /><rect x="18" y="14" width="3" height="4" fill="#7e22ce" /></>
+                  ) : (
+                    <><rect x="11" y="16" width="3" height="1" fill="#7e22ce" /><rect x="18" y="16" width="3" height="1" fill="#7e22ce" /></>
+                  )}
+                </motion.g>
+                <rect x="14" y="21" width="4" height="1" fill="#eab308" />
+              </>
+            ) : (
+              <>
+                {/* Mature Herta Front */}
+                <rect x="6" y="18" width="20" height="25" fill="#6b7280" />
+                <rect x="4" y="12" width="24" height="2" fill="#0f172a" />
+                <path d="M10 12 L16 2 L22 12 Z" fill="#0f172a" />
+                <rect x="10" y="24" width="12" height="18" fill="#1e293b" />
+                <rect x="11" y="26" width="10" height="4" fill="#f8fafc" />
+                <rect x="14" y="27" width="4" height="1" fill="#eab308" />
+                <rect x="11" y="16" width="10" height="10" rx="1" fill="#fff1f2" />
+                <rect x="10" y="15" width="12" height="4" fill="#94a3b8" />
+                <motion.g animate={{ x: mousePos.x * 0.5, y: mousePos.y * 0.5 }}>
+                  {!blink ? (
+                    <><rect x="13" y="19" width="2" height="3" fill="#7e22ce" /><rect x="17" y="19" width="2" height="3" fill="#7e22ce" /></>
+                  ) : (
+                    <rect x="13" y="20" width="6" height="1" fill="#7e22ce" />
+                  )}
+                </motion.g>
+              </>
+            )}
+          </svg>
+        </div>
 
-            {/* Witch Hat (Large) */}
-            <rect x="4" y="12" width="24" height="2" fill="#0f172a" /> {/* Brim */}
-            <path d="M10 12 L16 2 L22 12 Z" fill="#0f172a" /> {/* Cone */}
-            <rect x="12" y="8" width="8" height="2" fill="#7e22ce" opacity="0.5" /> {/* Purple ribbon */}
-            <rect x="10" y="10" width="3" height="3" fill="#a855f7" /> {/* Flower 1 */}
-            <rect x="14" y="9" width="3" height="3" fill="#a855f7" /> {/* Flower 2 */}
-
-            {/* Body / Elegant Dress */}
-            <rect x="10" y="24" width="12" height="18" fill="#1e293b" /> {/* Main dress */}
-            <rect x="9" y="30" width="14" height="12" fill="#1e293b" />
-            <rect x="11" y="26" width="10" height="4" fill="#f8fafc" /> {/* Chest/White part */}
-            <rect x="14" y="27" width="4" height="1" fill="#eab308" /> {/* Gold key decoration */}
-            
-            {/* Purple Skirt Highlights */}
-            <rect x="8" y="38" width="16" height="4" fill="#7e22ce" opacity="0.3" />
-            <rect x="10" y="42" width="12" height="4" fill="#a855f7" opacity="0.2" />
-
-            {/* Arms with Frills */}
-            <motion.g animate={{ rotate: isSpinning ? [0, 30, -30, 0] : 0 }}>
-              <rect x="5" y="26" width="5" height="12" fill="#1e293b" /> {/* Left long sleeve */}
-              <rect x="22" y="26" width="5" height="12" fill="#1e293b" /> {/* Right long sleeve */}
-              <rect x="4" y="35" width="7" height="4" fill="#f8fafc" opacity="0.8" /> {/* Frills */}
-              <rect x="21" y="35" width="7" height="4" fill="#f8fafc" opacity="0.8" />
-            </motion.g>
-
-            {/* Legs */}
-            <rect x="12" y="42" width="3" height="6" fill="#334155" />
-            <rect x="17" y="42" width="3" height="6" fill="#334155" />
-
-            {/* Head */}
-            <rect x="11" y="16" width="10" height="10" rx="1" fill="#fff1f2" />
-            <rect x="10" y="15" width="12" height="4" fill="#94a3b8" /> {/* Hair bangs */}
-
-            {/* Face Details */}
-            <motion.g animate={{ x: mousePos.x * 0.5, y: mousePos.y * 0.5 }}>
-              {!blink ? (
-                <>
-                  <rect x="13" y="19" width="2" height="3" fill="#7e22ce" />
-                  <rect x="17" y="19" width="2" height="3" fill="#7e22ce" />
-                  <rect x="13" y="19" width="1" height="1" fill="#fff" opacity="0.9" />
-                </>
-              ) : (
-                <rect x="13" y="20" width="6" height="1" fill="#7e22ce" />
-              )}
-            </motion.g>
-          </>
-        )}
-      </motion.svg>
+        {/* BACK SIDE (Darker / Hair view) */}
+        <div style={{ position: 'absolute', inset: 0, backfaceVisibility: 'hidden', transform: 'rotateY(180deg) translateZ(1px)', transformStyle: 'preserve-3d' }}>
+          <svg viewBox={isMature ? "0 0 32 48" : "0 0 32 32"} style={{ width: '100%', height: '100%', imageRendering: 'pixelated', filter: 'brightness(0.8)' }}>
+            {!isMature ? (
+              <>
+                {/* Chibi Herta Back */}
+                <rect x="6" y="10" width="20" height="14" fill="#6b7280" />
+                <rect x="5" y="12" width="22" height="12" fill="#6b7280" />
+                <rect x="10" y="20" width="12" height="8" fill="#111827" />
+                <rect x="8" y="8" width="16" height="14" rx="2" fill="#6b7280" />
+                <rect x="9" y="5" width="14" height="4" rx="1" fill="#0f172a" />
+              </>
+            ) : (
+              <>
+                {/* Mature Herta Back */}
+                <rect x="6" y="18" width="20" height="28" fill="#4b5563" />
+                <path d="M10 12 L16 2 L22 12 Z" fill="#020617" />
+                <rect x="10" y="24" width="12" height="18" fill="#0f172a" />
+                <rect x="11" y="16" width="10" height="10" fill="#4b5563" />
+              </>
+            )}
+          </svg>
+        </div>
+      </motion.div>
 
       {/* Speech Bubble */}
       {(isSpinning || isMature) && (
