@@ -19,6 +19,9 @@ import SiriAssistant from '@/components/portfolio/SiriAssistant';
 import DocumentsManager from '../components/portfolio/DocumentsManager';
 import SecretBoss from '../components/portfolio/SecretBoss';
 import MessagesView from '@/components/portfolio/MessagesView';
+import BrowserView from '@/components/portfolio/BrowserView';
+import DesktopPet from '@/components/portfolio/DesktopPet';
+
 
 type Tab = {
   id: string;
@@ -61,7 +64,13 @@ export default function Portfolio() {
   const [isDocsOpen, setIsDocsOpen] = useState(false);
   const [isDocsMinimized, setIsDocsMinimized] = useState(false);
   const [docsIconPosition, setDocsIconPosition] = useState({ x: 40, y: 140 });
+
+  const [isBrowserOpen, setIsBrowserOpen] = useState(false);
+  const [isBrowserMinimized, setIsBrowserMinimized] = useState(false);
+  const [browserIconPosition, setBrowserIconPosition] = useState({ x: 40, y: 440 });
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const [hasMounted, setHasMounted] = useState(false);
   const [isControlCenterOpen, setIsControlCenterOpen] = useState(false);
   const [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
@@ -90,9 +99,33 @@ export default function Portfolio() {
     main: { x: 50, y: 50 },
     docs: { x: 120, y: 120 },
     messages: { x: 100, y: 100 },
+    browser: { x: 80, y: 80 },
     ql: { x: 0, y: 0 }
   });
-  const activeDragWindow = useRef<'terminal' | 'freelance' | 'dmg' | 'main' | 'docs' | 'messages' | 'ql' | null>(null);
+
+  const [isReadingArticle, setIsReadingArticle] = useState(false);
+  const [articleTimer, setArticleTimer] = useState(0);
+  const [isPetTriggered, setIsPetTriggered] = useState(false);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (isReadingArticle && !isPetTriggered) {
+      timer = setInterval(() => {
+        setArticleTimer(prev => {
+          if (prev >= 15) { // 15 seconds of reading triggers the pet
+            setIsPetTriggered(true);
+            return 0;
+          }
+          return prev + 1;
+        });
+      }, 1000);
+    } else {
+      setArticleTimer(0);
+    }
+    return () => clearInterval(timer);
+  }, [isReadingArticle, isPetTriggered]);
+  const activeDragWindow = useRef<'terminal' | 'freelance' | 'dmg' | 'main' | 'docs' | 'messages' | 'browser' | 'ql' | null>(null);
+
   const windowDragOffset = useRef({ x: 0, y: 0 });
   const [contextMenu, setContextMenu] = useState<{ visible: boolean; x: number; y: number }>({ visible: false, x: 0, y: 0 });
 
@@ -104,7 +137,8 @@ export default function Portfolio() {
       window.navigator.vibrate(pattern);
     }
   };
-  const activeDragIcon = useRef<'main' | 'freelance' | 'terminal' | 'resume' | 'docs' | null>(null);
+  const activeDragIcon = useRef<'main' | 'freelance' | 'terminal' | 'resume' | 'docs' | 'browser' | null>(null);
+
 
   const [activeSpace, setActiveSpace] = useState(0); // 0: Desktop, 1: Fullscreen
   const [fullscreenWindow, setFullscreenWindow] = useState<'main' | 'freelance' | 'terminal' | null>(null);
@@ -232,9 +266,11 @@ export default function Portfolio() {
     setIsDocsMinimized(true);
     setIsMessagesMinimized(true);
     setIsFreelanceMinimized(true);
+    setIsBrowserMinimized(true);
     setIsDMGOpen(false);
     setActiveSpace(0);
   };
+
 
   const handleWindowMouseDown = (e: React.MouseEvent, type: keyof typeof windowPositions) => {
     activeDragWindow.current = type;
@@ -260,8 +296,10 @@ export default function Portfolio() {
     if (type === 'freelance' && isFreelanceOpen && !isFreelanceMinimized) return;
     if (type === 'terminal' && isTerminalOpen && !isTerminalMinimized) return;
     if (type === 'docs' && isDocsOpen && !isDocsMinimized) return;
+    if (type === 'browser' && isBrowserOpen && !isBrowserMinimized) return;
 
-    activeDragIcon.current = type;
+    activeDragIcon.current = type as any;
+
     const pos = type === 'main' ? iconPosition :
       type === 'freelance' ? freelanceIconPosition :
         type === 'terminal' ? terminalIconPosition :
@@ -309,8 +347,11 @@ export default function Portfolio() {
         setDocsIconPosition({ x: boundedX, y: boundedY });
       } else if (activeDragIcon.current === 'resume') {
         setResumeIconPosition({ x: boundedX, y: boundedY });
+      } else if (activeDragIcon.current === 'browser') {
+        setBrowserIconPosition({ x: boundedX, y: boundedY });
       }
     };
+
 
     const handleMouseUp = () => {
       activeDragIcon.current = null;
@@ -464,9 +505,13 @@ export default function Portfolio() {
         else setIsTerminalMinimized(!isTerminalMinimized);
       } else if (type === 'resume') {
         setIsDMGOpen(true);
+      } else if (type === 'browser') {
+        if (!isBrowserOpen) setIsBrowserOpen(true);
+        else setIsBrowserMinimized(!isBrowserMinimized);
       }
     }
   };
+
 
   const renderMainContent = () => (
     <>
@@ -1322,7 +1367,32 @@ export default function Portfolio() {
             </div>
           )}
 
+          {/* Browser Window */}
+          {isBrowserOpen && (
+            <div className={`mac-window browser-window ${isBrowserMinimized ? 'minimized' : ''} ${isMobile ? 'fullscreen-view' : ''}`} style={!isMobile ? {
+              position: 'absolute',
+              top: `${windowPositions.browser.y}px`,
+              left: `${windowPositions.browser.x}px`,
+              zIndex: 65,
+              width: '900px',
+              height: '650px'
+            } : { zIndex: 65 }}>
+              <div className="title-bar" onMouseDown={(e) => handleWindowMouseDown(e, 'browser')}>
+                <div className="buttons">
+                  <div className="close" title="Close" onClick={(e) => { e.stopPropagation(); setIsBrowserOpen(false); }}></div>
+                  <div className="minimize" title="Minimize" onClick={(e) => { e.stopPropagation(); setIsBrowserMinimized(true); }}></div>
+                  <div className="maximize" title="Maximize"></div>
+                </div>
+                <div className="window-title">Safari — wikiHow</div>
+              </div>
+              <div className="content-container" style={{ padding: 0, height: 'calc(100% - 35px)' }}>
+                <BrowserView onArticleView={(isArticle) => setIsReadingArticle(isArticle && isBrowserOpen && !isBrowserMinimized)} />
+              </div>
+            </div>
+          )}
+
           {/* Terminal Window */}
+
           {isTerminalOpen && (
             <div className={`mac-window terminal-window ${isTerminalMinimized ? 'minimized' : ''} ${isMobile ? 'fullscreen-view' : ''}`} style={!isMobile ? {
               position: 'absolute',
@@ -1574,8 +1644,26 @@ export default function Portfolio() {
                 </div>
                 <div className="icon-label">resume.dmg</div>
               </div>
+
+              <div
+                className={`minimized-icon ${activeDragIcon.current === 'browser' ? 'dragging' : ''}`}
+                onMouseDown={(e) => handleMouseDown(e, 'browser')}
+                onClick={() => handleIconClick('browser')}
+                style={{
+                  left: `${browserIconPosition.x}px`,
+                  bottom: `${browserIconPosition.y}px`,
+                  position: 'absolute'
+                }}
+                title="Safari"
+              >
+                <div className="icon-image">
+                  <img src="https://img.icons8.com/color/512/safari.png" alt="Safari" draggable="false" />
+                </div>
+                <div className="icon-label">Safari.app</div>
+              </div>
             </>
           )}
+
         </div>
 
         {/* Space 2: Fullscreen App */}
@@ -1661,7 +1749,9 @@ export default function Portfolio() {
           { id: 'launchpad', name: 'Launchpad', icon: 'https://img.icons8.com/color/512/launchpad.png', onClick: () => { playSound('funk'); setIsLaunchpadOpen(true); }, isOpen: false },
           { id: 'terminal', name: 'Terminal', icon: '/terminal_icon.png', onClick: () => { playSound('funk'); setIsTerminalOpen(true); }, isOpen: isTerminalOpen },
           { id: 'resume', name: 'Resume DMG', icon: '/dmg_icon.png', onClick: () => { playSound('funk'); setIsDMGOpen(true); }, isOpen: isDMGOpen },
+          { id: 'browser', name: 'Safari', icon: 'https://img.icons8.com/color/512/safari.png', onClick: () => { playSound('funk'); setIsBrowserOpen(true); setIsBrowserMinimized(false); }, isOpen: isBrowserOpen && !isBrowserMinimized },
           { id: 'settings', name: 'System Settings', icon: '/apps_icon.png', onClick: () => { playSound('funk'); setIsWallpaperSwitcherOpen(true); } },
+
           { id: 'github', name: 'GitHub', icon: '/git.png', onClick: () => window.open('https://github.com/aharshit123456', '_blank') },
           { id: 'linkedin', name: 'LinkedIn', icon: '/linkedin.png', onClick: () => window.open('https://www.linkedin.com/in/aharshit123456/', '_blank') },
         ]}
@@ -1676,7 +1766,9 @@ export default function Portfolio() {
           { id: 'resume', name: 'Resume DMG', icon: '/dmg_icon.png', onClick: () => setIsDMGOpen(true) },
           { id: 'settings', name: 'System Settings', icon: '/apps_icon.png', onClick: () => setIsWallpaperSwitcherOpen(true) },
           { id: 'github', name: 'GitHub', icon: '/git.png', onClick: () => window.open('https://github.com/aharshit123456', '_blank') },
+          { id: 'browser', name: 'Safari', icon: 'https://img.icons8.com/color/512/safari.png', onClick: () => setIsBrowserOpen(true) },
           { id: 'linkedin', name: 'LinkedIn', icon: '/linkedin.png', onClick: () => window.open('https://www.linkedin.com/in/aharshit123456/', '_blank') },
+
           { id: 'spotify', name: 'Spotify', icon: 'https://img.icons8.com/color/512/spotify.png', onClick: () => { 
             setActiveTabId('main'); 
             setIsMinimized(false); 
@@ -1724,7 +1816,9 @@ export default function Portfolio() {
           { id: 'terminal', name: 'Terminal', icon: '/terminal_icon.png', onClick: () => setIsTerminalOpen(true) },
           { id: 'resume', name: 'Resume DMG', icon: '/dmg_icon.png', onClick: () => setIsDMGOpen(true) },
           { id: 'settings', name: 'System Settings', icon: '/apps_icon.png', onClick: () => setIsWallpaperSwitcherOpen(true) },
+          { id: 'browser', name: 'Safari', icon: 'https://img.icons8.com/color/512/safari.png', onClick: () => setIsBrowserOpen(true) },
           { id: 'github', name: 'GitHub', icon: '/git.png', onClick: () => window.open('https://github.com/aharshit123456', '_blank') },
+
         ]}
       />
 
@@ -1764,6 +1858,7 @@ export default function Portfolio() {
       {isMobile && (
         <div className="home-indicator" onClick={minimizeAllWindows}></div>
       )}
+      <DesktopPet trigger={isPetTriggered} />
     </div>
   );
 
