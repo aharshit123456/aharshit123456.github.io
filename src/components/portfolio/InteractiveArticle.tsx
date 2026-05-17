@@ -57,6 +57,7 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [dbMode, setDbMode] = useState<'supabase' | 'local'>('local');
   const [isMounted, setIsMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   
   // Selection-driven comments state
   const [selectionCoords, setSelectionCoords] = useState<SelectionCoords | null>(null);
@@ -71,6 +72,16 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isMounted]);
 
   // Fetch comments for this article
   const fetchComments = async () => {
@@ -104,72 +115,88 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
     fetchComments();
   }, [slug]);
 
-  // Text selection listener inside the article with 100ms debounce to prevent layout thrashing lag
+  // Text selection listener inside the article with 100ms debounce and touchend safety fallback
   useEffect(() => {
     if (!isMounted) return;
 
     let debounceTimeout: NodeJS.Timeout;
 
+    const checkSelection = () => {
+      const selection = window.getSelection();
+      if (!selection || selection.rangeCount === 0 || selection.isCollapsed) {
+        setSelectionCoords(null);
+        return;
+      }
+
+      const range = selection.getRangeAt(0);
+      const text = selection.toString().trim();
+
+      // Cap selected text length for bubble and db
+      if (text.length < 3 || text.length > 300) {
+        setSelectionCoords(null);
+        return;
+      }
+
+      const articleNode = articleRef.current;
+      if (articleNode && articleNode.contains(range.commonAncestorContainer)) {
+        const rects = range.getClientRects();
+        if (rects.length > 0) {
+          const rect = rects[0];
+          const containerRect = articleNode.getBoundingClientRect();
+
+          // Calculate parent element block ID
+          let containerElement: HTMLElement | null = range.commonAncestorContainer as HTMLElement;
+          if (containerElement.nodeType === Node.TEXT_NODE) {
+            containerElement = containerElement.parentElement;
+          }
+
+          // Climb up to find nearest paragraph / block
+          let blockElement = containerElement;
+          while (
+            blockElement &&
+            blockElement !== articleNode &&
+            !blockElement.classList.contains('interactive-block-wrapper')
+          ) {
+            blockElement = blockElement.parentElement as HTMLElement;
+          }
+
+          const blockId = blockElement?.id?.replace('wrap-', '') || 'general';
+
+          // Center the comment trigger button 40px above selection
+          setSelectionCoords({
+            x: rect.left + rect.width / 2 - containerRect.left,
+            y: rect.top - containerRect.top - 40,
+            blockId,
+            selectedText: text
+          });
+        }
+      } else {
+        setSelectionCoords(null);
+      }
+    };
+
     const handleSelectionChange = () => {
       clearTimeout(debounceTimeout);
-      debounceTimeout = setTimeout(() => {
-        const selection = window.getSelection();
-        if (!selection || selection.rangeCount === 0 || selection.isCollapsed) {
-          setSelectionCoords(null);
-          return;
-        }
+      debounceTimeout = setTimeout(checkSelection, 100);
+    };
 
-        const range = selection.getRangeAt(0);
-        const text = selection.toString().trim();
-
-        // Cap selected text length for bubble and db
-        if (text.length < 3 || text.length > 300) {
-          setSelectionCoords(null);
-          return;
-        }
-
-        const articleNode = articleRef.current;
-        if (articleNode && articleNode.contains(range.commonAncestorContainer)) {
-          const rects = range.getClientRects();
-          if (rects.length > 0) {
-            const rect = rects[0];
-            const containerRect = articleNode.getBoundingClientRect();
-
-            // Calculate parent element block ID
-            let containerElement: HTMLElement | null = range.commonAncestorContainer as HTMLElement;
-            if (containerElement.nodeType === Node.TEXT_NODE) {
-              containerElement = containerElement.parentElement;
-            }
-
-            // Climb up to find nearest paragraph / block
-            let blockElement = containerElement;
-            while (
-              blockElement &&
-              blockElement !== articleNode &&
-              !blockElement.classList.contains('interactive-block-wrapper')
-            ) {
-              blockElement = blockElement.parentElement as HTMLElement;
-            }
-
-            const blockId = blockElement?.id?.replace('wrap-', '') || 'general';
-
-            // Center the comment trigger button 40px above selection
-            setSelectionCoords({
-              x: rect.left + rect.width / 2 - containerRect.left,
-              y: rect.top - containerRect.top - 40,
-              blockId,
-              selectedText: text
-            });
-          }
-        } else {
-          setSelectionCoords(null);
-        }
-      }, 100);
+    const handleTouchEnd = () => {
+      // Small 80ms delay to let mobile OS finalize text selection coordinates
+      setTimeout(checkSelection, 80);
     };
 
     document.addEventListener('selectionchange', handleSelectionChange);
+    
+    const articleNode = articleRef.current;
+    if (articleNode) {
+      articleNode.addEventListener('touchend', handleTouchEnd);
+    }
+
     return () => {
       document.removeEventListener('selectionchange', handleSelectionChange);
+      if (articleNode) {
+        articleNode.removeEventListener('touchend', handleTouchEnd);
+      }
       clearTimeout(debounceTimeout);
     };
   }, [isMounted]);
@@ -311,8 +338,8 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
   return (
     <div className="interactive-article-canvas" ref={articleRef} style={{ position: 'relative' }}>
       
-      {/* Floating Selection Comment Icon (Medium / Notion style) */}
-      {isMounted && selectionCoords && (
+      {/* Floating Selection Comment Icon (Medium / Notion style) - Desktop Only */}
+      {isMounted && selectionCoords && !isMobile && (
         <button
           className="floating-selection-comment-btn"
           style={{
@@ -324,6 +351,23 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
         >
           <span>💬</span> Discuss highlight
         </button>
+      )}
+
+      {/* Fixed Bottom Selection Actions Bar - Mobile Only (Portalled to document.body to prevent parent clipping) */}
+      {isMounted && selectionCoords && isMobile && typeof document !== 'undefined' && createPortal(
+        <div className="mobile-selection-bar">
+          <div className="mobile-selection-bar-text">
+            <span>Discuss Selection</span>
+            <p>"{selectionCoords.selectedText}"</p>
+          </div>
+          <button 
+            className="mobile-selection-bar-btn"
+            onClick={() => handleOpenComment(selectionCoords.blockId, selectionCoords.selectedText)}
+          >
+            💬 Discuss
+          </button>
+        </div>,
+        document.body
       )}
 
       {/* Markdown Body */}
@@ -1050,6 +1094,82 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
             width: 100% !important;
             text-align: center !important;
           }
+        }
+
+        /* Mobile Selection Bar Styles */
+        .mobile-selection-bar {
+          position: fixed !important;
+          bottom: 24px !important;
+          left: 20px !important;
+          right: 20px !important;
+          background: rgba(15, 23, 42, 0.95) !important;
+          backdrop-filter: blur(12px) !important;
+          -webkit-backdrop-filter: blur(12px) !important;
+          border: 1px solid rgba(255, 255, 255, 0.15) !important;
+          border-radius: 20px !important;
+          padding: 12px 18px !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: space-between !important;
+          gap: 12px !important;
+          z-index: 9999 !important;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+          animation: mobileBarAppear 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+          will-change: transform, opacity !important;
+        }
+
+        @keyframes mobileBarAppear {
+          from {
+            transform: translate3d(0, 80px, 0) !important;
+            opacity: 0 !important;
+          }
+          to {
+            transform: translate3d(0, 0, 0) !important;
+            opacity: 1 !important;
+          }
+        }
+
+        .mobile-selection-bar-text {
+          flex: 1 !important;
+          overflow: hidden !important;
+          text-align: left !important;
+        }
+
+        .mobile-selection-bar-text span {
+          font-size: 10px !important;
+          font-weight: 700 !important;
+          color: #94a3b8 !important;
+          text-transform: uppercase !important;
+          display: block !important;
+          margin-bottom: 2px !important;
+        }
+
+        .mobile-selection-bar-text p {
+          margin: 0 !important;
+          font-size: 12.5px !important;
+          color: #ffffff !important;
+          font-style: italic !important;
+          white-space: nowrap !important;
+          overflow: hidden !important;
+          text-overflow: ellipsis !important;
+        }
+
+        .mobile-selection-bar-btn {
+          background: #ff4757 !important;
+          color: #ffffff !important;
+          border: none !important;
+          border-radius: 14px !important;
+          padding: 8px 16px !important;
+          font-size: 12px !important;
+          font-weight: 700 !important;
+          cursor: pointer !important;
+          white-space: nowrap !important;
+          transition: all 0.2s ease !important;
+          outline: none !important;
+        }
+
+        .mobile-selection-bar-btn:active {
+          transform: scale(0.95) !important;
         }
       `}</style>
     </div>
