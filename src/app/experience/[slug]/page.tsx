@@ -52,14 +52,24 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   // Extract the first H1 for the title
   const titleMatch = content.match(/^# (.*)/m);
-  const title = titleMatch ? titleMatch[1] : 'Experience Detail';
+  const title = titleMatch ? titleMatch[1].replace(/&/g, 'and') : 'Experience Detail';
   
-  // Extract the first paragraph for the description
-  const descriptionMatch = content.match(/^(?!#)(.*)/m);
-  const description = descriptionMatch ? descriptionMatch[1].substring(0, 160) : 'Read details about Harshit Agarwal\'s professional experience and accomplishments.';
+  // Extract the first paragraph for the description using our advanced crawler
+  const lines = content.split('\n');
+  const overviewLine = lines.find(line => {
+    const trimmed = line.trim();
+    return trimmed.length > 0 && 
+           !trimmed.startsWith('#') && 
+           !trimmed.startsWith('*') && 
+           !trimmed.startsWith('-') &&
+           !trimmed.includes('Duration:') &&
+           !trimmed.includes('Role:') &&
+           !trimmed.includes('Website:');
+  });
+  const description = overviewLine ? overviewLine.trim().substring(0, 155).replace(/[*_#`\n\r]/g, '').replace(/&/g, 'and') + '...' : 'Read details about Harshit Agarwal\'s professional experience and accomplishments.';
 
   return {
-    title: `${title} | Work Experience`,
+    title: `${title} | Harshit Agarwal Portfolio`,
     description: description,
     alternates: {
       canonical: `https://aharshit123456.space/experience/${slug}`,
@@ -70,13 +80,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       type: 'article',
       url: `https://aharshit123456.space/experience/${slug}`,
       siteName: 'Harshit Agarwal Portfolio',
-      images: [
-        {
-          url: '/og-image.png',
-          width: 1200,
-          height: 630,
-        },
-      ],
     },
     twitter: {
       card: 'summary_large_image',
