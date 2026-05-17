@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import ReactMarkdown from 'react-markdown';
@@ -335,6 +335,53 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
 
   const activeComments = activeBlockId ? (commentsByBlock[activeBlockId] || []) : [];
 
+  const memoizedMarkdownBody = useMemo(() => {
+    return (
+      <ReactMarkdown
+        rehypePlugins={[rehypeRaw]}
+        remarkPlugins={[remarkGfm, remarkAlert]}
+        components={{
+          p: ({ children }) => renderInteractiveBlock('p', children),
+          h2: ({ children }) => renderInteractiveBlock('h2', children),
+          h3: ({ children }) => renderInteractiveBlock('h3', children),
+          li: ({ children }) => renderInteractiveBlock('li', children),
+          blockquote: ({ children }) => renderInteractiveBlock('blockquote', children),
+          img: ({ src, alt }) => {
+            if (!src || typeof src !== 'string') return null;
+            const isScreenshot = src.includes('/assets/famcare') || src.includes('/assets/shoppin');
+            if (isScreenshot) {
+              return (
+                <Image
+                  src={src}
+                  alt={alt || "Screenshot"}
+                  width={210}
+                  height={380}
+                  quality={85}
+                  unoptimized
+                  style={{
+                    borderRadius: '16px',
+                    objectFit: 'cover'
+                  }}
+                />
+              );
+            }
+            return (
+              <img
+                src={src}
+                alt={alt}
+                loading="lazy"
+                decoding="async"
+                style={{ maxWidth: '100%', height: 'auto', borderRadius: '8px' }}
+              />
+            );
+          }
+        }}
+      >
+        {content}
+      </ReactMarkdown>
+    );
+  }, [content, comments]);
+
   return (
     <div className="interactive-article-canvas" ref={articleRef} style={{ position: 'relative' }}>
       
@@ -371,47 +418,7 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
       )}
 
       {/* Markdown Body */}
-      <ReactMarkdown
-        rehypePlugins={[rehypeRaw]}
-        remarkPlugins={[remarkGfm, remarkAlert]}
-        components={{
-          p: ({ children }) => renderInteractiveBlock('p', children),
-          h2: ({ children }) => renderInteractiveBlock('h2', children),
-          h3: ({ children }) => renderInteractiveBlock('h3', children),
-          li: ({ children }) => renderInteractiveBlock('li', children),
-          blockquote: ({ children }) => renderInteractiveBlock('blockquote', children),
-          img: ({ src, alt }) => {
-            if (!src || typeof src !== 'string') return null;
-            const isScreenshot = src.includes('/assets/famcare') || src.includes('/assets/shoppin');
-            if (isScreenshot) {
-              return (
-                <Image
-                  src={src}
-                  alt={alt || "Screenshot"}
-                  width={210}
-                  height={380}
-                  quality={85}
-                  style={{
-                    borderRadius: '16px',
-                    objectFit: 'cover'
-                  }}
-                />
-              );
-            }
-            return (
-              <img
-                src={src}
-                alt={alt}
-                loading="lazy"
-                decoding="async"
-                style={{ maxWidth: '100%', height: 'auto', borderRadius: '8px' }}
-              />
-            );
-          }
-        }}
-      >
-        {content}
-      </ReactMarkdown>
+      {memoizedMarkdownBody}
       {/* General Article Comments Footer Section */}
       {isMounted && (
         <div className="general-comments-footer-box">
