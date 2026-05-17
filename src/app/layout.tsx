@@ -85,6 +85,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossOrigin="anonymous" />
+      </head>
       <body className="dark-mode">
         {children}
         <script
@@ -92,32 +97,63 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "Person",
-              "name": "Harshit Agarwal",
-              "url": "https://aharshit123456.space/",
-              "image": "https://aharshit123456.space/profile_new.jpg",
-              "sameAs": [
-                "https://github.com/aharshit123456",
-                "https://www.linkedin.com/in/aharshit123456/",
-                "https://twitter.com/aharshit123456"
-              ],
-              "jobTitle": "Fullstack Engineer & AI Researcher",
-              "worksFor": [
+              "@graph": [
                 {
-                  "@type": "Organization",
-                  "name": "Famcare"
+                  "@type": "ProfilePage",
+                  "@id": "https://aharshit123456.space/#profilepage",
+                  "url": "https://aharshit123456.space/",
+                  "name": "Harshit Agarwal | Fullstack Engineer & AI Researcher Portfolio",
+                  "description": "Professional space and portfolio of Harshit Agarwal, Fullstack Architect & AI Specialist.",
+                  "mainEntity": {
+                    "@id": "https://aharshit123456.space/#person"
+                  }
                 },
                 {
-                  "@type": "Organization",
-                  "name": "shoppin' (USAR Commerce Technologies)"
+                  "@type": "Person",
+                  "@id": "https://aharshit123456.space/#person",
+                  "name": "Harshit Agarwal",
+                  "url": "https://aharshit123456.space/",
+                  "image": "https://aharshit123456.space/profile_new.jpg",
+                  "sameAs": [
+                    "https://github.com/aharshit123456",
+                    "https://www.linkedin.com/in/aharshit123456/",
+                    "https://twitter.com/aharshit123456"
+                  ],
+                  "jobTitle": "Fullstack Engineer & AI Researcher",
+                  "description": "Harshit Agarwal is a high-performance Fullstack Engineer and AI Researcher specializing in scalable backend architectures, cross-platform mobile ecosystems, and advanced Machine Learning pipelines.",
+                  "knowsAbout": [
+                    "Fullstack Development", "AI/ML", "FastAPI", "Flutter", "Next.js", 
+                    "System Architecture", "Scalable Systems", "Python", "Cloud Infrastructure",
+                    "Deep Learning", "SLAM", "ORB-SLAM3", "Docker", "Kubernetes", "AWS SageMaker",
+                    "WebSockets", "Rancher", "Microservices", "Event-Driven Architecture"
+                  ],
+                  "alumniOf": {
+                    "@type": "EducationalOrganization",
+                    "name": "KIIT University",
+                    "sameAs": "https://kiit.ac.in/"
+                  },
+                  "hasOccupation": [
+                    {
+                      "@type": "Occupation",
+                      "name": "Fullstack Architect & Lead",
+                      "skills": "FastAPI, Flutter, WebSockets, Fastlane, SpringVerify, Razorpay, FCM, Redis",
+                      "description": "Architecting modular monolithic backends and caregiver platforms at Famcare."
+                    },
+                    {
+                      "@type": "Occupation",
+                      "name": "Founding SDE (AI & Systems)",
+                      "skills": "Generative Video, Lip-sync models, ComfyUI custom nodes, Systems engineering",
+                      "description": "Engineering generative video tools and automated media rendering setups at endorphind."
+                    },
+                    {
+                      "@type": "Occupation",
+                      "name": "Founding ML Engineer (AI/Infra)",
+                      "skills": "YOLO, RT-DETR, MaskRCNN, CLIP, SageMaker, EKS, Terraform, GitOps, Rancher",
+                      "description": "Engineered multimodal ML pipelines matching 3-4 crore catalog items at shoppin'."
+                    }
+                  ]
                 }
-              ],
-              "description": "Harshit Agarwal is a high-performance Fullstack Engineer and AI Researcher specializing in scalable backend architectures, cross-platform mobile ecosystems, and advanced Machine Learning pipelines.",
-              "knowsAbout": [
-                "Fullstack Development", "AI/ML", "FastAPI", "Flutter", "Next.js", 
-                "System Architecture", "Scalable Systems", "Python", "Cloud Infrastructure"
-              ],
-              "alumniOf": "KIIT University"
+              ]
             })
           }}
         />

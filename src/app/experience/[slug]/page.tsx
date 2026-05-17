@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import fs from 'fs';
@@ -60,6 +61,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${title} | Work Experience`,
     description: description,
+    alternates: {
+      canonical: `https://aharshit123456.space/experience/${slug}`,
+    },
     openGraph: {
       title: title,
       description: description,
@@ -98,8 +102,37 @@ export default async function ExperiencePage({ params }: { params: Promise<{ slu
     );
   }
 
+  // Dynamic JSON-LD structured data parameters
+  const titleMatch = content.match(/^# (.*)/m);
+  const title = titleMatch ? titleMatch[1] : 'Experience Detail';
+  
+  const descriptionMatch = content.match(/^(?!#)(.*)/m);
+  const description = descriptionMatch ? descriptionMatch[1].substring(0, 160).replace(/[*_#`\n\r]/g, '') : 'Read details about Harshit Agarwal\'s professional experience and accomplishments.';
+
   return (
     <div className="blog-outer experience-outer">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "TechArticle",
+            "headline": title,
+            "description": description,
+            "url": `https://aharshit123456.space/experience/${slug}`,
+            "inLanguage": "en-US",
+            "author": {
+              "@type": "Person",
+              "name": "Harshit Agarwal",
+              "url": "https://aharshit123456.space/"
+            },
+            "publisher": {
+              "@type": "Person",
+              "name": "Harshit Agarwal"
+            }
+          })
+        }}
+      />
       <nav className="blog-nav">
         <Link href="/" className="back-link">
            Back to Desktop
@@ -114,6 +147,36 @@ export default async function ExperiencePage({ params }: { params: Promise<{ slu
           <ReactMarkdown 
             remarkPlugins={[remarkGfm, remarkAlert]}
             rehypePlugins={[rehypeRaw]}
+            components={{
+              img: ({ src, alt }) => {
+                if (!src || typeof src !== 'string') return null;
+                const isScreenshot = src.includes('/assets/famcare') || src.includes('/assets/shoppin');
+                if (isScreenshot) {
+                  return (
+                    <Image
+                      src={src}
+                      alt={alt || "Screenshot"}
+                      width={210}
+                      height={380}
+                      quality={85}
+                      style={{
+                        borderRadius: '16px',
+                        objectFit: 'cover'
+                      }}
+                    />
+                  );
+                }
+                return (
+                  <img
+                    src={src}
+                    alt={alt}
+                    loading="lazy"
+                    decoding="async"
+                    style={{ maxWidth: '100%', height: 'auto', borderRadius: '8px' }}
+                  />
+                );
+              }
+            }}
           >
             {content}
           </ReactMarkdown>

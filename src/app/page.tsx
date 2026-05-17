@@ -7,7 +7,7 @@ export default function Home() {
         This section is hidden from users but visible to search engines and AI crawlers.
         It provides a semantic, SSR-friendly version of the portfolio content.
       */}
-      <section className="sr-only" aria-hidden="true" style={{ display: 'none' }}>
+      <section className="sr-only">
         <h1>Harshit Agarwal | Fullstack Engineer & AI Researcher</h1>
         <p>
           Founding SDE & System Architect based in India. Specialized in Building Scalable Systems, AI/ML, 

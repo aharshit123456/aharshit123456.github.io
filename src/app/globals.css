@@ -676,6 +676,19 @@ h3 {
 .video-container { position: relative; width: 100%; margin-bottom: 20px; background: #000; border-radius: 4px; overflow: hidden; }
 .prod-desc { font-size: 1rem; line-height: 1.6; color: var(--text-color); }
 
+/* Screen reader and SEO friendly visual hidden utility */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
 @media (max-width: 768px) {
     body { padding: 0; align-items: flex-start; background: var(--window-bg); }
     .mac-window { height: 100vh; max-width: 100%; width: 100%; border-radius: 0; box-shadow: none; display: flex; flex-direction: column; }
