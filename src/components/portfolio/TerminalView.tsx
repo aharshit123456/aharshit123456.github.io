@@ -168,6 +168,10 @@ const TerminalView: React.FC<TerminalProps> = ({ onCommand, isMobile }) => {
           },
           autostart: true,
           serial_container: v86ContainerRef.current,
+          network_relay_url: 'wss://relay.widgetry.org/',
+          net_device: {
+            type: 'ne2k',
+          },
         });
 
         // Immediately transition to booted state so the user can watch the BIOS initialization
