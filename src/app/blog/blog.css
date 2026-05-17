@@ -393,3 +393,193 @@
     font-size: 20px;
   }
 }
+
+/* Interactive Ecosystem Cards & Cute Grid Styles */
+.ecosystem-flex {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
+  margin: 30px 0 !important;
+}
+
+.repo-card {
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-left: 5px solid var(--accent-color) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02) !important;
+  overflow: hidden !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.repo-card[open] {
+  box-shadow: 0 10px 30px rgba(var(--accent-rgb), 0.08) !important;
+  border-color: rgba(var(--accent-rgb), 0.15) !important;
+}
+
+.repo-header {
+  display: flex !important;
+  align-items: center !important;
+  padding: 16px 20px !important;
+  cursor: pointer !important;
+  list-style: none !important; /* Hide native marker */
+  outline: none !important;
+  user-select: none !important;
+}
+
+/* Hide native summary marker in webkit */
+.repo-header::-webkit-details-marker {
+  display: none !important;
+}
+
+.repo-icon {
+  font-size: 28px !important;
+  margin-right: 15px !important;
+  transition: transform 0.3s ease !important;
+}
+
+.repo-card:hover .repo-icon {
+  transform: scale(1.15) rotate(5deg) !important;
+}
+
+.repo-meta {
+  display: flex !important;
+  flex-direction: column !important;
+  flex-grow: 1 !important;
+}
+
+.repo-meta h3 {
+  margin: 0 !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  color: #1a1a24 !important;
+  font-family: 'Outfit', sans-serif !important;
+  letter-spacing: -0.2px !important;
+}
+
+.repo-badge {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: #7f8c8d !important;
+  margin-top: 2px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+
+.repo-header::after {
+  content: '▼' !important;
+  font-size: 12px !important;
+  color: var(--accent-color) !important;
+  margin-left: auto !important;
+  transition: transform 0.3s ease !important;
+}
+
+.repo-card[open] .repo-header::after {
+  transform: rotate(-180deg) !important;
+}
+
+.repo-details {
+  padding: 0 20px 20px 63px !important;
+  animation: slideDown 0.3s ease-out !important;
+}
+
+.repo-details p {
+  margin: 0 0 12px 0 !important;
+  font-size: 14px !important;
+  color: #57606f !important;
+  line-height: 1.5 !important;
+  font-style: italic !important;
+}
+
+.repo-details ul {
+  margin: 0 !important;
+  padding-left: 0 !important;
+  list-style: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+}
+
+.repo-details li {
+  font-size: 13.5px !important;
+  color: #2c3e50 !important;
+  position: relative !important;
+  padding-left: 20px !important;
+  line-height: 1.4 !important;
+}
+
+.repo-details li::before {
+  content: '✨' !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 1px !important;
+  font-size: 11px !important;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Cute Stats Grid */
+.cute-stats-container {
+  margin: 40px 0 !important;
+  padding: 24px !important;
+  background: linear-gradient(135deg, #fff5f5 0%, #fff9f9 100%) !important;
+  border: 1px dashed rgba(255, 77, 77, 0.25) !important;
+  border-radius: 20px !important;
+}
+
+.cute-stats-container h3 {
+  margin-top: 0 !important;
+  text-align: center !important;
+  color: #ff4d4d !important;
+  font-family: 'Outfit', sans-serif !important;
+}
+
+.cute-stats-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)) !important;
+  gap: 16px !important;
+  margin-top: 20px !important;
+}
+
+.cute-stat-card {
+  background: #ffffff !important;
+  border: 1px solid rgba(255, 77, 77, 0.08) !important;
+  border-radius: 16px !important;
+  padding: 18px 12px !important;
+  text-align: center !important;
+  box-shadow: 0 4px 10px rgba(255, 77, 77, 0.02) !important;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+.cute-stat-card:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 12px 25px rgba(255, 77, 77, 0.08) !important;
+  border-color: rgba(255, 77, 77, 0.2) !important;
+}
+
+.cute-stat-emoji {
+  font-size: 32px !important;
+  margin-bottom: 8px !important;
+  display: block !important;
+}
+
+.cute-stat-value {
+  font-size: 20px !important;
+  font-weight: 800 !important;
+  color: #1a1a24 !important;
+  display: block !important;
+  font-family: 'Outfit', sans-serif !important;
+}
+
+.cute-stat-label {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: #7f8c8d !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  margin-top: 4px !important;
+  display: block !important;
+}
