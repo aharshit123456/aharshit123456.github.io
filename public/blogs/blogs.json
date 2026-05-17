@@ -1,5 +1,13 @@
 [
   {
+    "id": "vercels-running-os",
+    "slug": "vercels-running-os",
+    "title": "Running a Real Linux OS on a Vercel-Hosted Website: A WebAssembly Miracle",
+    "date": "2026-05-17",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/vercels-running-os.md"
+  },
+  {
     "id": "famcare-marketplace",
     "slug": "famcare-marketplace",
     "title": "FamCARE Distributed Marketplace",
