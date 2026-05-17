@@ -12,7 +12,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 1,
     },
-
     {
       url: `${baseUrl}/links`,
       lastModified: new Date(),
@@ -51,5 +50,29 @@ export default function sitemap(): MetadataRoute.Sitemap {
     console.error("Error generating blog sitemap entries:", error);
   }
 
-  return [...staticRoutes, ...blogRoutes];
+  // Dynamically add experience routes
+  const experiencesDirectory = path.join(process.cwd(), 'public/experiences');
+  let experienceRoutes: MetadataRoute.Sitemap = [];
+  
+  try {
+    if (fs.existsSync(experiencesDirectory)) {
+      const files = fs.readdirSync(experiencesDirectory);
+      experienceRoutes = files
+        .filter(file => file.endsWith('.md'))
+        .map(file => {
+          const slug = file.replace('.md', '');
+          const stats = fs.statSync(path.join(experiencesDirectory, file));
+          return {
+            url: `${baseUrl}/experience/${slug}`,
+            lastModified: stats.mtime,
+            changeFrequency: 'weekly' as const,
+            priority: 0.7,
+          };
+        });
+    }
+  } catch (error) {
+    console.error("Error generating experience sitemap entries:", error);
+  }
+
+  return [...staticRoutes, ...blogRoutes, ...experienceRoutes];
 }

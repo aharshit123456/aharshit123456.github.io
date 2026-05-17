@@ -148,7 +148,7 @@ export default function Portfolio() {
   const activeDragWindow = useRef<'terminal' | 'freelance' | 'dmg' | 'main' | 'docs' | 'messages' | 'browser' | 'bubblewrap' | 'ql' | null>(null);
 
   const windowDragOffset = useRef({ x: 0, y: 0 });
-  const [contextMenu, setContextMenu] = useState<{ visible: boolean; x: number; y: number }>({ visible: false, x: 0, y: 0 });
+  const [contextMenu, setContextMenu] = useState<{ visible: boolean; x: number; y: number; type?: string; data?: any }>({ visible: false, x: 0, y: 0 });
 
   const dragOffset = useRef({ x: 0, y: 0 });
   const dragStartTime = useRef(0);
@@ -767,7 +767,17 @@ export default function Portfolio() {
             <section className="experience-section" id="experience">
               <h3>//work_experience</h3>
               {renderSectionItems([
-                <div className="exp-item" key="famcare">
+                <div className="exp-item" key="famcare" onContextMenu={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setContextMenu({
+                    visible: true,
+                    x: e.clientX,
+                    y: e.clientY,
+                    type: 'experience',
+                    data: { url: '/experience/famcare' }
+                  });
+                }}>
                   <div className="time">April 2026 - Present</div>
                   <div className="details">
                     <h4>
@@ -811,7 +821,17 @@ export default function Portfolio() {
                     )}
                   </div>
                 </div>,
-                <div className="exp-item" key="endorphind">
+                <div className="exp-item" key="endorphind" onContextMenu={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setContextMenu({
+                    visible: true,
+                    x: e.clientX,
+                    y: e.clientY,
+                    type: 'experience',
+                    data: { url: '/experience/endorphind' }
+                  });
+                }}>
                   <div className="time">Jan 2026 - Present</div>
                   <div className="details">
                     <h4><a href="http://endorphind.com/" style={{ color: '#ff4d4d' }}>endorphind</a> <ClapButton projectId="endorphind" /> <span className="role">//Founding SDE (AI & Systems)</span></h4>
@@ -823,7 +843,17 @@ export default function Portfolio() {
                     </ul>
                   </div>
                 </div>,
-                <div className="exp-item" key="shoppin">
+                <div className="exp-item" key="shoppin" onContextMenu={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setContextMenu({
+                    visible: true,
+                    x: e.clientX,
+                    y: e.clientY,
+                    type: 'experience',
+                    data: { url: '/experience/shoppin' }
+                  });
+                }}>
                   <div className="time">Dec 2024 - Nov 2025</div>
                   <div className="details">
                     <h4>
@@ -866,7 +896,17 @@ export default function Portfolio() {
                     )}
                   </div>
                 </div>,
-                <div className="exp-item" key="alohomora">
+                <div className="exp-item" key="alohomora" onContextMenu={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setContextMenu({
+                    visible: true,
+                    x: e.clientX,
+                    y: e.clientY,
+                    type: 'experience',
+                    data: { url: '/experience/alohomora' }
+                  });
+                }}>
                   <div className="time">Jan 2025 - Present</div>
                   <div className="details">
                     <h4>Alohomora Labs <span className="role">//Research Lead <a style={{ fontSize: '0.8rem', color: 'var(--accent-color)' }} href="https://alohomora-labs.me" target="_blank" rel="noopener noreferrer" aria-label="Visit Alohomora Labs website">[Link]</a> </span></h4>
@@ -876,7 +916,17 @@ export default function Portfolio() {
                     </ul>
                   </div>
                 </div>,
-                <div className="exp-item" key="niser">
+                <div className="exp-item" key="niser" onContextMenu={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setContextMenu({
+                    visible: true,
+                    x: e.clientX,
+                    y: e.clientY,
+                    type: 'experience',
+                    data: { url: '/experience/niser' }
+                  });
+                }}>
                   <div className="time">May 2024 - Nov 2024</div>
                   <div className="details">
                     <h4>SMLab, NISER <span className="role">//Research Intern</span> <a href="#" onClick={(e) => { e.preventDefault(); openImageTab('NISER Certificate', 'niser_cert.jpg'); }} style={{ fontSize: '0.8rem', color: 'var(--accent-color)' }}>[Certificate]</a></h4>
@@ -887,7 +937,17 @@ export default function Portfolio() {
                     </ul>
                   </div>
                 </div>,
-                <div className="exp-item" key="freelance">
+                <div className="exp-item" key="freelance" onContextMenu={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setContextMenu({
+                    visible: true,
+                    x: e.clientX,
+                    y: e.clientY,
+                    type: 'experience',
+                    data: { url: '/experience/freelance' }
+                  });
+                }}>
                   <div className="time">2023 - Present</div>
                   <div className="details">
                     <h4>Android Development & Graphic Design <span className="role">//Freelancer</span></h4>
@@ -897,7 +957,17 @@ export default function Portfolio() {
                     </ul>
                   </div>
                 </div>,
-                <div className="exp-item" key="mindharmonics">
+                <div className="exp-item" key="mindharmonics" onContextMenu={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setContextMenu({
+                    visible: true,
+                    x: e.clientX,
+                    y: e.clientY,
+                    type: 'experience',
+                    data: { url: '/experience/mindharmonics' }
+                  });
+                }}>
                   <div className="time">Sep 2022 - Nov 2022</div>
                   <div className="details">
                     <h4>Mind Harmonics Pvt. Ltd. <span className="role">//Content Writing Expert</span></h4>
@@ -1623,13 +1693,29 @@ export default function Portfolio() {
           {/* Desktop Context Menu */}
           {contextMenu.visible && (
             <div className="custom-context-menu" style={{ top: contextMenu.y, left: contextMenu.x }}>
-              <div className="menu-item" onClick={() => setIsTerminalOpen(true)}>New Terminal</div>
-              <div className="menu-item" onClick={toggleTheme}>Change Theme</div>
-              <div className="menu-item" onClick={() => window.location.reload()}>Refresh Desktop</div>
-              <hr />
-              <div className="menu-item" onClick={() => setIsMatrixActive(!isMatrixActive)}>
-                {isMatrixActive ? 'Stop Matrix' : 'Start Matrix'}
-              </div>
+              {contextMenu.type === 'experience' ? (
+                <div 
+                  className="menu-item" 
+                  onClick={() => {
+                    if (contextMenu.data?.url) {
+                      window.open(contextMenu.data.url, '_blank');
+                    }
+                  }}
+                >
+                  <i className="fas fa-external-link-alt" style={{ marginRight: '8px' }}></i>
+                  Open more info
+                </div>
+              ) : (
+                <>
+                  <div className="menu-item" onClick={() => setIsTerminalOpen(true)}>New Terminal</div>
+                  <div className="menu-item" onClick={toggleTheme}>Change Theme</div>
+                  <div className="menu-item" onClick={() => window.location.reload()}>Refresh Desktop</div>
+                  <hr />
+                  <div className="menu-item" onClick={() => setIsMatrixActive(!isMatrixActive)}>
+                    {isMatrixActive ? 'Stop Matrix' : 'Start Matrix'}
+                  </div>
+                </>
+              )}
             </div>
           )}
 
