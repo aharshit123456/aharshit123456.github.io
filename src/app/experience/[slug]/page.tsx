@@ -1,14 +1,10 @@
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
-import ReactMarkdown from 'react-markdown';
 import fs from 'fs';
 import path from 'path';
 import '../../blog/blog.css';
 import { Metadata } from 'next';
-import rehypeRaw from 'rehype-raw';
-import remarkGfm from 'remark-gfm';
-import remarkAlert from 'remark-github-alerts';
+import InteractiveArticle from '@/components/portfolio/InteractiveArticle';
 
 // This function tells Next.js which paths to pre-render at build time
 export async function generateStaticParams() {
@@ -147,42 +143,7 @@ export default async function ExperiencePage({ params }: { params: Promise<{ slu
       
       <main className="blog-content">
         <article className="article-card markdown-body">
-          <ReactMarkdown 
-            remarkPlugins={[remarkGfm, remarkAlert]}
-            rehypePlugins={[rehypeRaw]}
-            components={{
-              img: ({ src, alt }) => {
-                if (!src || typeof src !== 'string') return null;
-                const isScreenshot = src.includes('/assets/famcare') || src.includes('/assets/shoppin');
-                if (isScreenshot) {
-                  return (
-                    <Image
-                      src={src}
-                      alt={alt || "Screenshot"}
-                      width={210}
-                      height={380}
-                      quality={85}
-                      style={{
-                        borderRadius: '16px',
-                        objectFit: 'cover'
-                      }}
-                    />
-                  );
-                }
-                return (
-                  <img
-                    src={src}
-                    alt={alt}
-                    loading="lazy"
-                    decoding="async"
-                    style={{ maxWidth: '100%', height: 'auto', borderRadius: '8px' }}
-                  />
-                );
-              }
-            }}
-          >
-            {content}
-          </ReactMarkdown>
+          <InteractiveArticle content={content} slug={slug} />
         </article>
       </main>
 
