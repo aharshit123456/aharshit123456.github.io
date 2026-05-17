@@ -68,6 +68,11 @@ export default function Dock({ items }: DockProps) {
             )}
           </div>
         ))}
+
+        {/* Animated Ippo sitting on the right end on top of the dock */}
+        <div className="dock-ippo-container">
+          <img src="/tenor_nobg.gif" alt="Ippo" className="dock-ippo" />
+        </div>
       </div>
 
       <style jsx>{`
@@ -84,6 +89,7 @@ export default function Dock({ items }: DockProps) {
           pointer-events: none;
         }
         .dock-container {
+          position: relative;
           pointer-events: auto;
           background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.08));
           backdrop-filter: blur(25px);
@@ -96,6 +102,23 @@ export default function Dock({ items }: DockProps) {
           border: 1px solid rgba(255, 255, 255, 0.2);
           box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255, 255, 255, 0.1);
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .dock-ippo-container {
+          position: absolute;
+          bottom: 100%;
+          right: -15px;
+          width: 150px;
+          height: 150px;
+          pointer-events: none;
+          z-index: 10001;
+          margin-bottom: -45px;
+        }
+        .dock-ippo {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          image-rendering: pixelated;
+          filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
         }
         .dock-item-wrapper {
           position: relative;

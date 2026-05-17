@@ -202,7 +202,7 @@ export default function GuestbookWidget() {
 
       <style jsx>{`
         .guestbook-widget {
-          width: 260px;
+          width: 290px;
           background: rgba(255, 255, 150, 0.9);
           backdrop-filter: blur(10px);
           border-radius: 12px;
@@ -230,7 +230,7 @@ export default function GuestbookWidget() {
           padding-bottom: 5px;
         }
         .notes-container {
-          max-height: 200px;
+          max-height: 230px;
           overflow-y: auto;
           display: flex;
           flex-direction: column;

@@ -1252,7 +1252,7 @@ export default function Portfolio() {
         <div className="workspace-container" style={{ transform: `translateX(-${activeSpace * 100}vw)` }}>
         {/* Space 1: Desktop */}
         <div className="space desktop-space" onContextMenu={handleContextMenu}>
-          <div style={{ position: 'absolute', right: '40px', bottom: '120px', zIndex: 10 }}>
+          <div style={{ position: 'absolute', right: '40px', bottom: '85px', zIndex: 10 }}>
             <GuestbookWidget />
           </div>
           <div className="top-menubar">
