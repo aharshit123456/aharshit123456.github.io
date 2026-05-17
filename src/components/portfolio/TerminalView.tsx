@@ -364,6 +364,59 @@ const TerminalView: React.FC<TerminalProps> = ({ onCommand, isMobile }) => {
         style={{ display: isBooted ? 'block' : 'none' }}
         spellCheck={false}
         autoComplete="off"
+        onKeyDown={(e) => {
+          if (!emulatorRef.current) return;
+          
+          // 1. Intercept Tab key for autocomplete
+          if (e.key === 'Tab') {
+            e.preventDefault();
+            emulatorRef.current.serial0_send('\t');
+            return;
+          }
+          
+          // 2. Intercept Backspace key
+          if (e.key === 'Backspace') {
+            e.preventDefault();
+            emulatorRef.current.serial0_send('\x7f');
+            return;
+          }
+          
+          // 3. Intercept Ctrl + C interrupt
+          if (e.ctrlKey && e.key.toLowerCase() === 'c') {
+            e.preventDefault();
+            emulatorRef.current.serial0_send('\x03');
+            return;
+          }
+          
+          // 4. Intercept Enter key
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            emulatorRef.current.serial0_send('\r');
+            return;
+          }
+          
+          // 5. Intercept Arrow Keys for navigation and command history
+          if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            emulatorRef.current.serial0_send('\x1b[A');
+            return;
+          }
+          if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            emulatorRef.current.serial0_send('\x1b[B');
+            return;
+          }
+          if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            emulatorRef.current.serial0_send('\x1b[D');
+            return;
+          }
+          if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            emulatorRef.current.serial0_send('\x1b[C');
+            return;
+          }
+        }}
       />
 
       {isBooted && (
