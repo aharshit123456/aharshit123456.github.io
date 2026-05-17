@@ -23,11 +23,23 @@ export default async function Image({ params }: { params: Promise<{ slug: string
     if (fs.existsSync(filePath)) {
       const content = fs.readFileSync(filePath, 'utf8');
       const titleMatch = content.match(/^# (.*)/m);
-      if (titleMatch) title = titleMatch[1];
+      if (titleMatch) {
+        title = titleMatch[1].replace(/&/g, 'and');
+      }
       
-      const descriptionMatch = content.match(/^(?!#)(.*)/m);
-      if (descriptionMatch) {
-        description = descriptionMatch[1].substring(0, 130).replace(/[*_#`\n\r]/g, '') + '...';
+      const lines = content.split('\n');
+      const overviewLine = lines.find(line => {
+        const trimmed = line.trim();
+        return trimmed.length > 0 && 
+               !trimmed.startsWith('#') && 
+               !trimmed.startsWith('*') && 
+               !trimmed.startsWith('-') &&
+               !trimmed.includes('Duration:') &&
+               !trimmed.includes('Role:') &&
+               !trimmed.includes('Website:');
+      });
+      if (overviewLine) {
+        description = overviewLine.trim().substring(0, 130).replace(/[*_#`\n\r]/g, '').replace(/&/g, 'and') + '...';
       }
     }
   } catch (error) {
