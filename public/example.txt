@@ -1,0 +1,23 @@
+======================================================
+  ______                                __
+ /      \                              |  \
+|  $$$$$$\  ______    ______   ______  | $$  ______
+| $$__| $$ /      \  |      \ /      \ | $$ /      \
+| $$    $$|  $$$$$$\  \$$$$$$\|  $$$$$$\| $$|  $$$$$$\
+| $$$$$$$$| $$   \$$ /      $$| $$  | $$| $$| $$    $$
+| $$  | $$| $$      |  $$$$$$$| $$__/ $$| $$| $$$$$$$$
+| $$  | $$| $$       \$$    $$| $$    $$| $$ \$$     \
+ \$$   \$$ \$$        \$$$$$$$| $$$$$$$  \$$  \$$$$$$$
+                              | $$
+                              | $$
+                              \$$
+======================================================
+Greetings from WebAssembly Linux! 
+This text file was fetched dynamically over the network 
+running completely inside your browser's virtual machine.
+
+System Stats:
+- OS: Buildroot / Linux 2.6
+- Emulation Engine: v86 (WASM + JS)
+- Status: Fully Operational and Riced to the core.
+======================================================
