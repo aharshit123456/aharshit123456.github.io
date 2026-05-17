@@ -1,0 +1,47 @@
+# Harshit Agarwal
+
+> Expert Fullstack Engineer, AI Researcher, and Product Architect specializing in high-performance backend systems, cross-platform mobile ecosystems, and advanced Machine Learning pipelines.
+
+- **Main Portfolio:** https://aharshit123456.space/
+- **GitHub:** https://github.com/aharshit123456
+- **LinkedIn:** https://www.linkedin.com/in/aharshit123456/
+- **Twitter:** https://twitter.com/aharshit123456
+- **Location:** India
+
+## Core Expertise & Tech Stack
+- **Languages:** Python, Go, C/C++, Java, JavaScript, TypeScript, Dart, Bash, SQL.
+- **Backend & APIs:** FastAPI, REST APIs, WebSockets, Redis caching, SQLAlchemy, Alembic, PostgreSQL.
+- **AI/ML & Vision:** PyTorch, CLIP, VLLMs, YOLO, RT-DETR, MaskRCNN, Diffusion-based Virtual Try-on (VTON), SLAM, ORB-SLAM3.
+- **Frontend & Mobile:** Flutter, React, Next.js, HTML5/CSS3, TailwindCSS.
+- **DevOps & Cloud:** Docker, AWS (SageMaker, EKS, SQS, EC2, RDS, Lambda), Rancher, Terraform, GitOps, CI/CD (Fastlane, GitHub Actions).
+
+## Work Experience & Major Accomplishments
+
+### Famcare — Fullstack Architect & Lead (April 2026 - Present)
+- Architected and delivered the entire FamCARE full-stack ecosystem, scaling a modular FastAPI backend and 3 cross-platform Flutter apps from zero to production.
+- Engineered high-throughput modular monolith architecture with 15+ decoupled services designed for the Strangler Pattern.
+- Developed Order/Booking flows, Razorpay checkout, and multi-channel notification engine (FCM, Fast2SMS, MSG91).
+- Optimized operational velocity, reducing deployment cycles by 70% using Fastlane CI/CD and automating caregiver background checks via SpringVerify.
+- Handled 2,000+ requests/minute and 100 concurrent users with a 100% success rate under stress testing.
+- **Live Links:** 
+  - [Google Play Store](https://play.google.com/store/apps/details?id=com.famcare.praja&pcampaignid=web_share)
+  - [Apple App Store](https://apps.apple.com/in/app/famcare-caregiver-in-minutes/id6761720384)
+
+### endorphind — Founding SDE (AI & Systems) (Jan 2026 - Present)
+- Engineered SOTA lip-sync and video generation pipelines for a generative video platform.
+- Developed custom ComfyUI nodes to automate complex media rendering pipelines.
+- Leading platform technical scoping, product roadmaps, and systems engineering.
+
+### shoppin' — Founding ML Engineer (AI/Infra) (Dec 2024 - Nov 2025)
+- Led end-to-end visual AI stack, incorporating YOLO, RT-DETR, MaskRCNN, and Diffusion VTON models.
+- Developed high-performance Multimodal AI pipelines matching 3-4 crore catalog items and serving CLIP/VLLM systems on AWS SageMaker.
+- Engineered automated scraping agents for 200+ partner stores and robust Shopify order automations.
+- Architected AWS EKS clusters with GitOps using Terraform and automated CI/CD disaster recovery setups.
+- **Live Links:** 
+  - [Google Play Store](https://play.google.com/store/apps/details?id=app.shoppin.ios)
+  - [Apple App Store](https://apps.apple.com/in/app/shoppin-ai-discovery-try-on/id6738202299)
+
+## Key Projects
+- **WHAM! OTT:** Hybrid video engine with an immersive comic-book UI, cross-platform video players, and smooth state handling.
+- **PreviouslyOn:** Social TV tracking platform with smart AI recommendations, Trakt.tv integrations, and community features.
+- **ORB-SLAM3:** Implementation of accurate Visual-Inertial SLAM libraries for autonomous navigation.

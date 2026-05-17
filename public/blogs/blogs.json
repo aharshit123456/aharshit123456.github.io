@@ -1,0 +1,34 @@
+[
+  {
+    "id": "vercels-running-os",
+    "slug": "vercels-running-os",
+    "title": "Running a Real Linux OS on a Vercel-Hosted Website: A WebAssembly Miracle",
+    "date": "2026-05-17",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/vercels-running-os.md"
+  },
+  {
+    "id": "famcare-marketplace",
+    "slug": "famcare-marketplace",
+    "title": "FamCARE Distributed Marketplace",
+    "date": "2026-05-16",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/famcare-marketplace.md"
+  },
+  {
+    "id": "famcare-pricing-engine",
+    "slug": "famcare-pricing-engine",
+    "title": "FamCARE Pricing Engine",
+    "date": "2026-05-16",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/famcare-pricing-engine.md"
+  },
+  {
+    "id": "orb-slam3",
+    "slug": "orb-slam3",
+    "title": "ORB-SLAM3: Accurate Open-Source SLAM",
+    "date": "2024-05-31",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/orb-slam3.md"
+  }
+]
