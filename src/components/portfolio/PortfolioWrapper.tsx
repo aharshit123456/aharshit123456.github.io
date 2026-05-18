@@ -5,30 +5,61 @@ import { motion } from 'framer-motion';
 import FamcareNotes from '@/components/portfolio/FamcareNotes';
 import ShoppinStats from '@/components/portfolio/ShoppinStats';
 import ProductionContent, { ProductionKey } from '@/components/portfolio/ProductionContent';
-import FreelanceExperience from '@/components/portfolio/FreelanceExperience';
 import dynamic from 'next/dynamic';
 
+// Blazing fast dynamic lazy-loaded application modules to minimize JS load size & RAM footprint down to a fraction of initial footprint
 const TerminalView = dynamic(
   () => import('@/components/portfolio/TerminalView'),
   { ssr: false, loading: () => <div style={{ color: '#fff', padding: '20px', fontFamily: 'monospace' }}>Loading terminal...</div> }
 );
+const BrowserView = dynamic(
+  () => import('@/components/portfolio/BrowserView'),
+  { ssr: false, loading: () => <div style={{ color: '#fff', padding: '20px', fontFamily: 'monospace' }}>Loading Safari...</div> }
+);
+const MessagesView = dynamic(
+  () => import('@/components/portfolio/MessagesView'),
+  { ssr: false, loading: () => <div style={{ color: '#fff', padding: '20px', fontFamily: 'monospace' }}>Loading Messages...</div> }
+);
+const DocumentsManager = dynamic(
+  () => import('@/components/portfolio/DocumentsManager'),
+  { ssr: false, loading: () => <div style={{ color: '#fff', padding: '20px', fontFamily: 'monospace' }}>Loading Documents...</div> }
+);
+const BubbleWrap = dynamic(
+  () => import('@/components/portfolio/BubbleWrap'),
+  { ssr: false }
+);
+const DMGInstaller = dynamic(
+  () => import('@/components/portfolio/DMGInstaller'),
+  { ssr: false }
+);
+const WallpaperSwitcher = dynamic(
+  () => import('@/components/portfolio/WallpaperSwitcher'),
+  { ssr: false }
+);
+const SiriAssistant = dynamic(
+  () => import('@/components/portfolio/SiriAssistant'),
+  { ssr: false }
+);
+const SecretBoss = dynamic(
+  () => import('@/components/portfolio/SecretBoss'),
+  { ssr: false }
+);
+const FreelanceExperience = dynamic(
+  () => import('@/components/portfolio/FreelanceExperience'),
+  { ssr: false }
+);
+const DesktopPet = dynamic(
+  () => import('@/components/portfolio/DesktopPet'),
+  { ssr: false }
+);
+
 import MatrixRain from '@/components/portfolio/MatrixRain';
-import DMGInstaller from '@/components/portfolio/DMGInstaller';
 import Dock from '@/components/portfolio/Dock';
 import ControlCenter from '@/components/portfolio/ControlCenter';
 import Spotlight from '@/components/portfolio/Spotlight';
-import WallpaperSwitcher from '@/components/portfolio/WallpaperSwitcher';
 import GuestbookWidget from '@/components/portfolio/GuestbookWidget';
 import Launchpad from '@/components/portfolio/Launchpad';
 import ClapButton from '@/components/portfolio/ClapButton';
-import SiriAssistant from '@/components/portfolio/SiriAssistant';
-import DocumentsManager from '@/components/portfolio/DocumentsManager';
-import SecretBoss from '@/components/portfolio/SecretBoss';
-
-import MessagesView from '@/components/portfolio/MessagesView';
-import BrowserView from '@/components/portfolio/BrowserView';
-import DesktopPet from '@/components/portfolio/DesktopPet';
-import BubbleWrap from '@/components/portfolio/BubbleWrap';
 import PixelCharacter from '@/components/portfolio/PixelCharacter';
 import VoxelHertaOverlay from '@/components/portfolio/VoxelHertaOverlay';
 import PixelRope from '@/components/portfolio/PixelRope';
