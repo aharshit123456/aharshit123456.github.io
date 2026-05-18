@@ -259,7 +259,7 @@ const TerminalView: React.FC<TerminalProps> = ({ onCommand, isMobile }) => {
         newLines.push({ text: 'Accessing secure node...\n[#######---] 70%\nCRITICAL ERROR: Too much rizz detected. System overload.', type: 'error' });
         break;
       case 'brainrot':
-        newLines.push({ text: 'skibidi toilet fanum tax sigma gyatt from ohio. no cap, fr fr. bussin. deadass.', type: 'output' });
+        newLines.push({ text: 'skibidi toilet fanum tax rizzler gyatt from ohio. no cap, fr fr. bussin. deadass.', type: 'output' });
         break;
       case 'secret_sauce.sh':
       case './secret_sauce.sh':

@@ -644,20 +644,20 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
         .comment-selection-quote {
           margin: 0 0 10px 0 !important;
           padding: 8px 12px !important;
-          border-left: 3px solid #ff4757 !important;
-          background: #f1f5f9 !important;
+          border-left: 3px solid #ff4d4d !important;
+          background: #121212 !important;
           font-style: italic !important;
           font-size: 11.5px !important;
-          color: #475569 !important;
+          color: #cccccc !important;
           border-radius: 0 8px 8px 0 !important;
           line-height: 1.4 !important;
         }
 
         .highlighted-text-preview-box {
-          background: #f8fafc !important;
+          background: #121212 !important;
           border-radius: 16px !important;
           padding: 12px !important;
-          border: 1px dashed #cbd5e1 !important;
+          border: 1px dashed #444444 !important;
         }
 
         .highlighted-text-preview-box span {
@@ -665,7 +665,7 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
           font-weight: 700 !important;
           text-transform: uppercase !important;
           letter-spacing: 0.5px !important;
-          color: #64748b !important;
+          color: #8e8e93 !important;
           opacity: 0.9;
         }
 
@@ -674,7 +674,7 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
           font-style: italic !important;
           font-size: 12px !important;
           line-height: 1.4 !important;
-          color: #334155 !important;
+          color: #cccccc !important;
         }
 
         /* Slide-over comments panel */
@@ -701,7 +701,7 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
           left: 0 !important;
           width: 100% !important;
           height: 100% !important;
-          background: rgba(15, 15, 20, 0.35) !important;
+          background: rgba(10, 10, 12, 0.45) !important;
           backdrop-filter: blur(8px) !important;
           -webkit-backdrop-filter: blur(8px) !important;
           opacity: 0;
@@ -720,9 +720,9 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
           width: 360px !important;
           max-width: 100% !important;
           height: 100vh !important;
-          background: #ffffff !important;
-          border-left: 1px solid rgba(0, 0, 0, 0.08) !important;
-          box-shadow: -10px 0 40px rgba(0, 0, 0, 0.12) !important;
+          background: #1e1e1e !important;
+          border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
+          box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5) !important;
           display: flex !important;
           flex-direction: column !important;
           transform: translate3d(100%, 0, 0);
@@ -741,7 +741,7 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
 
         .drawer-header {
           padding: 30px 30px 20px 30px !important;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.03) !important;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
           display: flex !important;
           align-items: center !important;
           justify-content: space-between !important;
@@ -749,15 +749,15 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
 
         .drawer-title-box h3 {
           margin: 0 !important;
-          font-family: 'Outfit', sans-serif !important;
-          font-size: 20px !important;
+          font-family: 'Fira Code', monospace !important;
+          font-size: 18px !important;
           font-weight: 700 !important;
-          color: #0f172a !important;
+          color: #ffffff !important;
         }
 
         .block-subtitle {
           font-size: 11px !important;
-          color: #64748b !important;
+          color: #8e8e93 !important;
           font-family: monospace !important;
           opacity: 0.8;
         }
@@ -766,7 +766,7 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
           background: none !important;
           border: none !important;
           font-size: 32px !important;
-          color: #475569 !important;
+          color: #8e8e93 !important;
           cursor: pointer !important;
           line-height: 1 !important;
           padding: 0 !important;
@@ -775,7 +775,7 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
 
         .close-drawer-btn:hover {
           transform: scale(1.15) rotate(90deg);
-          color: #ff4757 !important;
+          color: #ff4d4d !important;
         }
 
         .drawer-body {
@@ -801,14 +801,14 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
           width: 4px;
         }
         .drawer-comments-list::-webkit-scrollbar-thumb {
-          background: rgba(0, 0, 0, 0.08);
+          background: rgba(255, 255, 255, 0.1);
           border-radius: 10px;
         }
 
         .empty-discussion {
           text-align: center !important;
           padding: 40px 10px !important;
-          color: #64748b !important;
+          color: #8e8e93 !important;
           opacity: 0.8;
         }
 
@@ -825,18 +825,18 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
         }
 
         .comment-card {
-          background: #f8fafc !important;
-          border: 1px solid #e2e8f0 !important;
+          background: #242426 !important;
+          border: 1px solid rgba(255, 255, 255, 0.08) !important;
           border-radius: 20px !important;
           padding: 16px !important;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.02) !important;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
           transition: all 0.3s ease;
         }
 
         .comment-card:hover {
-          background: #ffffff !important;
-          border-color: #cbd5e1 !important;
-          box-shadow: 0 8px 20px rgba(0,0,0,0.04) !important;
+          background: #2b2b2e !important;
+          border-color: rgba(255, 77, 77, 0.3) !important;
+          box-shadow: 0 8px 20px rgba(0,0,0,0.2) !important;
         }
 
         .comment-card-header {
@@ -849,25 +849,25 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
         .comment-author {
           font-size: 13px !important;
           font-weight: 700 !important;
-          color: #0f172a !important;
+          color: #ffffff !important;
         }
 
         .comment-time {
           font-size: 10px !important;
-          color: #64748b !important;
+          color: #8e8e93 !important;
         }
 
         .comment-text {
           margin: 0 !important;
           font-size: 13.5px !important;
           line-height: 1.5 !important;
-          color: #334155 !important;
+          color: #f0f0f0 !important;
           word-break: break-word !important;
         }
 
         /* Comment form inputs */
         .drawer-comment-form {
-          border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+          border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
           padding-top: 20px !important;
           display: flex !important;
           flex-direction: column !important;
@@ -876,34 +876,34 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
 
         .drawer-comment-form h4 {
           margin: 0 !important;
-          font-family: 'Outfit', sans-serif !important;
+          font-family: 'Fira Code', monospace !important;
           font-size: 14px !important;
           font-weight: 700 !important;
-          color: #0f172a !important;
+          color: #ffffff !important;
         }
 
         .form-group input, .form-group textarea {
           width: 100% !important;
-          background: #ffffff !important;
-          border: 1px solid #cbd5e1 !important;
+          background: #121212 !important;
+          border: 1px solid rgba(255, 255, 255, 0.1) !important;
           border-radius: 16px !important;
           padding: 10px 14px !important;
           font-size: 13px !important;
           outline: none !important;
           box-sizing: border-box !important;
           font-family: inherit !important;
-          color: #0f172a !important;
+          color: #ffffff !important;
           transition: all 0.3s ease;
         }
 
         .form-group input::placeholder, .form-group textarea::placeholder {
-          color: #94a3b8 !important;
+          color: #666666 !important;
         }
 
         .form-group input:focus, .form-group textarea:focus {
-          background: #ffffff !important;
-          border-color: #ff4757 !important;
-          box-shadow: 0 0 0 3px rgba(255, 71, 87, 0.15) !important;
+          background: #121212 !important;
+          border-color: #ff4d4d !important;
+          box-shadow: 0 0 0 3px rgba(255, 77, 77, 0.15) !important;
         }
 
         .form-group textarea {
@@ -912,24 +912,24 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
         }
 
         .submit-comment-btn {
-          background: #0f172a !important;
+          background: #121212 !important;
           color: #ffffff !important;
-          border: 1px solid #1e293b !important;
+          border: 1px solid rgba(255, 255, 255, 0.15) !important;
           border-radius: 20px !important;
           padding: 12px !important;
           font-size: 13.5px !important;
           font-weight: 700 !important;
           cursor: pointer !important;
           transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
-          box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15) !important;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
           outline: none !important;
         }
 
         .submit-comment-btn:hover {
-          background: #ff4757 !important;
+          background: #ff4d4d !important;
           border-color: transparent !important;
           transform: translateY(-2px) !important;
-          box-shadow: 0 8px 20px rgba(255, 71, 87, 0.25) !important;
+          box-shadow: 0 8px 20px rgba(255, 77, 77, 0.25) !important;
         }
 
         .submit-comment-btn:disabled {
@@ -942,12 +942,12 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
         /* Drawer Tab Navigation Styles */
         .drawer-tabs {
           display: flex !important;
-          background: #f1f5f9 !important;
+          background: #121212 !important;
           padding: 4px !important;
           border-radius: 14px !important;
           margin: 10px 24px 0 24px !important;
           gap: 4px !important;
-          border: 1px solid rgba(0, 0, 0, 0.02) !important;
+          border: 1px solid rgba(255, 255, 255, 0.05) !important;
         }
 
         .drawer-tab {
@@ -955,10 +955,10 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
           background: none !important;
           border: none !important;
           padding: 8px 12px !important;
-          font-family: 'Outfit', sans-serif !important;
+          font-family: 'Fira Code', monospace !important;
           font-size: 12.5px !important;
           font-weight: 600 !important;
-          color: #64748b !important;
+          color: #8e8e93 !important;
           border-radius: 10px !important;
           cursor: pointer !important;
           transition: all 0.2s ease !important;
@@ -970,28 +970,29 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
         }
 
         .drawer-tab.active {
-          background: #ffffff !important;
-          color: #0f172a !important;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+          background: #1e1e1e !important;
+          color: #ffffff !important;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
         }
 
         .drawer-tab:hover:not(:disabled):not(.active) {
-          color: #0f172a !important;
-          background: rgba(255, 255, 255, 0.5) !important;
+          color: #ffffff !important;
+          background: rgba(255, 255, 255, 0.05) !important;
+          box-shadow: none !important;
         }
 
         /* General Comments Footer Box */
         .general-comments-footer-box {
           margin: 60px 0 30px 0 !important;
           padding: 24px 30px !important;
-          background: #f8fafc !important;
-          border: 1px solid #e2e8f0 !important;
+          background: rgba(26, 26, 26, 0.8) !important;
+          border: 1px solid rgba(255, 255, 255, 0.08) !important;
           border-radius: 24px !important;
           display: flex !important;
           align-items: center !important;
           justify-content: space-between !important;
           gap: 20px !important;
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02) !important;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
         }
 
         .g-left {
@@ -1002,7 +1003,7 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
 
         .g-icon {
           font-size: 28px !important;
-          background: rgba(255, 71, 87, 0.08) !important;
+          background: rgba(255, 77, 77, 0.08) !important;
           padding: 10px !important;
           border-radius: 16px !important;
           display: inline-flex !important;
@@ -1015,39 +1016,39 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
 
         .g-text-box h4 {
           margin: 0 0 4px 0 !important;
-          font-family: 'Outfit', sans-serif !important;
+          font-family: 'Fira Code', monospace !important;
           font-size: 16px !important;
           font-weight: 700 !important;
-          color: #0f172a !important;
+          color: #ffffff !important;
         }
 
         .g-text-box p {
           margin: 0 !important;
           font-size: 13px !important;
-          color: #64748b !important;
+          color: #cccccc !important;
           line-height: 1.4 !important;
         }
 
         .open-general-comments-btn {
-          background: #0f172a !important;
+          background: #121212 !important;
           color: #ffffff !important;
-          border: 1px solid #1e293b !important;
+          border: 1px solid rgba(255, 255, 255, 0.15) !important;
           border-radius: 20px !important;
           padding: 12px 24px !important;
           font-size: 13.5px !important;
           font-weight: 700 !important;
           cursor: pointer !important;
           transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
-          box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15) !important;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
           outline: none !important;
           white-space: nowrap !important;
         }
 
         .open-general-comments-btn:hover {
-          background: #ff4757 !important;
+          background: #ff4d4d !important;
           border-color: transparent !important;
           transform: translateY(-2px) !important;
-          box-shadow: 0 8px 20px rgba(255, 71, 87, 0.25) !important;
+          box-shadow: 0 8px 20px rgba(255, 77, 77, 0.25) !important;
         }
 
         /* Mobile selection overrides & sheet styles */
@@ -1067,9 +1068,10 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
             left: 0 !important;
             border-radius: 24px 24px 0 0 !important;
             border-left: none !important;
-            border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+            border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
             transform: translateY(100%) !important;
-            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.12) !important;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.4) !important;
+            background: #1e1e1e !important;
           }
 
           .comments-drawer.open .drawer-shell {
@@ -1109,7 +1111,7 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
           bottom: 24px !important;
           left: 20px !important;
           right: 20px !important;
-          background: rgba(15, 23, 42, 0.95) !important;
+          background: rgba(30, 30, 32, 0.95) !important;
           backdrop-filter: blur(12px) !important;
           -webkit-backdrop-filter: blur(12px) !important;
           border: 1px solid rgba(255, 255, 255, 0.15) !important;
@@ -1120,7 +1122,7 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
           justify-content: space-between !important;
           gap: 12px !important;
           z-index: 9999 !important;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
           animation: mobileBarAppear 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
           will-change: transform, opacity !important;
         }
@@ -1145,7 +1147,7 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
         .mobile-selection-bar-text span {
           font-size: 10px !important;
           font-weight: 700 !important;
-          color: #94a3b8 !important;
+          color: #8e8e93 !important;
           text-transform: uppercase !important;
           display: block !important;
           margin-bottom: 2px !important;
@@ -1162,7 +1164,7 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
         }
 
         .mobile-selection-bar-btn {
-          background: #ff4757 !important;
+          background: #ff4d4d !important;
           color: #ffffff !important;
           border: none !important;
           border-radius: 14px !important;

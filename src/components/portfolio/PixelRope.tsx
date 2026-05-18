@@ -6,9 +6,10 @@ import { motion, useMotionValue, useSpring, useTransform, useAnimate } from 'fra
 interface PixelRopeProps {
   playSound?: (sound: 'startup' | 'funk' | 'tink' | 'click') => void;
   triggerHaptic?: (pattern?: number | number[]) => void;
+  isLowPowerMode?: boolean;
 }
 
-export default function PixelRope({ playSound, triggerHaptic }: PixelRopeProps) {
+export default function PixelRope({ playSound, triggerHaptic, isLowPowerMode }: PixelRopeProps) {
   const [isLatched, setIsLatched] = useState(false);
   const [showTooltip, setShowTooltip] = useState(true);
   const [scope, animate] = useAnimate();
@@ -27,6 +28,10 @@ export default function PixelRope({ playSound, triggerHaptic }: PixelRopeProps) 
 
   // Handle updates to springY to calculate velocity and sway
   useEffect(() => {
+    if (isLowPowerMode) {
+      setSwayRotation(0);
+      return;
+    }
     return springY.on('change', (latest) => {
       const now = Date.now();
       const dt = Math.max(1, now - lastTime.current);
@@ -40,10 +45,14 @@ export default function PixelRope({ playSound, triggerHaptic }: PixelRopeProps) 
       lastY.current = latest;
       lastTime.current = now;
     });
-  }, [springY]);
+  }, [springY, isLowPowerMode]);
 
   // Slowly decay the sway rotation back to 0 or gentle passive sway
   useEffect(() => {
+    if (isLowPowerMode) {
+      setSwayRotation(0);
+      return;
+    }
     const interval = setInterval(() => {
       setSwayRotation((prev) => {
         if (Math.abs(prev) < 0.05) {
@@ -54,7 +63,7 @@ export default function PixelRope({ playSound, triggerHaptic }: PixelRopeProps) 
       });
     }, 16);
     return () => clearInterval(interval);
-  }, []);
+  }, [isLowPowerMode]);
 
   // Set up the latch logic
   const handleDragEnd = async (event: any, info: any) => {

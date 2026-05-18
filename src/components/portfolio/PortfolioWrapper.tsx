@@ -6,7 +6,12 @@ import FamcareNotes from '@/components/portfolio/FamcareNotes';
 import ShoppinStats from '@/components/portfolio/ShoppinStats';
 import ProductionContent, { ProductionKey } from '@/components/portfolio/ProductionContent';
 import FreelanceExperience from '@/components/portfolio/FreelanceExperience';
-import TerminalView from '@/components/portfolio/TerminalView';
+import dynamic from 'next/dynamic';
+
+const TerminalView = dynamic(
+  () => import('@/components/portfolio/TerminalView'),
+  { ssr: false, loading: () => <div style={{ color: '#fff', padding: '20px', fontFamily: 'monospace' }}>Loading terminal...</div> }
+);
 import MatrixRain from '@/components/portfolio/MatrixRain';
 import DMGInstaller from '@/components/portfolio/DMGInstaller';
 import Dock from '@/components/portfolio/Dock';
@@ -85,6 +90,7 @@ export default function Portfolio() {
   const [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
   const [isWallpaperSwitcherOpen, setIsWallpaperSwitcherOpen] = useState(false);
   const [wallpaper, setWallpaper] = useState('/wallpapers/space.jpg');
+  const [isLowPowerMode, setIsLowPowerMode] = useState(false);
   const [brightness, setBrightness] = useState(100);
   const [volume, setVolume] = useState(60);
   const [isAppleMenuOpen, setIsAppleMenuOpen] = useState(false);
@@ -1294,9 +1300,9 @@ export default function Portfolio() {
   );
 
   return (
-    <div className={`workspace-wrapper ${isWin95 ? 'win95-theme' : ''}`} style={{ backgroundImage: isWin95 ? 'none' : `url(${wallpaper})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+    <div className={`workspace-wrapper ${isWin95 ? 'win95-theme' : ''}`} style={{ backgroundImage: isWin95 ? 'none' : (isLowPowerMode ? 'linear-gradient(135deg, #121212 0%, #1c1c1e 100%)' : `url(${wallpaper})`), backgroundSize: 'cover', backgroundPosition: 'center' }}>
       {!isLoggedIn ? (
-        <div className="login-screen" style={{ backgroundImage: `url(${wallpaper})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+        <div className="login-screen" style={{ backgroundImage: isLowPowerMode ? 'linear-gradient(135deg, #121212 0%, #1c1c1e 100%)' : `url(${wallpaper})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
           <div className="login-container">
             <div className="login-profile">
               <img src="profile_new.jpg" alt="Harshit Agarwal" />
@@ -1721,7 +1727,7 @@ export default function Portfolio() {
             </div>
           )}
 
-          {isMatrixActive && <MatrixRain />}
+          {isMatrixActive && !isLowPowerMode && <MatrixRain />}
 
           {/* DMG Installer Window */}
           {isDMGOpen && (
@@ -2044,7 +2050,7 @@ export default function Portfolio() {
 
       {isLoggedIn && (
         <>
-          <PixelRope playSound={playSound} triggerHaptic={triggerHaptic} />
+          <PixelRope playSound={playSound} triggerHaptic={triggerHaptic} isLowPowerMode={isLowPowerMode} />
           <Dock
         items={isMobile ? [
           { id: 'messages', name: 'Messages', icon: 'https://img.icons8.com/color/512/imessage.png', onClick: () => { 
@@ -2122,6 +2128,8 @@ export default function Portfolio() {
         volume={volume}
         setVolume={setVolume}
         activeWifi={activeWifi}
+        isLowPowerMode={isLowPowerMode}
+        toggleLowPowerMode={() => setIsLowPowerMode(!isLowPowerMode)}
       />
 
       {/* Global Brightness Overlay with Vignette */}

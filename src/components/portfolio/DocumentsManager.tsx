@@ -45,7 +45,7 @@ export default function DocumentsManager({ isDarkMode }: { isDarkMode: boolean }
         
         // Filter out existing versions of public blogs to avoid duplicates
         const publicIds = publicBlogs.map(pb => pb.id);
-        // Specifically remove the old 'blog1' sigma blog and any public IDs
+        // Specifically remove the old 'blog1' post and any public IDs
         allBlogs = allBlogs.filter((b: Blog) => b.id !== 'blog1' && !publicIds.includes(b.id));
         
         // Combine and sort

@@ -85,7 +85,7 @@ const BRAINROT_ARTICLES: Article[] = [
     steps: [
       { title: "Never Blink in Public", content: "Blinking is a sign of weakness. Keep your eyes open at all times to maintain a constant flow of aura." },
       { title: "Formal Gym Attire", content: "Showing up to the gym in a 3-piece tuxedo immediately grants you +5000 aura. Lift heavy while looking like a CEO." },
-      { title: "Phonk-Only Audio Diet", content: "Your ears should only hear slowed + reverb phonk. This aligns your brainwaves with the Sigma frequency." }
+      { title: "Phonk-Only Audio Diet", content: "Your ears should only hear slowed + reverb phonk. This aligns your brainwaves with the optimal developer frequency." }
     ],
     expertTip: "If someone asks for the time, tell them 'it's time to grind' and walk away without checking your watch.",
     thingsYouNeed: [
@@ -105,30 +105,30 @@ const BRAINROT_ARTICLES: Article[] = [
   },
   {
     id: 4,
-    title: "How to Identify a Sigma Male in the Wild",
-    author: "Patrick Bateman",
+    title: "How to Identify a 10x Developer in the Wild",
+    author: "TechLead",
     date: "May 13, 2026",
-    category: "Biology",
+    category: "Engineering",
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400",
     steps: [
-      { title: "Check for the Thousand-Yard Stare", content: "A true Sigma is always looking at a future that doesn't exist yet. If they look like they're dissociating, they're probably just grinding." },
-      { title: "The American Psycho Metric", content: "Does the subject possess an overly complex skincare routine and a collection of transparent raincoats? If yes, Sigma detected." },
-      { title: "Silent Presence", content: "Sigmas do not speak unless necessary. If they communicate via head nods and intense eye contact, they are high-level." }
+      { title: "Check for the Thousand-Yard Stare", content: "A true 10x developer is always looking at a codebase that doesn't exist yet. If they look like they're dissociating, they're probably just refactoring in their head." },
+      { title: "The Mechanical Keyboard Metric", content: "Does the subject possess an overly complex split ergonomic mechanical keyboard with blank keycaps? If yes, 10x developer detected." },
+      { title: "Silent Presence", content: "10x developers do not speak unless necessary. If they communicate solely via PR reviews and Slack emojis, they are high-level." }
     ],
-    expertTip: "Sigmas often travel alone, except when they are leading a pack of Alphas who don't know they're being led.",
+    expertTip: "10x developers often work alone, except when they are carrying a team of juniors who don't know they're being carried.",
     thingsYouNeed: [
-      "Business Card (Bone color, Silian Rail lettering)",
-      "Transparent Raincoat",
-      "Skincare Routine (15 Steps)",
-      "Sigma Grindset Playlist"
+      "Split Mechanical Keyboard (Cherry MX Blue)",
+      "Dark Mode IDE Theme",
+      "Coffee IV Drip",
+      "10x Developer Grindset Playlist"
     ],
     qa: [
-      { q: "Can a Sigma have friends?", a: "Only business associates and rivals. Friends are for people who don't edge-maxx." },
-      { q: "Do Sigmas sleep?", a: "No, they just close their eyes and calculate ROI." }
+      { q: "Can a 10x developer have friends?", a: "Only compiler warnings and stack overflow answers. Friends are for people who write HTML." },
+      { q: "Do 10x developers sleep?", a: "No, they just close their eyes and compile." }
     ],
     warnings: [
-      "Approaching a Sigma during a grind session may result in being Roasted by Siri.",
-      "Highly infectious grindset energy."
+      "Approaching a 10x developer during a coding session may result in being Roasted by Siri.",
+      "Highly infectious syntax energy."
     ]
   },
   {
@@ -167,13 +167,13 @@ const BRAINROT_ARTICLES: Article[] = [
     category: "Emergency",
     image: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&q=80&w=400",
     steps: [
-      { title: "Pre-emptive Sigma Elixir", content: "Before even looking at the purple shake, consume 500ml of raw Sigma Elixir to build an internal shield." },
+      { title: "Pre-emptive Debugging Elixir", content: "Before even looking at the purple shake, consume 500ml of raw Debugging Elixir to build an internal shield." },
       { title: "The 5-Mile Exclusion Zone", content: "If a McDonald's is spotted, maintain a 5-mile radius. The purple energy is airborne and highly contagious." },
       { title: "Counter-TikTok Protocol", content: "If you accidentally drink it, do not film yourself. The camera is what triggers the Grimace transformation." }
     ],
     expertTip: "Carry a mirror at all times; the purple monster cannot stand its own reflection in Ohio.",
     thingsYouNeed: [
-      "Sigma Elixir",
+      "Debugging Elixir",
       "Mirror",
       "Gas Mask (Purple Filter)",
       "Hazmat Suit"

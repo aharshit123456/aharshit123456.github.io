@@ -64,10 +64,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
            !trimmed.includes('Role:') &&
            !trimmed.includes('Website:');
   });
-  const description = overviewLine ? overviewLine.trim().substring(0, 155).replace(/[*_#`\n\r]/g, '').replace(/&/g, 'and') + '...' : 'Read this latest blog post on Harshit Agarwal\'s Sigma Blog.';
+  const description = overviewLine ? overviewLine.trim().substring(0, 155).replace(/[*_#`\n\r]/g, '').replace(/&/g, 'and') + '...' : 'Read this latest blog post on Harshit Agarwal\'s Tech Blog.';
 
   return {
-    title: `${title} | Harshit Agarwal Sigma Blog`,
+    title: `${title} | Harshit Agarwal Tech Blog`,
     description: description,
     alternates: {
       canonical: `https://aharshit123456.space/blog/${slug}`,
@@ -84,7 +84,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       title: title,
       description: description,
     },
-    keywords: ['Sigma Grindset', 'Tech Blog', 'Harshit Agarwal', 'Ohio', 'Mewing', 'AI'],
+    keywords: ['Tech Blog', 'Software Engineering', 'System Architecture', 'Harshit Agarwal', 'AI'],
     authors: [{ name: 'Harshit Agarwal' }],
   };
 }
@@ -96,8 +96,8 @@ export default async function BlogPage({ params }: { params: Promise<{ slug: str
   if (!content) {
     return (
       <div className="error-container">
-        <h1>404 - Sigma Not Found</h1>
-        <p>The requested grindset does not exist on our servers.</p>
+        <h1>404 - Post Not Found</h1>
+        <p>The requested blog post does not exist on our servers.</p>
         <Link href="/" className="back-link">Back to Desktop</Link>
       </div>
     );
@@ -108,7 +108,7 @@ export default async function BlogPage({ params }: { params: Promise<{ slug: str
   const title = titleMatch ? titleMatch[1] : 'Blog Post';
   
   const descriptionMatch = content.match(/^(?!#)(.*)/m);
-  const description = descriptionMatch ? descriptionMatch[1].substring(0, 160).replace(/[*_#`\n\r]/g, '') : 'Read this latest blog post on Harshit Agarwal\'s Sigma Blog.';
+  const description = descriptionMatch ? descriptionMatch[1].substring(0, 160).replace(/[*_#`\n\r]/g, '') : 'Read this latest blog post on Harshit Agarwal\'s Tech Blog.';
 
   return (
     <div className="blog-outer">
@@ -138,7 +138,7 @@ export default async function BlogPage({ params }: { params: Promise<{ slug: str
         <Link href="/" className="back-link">
            Back to Desktop
         </Link>
-        <div className="nav-logo">SIGMA_BLOG</div>
+        <div className="nav-logo">TECH_BLOG</div>
       </nav>
       
       <main className="blog-content">
@@ -148,7 +148,7 @@ export default async function BlogPage({ params }: { params: Promise<{ slug: str
       </main>
 
       <footer className="blog-footer">
-        <p>© 2026 Sigma Grindset Publishing. All gainz reserved.</p>
+        <p>© 2026 Harshit Agarwal. All rights reserved.</p>
       </footer>
     </div>
   );

@@ -12,6 +12,8 @@ interface ControlCenterProps {
   volume: number;
   setVolume: (val: number) => void;
   activeWifi: string;
+  isLowPowerMode: boolean;
+  toggleLowPowerMode: () => void;
 }
 
 export default function ControlCenter({ 
@@ -23,7 +25,9 @@ export default function ControlCenter({
   setBrightness,
   volume,
   setVolume,
-  activeWifi
+  activeWifi,
+  isLowPowerMode,
+  toggleLowPowerMode
 }: ControlCenterProps) {
   const brightnessRef = useRef<HTMLDivElement>(null);
   const volumeRef = useRef<HTMLDivElement>(null);
@@ -80,9 +84,15 @@ export default function ControlCenter({
               <i className={isDarkMode ? "fas fa-moon" : "fas fa-sun"}></i>
               <span className="label">{isDarkMode ? 'Dark Mode' : 'Light Mode'}</span>
             </div>
-            <div className="control-item square">
-              <i className="fas fa-keyboard"></i>
-              <span className="label">Keyboard</span>
+            <div 
+              className={`control-item square low-power ${isLowPowerMode ? 'active' : ''}`} 
+              onClick={() => {
+                toggleLowPowerMode();
+                triggerHaptic(15);
+              }}
+            >
+              <i className="fas fa-battery-quarter"></i>
+              <span className="label">{isLowPowerMode ? 'Low Power' : 'Performance'}</span>
             </div>
           </div>
 
@@ -223,6 +233,10 @@ export default function ControlCenter({
         }
         .control-item.square.active {
           background: #007aff;
+          color: white;
+        }
+        .control-item.square.low-power.active {
+          background: #30d158;
           color: white;
         }
         .control-item.square i {

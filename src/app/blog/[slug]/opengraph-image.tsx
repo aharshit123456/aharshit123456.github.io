@@ -16,8 +16,8 @@ export default async function Image({ params }: { params: Promise<{ slug: string
   // Retrieve the blog content to extract title
   const blogsDirectory = path.join(process.cwd(), 'public/blogs');
   const filePath = path.join(blogsDirectory, `${slug}.md`);
-  let title = 'Sigma Blog Post';
-  let description = 'Read this latest technical blog post on Harshit Agarwal\'s Sigma Blog.';
+  let title = 'Blog Post';
+  let description = 'Read this latest technical blog post on Harshit Agarwal\'s Tech Blog.';
 
   try {
     if (fs.existsSync(filePath)) {
@@ -88,7 +88,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
               textTransform: 'uppercase',
             }}
           >
-            SIGMA_BLOG
+            TECH_BLOG
           </div>
           <div style={{ fontSize: '18px', color: '#a0a5b5', fontWeight: 500 }}>
             aharshit123456.space

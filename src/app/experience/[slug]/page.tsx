@@ -136,7 +136,7 @@ export default async function ExperiencePage({ params }: { params: Promise<{ slu
         <Link href="/" className="back-link">
            Back to Desktop
         </Link>
-        <div className="nav-logo" style={{ background: 'linear-gradient(90deg, #ff4d4d, #ff7675)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+        <div className="nav-logo">
           WORK_EXPERIENCE
         </div>
       </nav>

@@ -23,7 +23,7 @@ David's original painting was defined by its strict geometrical organization and
 
 What makes *The Death of Socrates* so resonant in a digital workspace? 
 
-1. **The Sigma Mindset of Antiquity**: Socrates represents the ultimate intellectual discipline. He refused to compromise his pursuit of truth, choosing death over exile or silence. 
+1. **The Ultimate Focus of Antiquity**: Socrates represents the ultimate intellectual discipline. He refused to compromise his pursuit of truth, choosing death over exile or silence. 
 2. **Structural Composition**: The blocky, pixelated geometry highlights David's neoclassical layout. The vertical lines of the cell stone arches align perfectly with the pixel grid, reinforcing the stoic structure of the scene.
 3. **Approximation of the Infinite**: The reduction of fine oil paint lines to discrete pixels acts as a metaphor for the digital realm itself—using simple building blocks to render infinite, profound human concepts.
 
