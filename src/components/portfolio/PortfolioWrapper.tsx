@@ -2,9 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import FamcareNotes from '@/components/portfolio/FamcareNotes';
-import ShoppinStats from '@/components/portfolio/ShoppinStats';
-import ProductionContent, { ProductionKey } from '@/components/portfolio/ProductionContent';
+import type { ProductionKey } from '@/components/portfolio/ProductionContent';
 import dynamic from 'next/dynamic';
 
 // Blazing fast dynamic lazy-loaded application modules to minimize JS load size & RAM footprint down to a fraction of initial footprint
@@ -52,16 +50,37 @@ const DesktopPet = dynamic(
   () => import('@/components/portfolio/DesktopPet'),
   { ssr: false }
 );
+const FamcareNotes = dynamic(
+  () => import('@/components/portfolio/FamcareNotes'),
+  { ssr: false }
+);
+const ShoppinStats = dynamic(
+  () => import('@/components/portfolio/ShoppinStats'),
+  { ssr: false }
+);
+const ProductionContent = dynamic(
+  () => import('@/components/portfolio/ProductionContent'),
+  { ssr: false }
+);
+const MatrixRain = dynamic(
+  () => import('@/components/portfolio/MatrixRain'),
+  { ssr: false }
+);
+const GuestbookWidget = dynamic(
+  () => import('@/components/portfolio/GuestbookWidget'),
+  { ssr: false }
+);
+const VoxelHertaOverlay = dynamic(
+  () => import('@/components/portfolio/VoxelHertaOverlay'),
+  { ssr: false }
+);
 
-import MatrixRain from '@/components/portfolio/MatrixRain';
 import Dock from '@/components/portfolio/Dock';
 import ControlCenter from '@/components/portfolio/ControlCenter';
 import Spotlight from '@/components/portfolio/Spotlight';
-import GuestbookWidget from '@/components/portfolio/GuestbookWidget';
 import Launchpad from '@/components/portfolio/Launchpad';
 import ClapButton from '@/components/portfolio/ClapButton';
 import PixelCharacter from '@/components/portfolio/PixelCharacter';
-import VoxelHertaOverlay from '@/components/portfolio/VoxelHertaOverlay';
 import PixelRope from '@/components/portfolio/PixelRope';
 
 

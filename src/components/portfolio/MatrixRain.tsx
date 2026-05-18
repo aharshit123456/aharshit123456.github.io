@@ -57,6 +57,10 @@ const MatrixRain: React.FC = () => {
     return () => {
       clearInterval(interval);
       window.removeEventListener('resize', handleResize);
+      
+      // Explicitly reset canvas dimensions to 0 to immediately release backing graphics buffer and VRAM
+      canvas.width = 0;
+      canvas.height = 0;
     };
   }, []);
 
