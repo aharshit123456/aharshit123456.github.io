@@ -26,6 +26,8 @@ import DesktopPet from '@/components/portfolio/DesktopPet';
 import BubbleWrap from '@/components/portfolio/BubbleWrap';
 import PixelCharacter from '@/components/portfolio/PixelCharacter';
 import VoxelHertaOverlay from '@/components/portfolio/VoxelHertaOverlay';
+import PixelRope from '@/components/portfolio/PixelRope';
+
 
 
 type Tab = {
@@ -2042,6 +2044,7 @@ export default function Portfolio() {
 
       {isLoggedIn && (
         <>
+          <PixelRope playSound={playSound} triggerHaptic={triggerHaptic} />
           <Dock
         items={isMobile ? [
           { id: 'messages', name: 'Messages', icon: 'https://img.icons8.com/color/512/imessage.png', onClick: () => { 

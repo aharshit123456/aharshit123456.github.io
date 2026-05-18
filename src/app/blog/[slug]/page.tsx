@@ -1,5 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
+// Trigger dynamic hot-reload for new blog markdown files
+
 import fs from 'fs';
 import path from 'path';
 import './../blog.css';

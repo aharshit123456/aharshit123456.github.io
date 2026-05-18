@@ -1,5 +1,29 @@
 [
   {
+    "id": "the-scream",
+    "slug": "the-scream",
+    "title": "The Pixelated Scream: Capturing Existential Dread in 8-Bits",
+    "date": "2026-05-18",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/the-scream.md"
+  },
+  {
+    "id": "the-death-of-socrates",
+    "slug": "the-death-of-socrates",
+    "title": "The Death of Socrates: A Pixel-Art Tribute to Stoic Defiance",
+    "date": "2026-05-18",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/the-death-of-socrates.md"
+  },
+  {
+    "id": "the-starry-night",
+    "slug": "the-starry-night",
+    "title": "Cosmic Turbulence: Appreciating Van Gogh's Starry Night in Pixels",
+    "date": "2026-05-18",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/the-starry-night.md"
+  },
+  {
     "id": "vercels-running-os",
     "slug": "vercels-running-os",
     "title": "Running a Real Linux OS on a Vercel-Hosted Website: A WebAssembly Miracle",
