@@ -141,7 +141,7 @@ export default function PixelRope({ playSound, triggerHaptic, isLowPowerMode }: 
       style={{
         position: 'fixed',
         top: 0,
-        right: '180px',
+        right: '80px',
         width: '240px',
         height: '100vh',
         zIndex: 9999, // Floating on top of macOS workspace
@@ -178,42 +178,12 @@ export default function PixelRope({ playSound, triggerHaptic, isLowPowerMode }: 
           </pattern>
         </defs>
 
-        {/* Rope Segment 1: Top of screen to Frame 1 */}
+        {/* Continuous rope from top of screen to the handle */}
         <motion.rect
           x="114"
           y="0"
           width="12"
-          height={useTransform(springY, (val) => Math.max(0, val - 590))}
-          fill="url(#pixel-rope-pat)"
-        />
-
-        {/* Rope Segment 2: Connecting Frame 1 to Frame 2 */}
-        <motion.rect
-          x="114"
-          y={useTransform(springY, (val) => Math.max(0, val - 400))}
-          width="12"
-          height={useTransform(springY, (val) => Math.max(0, Math.min(20, val - 380 - (val - 400))))}
-          style={{ opacity }}
-          fill="url(#pixel-rope-pat)"
-        />
-
-        {/* Rope Segment 3: Connecting Frame 2 to Frame 3 */}
-        <motion.rect
-          x="114"
-          y={useTransform(springY, (val) => Math.max(0, val - 190))}
-          width="12"
-          height={useTransform(springY, (val) => Math.max(0, Math.min(20, val - 170 - (val - 190))))}
-          style={{ opacity }}
-          fill="url(#pixel-rope-pat)"
-        />
-
-        {/* Rope Segment 4: Connecting Frame 3 to Handle */}
-        <motion.rect
-          x="114"
-          y={useTransform(springY, (val) => Math.max(0, val - 20))}
-          width="12"
-          height="20"
-          style={{ opacity }}
+          height={useTransform(springY, (val) => val + 8)}
           fill="url(#pixel-rope-pat)"
         />
       </svg>
