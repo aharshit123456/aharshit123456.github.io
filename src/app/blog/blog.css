@@ -558,25 +558,26 @@
 }
 
 .repo-card {
-  background: rgba(255, 255, 255, 0.6) !important;
-  border: 1px solid rgba(255, 255, 255, 0.6) !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
   border-radius: 20px !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.015), inset 0 1px 1px rgba(255, 255, 255, 0.8) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.05) !important;
   overflow: hidden !important;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .repo-card:hover {
   transform: translateY(-2px) !important;
-  background: rgba(255, 255, 255, 0.8) !important;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.02) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(var(--accent-rgb), 0.2) !important;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3) !important;
 }
 
 .repo-card[open] {
-  background: rgba(255, 255, 255, 0.95) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
   border-radius: 24px !important;
-  border-color: rgba(var(--accent-rgb), 0.25) !important;
-  box-shadow: 0 20px 45px rgba(var(--accent-rgb), 0.06), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(var(--accent-rgb), 0.3) !important;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.08) !important;
 }
 
 .repo-header {
@@ -614,7 +615,7 @@
   margin: 0 !important;
   font-size: 17px !important;
   font-weight: 700 !important;
-  color: #1a1a24 !important;
+  color: #ffffff !important;
   font-family: 'Outfit', sans-serif !important;
   letter-spacing: -0.2px !important;
 }
@@ -622,7 +623,7 @@
 .repo-badge {
   font-size: 11px !important;
   font-weight: 600 !important;
-  color: #7f8c8d !important;
+  color: #a0a5b5 !important;
   margin-top: 2px !important;
   text-transform: uppercase !important;
   letter-spacing: 0.5px !important;
@@ -647,9 +648,9 @@
 
 .repo-details p {
   margin: 0 0 12px 0 !important;
-  font-size: 14px !important;
-  color: #57606f !important;
-  line-height: 1.5 !important;
+  font-size: 14.5px !important;
+  color: var(--text-secondary) !important;
+  line-height: 1.6 !important;
   font-style: italic !important;
 }
 
@@ -663,11 +664,11 @@
 }
 
 .repo-details li {
-  font-size: 13.5px !important;
-  color: #2c3e50 !important;
+  font-size: 14px !important;
+  color: var(--text-secondary) !important;
   position: relative !important;
   padding-left: 20px !important;
-  line-height: 1.4 !important;
+  line-height: 1.5 !important;
 }
 
 .repo-details li::before {
@@ -687,11 +688,11 @@
 .cute-stats-container {
   margin: 40px 0 !important;
   padding: 26px !important;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.25) 100%) !important;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%) !important;
   backdrop-filter: blur(10px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
   border-radius: 32px !important;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.01) !important;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2) !important;
 }
 
 .cute-stats-container h3 {
@@ -712,20 +713,20 @@
 }
 
 .cute-stat-card {
-  background: rgba(255, 255, 255, 0.75) !important;
-  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
   border-radius: 24px !important;
   padding: 20px 12px !important;
   text-align: center !important;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.01) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
   transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .cute-stat-card:hover {
   transform: translateY(-5px) scale(1.02) !important;
-  background: rgba(255, 255, 255, 0.95) !important;
-  box-shadow: 0 20px 45px rgba(var(--accent-rgb), 0.05) !important;
-  border-color: rgba(var(--accent-rgb), 0.2) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  box-shadow: 0 20px 45px rgba(var(--accent-rgb), 0.1) !important;
+  border-color: rgba(var(--accent-rgb), 0.25) !important;
 }
 
 .cute-stat-emoji {
@@ -737,7 +738,7 @@
 .cute-stat-value {
   font-size: 20px !important;
   font-weight: 800 !important;
-  color: #1a1a24 !important;
+  color: #ffffff !important;
   display: block !important;
   font-family: 'Outfit', sans-serif !important;
 }
@@ -745,7 +746,7 @@
 .cute-stat-label {
   font-size: 11px !important;
   font-weight: 600 !important;
-  color: #7f8c8d !important;
+  color: #a0a5b5 !important;
   text-transform: uppercase !important;
   letter-spacing: 0.5px !important;
   margin-top: 4px !important;
