@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import type { ProductionKey } from '@/components/portfolio/ProductionContent';
 import dynamic from 'next/dynamic';
 
@@ -2449,10 +2449,13 @@ export default function Portfolio() {
       )}
 
       {/* Fullscreen Voxel Overlay */}
-      <VoxelHertaOverlay 
-        isOpen={showVoxelHerta} 
-        onClose={() => setShowVoxelHerta(false)} 
-      />
+      <AnimatePresence>
+        {showVoxelHerta && (
+          <VoxelHertaOverlay 
+            onClose={() => setShowVoxelHerta(false)} 
+          />
+        )}
+      </AnimatePresence>
 
     </div>
   );
