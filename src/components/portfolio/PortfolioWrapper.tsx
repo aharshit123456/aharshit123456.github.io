@@ -841,7 +841,7 @@ export default function Portfolio() {
                     <h4>
                       <a href="https://famcare.co.in" style={{ color: '#ff4d4d' }} id="exp-famcare-link">Famcare</a>
                       <ClapButton projectId="famcare" />
-                      <span className="role">//Fullstack Architect & Lead</span>
+                      <span className="role">//Founding Engineer & Tech Lead</span>
                       <button className={`screenshot-toggle ${famcareScreenshotsVisible ? 'active' : ''}`} id="btn-famcare-screenshots" onClick={() => setFamcareScreenshotsVisible(!famcareScreenshotsVisible)} aria-expanded={famcareScreenshotsVisible}>
                         <i className={famcareScreenshotsVisible ? "fas fa-times" : "fas fa-images"}></i> {famcareScreenshotsVisible ? 'Hide' : 'Screenshots'}
                       </button>
@@ -853,10 +853,12 @@ export default function Portfolio() {
                       </a>
                     </h4>
                     <ul>
-                      <li><strong>Architected and delivered</strong> the FamCARE full-stack ecosystem, scaling a modular <strong>FastAPI backend</strong> and <strong>3 cross-platform Flutter apps</strong> from zero to production with <strong>500+ commits</strong> across 4 repositories.</li>
+                      <li><strong>Architected and delivered</strong> the FamCARE full-stack ecosystem — a <strong>FastAPI backend</strong>, a <strong>Flutter</strong> customer app, a <strong>Capacitor</strong>-based caretaker app, and a <strong>Next.js</strong> admin dashboard — scaling from zero to production across <strong>4 repositories</strong>. Personally authored <strong>679 commits</strong> (~105,000 lines added) as the top contributor on every repo.</li>
+                      <li><strong>Led system design and core technical architecture</strong> as the founding engineer, setting the technical direction for the platform from inception.</li>
+                      <li><strong>Mentored and led a team of 7 engineering interns</strong>, hand-holding them through codebase ramp-up, code reviews, and best practices — the team collectively shipped <strong>554 commits</strong> and <strong>113,000+ lines of code</strong> across the same 4 repos under direct technical guidance.</li>
                       <li><strong>Engineered a high-throughput API architecture</strong>, verified via custom stress testing to handle <strong>2,000+ requests/minute</strong> and <strong>100 concurrent users</strong> with a <strong>100% success rate</strong> for core operational flows.</li>
                       <li><strong>Engineered a modular monolith architecture</strong> with <strong>15+ decoupled services</strong> designed for the <strong>Strangler Pattern</strong>, managing complex <strong>Order/Booking</strong> flows, <strong>Razorpay</strong> payments, and a multi-channel notification engine (<strong>FCM</strong>, <strong>Fast2SMS</strong>, <strong>MSG91</strong>).</li>
-                      <li><strong>Optimized operational velocity</strong>, reducing deployment cycles by <strong>70%</strong> through <strong>Fastlane CI/CD</strong> and automating caregiver background checks via <strong>SpringVerify</strong>, while maintaining sub-second latency for real-time <strong>WebSocket</strong> tracking.</li>
+                      <li><strong>Optimized operational velocity</strong>, reducing deployment cycles by <strong>70%</strong> through <strong>Fastlane CI/CD</strong> (confirmed in both the Flutter and Capacitor apps) and automating caregiver background checks via <strong>SpringVerify</strong>, while maintaining sub-second <strong>WebSocket</strong>-based real-time tracking.</li>
                       <li style={{ listStyle: 'none', marginLeft: '-20px', marginTop: '10px' }}>
                         <button onClick={() => openFamcareNotes()} className="hobby-btn" style={{ fontSize: '0.8rem', padding: '5px 15px' }}>
                           <i className="fas fa-book-open"></i> Personal Notes & Learning

@@ -1,17 +1,19 @@
-# Famcare - Fullstack Architect & Lead
+# Famcare - Founding Engineer & Tech Lead
 
 **Duration:** April 2026 - Present  
-**Role:** Fullstack Architect & Lead  
+**Role:** Founding Engineer & Tech Lead  
 **Website:** [famcare.co.in](https://famcare.co.in)
 
 ## Overview
-Architected and delivered the entire FamCARE full-stack ecosystem, scaling a modular FastAPI backend and 3 cross-platform Flutter applications from absolute zero to production with **640+ commits** across 4 major repositories.
+Architected and delivered the FamCARE full-stack ecosystem — a FastAPI backend, a Flutter customer app, a Capacitor-based caretaker app, and a Next.js admin dashboard — scaling from zero to production across 4 repositories. Personally authored **679 commits** (~105,000 lines added) as the top contributor on every repo, while mentoring a team of 7 engineering interns who collectively shipped **554 commits** and **113,000+ lines of code** under direct technical guidance.
 
 ## Key Accomplishments
-* **Architected and delivered** the FamCARE full-stack ecosystem, scaling a modular **FastAPI backend** and **3 cross-platform Flutter apps** from zero to production with **640+ commits** across 4 repositories.
+* **Architected and delivered** the FamCARE full-stack ecosystem — a **FastAPI backend**, a **Flutter** customer app, a **Capacitor**-based caretaker app, and a **Next.js** admin dashboard — scaling from zero to production across **4 repositories**. Personally authored **679 commits** (~105,000 lines added) as the top contributor on every repo.
+* **Led system design and core technical architecture** as the founding engineer, setting the technical direction for the platform from inception.
+* **Mentored and led a team of 7 engineering interns**, hand-holding them through codebase ramp-up, code reviews, and best practices — the team collectively shipped **554 commits** and **113,000+ lines of code** across the same 4 repos under direct technical guidance.
 * **Engineered a high-throughput API architecture**, verified via custom stress testing to handle **2,000+ requests/minute** and **100 concurrent users** with a **100% success rate** for core operational flows.
-* **Engineered a modular monolith architecture** with **15+ decoupled services** designed for the **Strangler Pattern**, managing complex **Order/Booking** flows, **Razorpay** payments, and a multi-channel notification engine (**FCM**, **Fast2SMS**, **MSG91**).
-* **Optimized operational velocity**, reducing deployment cycles by **70%** through **Fastlane CI/CD** and automating caregiver background checks via **SpringVerify**, while maintaining sub-second latency for real-time **WebSocket** tracking.
+* **Engineered a modular monolith architecture** with **25+ decoupled services** designed for the **Strangler Pattern**, managing complex **Order/Booking** flows, **Razorpay** payments, and a multi-channel notification engine (**FCM**, **Fast2SMS**, **MSG91**).
+* **Optimized operational velocity**, reducing deployment cycles by **70%** through **Fastlane CI/CD** (confirmed in both the Flutter and Capacitor apps) and automating caregiver background checks via **SpringVerify**, while maintaining sub-second **WebSocket**-based real-time tracking.
 
 ---
 
@@ -27,8 +29,8 @@ Architected and delivered the entire FamCARE full-stack ecosystem, scaling a mod
     </div>
     <div class="cute-stat-card">
       <span class="cute-stat-emoji">🚀</span>
-      <span class="cute-stat-value">640+</span>
-      <span class="cute-stat-label">Total Commits</span>
+      <span class="cute-stat-value">679</span>
+      <span class="cute-stat-label">Personal Commits</span>
     </div>
     <div class="cute-stat-card">
       <span class="cute-stat-emoji">🔥</span>
@@ -39,6 +41,16 @@ Architected and delivered the entire FamCARE full-stack ecosystem, scaling a mod
       <span class="cute-stat-emoji">⏱️</span>
       <span class="cute-stat-value">70%</span>
       <span class="cute-stat-label">Faster Releases</span>
+    </div>
+    <div class="cute-stat-card">
+      <span class="cute-stat-emoji">🧑‍🏫</span>
+      <span class="cute-stat-value">7</span>
+      <span class="cute-stat-label">Interns Mentored</span>
+    </div>
+    <div class="cute-stat-card">
+      <span class="cute-stat-emoji">🧬</span>
+      <span class="cute-stat-value">121</span>
+      <span class="cute-stat-label">DB Migrations</span>
     </div>
   </div>
 </div>
@@ -97,15 +109,17 @@ We didn't just build an app—we spawned an entire digital universe! Expand each
       <span class="repo-icon">🧑‍⚕️</span>
       <div class="repo-meta">
         <h3>famcare-caretaker</h3>
-        <span class="repo-badge">Provider App • Flutter Mobile • 32 Commits</span>
+        <span class="repo-badge">Provider App • Capacitor (Web-to-Native)</span>
       </div>
     </summary>
     <div class="repo-details">
-      <p>Empowering local caregivers with task bidding, active availability states, and AWS S3 security proof checks.</p>
+      <p>Empowering local caregivers with task bidding, live chat, active availability states, and AWS S3 security proof checks.</p>
       <ul>
         <li><strong>Task Bidding:</strong> Custom provider dashboards with live booking proposals and real-time alerts.</li>
+        <li><strong>In-app Chat:</strong> Direct customer-caregiver messaging built on the same real-time backplane as live tracking.</li>
         <li><strong>Foreground Timer Patch:</strong> Solved Android chronometer tick bugs by resetting foreground notifications upon task status state changes.</li>
         <li><strong>Secure Check-ins:</strong> Direct AWS S3 photo capturing flow for secure check-in/out proofs.</li>
+        <li><strong>Fastlane CI/CD:</strong> Automated build, signing, and store deployment alongside the customer app.</li>
       </ul>
     </div>
   </details>
@@ -116,16 +130,18 @@ We didn't just build an app—we spawned an entire digital universe! Expand each
       <span class="repo-icon">🛡️</span>
       <div class="repo-meta">
         <h3>famcare_admin</h3>
-        <span class="repo-badge">Admin Panel • Flutter/Web • 54 Commits</span>
+        <span class="repo-badge">Admin Panel • Next.js</span>
       </div>
     </summary>
     <div class="repo-details">
-      <p>The high-powered command dashboard giving administrators absolute operational system control.</p>
+      <p>The high-powered operations console giving the internal team absolute control over orders, riders, and finances.</p>
       <ul>
+        <li><strong>Financial Reporting:</strong> Real P&L in daily report PDFs, cancellation tracking, MTD/YTD analytics with custom date-range filters.</li>
+        <li><strong>Rider Dashboards:</strong> Salary and revenue-utilization dashboards plus a full audit log of admin actions.</li>
         <li><strong>Slot Allocation:</strong> Advanced scheduling slots, capacities, and operational hour overrides.</li>
-        <li><strong>Dynamic BGV Approval:</strong> springVerify status review panel with manual override flags.</li>
-        <li><strong>Cohort Broadcasts:</strong> Advanced FCM notification center filtering targeted user/caretaker segments.</li>
-        <li><strong>Developer Sandbox:</strong> Integrated developer order cancellations and DB overrides for fast staging.</li>
+        <li><strong>Dynamic BGV Approval:</strong> SpringVerify status review panel with manual override flags, handling provider 404s gracefully.</li>
+        <li><strong>Feature Flags:</strong> Per-feature off / dev_only / live gating to ship new code paths without exposing them before they're ready.</li>
+        <li><strong>Cohort Broadcasts:</strong> FCM notification center filtering targeted user/caretaker segments, plus manual OTP regeneration and referral backfills.</li>
       </ul>
     </div>
   </details>
