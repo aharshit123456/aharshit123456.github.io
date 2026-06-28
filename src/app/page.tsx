@@ -130,6 +130,77 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        <h2>Portfolio Gallery & Concept Diagrams</h2>
+        <div className="seo-gallery">
+          <h3>Delhi & Shopping Highlights</h3>
+          <ul>
+            <li><img src="/gallery/delhi-shopping/1780959476156.jpeg" alt="Delhi trip and shopping photo 1" /></li>
+            <li><img src="/gallery/delhi-shopping/1780959476321.jpeg" alt="Delhi trip and shopping photo 2" /></li>
+            <li><img src="/gallery/delhi-shopping/1780959476161.jpeg" alt="Delhi trip and shopping photo 3" /></li>
+            <li><img src="/gallery/delhi-shopping/1780959475584.jpeg" alt="Delhi trip and shopping photo 4" /></li>
+            <li><img src="/gallery/delhi-shopping/1780959476608.jpeg" alt="Delhi trip and shopping photo 5" /></li>
+            <li><img src="/gallery/delhi-shopping/1780959476425.jpeg" alt="Delhi trip and shopping photo 6" /></li>
+            <li><img src="/gallery/delhi-shopping/1780959474802.jpeg" alt="Delhi trip and shopping photo 7" /></li>
+            <li><img src="/gallery/delhi-shopping/1780959476168.jpeg" alt="Delhi trip and shopping photo 8" /></li>
+            <li><img src="/gallery/delhi-shopping/1780959474708.jpeg" alt="Delhi trip and shopping photo 9" /></li>
+            <li><img src="/gallery/delhi-shopping/1780959475708.jpeg" alt="Delhi trip and shopping photo 10" /></li>
+            <li><img src="/gallery/delhi-shopping/1780959476299.jpeg" alt="Delhi trip and shopping photo 11" /></li>
+            <li><img src="/gallery/delhi-shopping/1780959476174.jpeg" alt="Delhi trip and shopping photo 12" /></li>
+          </ul>
+
+          <h3>NISER Campus & Times</h3>
+          <ul>
+            <li><img src="/gallery/niser-times/1780776777123.jpeg" alt="NISER undergrad times and research internship photo 1" /></li>
+            <li><img src="/gallery/niser-times/1780776776660.jpeg" alt="NISER undergrad times and research internship photo 2" /></li>
+            <li><img src="/gallery/niser-times/1780776776714.jpeg" alt="NISER undergrad times and research internship photo 3" /></li>
+            <li><img src="/gallery/niser-times/1780776777775.jpeg" alt="NISER undergrad times and research internship photo 4" /></li>
+            <li><img src="/gallery/niser-times/1780776777243.jpeg" alt="NISER undergrad times and research internship photo 5" /></li>
+            <li><img src="/gallery/niser-times/1780776777038.jpeg" alt="NISER undergrad times and research internship photo 6" /></li>
+            <li><img src="/gallery/niser-times/1780776776680.jpeg" alt="NISER undergrad times and research internship photo 7" /></li>
+            <li><img src="/gallery/niser-times/1780776776706.jpeg" alt="NISER undergrad times and research internship photo 8" /></li>
+            <li><img src="/gallery/niser-times/1780776776160.jpeg" alt="NISER undergrad times and research internship photo 9" /></li>
+            <li><img src="/gallery/niser-times/1780776777024.jpeg" alt="NISER undergrad times and research internship photo 10" /></li>
+          </ul>
+
+          <h3>Illustrations & Concept Diagrams</h3>
+          <figure>
+            <img src="/gallery/illustrations/1782174990163.jpeg" alt="Feature Flag Rollout Strategy Diagram" />
+            <figcaption>Feature Flag Rollout Strategy: Flowchart explaining user routing, database query logic, hash-based percentage rollout, and safe fallback systems.</figcaption>
+          </figure>
+          <figure>
+            <img src="/gallery/illustrations/1781798754417.jpeg" alt="Whitefield Traffic Hotspots Map Layout" />
+            <figcaption>Whitefield Traffic Hotspots Map: OpenStreetMap satellite overlay of peak travel times and route latencies.</figcaption>
+          </figure>
+          <figure>
+            <img src="/gallery/illustrations/1780700866053.jpeg" alt="Enterprise Java and TypeScript Boilerplate Call Stack" />
+            <figcaption>Boilerplate Call Stack Trace: Visualizing nested interceptors, validation chains, and unit of work coordinators in enterprise service layers.</figcaption>
+          </figure>
+          <figure>
+            <img src="/gallery/illustrations/1781729663413.jpeg" alt="Today: Production vs Me - Startup Bugs Dashboard" />
+            <figcaption>Today: Production vs Me: sticky note representation of fixing coupon stacking, webhook loops, and checkout totals.</figcaption>
+          </figure>
+          <figure>
+            <img src="/gallery/illustrations/1782174989927.jpeg" alt="Dr. STONE Anime Rocket Scene screenshot" />
+            <figcaption>Dr. STONE Space Rocket Episode: Anime screenshot of Senku 7 launching into space as a symbol of engineering determination.</figcaption>
+          </figure>
+          <figure>
+            <img src="/gallery/illustrations/1781798750123.jpeg" alt="AWS ECS Task and OSRM Sidecar Routing Architecture" />
+            <figcaption>AWS ECS Task Architecture: Diagram of a Python/FastAPI container communicating via localhost with an OSRM routing engine sidecar in less than 2ms.</figcaption>
+          </figure>
+          <figure>
+            <img src="/gallery/illustrations/1780700865883.jpeg" alt="Technical Debt Cost Curve over Time" />
+            <figcaption>Technical Debt Curve: Cost-to-fix compounding timeline illustrating the importance of early architecture decisions before day 90.</figcaption>
+          </figure>
+          <figure>
+            <img src="/gallery/illustrations/1780700866000.jpeg" alt="Software Architecture Comparison: Monolith vs Microservices" />
+            <figcaption>Software Architecture Comparison: Visual comparison of flat monoliths, modular monoliths (the sweet spot), and microservice complexity traps.</figcaption>
+          </figure>
+          <figure>
+            <img src="/gallery/illustrations/1781729663439.jpeg" alt="LLM Prompting Comparison: Vague vs Surgical prompts" />
+            <figcaption>LLM Prompting Comparison: Highlighting vague vs surgical prompts and why AI response quality depends on codebase familiarity.</figcaption>
+          </figure>
+        </div>
       </section>
 
       {/* The actual interactive macOS-style interface */}

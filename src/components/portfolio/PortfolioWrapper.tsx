@@ -74,6 +74,10 @@ const VoxelHertaOverlay = dynamic(
   () => import('@/components/portfolio/VoxelHertaOverlay'),
   { ssr: false }
 );
+const GalleryView = dynamic(
+  () => import('@/components/portfolio/GalleryView'),
+  { ssr: false, loading: () => <div style={{ color: '#fff', padding: '20px', fontFamily: 'monospace' }}>Loading Gallery...</div> }
+);
 
 import Dock from '@/components/portfolio/Dock';
 import ControlCenter from '@/components/portfolio/ControlCenter';
@@ -132,6 +136,9 @@ export default function Portfolio() {
   const [isBubbleWrapOpen, setIsBubbleWrapOpen] = useState(false);
   const [isBubbleWrapMinimized, setIsBubbleWrapMinimized] = useState(false);
   const [browserIconPosition, setBrowserIconPosition] = useState({ x: 40, y: 440 });
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+  const [isGalleryMinimized, setIsGalleryMinimized] = useState(false);
+  const [galleryIconPosition, setGalleryIconPosition] = useState({ x: 40, y: 540 });
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -174,6 +181,7 @@ export default function Portfolio() {
     messages: { x: 100, y: 100 },
     browser: { x: 80, y: 80 },
     bubblewrap: { x: 200, y: 150 },
+    gallery: { x: 140, y: 140 },
     ql: { x: 0, y: 0 }
   });
 
@@ -203,7 +211,7 @@ export default function Portfolio() {
     }
     return () => clearInterval(timer);
   }, [isReadingArticle, isPetTriggered]);
-  const activeDragWindow = useRef<'terminal' | 'freelance' | 'dmg' | 'main' | 'docs' | 'messages' | 'browser' | 'bubblewrap' | 'ql' | null>(null);
+  const activeDragWindow = useRef<'terminal' | 'freelance' | 'dmg' | 'main' | 'docs' | 'messages' | 'browser' | 'bubblewrap' | 'gallery' | 'ql' | null>(null);
 
   const windowDragOffset = useRef({ x: 0, y: 0 });
   const [contextMenu, setContextMenu] = useState<{ visible: boolean; x: number; y: number; type?: string; data?: any }>({ visible: false, x: 0, y: 0 });
@@ -216,7 +224,7 @@ export default function Portfolio() {
       window.navigator.vibrate(pattern);
     }
   };
-  const activeDragIcon = useRef<'main' | 'freelance' | 'terminal' | 'resume' | 'docs' | 'browser' | null>(null);
+  const activeDragIcon = useRef<'main' | 'freelance' | 'terminal' | 'resume' | 'docs' | 'browser' | 'gallery' | null>(null);
 
 
   const [activeSpace, setActiveSpace] = useState(0); // 0: Desktop, 1: Fullscreen
@@ -358,6 +366,7 @@ export default function Portfolio() {
     setIsMessagesMinimized(true);
     setIsFreelanceMinimized(true);
     setIsBrowserMinimized(true);
+    setIsGalleryMinimized(true);
     setIsDMGOpen(false);
     setActiveSpace(0);
   };
@@ -382,12 +391,13 @@ export default function Portfolio() {
   }, [selectedImage]);
 
   // Dragging logic
-  const handleMouseDown = (e: React.MouseEvent, type: 'main' | 'freelance' | 'terminal' | 'resume' | 'docs' | 'browser') => {
+  const handleMouseDown = (e: React.MouseEvent, type: 'main' | 'freelance' | 'terminal' | 'resume' | 'docs' | 'browser' | 'gallery') => {
     if (type === 'main' && !isMinimized) return;
     if (type === 'freelance' && isFreelanceOpen && !isFreelanceMinimized) return;
     if (type === 'terminal' && isTerminalOpen && !isTerminalMinimized) return;
     if (type === 'docs' && isDocsOpen && !isDocsMinimized) return;
     if (type === 'browser' && isBrowserOpen && !isBrowserMinimized) return;
+    if (type === 'gallery' && isGalleryOpen && !isGalleryMinimized) return;
 
     activeDragIcon.current = type as any;
 
@@ -395,7 +405,9 @@ export default function Portfolio() {
       type === 'freelance' ? freelanceIconPosition :
         type === 'terminal' ? terminalIconPosition :
           type === 'docs' ? docsIconPosition :
-            resumeIconPosition;
+            type === 'browser' ? browserIconPosition :
+              type === 'gallery' ? galleryIconPosition :
+                resumeIconPosition;
 
     setIsDragging(true);
 
@@ -440,6 +452,8 @@ export default function Portfolio() {
         setResumeIconPosition({ x: boundedX, y: boundedY });
       } else if (activeDragIcon.current === 'browser') {
         setBrowserIconPosition({ x: boundedX, y: boundedY });
+      } else if (activeDragIcon.current === 'gallery') {
+        setGalleryIconPosition({ x: boundedX, y: boundedY });
       }
     };
 
@@ -590,7 +604,7 @@ export default function Portfolio() {
     };
   }, [activeSpace, fullscreenWindow]);
 
-  const handleIconClick = (type: 'main' | 'freelance' | 'terminal' | 'resume' | 'browser') => {
+  const handleIconClick = (type: 'main' | 'freelance' | 'terminal' | 'resume' | 'browser' | 'gallery' | 'bubblewrap') => {
     const dragDuration = Date.now() - dragStartTime.current;
     if (dragDuration < 200) {
       if (type === 'main') toggleMinimize();
@@ -608,6 +622,9 @@ export default function Portfolio() {
       } else if (type === 'bubblewrap') {
         if (!isBubbleWrapOpen) setIsBubbleWrapOpen(true);
         else setIsBubbleWrapMinimized(!isBubbleWrapMinimized);
+      } else if (type === 'gallery') {
+        if (!isGalleryOpen) setIsGalleryOpen(true);
+        else setIsGalleryMinimized(!isGalleryMinimized);
       }
     }
   };
@@ -1832,6 +1849,33 @@ export default function Portfolio() {
             </div>
           )}
 
+          {/* Gallery Window */}
+          {isGalleryOpen && (
+            <div className={`mac-window gallery-window ${isGalleryMinimized ? 'minimized' : ''} ${isMobile ? 'fullscreen-view' : ''}`} style={!isMobile ? {
+              position: 'absolute',
+              top: `${windowPositions.gallery.y}px`,
+              left: `${windowPositions.gallery.x}px`,
+              zIndex: 67,
+              width: '850px',
+              height: '550px'
+            } : { zIndex: 67 }}>
+              <div className="title-bar" onMouseDown={(e) => handleWindowMouseDown(e, 'gallery')}>
+                <div className="buttons">
+                  <div className="close" title="Close" onClick={(e) => { e.stopPropagation(); setIsGalleryOpen(false); }}></div>
+                  <div className="minimize" title="Minimize" onClick={(e) => { e.stopPropagation(); setIsGalleryMinimized(true); }}></div>
+                  <div className="maximize" title="Maximize"></div>
+                </div>
+                <div className="window-title">Gallery.app</div>
+              </div>
+              <div className="content-container" style={{ padding: 0, height: 'calc(100% - 35px)' }}>
+                <GalleryView 
+                  isDarkMode={isDarkMode} 
+                  onOpenQuickLook={(images, index, title) => openQuickLook(images, index, title)} 
+                />
+              </div>
+            </div>
+          )}
+
           {/* Desktop Context Menu */}
           {contextMenu.visible && (
             <div className="custom-context-menu" style={{ top: contextMenu.y, left: contextMenu.x }}>
@@ -2093,6 +2137,26 @@ export default function Portfolio() {
                 </div>
                 <div className="icon-label">Safari.app</div>
               </div>
+
+              <div
+                className={`minimized-icon ${activeDragIcon.current === 'gallery' ? 'dragging' : ''}`}
+                onMouseDown={(e) => handleMouseDown(e, 'gallery')}
+                onClick={() => {
+                  setIsGalleryOpen(true);
+                  setIsGalleryMinimized(false);
+                }}
+                style={{
+                  left: `${galleryIconPosition.x}px`,
+                  bottom: `${galleryIconPosition.y}px`,
+                  position: 'absolute'
+                }}
+                title="Gallery"
+              >
+                <div className="icon-image">
+                  <img src="https://img.icons8.com/color/512/photos.png" alt="Gallery" draggable="false" />
+                </div>
+                <div className="icon-label">Gallery.app</div>
+              </div>
             </>
           )}
 
@@ -2208,6 +2272,13 @@ export default function Portfolio() {
             setIsTerminalOpen(true); 
             setIsTerminalMinimized(false);
           }, isOpen: isTerminalOpen && !isTerminalMinimized },
+          { id: 'gallery', name: 'Gallery', icon: 'https://img.icons8.com/color/512/photos.png', onClick: () => { 
+            playSound('funk'); 
+            triggerHaptic(15);
+            minimizeAllWindows(); 
+            setIsGalleryOpen(true); 
+            setIsGalleryMinimized(false);
+          }, isOpen: isGalleryOpen && !isGalleryMinimized },
           { id: 'bubblewrap', name: 'PopIt', icon: 'https://img.icons8.com/fluency/512/bubble.png', onClick: () => { 
             playSound('funk'); 
             triggerHaptic(15);
@@ -2220,7 +2291,8 @@ export default function Portfolio() {
           { id: 'launchpad', name: 'Launchpad', icon: 'https://img.icons8.com/color/512/launchpad.png', onClick: () => { playSound('funk'); setIsLaunchpadOpen(true); }, isOpen: false },
           { id: 'terminal', name: 'Terminal', icon: '/terminal_icon.png', onClick: () => { playSound('funk'); setIsTerminalOpen(true); }, isOpen: isTerminalOpen },
           { id: 'resume', name: 'Resume DMG', icon: '/dmg_icon.png', onClick: () => { playSound('funk'); setIsDMGOpen(true); }, isOpen: isDMGOpen },
-          {id: 'browser', name: 'Safari', icon: 'https://img.icons8.com/color/512/safari.png', onClick: () => { playSound('funk'); setIsBrowserOpen(true); setIsBrowserMinimized(false); }, isOpen: isBrowserOpen && !isBrowserMinimized },
+          { id: 'browser', name: 'Safari', icon: 'https://img.icons8.com/color/512/safari.png', onClick: () => { playSound('funk'); setIsBrowserOpen(true); setIsBrowserMinimized(false); }, isOpen: isBrowserOpen && !isBrowserMinimized },
+          { id: 'gallery', name: 'Gallery', icon: 'https://img.icons8.com/color/512/photos.png', onClick: () => { playSound('funk'); setIsGalleryOpen(true); setIsGalleryMinimized(false); }, isOpen: isGalleryOpen && !isGalleryMinimized },
           { id: 'bubblewrap', name: 'PopIt', icon: 'https://img.icons8.com/fluency/512/bubble.png', onClick: () => { playSound('funk'); setIsBubbleWrapOpen(true); setIsBubbleWrapMinimized(false); }, isOpen: isBubbleWrapOpen && !isBubbleWrapMinimized },
           { id: 'settings', name: 'System Settings', icon: '/apps_icon.png', onClick: () => { playSound('funk'); setIsWallpaperSwitcherOpen(true); } },
 
@@ -2239,6 +2311,7 @@ export default function Portfolio() {
           { id: 'settings', name: 'System Settings', icon: '/apps_icon.png', onClick: () => setIsWallpaperSwitcherOpen(true) },
           { id: 'github', name: 'GitHub', icon: '/git.png', onClick: () => window.open('https://github.com/aharshit123456', '_blank') },
           { id: 'browser', name: 'Safari', icon: 'https://img.icons8.com/color/512/safari.png', onClick: () => setIsBrowserOpen(true) },
+          { id: 'gallery', name: 'Gallery', icon: 'https://img.icons8.com/color/512/photos.png', onClick: () => { setIsGalleryOpen(true); setIsGalleryMinimized(false); } },
           { id: 'linkedin', name: 'LinkedIn', icon: '/linkedin.png', onClick: () => window.open('https://www.linkedin.com/in/aharshit123456/', '_blank') },
 
           { id: 'spotify', name: 'Spotify', icon: 'https://img.icons8.com/color/512/spotify.png', onClick: () => { 
@@ -2291,6 +2364,7 @@ export default function Portfolio() {
           { id: 'resume', name: 'Resume DMG', icon: '/dmg_icon.png', onClick: () => setIsDMGOpen(true) },
           { id: 'settings', name: 'System Settings', icon: '/apps_icon.png', onClick: () => setIsWallpaperSwitcherOpen(true) },
           { id: 'browser', name: 'Safari', icon: 'https://img.icons8.com/color/512/safari.png', onClick: () => setIsBrowserOpen(true) },
+          { id: 'gallery', name: 'Gallery', icon: 'https://img.icons8.com/color/512/photos.png', onClick: () => { setIsGalleryOpen(true); setIsGalleryMinimized(false); } },
           { id: 'github', name: 'GitHub', icon: '/git.png', onClick: () => window.open('https://github.com/aharshit123456', '_blank') },
 
         ]}
