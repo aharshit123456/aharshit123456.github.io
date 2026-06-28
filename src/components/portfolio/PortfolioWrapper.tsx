@@ -2153,7 +2153,7 @@ export default function Portfolio() {
                 title="Gallery"
               >
                 <div className="icon-image">
-                  <img src="https://img.icons8.com/color/512/photos.png" alt="Gallery" draggable="false" />
+                  <img src="https://img.icons8.com/fluency/512/image.png" alt="Gallery" draggable="false" />
                 </div>
                 <div className="icon-label">Gallery.app</div>
               </div>
@@ -2272,7 +2272,7 @@ export default function Portfolio() {
             setIsTerminalOpen(true); 
             setIsTerminalMinimized(false);
           }, isOpen: isTerminalOpen && !isTerminalMinimized },
-          { id: 'gallery', name: 'Gallery', icon: 'https://img.icons8.com/color/512/photos.png', onClick: () => { 
+          { id: 'gallery', name: 'Gallery', icon: 'https://img.icons8.com/fluency/512/image.png', onClick: () => { 
             playSound('funk'); 
             triggerHaptic(15);
             minimizeAllWindows(); 
@@ -2292,7 +2292,7 @@ export default function Portfolio() {
           { id: 'terminal', name: 'Terminal', icon: '/terminal_icon.png', onClick: () => { playSound('funk'); setIsTerminalOpen(true); }, isOpen: isTerminalOpen },
           { id: 'resume', name: 'Resume DMG', icon: '/dmg_icon.png', onClick: () => { playSound('funk'); setIsDMGOpen(true); }, isOpen: isDMGOpen },
           { id: 'browser', name: 'Safari', icon: 'https://img.icons8.com/color/512/safari.png', onClick: () => { playSound('funk'); setIsBrowserOpen(true); setIsBrowserMinimized(false); }, isOpen: isBrowserOpen && !isBrowserMinimized },
-          { id: 'gallery', name: 'Gallery', icon: 'https://img.icons8.com/color/512/photos.png', onClick: () => { playSound('funk'); setIsGalleryOpen(true); setIsGalleryMinimized(false); }, isOpen: isGalleryOpen && !isGalleryMinimized },
+          { id: 'gallery', name: 'Gallery', icon: 'https://img.icons8.com/fluency/512/image.png', onClick: () => { playSound('funk'); setIsGalleryOpen(true); setIsGalleryMinimized(false); }, isOpen: isGalleryOpen && !isGalleryMinimized },
           { id: 'bubblewrap', name: 'PopIt', icon: 'https://img.icons8.com/fluency/512/bubble.png', onClick: () => { playSound('funk'); setIsBubbleWrapOpen(true); setIsBubbleWrapMinimized(false); }, isOpen: isBubbleWrapOpen && !isBubbleWrapMinimized },
           { id: 'settings', name: 'System Settings', icon: '/apps_icon.png', onClick: () => { playSound('funk'); setIsWallpaperSwitcherOpen(true); } },
 
@@ -2311,7 +2311,7 @@ export default function Portfolio() {
           { id: 'settings', name: 'System Settings', icon: '/apps_icon.png', onClick: () => setIsWallpaperSwitcherOpen(true) },
           { id: 'github', name: 'GitHub', icon: '/git.png', onClick: () => window.open('https://github.com/aharshit123456', '_blank') },
           { id: 'browser', name: 'Safari', icon: 'https://img.icons8.com/color/512/safari.png', onClick: () => setIsBrowserOpen(true) },
-          { id: 'gallery', name: 'Gallery', icon: 'https://img.icons8.com/color/512/photos.png', onClick: () => { setIsGalleryOpen(true); setIsGalleryMinimized(false); } },
+          { id: 'gallery', name: 'Gallery', icon: 'https://img.icons8.com/fluency/512/image.png', onClick: () => { setIsGalleryOpen(true); setIsGalleryMinimized(false); } },
           { id: 'linkedin', name: 'LinkedIn', icon: '/linkedin.png', onClick: () => window.open('https://www.linkedin.com/in/aharshit123456/', '_blank') },
 
           { id: 'spotify', name: 'Spotify', icon: 'https://img.icons8.com/color/512/spotify.png', onClick: () => { 
@@ -2364,7 +2364,7 @@ export default function Portfolio() {
           { id: 'resume', name: 'Resume DMG', icon: '/dmg_icon.png', onClick: () => setIsDMGOpen(true) },
           { id: 'settings', name: 'System Settings', icon: '/apps_icon.png', onClick: () => setIsWallpaperSwitcherOpen(true) },
           { id: 'browser', name: 'Safari', icon: 'https://img.icons8.com/color/512/safari.png', onClick: () => setIsBrowserOpen(true) },
-          { id: 'gallery', name: 'Gallery', icon: 'https://img.icons8.com/color/512/photos.png', onClick: () => { setIsGalleryOpen(true); setIsGalleryMinimized(false); } },
+          { id: 'gallery', name: 'Gallery', icon: 'https://img.icons8.com/fluency/512/image.png', onClick: () => { setIsGalleryOpen(true); setIsGalleryMinimized(false); } },
           { id: 'github', name: 'GitHub', icon: '/git.png', onClick: () => window.open('https://github.com/aharshit123456', '_blank') },
 
         ]}

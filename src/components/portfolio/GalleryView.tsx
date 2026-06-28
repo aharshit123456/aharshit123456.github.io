@@ -13,8 +13,10 @@ interface ImageItem {
   description?: string;
 }
 
-export default function GalleryView({ isDarkMode, onOpenQuickLook }: GalleryViewProps) {
+export default function GalleryView({ isDarkMode }: GalleryViewProps) {
   const [activeTab, setActiveTab] = useState<'delhi' | 'niser' | 'illustrations'>('delhi');
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [lightboxImages, setLightboxImages] = useState<string[]>([]);
 
   const delhiImages: ImageItem[] = [
     { src: '/gallery/delhi-shopping/1780959476156.jpeg' },
@@ -92,9 +94,10 @@ export default function GalleryView({ isDarkMode, onOpenQuickLook }: GalleryView
     }
   ];
 
-  const handleImageClick = (images: ImageItem[], index: number, title: string) => {
+  const handleImageClick = (images: ImageItem[], index: number) => {
     const list = images.map(img => img.src);
-    onOpenQuickLook(list, index, title);
+    setLightboxImages(list);
+    setLightboxIndex(index);
   };
 
   return (
@@ -127,7 +130,7 @@ export default function GalleryView({ isDarkMode, onOpenQuickLook }: GalleryView
               <div 
                 key={i} 
                 className="gallery-card"
-                onClick={() => handleImageClick(delhiImages, i, 'Delhi & Shopping')}
+                onClick={() => handleImageClick(delhiImages, i)}
               >
                 <img src={img.src} alt={`Delhi & Shopping ${i + 1}`} />
               </div>
@@ -141,7 +144,7 @@ export default function GalleryView({ isDarkMode, onOpenQuickLook }: GalleryView
               <div 
                 key={i} 
                 className="gallery-card"
-                onClick={() => handleImageClick(niserImages, i, 'NISER Times')}
+                onClick={() => handleImageClick(niserImages, i)}
               >
                 <img src={img.src} alt={`NISER Times ${i + 1}`} />
               </div>
@@ -155,7 +158,7 @@ export default function GalleryView({ isDarkMode, onOpenQuickLook }: GalleryView
               <div key={i} className="illustration-row">
                 <div 
                   className="illustration-img-container"
-                  onClick={() => handleImageClick(illustrationImages, i, img.title || 'Illustration')}
+                  onClick={() => handleImageClick(illustrationImages, i)}
                 >
                   <img src={img.src} alt={img.title} />
                   <div className="zoom-overlay"><i className="fas fa-search-plus"></i> Click to Zoom</div>
@@ -169,6 +172,37 @@ export default function GalleryView({ isDarkMode, onOpenQuickLook }: GalleryView
           </div>
         )}
       </div>
+
+      {/* Fullscreen Lightbox Overlay */}
+      {lightboxIndex !== null && (
+        <div className="lightbox-overlay" onClick={() => setLightboxIndex(null)}>
+          <button className="lightbox-close" onClick={() => setLightboxIndex(null)}>×</button>
+          
+          <button 
+            className="lightbox-nav prev" 
+            onClick={(e) => {
+              e.stopPropagation();
+              setLightboxIndex((lightboxIndex - 1 + lightboxImages.length) % lightboxImages.length);
+            }}
+          >
+            ‹
+          </button>
+          
+          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+            <img src={lightboxImages[lightboxIndex]} alt="Zoomed view" />
+          </div>
+          
+          <button 
+            className="lightbox-nav next" 
+            onClick={(e) => {
+              e.stopPropagation();
+              setLightboxIndex((lightboxIndex + 1) % lightboxImages.length);
+            }}
+          >
+            ›
+          </button>
+        </div>
+      )}
 
       <style jsx>{`
         .gallery-app {
@@ -315,6 +349,92 @@ export default function GalleryView({ isDarkMode, onOpenQuickLook }: GalleryView
           opacity: 0.8;
         }
 
+        /* Lightbox CSS */
+        .lightbox-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background: rgba(0, 0, 0, 0.88);
+          backdrop-filter: blur(15px);
+          -webkit-backdrop-filter: blur(15px);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          z-index: 100000;
+          animation: fadeIn 0.2s ease-out;
+        }
+
+        .lightbox-content {
+          flex: 1;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          max-height: 90vh;
+          padding: 20px;
+        }
+
+        .lightbox-content img {
+          max-width: 100%;
+          max-height: 85vh;
+          object-fit: contain;
+          border-radius: 8px;
+          box-shadow: 0 25px 50px rgba(0,0,0,0.7);
+        }
+
+        .lightbox-close {
+          position: absolute;
+          top: 20px;
+          right: 30px;
+          background: none;
+          border: none;
+          color: rgba(255,255,255,0.7);
+          font-size: 44px;
+          cursor: pointer;
+          transition: color 0.2s;
+          z-index: 100001;
+        }
+
+        .lightbox-close:hover {
+          color: white;
+        }
+
+        .lightbox-nav {
+          background: rgba(255,255,255,0.08);
+          border: none;
+          color: rgba(255,255,255,0.8);
+          font-size: 36px;
+          width: 56px;
+          height: 56px;
+          border-radius: 50%;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s;
+          z-index: 100001;
+        }
+
+        .lightbox-nav:hover {
+          background: rgba(255,255,255,0.2);
+          color: white;
+          transform: scale(1.05);
+        }
+
+        .lightbox-nav.prev {
+          margin-left: 30px;
+        }
+
+        .lightbox-nav.next {
+          margin-right: 30px;
+        }
+
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
         @media (max-width: 600px) {
           .gallery-app {
             flex-direction: column;
@@ -338,6 +458,13 @@ export default function GalleryView({ isDarkMode, onOpenQuickLook }: GalleryView
             width: 100%;
             height: 200px;
           }
+          .lightbox-nav {
+            width: 44px;
+            height: 44px;
+            font-size: 28px;
+          }
+          .lightbox-nav.prev { margin-left: 10px; }
+          .lightbox-nav.next { margin-right: 10px; }
         }
       `}</style>
     </div>
