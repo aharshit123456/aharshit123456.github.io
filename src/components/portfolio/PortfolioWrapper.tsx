@@ -682,6 +682,8 @@ export default function Portfolio() {
                   <a href="#about">//about</a>
                   <a href="#experience">//experience</a>
                   <a href="#projects">//projects</a>
+                  <a href="#research">//research</a>
+                  <a href="#publications">//publications</a>
                   <a href="#hackathons">//hackathons</a>
                   <a href="#skills">//skills</a>
                 </div>
@@ -1117,6 +1119,76 @@ export default function Portfolio() {
                   <p>DSA (Stacks, Queues, Lists) from scratch. Numerical methods for linear/non-linear equations.</p>
                 </div>
               ], 'projects')}
+            </section>
+
+            <hr className="divider" />
+
+            <section className="research-section" id="research">
+              <h3>//research</h3>
+              <div className="skills-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginTop: '20px' }}>
+                <div className="skill-category" style={{ cursor: 'pointer', transition: 'transform 0.2s' }} onClick={() => window.open('/research/computational-neuroscience', '_blank')}>
+                  <strong>Computational Neuroscience</strong>
+                  <p style={{ fontSize: '0.8rem', opacity: 0.8, marginTop: '8px', lineHeight: '1.4' }}>
+                    Alzheimer's and Parkinson's FOG prediction models, EEG working memory feature extraction.
+                  </p>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--accent-color)', fontWeight: 'bold', display: 'block', marginTop: '10px' }}>Read research page →</span>
+                </div>
+                <div className="skill-category" style={{ cursor: 'pointer', transition: 'transform 0.2s' }} onClick={() => window.open('/research/protein-engineering', '_blank')}>
+                  <strong>Protein Engineering</strong>
+                  <p style={{ fontSize: '0.8rem', opacity: 0.8, marginTop: '8px', lineHeight: '1.4' }}>
+                    Deep generative models and diffusion architectures for folding stability and synthetic backbone design.
+                  </p>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--accent-color)', fontWeight: 'bold', display: 'block', marginTop: '10px' }}>Read research page →</span>
+                </div>
+                <div className="skill-category" style={{ cursor: 'pointer', transition: 'transform 0.2s' }} onClick={() => window.open('/research/drug-discovery', '_blank')}>
+                  <strong>Drug Discovery</strong>
+                  <p style={{ fontSize: '0.8rem', opacity: 0.8, marginTop: '8px', lineHeight: '1.4' }}>
+                    Target binding affinity estimation using Graph Neural Networks and active learning structures.
+                  </p>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--accent-color)', fontWeight: 'bold', display: 'block', marginTop: '10px' }}>Read research page →</span>
+                </div>
+                <div className="skill-category" style={{ cursor: 'pointer', transition: 'transform 0.2s' }} onClick={() => window.open('/research/cybersecurity', '_blank')}>
+                  <strong>Cybersecurity</strong>
+                  <p style={{ fontSize: '0.8rem', opacity: 0.8, marginTop: '8px', lineHeight: '1.4' }}>
+                    Transformer models for software vulnerability exploit prediction and CTF offensive challenge tasks.
+                  </p>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--accent-color)', fontWeight: 'bold', display: 'block', marginTop: '10px' }}>Read research page →</span>
+                </div>
+                <div className="skill-category" style={{ cursor: 'pointer', transition: 'transform 0.2s' }} onClick={() => window.open('/research/foundation-models', '_blank')}>
+                  <strong>Foundation Models</strong>
+                  <p style={{ fontSize: '0.8rem', opacity: 0.8, marginTop: '8px', lineHeight: '1.4' }}>
+                    Attention rewiring mechanisms, context optimizations, and production serving of CLIP & VLLMs.
+                  </p>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--accent-color)', fontWeight: 'bold', display: 'block', marginTop: '10px' }}>Read research page →</span>
+                </div>
+              </div>
+            </section>
+
+            <hr className="divider" />
+
+            <section className="publications-section" id="publications">
+              <h3>//publications & papers</h3>
+              {renderSectionItems([
+                <div className="project-card" key="rewiring-transformers">
+                  <div className="project-header">
+                    <h4>Rewiring transformers for exploit likelihood of vulnerabilities</h4>
+                    <span className="tech-stack">PyTorch, Transformers, EPSS</span>
+                  </div>
+                  <p>Fine-tuned DistilBERT and GPT-2 models on NVD vulnerability descriptions to predict exploitability likelihood. Published in AIP Conference Proceedings / ICANTCI 2025.</p>
+                  <div style={{ display: 'flex', gap: '15px', marginTop: '10px' }}>
+                    <a href="https://link.springer.com/chapter/10.1007/978-3-032-29501-9_42" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.8rem', color: 'var(--accent-color)' }}>[Springer]</a>
+                    <a href="https://pubs.aip.org/aip/acp/article-abstract/3410/1/070002/3391998/Rewiring-transformers-for-exploit-likelihood" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.8rem', color: 'var(--accent-color)' }}>[AIP]</a>
+                    <a href="https://www.semanticscholar.org/paper/Rewiring-transformers-for-exploit-likelihood-of-Kumar-Agarwal/e1b24fbc4451a11963afa12b247ec3f0c22a2f21" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.8rem', color: 'var(--accent-color)' }}>[Semantic Scholar]</a>
+                  </div>
+                </div>,
+                <div className="project-card" key="parkinsons-gait-pub">
+                  <div className="project-header">
+                    <h4>Detecting Freezing of Gait (FOG) and Imbalances in Parkinson's Disease Patients</h4>
+                    <span className="tech-stack">GCN, LSTM, Wearable Sensors</span>
+                  </div>
+                  <p>Developed spatial-temporal graph modeling on wearable sensor streams to classify and forecast Parkinson's FOG occurrences. Submitted to Health and Technology (Journal).</p>
+                </div>
+              ], 'publications')}
             </section>
 
             <hr className="divider" />
