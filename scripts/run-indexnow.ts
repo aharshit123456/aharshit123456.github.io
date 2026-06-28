@@ -2,7 +2,7 @@ import sitemap from '../src/app/sitemap';
 
 async function runIndexNow() {
   const host = 'www.aharshit123456.space';
-  const key = '4bfa85a3c9e74d12b1897cb5b5c7fe99';
+  const key = '2a8bf3b8d1b34f2db09c855a88c7f999';
   const keyLocation = `https://${host}/${key}.txt`;
   
   console.log('Generating sitemap URLs...');
