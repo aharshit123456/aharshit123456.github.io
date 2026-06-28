@@ -1,5 +1,45 @@
 [
   {
+    "id": "architecture-decision",
+    "slug": "architecture-decision",
+    "title": "Architecture Decision (Day 0)",
+    "date": "2026-06-28",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/architecture-decision.md"
+  },
+  {
+    "id": "niser-internship-retrospective",
+    "slug": "niser-internship-retrospective",
+    "title": "NISER Internship Retrospective",
+    "date": "2026-06-27",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/niser-internship-retrospective.md"
+  },
+  {
+    "id": "shoppin-experience",
+    "slug": "shoppin-experience",
+    "title": "shoppin' Experience",
+    "date": "2026-06-26",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/shoppin-experience.md"
+  },
+  {
+    "id": "routing-infrastructure-osrm",
+    "slug": "routing-infrastructure-osrm",
+    "title": "Routing Infrastructure (OSRM)",
+    "date": "2026-06-25",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/routing-infrastructure-osrm.md"
+  },
+  {
+    "id": "feature-flags-rollout-strategy",
+    "slug": "feature-flags-rollout-strategy",
+    "title": "Feature Flags & Rollout Strategy",
+    "date": "2026-06-24",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/feature-flags-rollout-strategy.md"
+  },
+  {
     "id": "the-scream",
     "slug": "the-scream",
     "title": "The Pixelated Scream: Capturing Existential Dread in 8-Bits",
