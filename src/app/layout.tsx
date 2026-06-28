@@ -9,15 +9,16 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://aharshit123456.space"),
 
   title: {
-    default: "Harshit Agarwal | Fullstack Engineer & AI Researcher",
+    default: "Harshit Agarwal | AI Researcher | Computational Neuroscience",
     template: "%s | Harshit Agarwal"
   },
-  description: "Harshit Agarwal: Expert Fullstack Engineer, AI Researcher, and Product Architect. Lead at Famcare, Founding ML Engineer at shoppin'. Specialist in FastAPI, Flutter, Python, and Scalable AI Systems. Based in India.",
+  description: "Harshit Agarwal: AI Researcher & Software Engineer from KIIT. Expert in Computational Neuroscience, Alzheimer's models & Foundation Models. Find me on GitHub.",
   keywords: [
     "Harshit Agarwal", "Harshit Agarwal Portfolio", "aharshit123456", "Fullstack Engineer India", 
     "AI Researcher", "Machine Learning Engineer", "FastAPI Expert", "Flutter Developer", 
     "Famcare Lead Developer", "shoppin' AI Engineer", "Software Architect Portfolio", 
-    "Python Backend Expert", "Scalable Systems Design", "Generative AI Developer"
+    "Python Backend Expert", "Scalable Systems Design", "Generative AI Developer",
+    "Computational Neuroscience", "Alzheimer's Research", "Foundation Models"
   ],
   authors: [{ name: "Harshit Agarwal", url: "https://aharshit123456.space/" }],
   creator: "Harshit Agarwal",
@@ -37,24 +38,25 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://aharshit123456.space/",
     siteName: "Harshit Agarwal | The Space",
-    title: "Harshit Agarwal | Fullstack Engineer & AI Researcher",
-    description: "Architecting scalable AI systems and cross-platform ecosystems. Founding SDE at shoppin', Lead at Famcare. Explore the workspace of Harshit Agarwal.",
+    title: "Harshit Agarwal | AI Researcher | Computational Neuroscience",
+    description: "AI Researcher & Software Engineer specializing in Computational Neuroscience, Alzheimer's models, and Foundation Models. Explore my workspace.",
     images: [
       {
         url: "/profile_new.jpg",
         width: 1200,
         height: 630,
-        alt: "Harshit Agarwal - Fullstack Engineer & AI Researcher",
+        alt: "Harshit Agarwal - AI Researcher & Software Engineer",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Harshit Agarwal | Fullstack Engineer & AI Researcher",
-    description: "Building the future of AI-driven commerce and healthcare systems. Explore my professional space.",
+    title: "Harshit Agarwal | AI Researcher | Computational Neuroscience",
+    description: "AI Researcher & Software Engineer from KIIT specializing in Computational Neuroscience and Foundation Models.",
     creator: "@aharshit123456",
     images: ["/profile_new.jpg"],
   },
+
   robots: {
     index: true,
     follow: true,
@@ -117,7 +119,9 @@ export default function RootLayout({
                   "sameAs": [
                     "https://github.com/aharshit123456",
                     "https://www.linkedin.com/in/aharshit123456/",
-                    "https://twitter.com/aharshit123456"
+                    "https://twitter.com/aharshit123456",
+                    "https://orcid.org/0009-0000-2173-1740",
+                    "https://scholar.google.com/citations?user=VSiAoGoAAAAJ&hl=en"
                   ],
                   "jobTitle": "Fullstack Engineer & AI Researcher",
                   "description": "Harshit Agarwal is a high-performance Fullstack Engineer and AI Researcher specializing in scalable backend architectures, cross-platform mobile ecosystems, and advanced Machine Learning pipelines.",
