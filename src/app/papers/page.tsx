@@ -14,13 +14,22 @@ export const metadata: Metadata = {
 export default function PapersIndexPage() {
   const publications = [
     {
+      title: 'A Hybrid Dual-Head Transformer-Based LSTM Framework for Physiotherapy Exercise Recognition Using Kinect Sensors',
+      authors: 'Chakraborty, S., Johri, D., Agarwal, H., Chakraborty, J., Behura, A.',
+      venue: 'Frontiers in Advanced Computing and Emerging Intelligent Technologies. FACEIT 2026. Learning and Analytics in Intelligent Systems, vol 63. Springer, Cham.',
+      date: '2026',
+      abstract: 'Proposes a hybrid dual-head transformer-based LSTM framework to identify and recognize physiotherapy exercises from spatial-temporal Kinect sensor coordinate inputs.',
+      links: [
+        { label: 'Springer Link', url: 'https://doi.org/10.1007/978-3-032-29501-9_42' }
+      ]
+    },
+    {
       title: 'Rewiring transformers for exploit likelihood of vulnerabilities',
       authors: 'Kumar, Agarwal, et al.',
       venue: 'AIP Conference Proceedings / ICANTCI 2025',
       date: '2025',
       abstract: 'Investigates custom attention mechanics inside transformers (like DistilBERT and GPT-2) to predict the likelihood of exploit releases based on National Vulnerability Database (NVD) text reports.',
       links: [
-        { label: 'Springer Link', url: 'https://link.springer.com/chapter/10.1007/978-3-032-29501-9_42' },
         { label: 'AIP Publishing', url: 'https://pubs.aip.org/aip/acp/article-abstract/3410/1/070002/3391998/Rewiring-transformers-for-exploit-likelihood' },
         { label: 'Semantic Scholar', url: 'https://www.semanticscholar.org/paper/Rewiring-transformers-for-exploit-likelihood-of-Kumar-Agarwal/e1b24fbc4451a11963afa12b247ec3f0c22a2f21' }
       ]

@@ -1169,6 +1169,16 @@ export default function Portfolio() {
             <section className="publications-section" id="publications">
               <h3>//publications & papers</h3>
               {renderSectionItems([
+                <div className="project-card" key="physiotherapy-transformer">
+                  <div className="project-header">
+                    <h4>A Hybrid Dual-Head Transformer-Based LSTM Framework for Physiotherapy Exercise Recognition Using Kinect Sensors</h4>
+                    <span className="tech-stack">Kinect Sensors, Transformers, LSTM, Physio</span>
+                  </div>
+                  <p>Proposes a hybrid dual-head transformer-based LSTM framework to identify and recognize physiotherapy exercises from spatial-temporal Kinect sensor coordinate inputs. Published in Frontiers in Advanced Computing and Emerging Intelligent Technologies (FACEIT 2026 / Springer).</p>
+                  <div style={{ display: 'flex', gap: '15px', marginTop: '10px' }}>
+                    <a href="https://doi.org/10.1007/978-3-032-29501-9_42" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.8rem', color: 'var(--accent-color)' }}>[Springer]</a>
+                  </div>
+                </div>,
                 <div className="project-card" key="rewiring-transformers">
                   <div className="project-header">
                     <h4>Rewiring transformers for exploit likelihood of vulnerabilities</h4>
@@ -1176,7 +1186,6 @@ export default function Portfolio() {
                   </div>
                   <p>Fine-tuned DistilBERT and GPT-2 models on NVD vulnerability descriptions to predict exploitability likelihood. Published in AIP Conference Proceedings / ICANTCI 2025.</p>
                   <div style={{ display: 'flex', gap: '15px', marginTop: '10px' }}>
-                    <a href="https://link.springer.com/chapter/10.1007/978-3-032-29501-9_42" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.8rem', color: 'var(--accent-color)' }}>[Springer]</a>
                     <a href="https://pubs.aip.org/aip/acp/article-abstract/3410/1/070002/3391998/Rewiring-transformers-for-exploit-likelihood" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.8rem', color: 'var(--accent-color)' }}>[AIP]</a>
                     <a href="https://www.semanticscholar.org/paper/Rewiring-transformers-for-exploit-likelihood-of-Kumar-Agarwal/e1b24fbc4451a11963afa12b247ec3f0c22a2f21" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.8rem', color: 'var(--accent-color)' }}>[Semantic Scholar]</a>
                   </div>
