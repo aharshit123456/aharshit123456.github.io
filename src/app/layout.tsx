@@ -12,13 +12,14 @@ export const metadata: Metadata = {
     default: "Harshit Agarwal | AI Researcher | Computational Neuroscience",
     template: "%s | Harshit Agarwal"
   },
-  description: "Harshit Agarwal: AI Researcher & Software Engineer from KIIT. Expert in Computational Neuroscience, Alzheimer's models & Foundation Models. Find me on GitHub.",
+  description: "Harshit Agarwal: AI Researcher & Software Engineer from KIIT. Specialist in Distributed Systems, Computational Neuroscience, Multimodal Search, Generative AI & ML Infrastructure.",
   keywords: [
     "Harshit Agarwal", "Harshit Agarwal Portfolio", "aharshit123456", "Fullstack Engineer India", 
     "AI Researcher", "Machine Learning Engineer", "FastAPI Expert", "Flutter Developer", 
     "Famcare Lead Developer", "shoppin' AI Engineer", "Software Architect Portfolio", 
     "Python Backend Expert", "Scalable Systems Design", "Generative AI Developer",
-    "Computational Neuroscience", "Alzheimer's Research", "Foundation Models"
+    "Computational Neuroscience", "Alzheimer's Research", "Foundation Models",
+    "Distributed Systems", "Multimodal Search", "Gait Analysis", "Robotics", "Rancher on EKS"
   ],
   authors: [{ name: "Harshit Agarwal", url: "https://aharshit123456.space/" }],
   creator: "Harshit Agarwal",
@@ -39,7 +40,7 @@ export const metadata: Metadata = {
     url: "https://aharshit123456.space/",
     siteName: "Harshit Agarwal | The Space",
     title: "Harshit Agarwal | AI Researcher | Computational Neuroscience",
-    description: "AI Researcher & Software Engineer specializing in Computational Neuroscience, Alzheimer's models, and Foundation Models. Explore my workspace.",
+    description: "AI Researcher & Software Engineer specializing in Computational Neuroscience, Distributed Systems, Multimodal Search, and ML Infrastructure.",
     images: [
       {
         url: "/profile_new.jpg",
@@ -52,7 +53,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Harshit Agarwal | AI Researcher | Computational Neuroscience",
-    description: "AI Researcher & Software Engineer from KIIT specializing in Computational Neuroscience and Foundation Models.",
+    description: "AI Researcher & Software Engineer from KIIT specializing in Distributed Systems, Computational Neuroscience, and Foundation Models.",
     creator: "@aharshit123456",
     images: ["/profile_new.jpg"],
   },
@@ -101,6 +102,13 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@graph": [
                 {
+                  "@type": "WebSite",
+                  "@id": "https://aharshit123456.space/#website",
+                  "url": "https://aharshit123456.space/",
+                  "name": "Harshit Agarwal | The Space",
+                  "description": "Scientific Research portfolio and tech blog of Harshit Agarwal"
+                },
+                {
                   "@type": "ProfilePage",
                   "@id": "https://aharshit123456.space/#profilepage",
                   "url": "https://aharshit123456.space/",
@@ -129,7 +137,8 @@ export default function RootLayout({
                     "Fullstack Development", "AI/ML", "FastAPI", "Flutter", "Next.js", 
                     "System Architecture", "Scalable Systems", "Python", "Cloud Infrastructure",
                     "Deep Learning", "SLAM", "ORB-SLAM3", "Docker", "Kubernetes", "AWS SageMaker",
-                    "WebSockets", "Rancher", "Microservices", "Event-Driven Architecture"
+                    "WebSockets", "Rancher", "Microservices", "Event-Driven Architecture",
+                    "Distributed Systems", "Multimodal Search", "Gait Analysis", "Robotics"
                   ],
                   "alumniOf": {
                     "@type": "EducationalOrganization",
@@ -154,6 +163,44 @@ export default function RootLayout({
                       "name": "Founding ML Engineer (AI/Infra)",
                       "skills": "YOLO, RT-DETR, MaskRCNN, CLIP, SageMaker, EKS, Terraform, GitOps, Rancher",
                       "description": "Engineered multimodal ML pipelines matching 3-4 crore catalog items at shoppin'."
+                    }
+                  ]
+                },
+                {
+                  "@type": "FAQPage",
+                  "@id": "https://aharshit123456.space/#faq",
+                  "mainEntity": [
+                    {
+                      "@type": "Question",
+                      "name": "Who is Harshit Agarwal?",
+                      "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Harshit Agarwal is a Fullstack Software Architect and AI Researcher based in India. He acts as Founding Engineer & Lead SDE at platforms like Famcare, shoppin', and endorphind, specializing in high-throughput backend services and deep learning systems."
+                      }
+                    },
+                    {
+                      "@type": "Question",
+                      "name": "What technologies does Harshit Agarwal use?",
+                      "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Harshit specializes in Python, FastAPI, Go, C/C++, Java, React/Next.js, Flutter, PyTorch, AWS (SageMaker, EKS, EC2), Kubernetes, Rancher, Docker, PostgreSQL, Redis, and WebSockets."
+                      }
+                    },
+                    {
+                      "@type": "Question",
+                      "name": "What research has Harshit published?",
+                      "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Harshit has published research on transformer-based NLP architectures for software vulnerability exploit prediction in NVD (AIP / Springer), and has submitted gait analysis/Parkinson's Freezing of Gait prediction research to Health and Technology."
+                      }
+                    },
+                    {
+                      "@type": "Question",
+                      "name": "What open-source projects has Harshit built?",
+                      "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Harshit is the author of gaitSetPy (a Python package for high-throughput gait time-series preprocessing and modeling) and has built custom generative video nodes for ComfyUI workflows."
+                      }
                     }
                   ]
                 }

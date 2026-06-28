@@ -91,7 +91,45 @@ export default function Home() {
           <li><Link href="/papers">Academic Papers & Publications</Link></li>
           <li><Link href="/datasets">Research Datasets</Link></li>
           <li><Link href="/models">Trained AI Models</Link></li>
+          <li><Link href="/now">Now (Current Activities)</Link></li>
+          <li><Link href="/case-studies">Project Case Studies</Link></li>
+          <li><Link href="/open-source">Open Source Work</Link></li>
+          <li><Link href="/uses">Developer Uses & Stack</Link></li>
+          <li><Link href="/contact">Detailed Contact</Link></li>
+          <li><Link href="/reading">Reading List</Link></li>
+          <li><Link href="/speaking">Speaking & Presentations</Link></li>
+          <li><Link href="/ai">Artificial Intelligence Hub</Link></li>
+          <li><Link href="/systems">Systems Engineering Hub</Link></li>
+          <li><Link href="/engineering">Software Engineering Hub</Link></li>
         </ul>
+
+        <h2>Frequently Asked Questions (FAQ)</h2>
+        <div itemScope itemType="https://schema.org/FAQPage">
+          <div itemScope itemProp="mainEntity" itemType="https://schema.org/Question">
+            <h3 itemProp="name">Who is Harshit Agarwal?</h3>
+            <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
+              <p itemProp="text">Harshit Agarwal is a Fullstack Software Architect and AI Researcher based in India. He acts as Founding Engineer & Lead SDE at platforms like Famcare, shoppin', and endorphind, specializing in high-throughput backend services and deep learning systems.</p>
+            </div>
+          </div>
+          <div itemScope itemProp="mainEntity" itemType="https://schema.org/Question">
+            <h3 itemProp="name">What technologies does Harshit Agarwal use?</h3>
+            <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
+              <p itemProp="text">Harshit specializes in Python, FastAPI, Go, C/C++, Java, React/Next.js, Flutter, PyTorch, AWS (SageMaker, EKS, EC2), Kubernetes, Rancher, Docker, PostgreSQL, Redis, and WebSockets.</p>
+            </div>
+          </div>
+          <div itemScope itemProp="mainEntity" itemType="https://schema.org/Question">
+            <h3 itemProp="name">What research has Harshit published?</h3>
+            <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
+              <p itemProp="text">Harshit has published research on transformer-based NLP architectures for software vulnerability exploit prediction in NVD (AIP / Springer), and has submitted gait analysis/Parkinson's Freezing of Gait prediction research to Health and Technology.</p>
+            </div>
+          </div>
+          <div itemScope itemProp="mainEntity" itemType="https://schema.org/Question">
+            <h3 itemProp="name">What open-source projects has Harshit built?</h3>
+            <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
+              <p itemProp="text">Harshit is the author of gaitSetPy (a Python package for high-throughput gait time-series preprocessing and modeling) and has built custom generative video nodes for ComfyUI workflows.</p>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* The actual interactive macOS-style interface */}
