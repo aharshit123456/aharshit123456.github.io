@@ -25,13 +25,22 @@ export default function AiClusterPage() {
         <article className="article-card markdown-body">
           <h1>Artificial Intelligence & Deep Learning</h1>
           <p>Investigating core representations, attention rewiring, and scalable ML inference systems.</p>
-          
-          <h2>Key Domains</h2>
+
+          <h2>shoppin' Fashion Search & Model Training</h2>
+          <p>
+            Building a fashion discovery search lens that maps snap-to-search items compared across 10 websites. 
+            Designed and benchmarked 10-12 image search methods with full performance metrics.
+          </p>
           <ul>
-            <li><strong>Transformer Optimizations:</strong> Adapting self-attention filters to prioritize technical semantics for cyber-vulnerability forecasts.</li>
-            <li><strong>Multimodal Vector Retrieval:</strong> Deploying large-scale CLIP embeddings on AWS SageMaker pipelines to serve catalog lookups across tens of millions of items.</li>
-            <li><strong>Generative Video Adapters:</strong> Fine-tuning lip-sync adapters and pipeline nodes for ComfyUI.</li>
+            <li><strong>Model Training:</strong> Ran model training on extensive image sets to construct search matching.</li>
+            <li><strong>Cosplay Search Node:</strong> Designed a cosplay search extension feeding characters to extract and match coordinates for clothes across the web.</li>
+            <li><strong>Multimodal Vector Ingestion:</strong> Managed large-scale product catalogs matching 3-4 crore catalog items using CLIP embedding models, deployed on AWS SageMaker pipelines.</li>
           </ul>
+          
+          <h2>Transformer Optimizations</h2>
+          <p>
+            Adapted attention mechanics inside transformer-based architectures (DistilBERT, GPT-2) to prioritize technical semantics and vulnerability text reports, improving cyber-vulnerability exploit prediction accuracy to 85.6%.
+          </p>
 
           <h2>Relevant Resources</h2>
           <p>
