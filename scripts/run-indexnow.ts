@@ -1,13 +1,13 @@
 import sitemap from '../src/app/sitemap';
 
 async function runIndexNow() {
-  const host = 'aharshit123456.space';
+  const host = 'www.aharshit123456.space';
   const key = '4bfa85a3c9e74d12b1897cb5b5c7fe99';
   const keyLocation = `https://${host}/${key}.txt`;
   
   console.log('Generating sitemap URLs...');
   const sitemapEntries = sitemap();
-  const urlList = sitemapEntries.map(entry => entry.url);
+  const urlList = sitemapEntries.map(entry => entry.url.replace('https://aharshit123456.space', `https://${host}`));
   
   console.log(`Found ${urlList.length} URLs to submit.`);
   
@@ -18,9 +18,10 @@ async function runIndexNow() {
     urlList
   };
   
+  console.log('Sending request to IndexNow with payload:', JSON.stringify(payload, null, 2));
   console.log('Sending request to IndexNow...');
   try {
-    const response = await fetch('https://api.indexnow.org/indexnow', {
+    const response = await fetch('https://www.bing.com/indexnow', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json; charset=utf-8'
