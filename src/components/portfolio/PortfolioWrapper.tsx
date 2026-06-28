@@ -1188,6 +1188,7 @@ export default function Portfolio() {
                   <div style={{ display: 'flex', gap: '15px', marginTop: '10px' }}>
                     <a href="https://pubs.aip.org/aip/acp/article-abstract/3410/1/070002/3391998/Rewiring-transformers-for-exploit-likelihood" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.8rem', color: 'var(--accent-color)' }}>[AIP]</a>
                     <a href="https://www.semanticscholar.org/paper/Rewiring-transformers-for-exploit-likelihood-of-Kumar-Agarwal/e1b24fbc4451a11963afa12b247ec3f0c22a2f21" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.8rem', color: 'var(--accent-color)' }}>[Semantic Scholar]</a>
+                    <a href="https://www.wikidata.org/wiki/Q140373223" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.8rem', color: 'var(--accent-color)' }}>[Wikidata]</a>
                   </div>
                 </div>,
                 <div className="project-card" key="parkinsons-gait-pub">

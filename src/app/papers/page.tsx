@@ -31,7 +31,8 @@ export default function PapersIndexPage() {
       abstract: 'Investigates custom attention mechanics inside transformers (like DistilBERT and GPT-2) to predict the likelihood of exploit releases based on National Vulnerability Database (NVD) text reports.',
       links: [
         { label: 'AIP Publishing', url: 'https://pubs.aip.org/aip/acp/article-abstract/3410/1/070002/3391998/Rewiring-transformers-for-exploit-likelihood' },
-        { label: 'Semantic Scholar', url: 'https://www.semanticscholar.org/paper/Rewiring-transformers-for-exploit-likelihood-of-Kumar-Agarwal/e1b24fbc4451a11963afa12b247ec3f0c22a2f21' }
+        { label: 'Semantic Scholar', url: 'https://www.semanticscholar.org/paper/Rewiring-transformers-for-exploit-likelihood-of-Kumar-Agarwal/e1b24fbc4451a11963afa12b247ec3f0c22a2f21' },
+        { label: 'Wikidata', url: 'https://www.wikidata.org/wiki/Q140373223' }
       ]
     },
     {

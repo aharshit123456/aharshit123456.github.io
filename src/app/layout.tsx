@@ -129,7 +129,8 @@ export default function RootLayout({
                     "https://www.linkedin.com/in/aharshit123456/",
                     "https://twitter.com/aharshit123456",
                     "https://orcid.org/0009-0000-2173-1740",
-                    "https://scholar.google.com/citations?user=VSiAoGoAAAAJ&hl=en"
+                    "https://scholar.google.com/citations?user=VSiAoGoAAAAJ&hl=en",
+                    "https://www.wikidata.org/wiki/Q140373207"
                   ],
                   "jobTitle": "Fullstack Engineer & AI Researcher",
                   "description": "Harshit Agarwal is a high-performance Fullstack Engineer and AI Researcher specializing in scalable backend architectures, cross-platform mobile ecosystems, and advanced Machine Learning pipelines.",
