@@ -36,6 +36,18 @@ To bypass Vercel's backend execution limits, we flip the server-client model on 
 ```
 
 We utilize **v86**, an open-source x86 hardware emulator compiled into WebAssembly. It emulates:
+
+<figure>
+<div class="diagram">
+  <div class="node muted-node">React Front-End (Terminal View)</div>
+  <span class="arrow">→</span>
+  <div class="node accent">v86 Wasm Engine (x86 CPU Emulator)</div>
+  <span class="arrow">→</span>
+  <div class="node">Vercel Edge CDN (Kernel, RootFS, BIOS)</div>
+</div>
+<figcaption><b>Fig. 1</b> — The browser-side terminal talks to the v86 WebAssembly CPU emulator, which requests kernel and filesystem sectors via HTTP Range requests from Vercel's Edge CDN.</figcaption>
+</figure>
+
 * An x86 Pentium-compatible CPU (with a browser-based dynamic translation/JIT engine)
 * A serial console interface (which we pipe directly to our `TerminalView` component)
 * RAM, IDE controllers, and basic PCI hardware
@@ -107,6 +119,18 @@ Because browser-level scripts cannot establish raw TCP/UDP socket connections di
 3. The proxy backend receives the raw frames, unwraps the TCP/IP packets, and routes them to the real internet.
 4. Incoming responses are wrapped back into Ethernet frames, sent over the WebSocket back to `v86`, and injected directly into the Linux VM's network card.
 
+<figure>
+<div class="diagram">
+  <div class="node muted-node">Alpine VM (virtio NIC)</div>
+  <span class="arrow">→</span>
+  <div class="node accent">WebSocket Proxy</div>
+  <span class="arrow">→</span>
+  <div class="node muted-node">Real Internet</div>
+</div>
+<figcaption><b>Fig. 2</b> — Outgoing Ethernet frames from the v86-emulated NIC are tunneled over a WebSocket to a proxy backend, which unwraps and routes the TCP/IP packets to the real internet, then wraps responses back into frames for the VM.</figcaption>
+</figure>
+
+
 Using this architecture, you can open your browser-native Linux VM and run:
 ```bash
 / # apk update && apk add python3 curl
@@ -124,3 +148,9 @@ Building a browser-native OS hosted on Vercel is the ultimate flex for a develop
 3. **Immersive UX**: Giving visitors a real, fully bootable shell rather than a basic, hardcoded CLI mock.
 
 It is 100% serverless, 100% free to host, and runs at near-native speeds. It's time to build the future of browser-native computing.
+
+<div class="stat-row">
+  <div class="stat"><div class="stat-num">~5MB</div><div class="stat-label">stripped kernel</div></div>
+  <div class="stat"><div class="stat-num">64MB</div><div class="stat-label">emulated RAM</div></div>
+  <div class="stat"><div class="stat-num">$0</div><div class="stat-label">hosting cost</div></div>
+</div>

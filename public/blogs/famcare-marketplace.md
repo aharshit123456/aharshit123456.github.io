@@ -6,6 +6,12 @@ Building a service marketplace isn't just about matching supply and demand; it�
 
 In this post, I’ll dive into the architectural decisions and engineering patterns I implemented to scale FamCARE from a prototype to a production-ready engine handling thousands of requests.
 
+<div class="screenshot-container">
+  <img src="/assets/famcare/1.webp" alt="FamCARE app screenshot" />
+  <img src="/assets/famcare/2.webp" alt="FamCARE app screenshot" />
+  <img src="/assets/famcare/3.webp" alt="FamCARE app screenshot" />
+</div>
+
 ---
 
 ## 1. The Modular Monolith: Designing for the Strangler Pattern
@@ -19,6 +25,21 @@ Early-stage startups often fall into the "Microservices Trap" too soon. For FamC
 ## 2. Solving the Distributed State Problem: The Request Lifecycle
 
 The core of FamCARE is the **Service Request Engine**. The complexity lies in the state machine: a request isn't just "Created"; it is a living entity that transitions through `proposing`, `accepting`, `ongoing`, and `settling`.
+
+<figure>
+  <div class="diagram">
+    <div class="node muted-node">Created</div>
+    <span class="arrow">→</span>
+    <div class="node accent">Proposing</div>
+    <span class="arrow">→</span>
+    <div class="node">Accepting</div>
+    <span class="arrow">→</span>
+    <div class="node">Ongoing</div>
+    <span class="arrow">→</span>
+    <div class="node muted-node">Settling</div>
+  </div>
+  <figcaption><b>Fig. 1</b> — the Service Request lifecycle. A request that times out in "Proposing" gets reaped and re-injected into the assignment queue rather than left dangling.</figcaption>
+</figure>
 
 ### The "Ghost Assignment" Challenge
 
@@ -36,6 +57,17 @@ We used **WebSockets** for the frontends, but scaling WebSockets across multiple
 *   When a state change occurs (e.g., Rider accepts a job), the backend publishes a message to a Redis channel.
 *   Every active FastAPI worker listens to this channel and broadcasts the update only to the relevant connected clients (User, Caretaker, or Admin).
 *   **Result:** We achieved sub-300ms propagation of status updates across the entire ecosystem.
+
+<figure>
+  <div class="diagram">
+    <div class="node">Worker A</div>
+    <span class="arrow">→</span>
+    <div class="node accent">Redis Pub/Sub</div>
+    <span class="arrow">→</span>
+    <div class="node">Worker B</div>
+  </div>
+  <figcaption><b>Fig. 2</b> — the Pub/Sub relay acts as the shared backplane so a state change on any FastAPI worker reaches every WebSocket connection, regardless of which worker holds it.</figcaption>
+</figure>
 
 ## 4. Engineering the Dynamic Operational Slot Engine
 
@@ -56,6 +88,28 @@ An architecture is only as good as its breaking point. I developed a custom asyn
 *   **Concurrency:** The system maintained a **100% success rate** at 50 concurrent users.
 *   **Throughput:** Handled **2,000+ requests/minute** with an average latency of ~950ms.
 *   **Bottleneck Identification:** Under extreme load (100+ concurrent users), the P95 latency shifted to 8s, identifying the database connection pool as the primary scaling target. This data-driven approach allowed us to pre-emptively optimize our RDS instance sizing.
+
+<figure>
+  <div class="chart">
+    <div class="bar-col">
+      <div class="bar-value">950ms</div>
+      <div class="bar accent" style="height: 12%;"></div>
+      <div class="bar-label">50 users</div>
+    </div>
+    <div class="bar-col">
+      <div class="bar-value">8s</div>
+      <div class="bar" style="height: 100%;"></div>
+      <div class="bar-label">100+ users (p95)</div>
+    </div>
+  </div>
+  <figcaption><b>Fig. 3</b> — p95 latency under load. The cliff past 100 concurrent users pointed straight at the DB connection pool, not the app layer.</figcaption>
+</figure>
+
+<div class="stat-row">
+  <div class="stat"><div class="stat-num">100%</div><div class="stat-label">success @ 50 users</div></div>
+  <div class="stat"><div class="stat-num">2,000+</div><div class="stat-label">req/min throughput</div></div>
+  <div class="stat"><div class="stat-num">15+</div><div class="stat-label">decoupled services</div></div>
+</div>
 
 ## 6. Multi-Channel Notifications & External Integrations
 

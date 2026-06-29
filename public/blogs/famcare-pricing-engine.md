@@ -19,6 +19,19 @@ Standard discount systems are usually flat. For a service marketplace, this is i
 We engineered a **Resolution-Priority Strategy** across the entire stack. Instead of a hardcoded "First Order Price," the system now performs a recursive lookup to find the most specific price defined by the admin.
 
 *   **The Hierarchy:** Pricing Tier (Most Specific) → Sub-Service → Service Category → Original Price (Fallback).
+
+<figure>
+  <div class="diagram">
+    <div class="node accent">Pricing tier</div>
+    <span class="arrow">→</span>
+    <div class="node">Sub-service</div>
+    <span class="arrow">→</span>
+    <div class="node">Service category</div>
+    <span class="arrow">→</span>
+    <div class="node muted-node">Original price</div>
+  </div>
+  <figcaption><b>Fig. 1</b> — the resolution-priority fallback chain. Lookup walks left to right and stops at the first level with an override defined.</figcaption>
+</figure>
 *   **Implementation Details:**
     *   **Database Schema:** Extended the `services` and `pricing_tiers` tables via **Alembic** migrations to support nullable promotional fields.
     *   **Frontend Resolution Logic:** In Flutter, we implemented a memoized resolution helper `_getTrialPrice(sub, tier)` that calculates the "Best Available Promotion" in *O(1)* time during the build cycle, ensuring zero UI lag.
@@ -36,6 +49,17 @@ Instead of modifying the original request, we implemented a **Linked-Node Archit
 
 *   **Relational Logic:** When an extension is requested, the system spawns a new `Request` object with a `parent_request_id` pointer. This creates an "Extension Chain."
 *   **State Merging:** Once the extension (the child) is paid, a background trigger adds those hours back to the Parent task. The user's live tracker "absorbs" the new time seamlessly.
+
+<figure>
+  <div class="diagram">
+    <div class="node muted-node">Parent<br>request</div>
+    <span class="arrow">→</span>
+    <div class="node accent">Child request<br>(extension)</div>
+    <span class="arrow">→</span>
+    <div class="node muted-node">Merged<br>tracker</div>
+  </div>
+  <figcaption><b>Fig. 2</b> — extension chain. The child is paid independently, then a background trigger merges its hours back into the parent without a page reload.</figcaption>
+</figure>
 *   **UI Synchronization:** The `LiveTrackingScreen` was refactored into a state-aware consumer. It listens for child-requests and dynamically shifts the UI from a "Tracking State" to a "Payment-Gated Extension State" without a page reload.
 
 ## 3. The "Genius" in the Full-Stack Connection
@@ -44,7 +68,29 @@ Instead of modifying the original request, we implemented a **Linked-Node Archit
 2.  **Sutram (FastAPI/PostgreSQL):** The backend serves as the "Source of Truth," preventing any frontend price manipulation.
 3.  **Praja (Flutter):** Implemented a "Premium Aesthetics" UI overhaul with **Vertical Intrinsic Dividers**, **Slashed-Price Visuals**, and **Micro-animations** for the "Try at" badge.
 
+<figure>
+  <div class="diagram">
+    <div class="node muted-node">Admin Panel<br>(Next.js)</div>
+    <span class="arrow">→</span>
+    <div class="node accent">Sutram<br>(FastAPI/PostgreSQL)</div>
+    <span class="arrow">→</span>
+    <div class="node muted-node">Praja<br>(Flutter)</div>
+  </div>
+  <figcaption><b>Fig. 3</b> — the full-stack connection. Admins set prices, Sutram acts as the source of truth preventing frontend manipulation, and Praja renders the resolved price to the user.</figcaption>
+</figure>
+
 ### Summary of Impact
 
 *   **Conversion:** Lowered the entry barrier for the most popular services.
 *   **Revenue Continuity:** Ensuring caregivers are paid for every extra minute while providing a seamless one-tap payment experience.
+
+<div class="stat-row">
+  <div class="stat">
+    <div class="stat-num">↓</div>
+    <div class="stat-label">entry barrier lowered for the most popular services</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">1-tap</div>
+    <div class="stat-label">payment experience for session extensions</div>
+  </div>
+</div>

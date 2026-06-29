@@ -6,7 +6,23 @@ Building a booking flow with live rider tracking, every active trip needs contin
 
 So I self-hosted OSRM instead. A localized OpenStreetMap graph, just our core Whitefield region, packaged as a sidecar container sitting right next to the API service inside the same ECS task. Routing queries now run over localhost. Zero external calls, zero external bill, single-digit millisecond latency.
 
+<figure>
+  <img src="/gallery/illustrations/1781798750123.jpeg" alt="AWS ECS task architecture diagram showing the API container and OSRM sidecar communicating over localhost in under 2ms, with external maps APIs bypassed" style="width:100%; border-radius: 6px;" />
+  <figcaption><b>Fig. 1</b> — OSRM runs as a sidecar inside the same ECS task as the API. Routing never leaves the task, so there's no external call and no per-request bill.</figcaption>
+</figure>
+
+<div class="stat-row">
+  <div class="stat"><div class="stat-num">$0</div><div class="stat-label">routing API cost</div></div>
+  <div class="stat"><div class="stat-num">&lt;10ms</div><div class="stat-label">p50 latency</div></div>
+  <div class="stat"><div class="stat-num">60+</div><div class="stat-label">calls/trip avoided</div></div>
+</div>
+
 OSRM gives you the shortest physical route. It doesn't know Bangalore traffic exists. So I layered custom heuristics on top, time-of-day multipliers, and static penalties for the junctions every Bangalore driver already knows by name: Silk Board, Tin Factory, Kundalahalli Gate. If a route passes within 300m of one of these during peak hours, the penalty gets added before the user ever sees the ETA.
+
+<figure>
+  <img src="/gallery/illustrations/1781798754417.jpeg" alt="Satellite map of Whitefield, Bangalore showing traffic hotspot junctions: Tin Factory, Hoodi Circle, Hope Farm Junction, Kundalahalli Gate, and Marathahalli Bridge" style="width:100%; border-radius: 6px;" />
+  <figcaption><b>Fig. 2</b> — OSRM's raw shortest-path output is adjusted by a heuristic layer, time-of-day multipliers and static 300m-radius penalties at junctions like Tin Factory, Kundalahalli Gate, Hoodi Circle, and Hope Farm Junction, before the ETA is shown to the user.</figcaption>
+</figure>
 
 And if the OSRM container ever hiccups, it falls back to straight-line distance instantly. Routing is a UX layer, not something that should ever block a booking.
 
