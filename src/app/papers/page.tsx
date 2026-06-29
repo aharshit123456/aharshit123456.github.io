@@ -35,16 +35,6 @@ const publicationGroups: PublicationGroup[] = [
     heading: 'Conference Papers',
     items: [
       {
-        authors: 'Kumar, P., Agarwal, H., Singh, S., Singh, T.P.',
-        title: 'AI-Based Intrusion Detection System (IDS) for Wireless Networks: An IDFSWSN-DRL Framework.',
-        venue: '6th International Conference on Computing and Communication Networks (ICCCNet-2026), Manchester Metropolitan University, Manchester/London, UK. Springer LNNS (Lecture Notes in Networks and Systems), Scopus/EI/WoS indexed.',
-        date: '2026, accepted — 17–19 July 2026',
-        abstract: 'Proposes IDFSWSN-DRL, a hybrid intrusion detection framework for Wireless Sensor Networks combining Gazelle Optimization Algorithm (GOA) feature selection with a Temporal Convolutional Network and Multi-Head Attention (TCN-MHA) classifier, evaluated on the WSN-DS dataset against LEACH protocol attack patterns (Blackhole, Grayhole, Flooding, TDMA Scheduling).',
-        links: [
-          { label: 'Conference Site', url: 'https://icccn.co.uk/' },
-        ],
-      },
-      {
         authors: 'Chakraborty, S., Johri, D., Agarwal, H., Chakraborty, J., Behura, A.',
         title: 'A Hybrid Dual-Head Transformer-Based LSTM Framework for Physiotherapy Exercise Recognition Using Kinect Sensors.',
         venue: 'Frontiers in Advanced Computing and Emerging Intelligent Technologies (FACEIT 2026). Learning and Analytics in Intelligent Systems, vol. 63. Springer, Cham.',
