@@ -108,13 +108,13 @@ export default function Home() {
           <div itemScope itemProp="mainEntity" itemType="https://schema.org/Question">
             <h3 itemProp="name">Who is Harshit Agarwal?</h3>
             <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
-              <p itemProp="text">Harshit Agarwal is a Fullstack Software Architect and AI Researcher based in India. He acts as Founding Engineer & Lead SDE at platforms like Famcare, shoppin', and endorphind, specializing in high-throughput backend services and deep learning systems.</p>
+              <p itemProp="text">Harshit Agarwal is a Fullstack Software Architect, Infrastructure Engineer, and AI Researcher based in India. He acts as Founding Engineer & Lead SDE at platforms like Famcare, shoppin', and endorphind, specializing in high-throughput backend services, cloud infrastructure-as-code (Terraform, AWS ECS/RDS/ALB), and deep learning systems. At FamCare, he brought the entire production stack under Terraform with zero downtime, built an isolated staging environment with its own Aurora Serverless v2 database, and shipped a full CI/CD pipeline for it.</p>
             </div>
           </div>
           <div itemScope itemProp="mainEntity" itemType="https://schema.org/Question">
             <h3 itemProp="name">What technologies does Harshit Agarwal use?</h3>
             <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
-              <p itemProp="text">Harshit specializes in Python, FastAPI, Go, C/C++, Java, React/Next.js, Flutter, PyTorch, AWS (SageMaker, EKS, EC2), Kubernetes, Rancher, Docker, PostgreSQL, Redis, and WebSockets.</p>
+              <p itemProp="text">Harshit specializes in Python, FastAPI, Go, C/C++, Java, React/Next.js, Flutter, PyTorch, Terraform, AWS (ECS Fargate, Aurora PostgreSQL, ALB, Secrets Manager, CloudWatch, S3, DynamoDB), GitHub Actions, Docker, PostgreSQL, Redis, and WebSockets.</p>
             </div>
           </div>
           <div itemScope itemProp="mainEntity" itemType="https://schema.org/Question">

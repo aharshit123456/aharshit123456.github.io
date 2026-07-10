@@ -129,10 +129,11 @@ export default function AboutPage() {
             <p className="response">Building scalable AI systems that actually solve human problems, not just benchmarks.</p>
             
             <p className="line"><span className="prompt">$</span> ls skills/</p>
-            <p className="response">FastAPI, Flutter, Python, React, Next.js, SystemDesign, ML_Pipelines</p>
-            
+            <p className="response">FastAPI, Flutter, Python, React, Next.js, Terraform, AWS_ECS, SystemDesign, ML_Pipelines</p>
+
             <div className="bio-text">
               <p>Hey there! I'm Harshit. I spend my time at the intersection of product engineering and research. Currently leading the technical ecosystem at <strong>Famcare</strong> and architecting visual AI at <strong>shoppin'</strong>.</p>
+              <p>Recently brought FamCare's entire production stack under Terraform — zero-downtime import of live ECS/RDS/ALB infrastructure, stood up an isolated staging environment, and shipped CI/CD — while uncovering and fixing pre-existing security gaps along the way.</p>
               <p>When I'm not coding, you can find me practicing kickboxing or deep-diving into the latest generative AI papers.</p>
             </div>
             

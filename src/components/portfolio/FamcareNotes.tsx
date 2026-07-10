@@ -165,6 +165,93 @@ const FamcareNotes: React.FC = () => {
         </ul>
       </section>
 
+      <section className="blog-post" style={{ marginTop: '60px' }}>
+        <h1>Infrastructure Modernization: Bringing Production Under Terraform with Zero Downtime</h1>
+        <p className="author-line"><em>By Harshit Agarwal, Founding Engineer & Tech Lead</em></p>
+        <p>
+          FamCARE's production backend — FastAPI on ECS Fargate, Aurora PostgreSQL, behind an ALB — had grown organically
+          with every resource hand-created through the AWS Console. No infrastructure-as-code, no staging environment,
+          no version control on infra changes. I took this on end-to-end: full Terraform coverage of live production,
+          a genuinely isolated staging environment, and a CI/CD pipeline for it — all with zero production downtime.
+        </p>
+
+        <hr className="note-divider" />
+
+        <h2>1. Terraform from Scratch, Modeled on Live Infrastructure</h2>
+        <p>
+          Built a reusable Terraform module library (VPC, ALB, ECS cluster, ECS service, RDS, IAM) by first running a
+          full read-only audit of the existing AWS account — every ECS service, task definition, security group, listener
+          rule, and RDS configuration — then writing modules generic enough to describe both production and a new staging
+          stack from the same code, with only input values differing between environments.
+        </p>
+
+        <h2>2. Zero-Downtime Import of Live Production into Terraform State</h2>
+        <p>
+          Rather than recreating anything, I imported every existing production resource directly into Terraform state
+          via <code>terraform import</code> — VPC, subnets, 3 security groups, the ALB with its listeners and target
+          groups, the ECS cluster and all 3 running services (API, background agent, scheduler) with their task
+          definitions, the Aurora RDS cluster, and IAM roles. Nothing was created, modified, or destroyed.
+        </p>
+        <p>
+          I iteratively reconciled every mismatch until <code>terraform plan</code> showed <strong>zero forced
+          replacements and zero destroys</strong> — the gold-standard signal of complete fidelity. Pre-existing
+          gaps discovered and fixed along the way:
+        </p>
+        <ul>
+          <li><strong>Missing <code>description</code> on security groups:</strong> AWS treats it as immutable — would have force-replaced live, in-use groups on first apply.</li>
+          <li><strong>Incorrect RDS password management mode:</strong> Would have altered how the live database authenticates.</li>
+          <li><strong>Task definition revision drift:</strong> The app was redeployed mid-project; required re-import at the correct live revision.</li>
+          <li><strong>Silently-defaulted container config:</strong> Health checks, per-container CPU, and log configuration had to be reverse-engineered from the live resource to avoid spurious diffs.</li>
+        </ul>
+
+        <h2>3. Net-New, Isolated Staging Environment</h2>
+        <p>
+          Built staging as a genuinely separate ECS cluster — its own private Aurora Serverless v2 database, its own
+          narrowly-scoped security groups, its own IAM roles — sharing only the production VPC and ALB for cost
+          efficiency, via new path-based routing rules (<code>/api/*</code> → production, <code>/staging/api/*</code> →
+          staging) added additively without touching any existing routing behavior.
+        </p>
+        <p>During first live deployment, diagnosed and fixed four non-obvious bugs in sequence:</p>
+        <ul>
+          <li>IAM role missing Secrets Manager read permissions.</li>
+          <li>Missing <code>logs:CreateLogGroup</code> grant — the AWS-managed ECS policy only grants log <em>stream</em> creation, not group creation.</li>
+          <li>URL-encoding bug in the database connection string that broke on special characters in the generated password.</li>
+          <li>Driver-scheme mismatch between the app's runtime and its migration tooling (<code>postgresql://</code> vs <code>postgresql+asyncpg://</code>).</li>
+        </ul>
+
+        <h2>4. FastAPI Path-Prefix Change for Multi-Tenancy</h2>
+        <p>
+          AWS ALB has no path-rewrite capability — it forwards the full incoming path unchanged. I shipped a small,
+          backward-compatible change to the FastAPI backend making the API's URL prefix configurable via environment
+          variable, defaulting to the existing <code>/api</code> behavior so production was unaffected. This is the
+          mechanism that lets one codebase serve both environments correctly.
+        </p>
+
+        <h2>5. CI/CD Pipeline for Staging</h2>
+        <p>
+          Wrote a new GitHub Actions workflow mirroring the production deploy pipeline — build → push to ECR → run
+          Alembic migrations → update ECS service → wait for stability — fully re-scoped to the staging cluster,
+          triggered on pushes to the staging branch. Verified end-to-end: image build, 110+ sequential migrations on a
+          freshly-provisioned database, service deployment, and health-check convergence — while confirming production
+          remained completely unaffected throughout.
+        </p>
+
+        <h2>6. Security Hardening</h2>
+        <p>
+          Surfaced and remediated two live security issues during the audit: plaintext credentials (Slack tokens, an
+          OAuth client secret) sitting in non-secret container environment variables instead of Secrets Manager; and a
+          pre-existing, publicly-accessible database (open security group, no VPC isolation) flagged for decommissioning.
+          The new staging database was built private-only from the start specifically to not repeat that mistake.
+        </p>
+
+        <hr className="note-divider" />
+        <p>
+          <em>Production infrastructure — previously undocumented and unreproducible — is now fully version-controlled,
+          auditable, and safely modifiable by any engineer following a documented process, with zero production downtime
+          or incidents throughout.</em>
+        </p>
+      </section>
+
       <style jsx>{`
         .personal-notes {
           padding: 40px;

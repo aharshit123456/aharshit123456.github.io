@@ -724,8 +724,8 @@ export default function Portfolio() {
               </p>
               <p className="bio">
                 Hi, I'm Harshit. I enjoy building dynamic, creative products from start to finish.
-                Currently an undergrad at KIIT, I've architected the Famcare ecosystem, built AI systems for fashion at scale, and developed drone sensor calibration systems.
-                I'm a heavyweight coder with a reach extending from low-level C++ to high-level Distributed Systems.
+                Currently an undergrad at KIIT, I've architected the FamCARE ecosystem — including bringing its entire production ECS/RDS/ALB stack under Terraform with zero downtime and standing up an isolated staging environment — built AI systems for fashion at scale at shoppin', and developed drone sensor calibration systems.
+                I'm a heavyweight coder with a reach extending from low-level C++ to cloud infrastructure-as-code and distributed systems.
               </p>
             </section>
 
@@ -736,7 +736,7 @@ export default function Portfolio() {
               <div className="skills-grid">
                 <div className="skill-category"><strong>Languages:</strong><br /> [Python, C/C++, Java, Go, JS/TS, Kotlin, C#]</div>
                 <div className="skill-category"><strong>Frameworks:</strong><br /> [NextJS, React, Flutter, FastAPI, PyTorch, TensorFlow]</div>
-                <div className="skill-category"><strong>Cloud/DevOps:</strong><br /> [AWS, Docker, K8s, Terraform, CI/CD]</div>
+                <div className="skill-category"><strong>Cloud/DevOps:</strong><br /> [AWS (ECS, Aurora, ALB, Secrets Manager), Terraform, Docker, K8s, GitHub Actions]</div>
                 <div className="skill-category"><strong>Databases:</strong><br /> [PostgreSQL, MongoDB, Redis, Firebase]</div>
                 <div className="skill-category"><strong>Tools:</strong><br /> [Git, Linux, Unity, ROS]</div>
               </div>
@@ -878,6 +878,7 @@ export default function Portfolio() {
                       <li><strong>Engineered a high-throughput API architecture</strong>, verified via custom stress testing to handle <strong>2,000+ requests/minute</strong> and <strong>100 concurrent users</strong> with a <strong>100% success rate</strong> for core operational flows.</li>
                       <li><strong>Engineered a modular monolith architecture</strong> with <strong>15+ decoupled services</strong> designed for the <strong>Strangler Pattern</strong>, managing complex <strong>Order/Booking</strong> flows, <strong>Razorpay</strong> payments, and a multi-channel notification engine (<strong>FCM</strong>, <strong>Fast2SMS</strong>, <strong>MSG91</strong>).</li>
                       <li><strong>Optimized operational velocity</strong>, reducing deployment cycles by <strong>70%</strong> through <strong>Fastlane CI/CD</strong> (confirmed in both the Flutter and Capacitor apps) and automating caregiver background checks via <strong>SpringVerify</strong>, while maintaining sub-second <strong>WebSocket</strong>-based real-time tracking.</li>
+                      <li><strong>Modernized production infrastructure end-to-end</strong> — imported the entire live stack (ECS Fargate, Aurora PostgreSQL, ALB, IAM) into <strong>Terraform</strong> with <strong>zero downtime and zero forced replacements</strong>, stood up a fully isolated staging environment with its own Aurora Serverless v2 database and CI/CD pipeline via <strong>GitHub Actions</strong>, and remediated live security gaps (plaintext secrets in env vars, publicly-accessible database) discovered during the audit.</li>
                       <li style={{ listStyle: 'none', marginLeft: '-20px', marginTop: '10px' }}>
                         <button onClick={() => openFamcareNotes()} className="hobby-btn" style={{ fontSize: '0.8rem', padding: '5px 15px' }}>
                           <i className="fas fa-book-open"></i> Personal Notes & Learning
