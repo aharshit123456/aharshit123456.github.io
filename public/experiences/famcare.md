@@ -149,6 +149,51 @@ We didn't just build an app—we spawned an entire digital universe! Expand each
 
 ---
 
+## Infrastructure Modernization
+
+Brought the entire production stack under infrastructure-as-code, stood up a fully isolated staging environment, and wired up CI/CD — all with zero production downtime.
+
+### Terraform from scratch, modeled on live infrastructure
+
+Built a reusable Terraform module library (VPC, ALB, ECS cluster, ECS service, RDS, IAM) by running a full read-only audit of the existing AWS account, then writing modules generic enough to describe both the existing production stack and a new staging stack from the same code, with only input values differing between environments.
+
+### Zero-downtime import of live production into Terraform state
+
+Imported every existing production resource — VPC, subnets, 3 security groups, ALB with listeners and target groups, ECS cluster and all 3 running services (API, background agent, scheduler) with their task definitions, the Aurora RDS cluster, and IAM roles — directly into Terraform state via `terraform import`. Nothing was created, modified, or destroyed.
+
+Iteratively reconciled every mismatch until `terraform plan` showed **zero forced replacements and zero destroys** — the gold-standard signal that the codebase now describes production with complete fidelity. Along the way, fixed several pre-existing gaps that would otherwise have caused an unintended outage:
+
+- A missing `description` field on security groups (AWS treats it as immutable — would have force-replaced live, in-use groups)
+- An incorrect assumption about RDS master password management mode
+- Task definition revision drift from a mid-project redeployment
+- Missing container-level config (health checks, per-container CPU, log configuration) silently defaulted by the AWS API
+
+### Net-new, isolated staging environment
+
+Designed and built staging as a genuinely separate ECS cluster — its own private Aurora Serverless v2 database, its own security groups, its own IAM roles — sharing only the production VPC and load balancer for cost efficiency, via new path-based ALB routing rules (`/api/*` → production, `/staging/api/*` → staging) added additively without touching any existing routing behavior.
+
+During first live deployment, diagnosed and fixed four non-obvious bugs in sequence: IAM role missing Secrets Manager read, missing `logs:CreateLogGroup` grant (the AWS-managed ECS policy only grants log *stream* creation, not group creation), a URL-encoding bug in the database connection string breaking on special characters in the generated password, and a driver-scheme mismatch between the app's runtime and its migration tooling (`postgresql://` vs `postgresql+asyncpg://`).
+
+<div class="stat-row">
+  <div class="stat"><div class="stat-num">0 destroys</div><div class="stat-label">terraform plan on live prod</div></div>
+  <div class="stat"><div class="stat-num">110+</div><div class="stat-label">Alembic migrations on staging</div></div>
+  <div class="stat"><div class="stat-num">0 downtime</div><div class="stat-label">throughout entire migration</div></div>
+</div>
+
+### Application change for path-based multi-tenancy
+
+AWS ALB has no path-rewrite capability — it forwards the full incoming path unchanged. Shipped a small, backward-compatible change to the FastAPI backend making the API's URL prefix configurable via environment variable, defaulting to existing `/api` behavior so production was unaffected. This lets one codebase serve both `/api/*` (prod) and `/staging/api/*` (staging) correctly.
+
+### CI/CD pipeline for staging
+
+Wrote a new GitHub Actions workflow mirroring the production deploy pipeline (build → push to ECR → run migrations → update ECS service → wait for stability), fully re-scoped to the staging cluster and triggered on pushes to the staging branch. Verified end-to-end on a live run: image build, 110+ sequential Alembic migrations on a freshly-provisioned database, service deployment, and health-check convergence — while confirming production remained completely unaffected throughout.
+
+### Security hardening
+
+Surfaced and remediated two live security issues discovered during the audit: plaintext credentials (Slack tokens, an OAuth client secret) sitting in non-secret container environment variables instead of Secrets Manager; and a pre-existing, publicly-accessible database (open security group, no VPC isolation) flagged for decommissioning — the new staging database was built private-only from the start specifically to not repeat that mistake.
+
+---
+
 ## App Store & Play Store Downloads
 <div class="app-links-grid">
   <a href="https://play.google.com/store/apps/details?id=com.famcare.praja&pcampaignid=web_share" target="_blank" class="app-store-btn" rel="noopener noreferrer">
