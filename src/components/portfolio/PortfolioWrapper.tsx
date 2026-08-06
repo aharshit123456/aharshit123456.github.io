@@ -1215,6 +1215,13 @@ export default function Portfolio() {
                     <span className="tech-stack">GCN, LSTM, Wearable Sensors</span>
                   </div>
                   <p>Developed spatial-temporal graph modeling on wearable sensor streams to classify and forecast Parkinson's FOG occurrences. Submitted to Health and Technology (Journal).</p>
+                </div>,
+                <div className="project-card" key="foundation-brain">
+                  <div className="project-header">
+                    <h4>Foundation Brain: A Task-Agnostic Contrastive Pretraining Backbone for Simultaneous EEG and fNIRS</h4>
+                    <span className="tech-stack">CLIP-style Contrastive Pretraining, EEG, fNIRS</span>
+                  </div>
+                  <p>Introduces a CLIP-style contrastive pretraining approach that learns a single, task-agnostic representation of paired EEG+fNIRS windows by recognizing when two signals came from the same moment in time, without task labels. On a 23-subject LOSO word-generation task, the frozen representation reaches 0.630 accuracy (0.610 F1), close to a fully supervised baseline (0.673 / 0.665 F1). Probing the same backbone zero-shot on an unseen three-class working-memory task reaches 0.381 accuracy against 0.333 chance — early evidence of task-agnostic transfer. Submitted to IEEE INDICON 2026.</p>
                 </div>
               ], 'publications')}
             </section>
