@@ -2,56 +2,53 @@
 
 *By Harshit Agarwal*
 
-FamCare's customer app is Flutter, and like every mobile team we used to wait on store review for every fix. Since September we ship most Dart changes over the air with Shorebird instead: a GitHub Actions workflow builds a patch, and phones pick it up on their next launch. This post covers the pipeline, the reasons Shorebird refuses a patch, the time patching from the wrong branch would have deleted a live feature, what to do about builds a patch can't fix, and what all this does to the CI bill.
+A booking screen shows the wrong price. The fix is four lines of Dart, written and reviewed before lunch. Then it waits: a full store build, a Play Store and App Store review, and days or weeks of people getting around to updating. For a mobile team, the slowest part of a small fix is almost never the fix. This post is about how we moved most of our fixes out of that queue with over-the-air code push, and about what turned out to matter more than the tool: why patches get refused, why a patch is not a diff, and what it does to the CI bill.
+
+FamCare is an in-home care marketplace in India. Families book babysitting and elder care by the hour from a Flutter app. When a sheet traps someone mid-booking or a price reads wrong, a slow fix means a parent who gives up and calls someone else.
 
 <div class="stat-row">
-  <div class="stat"><div class="stat-num">134</div><div class="stat-label">patch workflow runs in ten weeks</div></div>
   <div class="stat"><div class="stat-num">~1.4–2.7 MB</div><div class="stat-label">a typical patch download, per platform</div></div>
   <div class="stat"><div class="stat-num">~20 min</div><div class="stat-label">an iOS patch on a hosted macOS runner</div></div>
   <div class="stat"><div class="stat-num">10×</div><div class="stat-label">macOS minute vs Linux minute</div></div>
 </div>
 
----
+## What code push is, and why the stores allow it
 
-## The problem: a store review for every fix
+A mobile app is a signed binary that a store reviewed. **Code push** (or OTA patching) changes part of the app's behaviour after install, without a new binary: the app checks a server on launch, downloads a patch, and runs the new code the next time it starts.
 
-FamCare is an in-home care marketplace in India. Families book babysitting and elder care by the hour from the app. When a booking screen shows the wrong price or a sheet traps someone, the fix is usually a few lines of Dart. Getting those few lines to phones used to mean a full store build, a Play and App Store review, and then waiting for people to actually update.
+JavaScript-based frameworks have done this for years, because their code ships as source and is interpreted. Flutter is harder: release builds compile Dart ahead of time to machine code, with no interpreter to hand new code to. **Shorebird** fills that gap. It ships a modified Flutter engine that can load a patch for the compiled Dart code inside an installed app.
 
-Shorebird swaps the compiled Dart code inside an already-installed Flutter app. It can't touch native code or assets. But most of our day-to-day changes are Dart: copy, layout, booking logic, analytics events. That is exactly the part Shorebird can replace.
+Why do the stores tolerate this? Both have rules against an app silently becoming a different app. Apple's developer agreement allows downloading interpreted code as long as it doesn't change the app's primary purpose, create a storefront for other code, or bypass the operating system's security features. Google Play forbids downloading executable code from outside Play, with an exception for code that runs in a virtual machine or interpreter. Shorebird is designed to sit inside those exceptions; on iOS, for example, changed code runs in an interpreter while unchanged code keeps running as the compiled code Apple reviewed.
 
-## Release, then patch
+The spirit of both rules is a useful discipline: you may fix and adjust the app the reviewer saw, but not turn it into something else behind their back. It also explains the technical limit. A patch replaces Dart code and nothing more. Native code (Kotlin, Swift, third-party SDKs, the native halves of plugins) and assets (fonts, images) are baked into the signed binary and still need a store release. For us that limit is generous: most day-to-day changes are Dart, such as copy, layout, booking logic and analytics events.
 
-I added Shorebird to the app and wrote the first version of the release and patch workflows in mid-September. A teammate added per-platform dispatch and the iOS signing fixes that followed. The pipeline has two halves.
+## Release once, patch many times
 
-**A release** is a store build that Shorebird knows about. `deploy.yml` builds the Android bundle and the iOS archive with `shorebird release` instead of plain `flutter build`, uploads it to the stores, and registers that exact binary with Shorebird under its version and build number (for example `1.0.577+677`).
+I added Shorebird to the app and wrote the first release and patch workflows; a teammate added per-platform dispatch and the iOS signing fixes that followed. The pipeline has two halves.
 
-**A patch** is a manual `workflow_dispatch` of `shorebird-patch.yml`. Whoever dispatches it picks the branch to build, the platform, and the release version to patch. The workflow builds the Dart from that branch, Shorebird checks it against the stored release, and if it's compatible it goes out.
+**A release** is a store build that Shorebird knows about. The deploy workflow builds the Android bundle and the iOS archive with `shorebird release` instead of `flutter build`, uploads them to the stores, and registers that exact binary with Shorebird under its version and build number.
+
+**A patch** is a manual GitHub Actions run. Whoever starts it picks the branch, the platform, and the release to patch. The workflow builds the Dart code from that branch, Shorebird compares it with the stored release, and if they're compatible the patch is published.
 
 <figure>
   <div class="diagram">
-    <div class="node muted-node">deploy.yml<br>shorebird release</div>
+    <div class="node muted-node">Release build<br>shorebird release</div>
     <span class="arrow">→</span>
-    <div class="node">Play / App Store<br>1.0.577+677</div>
+    <div class="node">Play / App Store<br>one version + build</div>
     <span class="arrow">→</span>
-    <div class="node accent">shorebird-patch.yml<br>branch + release version</div>
+    <div class="node accent">Patch build<br>branch + release version</div>
     <span class="arrow">→</span>
-    <div class="node">Stable track<br>every user on 677</div>
+    <div class="node">Stable track<br>every user on that release</div>
     <span class="arrow">→</span>
     <div class="node muted-node">Next launch:<br>download, then restart</div>
   </div>
   <figcaption><b>Fig. 1</b> — a release is built once and goes through the store. Patches are built from a branch, checked against that release, and published to everyone on it.</figcaption>
 </figure>
 
-### The first patches reached nobody
-
-My first version got the release half wrong. `deploy.yml` uploaded a plain Flutter build to the Play Store and then pushed a `shorebird-release-*` tag. That tag triggered `shorebird-release.yml`, which built a *second* bundle with Shorebird's engine and registered it. That second bundle was never uploaded anywhere.
-
-So the binary real users installed had the stock Flutter engine, with no code to check for or apply patches. Patches published fine in Shorebird's console and silently reached zero phones. On 26 September I changed both store builds to `shorebird release` itself (Android bundle and the iOS fastlane lane), so the shipped binary and the registered release are the same file. `shorebird-release.yml` still exists for manual backfills, but it hasn't been needed since.
-
 > [!NOTE]
-> **Decision: manual dispatch, straight to stable.** The workflow header calls it a "manual, deliberate hotfix push". There's no auto-patch on merge, and no staging track: a patch goes to the stable track and reaches everyone on that release. We started on Shorebird's free tier, which has no rollback. The safety net is that a human chooses the branch and the release every time, and that Shorebird refuses anything that isn't pure Dart.
+> **Decision: manual dispatch, straight to stable.** No automatic patch when code merges, and no separate test track: a patch reaches everyone on that release. We started on Shorebird's free tier, which has no rollback. The safety net is that a human chooses the branch and the release every time, and that Shorebird refuses anything that isn't pure Dart.
 
-Shorebird applies a downloaded patch only when the process restarts. A teammate added a small sheet for that: once a patch has downloaded, the app shows it on Home, once per patch, and never on top of a booking or payment.
+Shorebird applies a downloaded patch only when the app process restarts, and people rarely kill apps on purpose. A teammate added a small sheet for that: once a patch has downloaded, the app mentions it on Home, once per patch, never on top of a booking or payment.
 
 <figure>
   <div class="screenshot-container">
@@ -60,44 +57,52 @@ Shorebird applies a downloaded patch only when the process restarts. A teammate 
   <figcaption><b>In the app</b> — the "Update ready" sheet shown once a patch has downloaded.</figcaption>
 </figure>
 
-## Why Shorebird says no
+## The patches that reached nobody
 
-Most of the work after launch was understanding refusals. Shorebird compares the new build with the stored release and refuses if anything outside the Dart code changed. We have hit three kinds.
+My first version got the release half wrong, in a way that's easy to repeat. The deploy workflow uploaded a plain Flutter build to the Play Store and then pushed a tag. The tag triggered a second workflow, which built a *second* bundle with Shorebird's engine and registered it. That second bundle was never uploaded anywhere.
+
+So the binary users installed had the stock Flutter engine, with no code to check for patches. Patches published cleanly, showed up in Shorebird's console, and reached zero phones. Nothing failed, so nothing told us.
+
+The fix was to make both store builds use `shorebird release` directly, so the binary in the store and the binary Shorebird knows are the same file. The lesson: **verify not that the patch was published, but that the binary in users' hands can receive it.** Two builds that "should be the same" are two different binaries.
+
+## Why a patch gets refused
+
+Most of the work after launch was understanding refusals. Shorebird refuses if anything outside the Dart code changed. We have hit three kinds:
 
 | Refusal | What actually changed | What we do |
 |---|---|---|
 | Asset diff | The Material Icons font, trimmed to the icons the code uses | Ship the full font in every release |
-| Native diff, Android | Razorpay SDK bytecode, from R8 non-determinism or a newer SDK version | Opt-in `allow_native_diffs`; pin Razorpay per release range |
-| Native diff, iOS | One data section in the binary, from the build machine | `allow_native_diffs=true` after checking the list |
+| Native diff, Android | Razorpay SDK bytecode, from R8 non-determinism or a newer SDK version | Opt-in "allow native diffs"; pin the Razorpay version per release range |
+| Native diff, iOS | One data section in the binary, from the build machine | Allow native diffs after checking the list |
 
 ### The icon font is an asset
 
-By default Flutter tree-shakes the Material Icons font down to the glyphs the code references. Add or drop a single `Icons.*` in a patch and the font file changes. Fonts are assets, and Shorebird refuses asset diffs. A patch against build 623 failed exactly this way.
+By default, Flutter **tree-shakes** the Material Icons font, keeping only the glyphs the code references. So adding or dropping one `Icons.*` reference in a patch changes the font file. Fonts are assets, and Shorebird refuses asset diffs.
 
-There's an `allow_asset_diffs` checkbox, but it's dangerous. Assets never ship in a patch, so if an icon was *added*, the glyph is missing from the installed font and renders as an empty box. The fix a teammate shipped in October was to build releases with `--no-tree-shake-icons`. Every release since build 662 carries the whole font, about 1.6 MB, so icon changes are no longer asset changes.
+There is an option to allow asset diffs anyway, and it's a trap: assets never ship in a patch, so a newly added icon renders as an empty box. The fix a teammate shipped was to build releases with `--no-tree-shake-icons`. Every release since carries the whole font, about 1.6 MB, so icon changes are no longer asset changes.
 
-The catch is that a patch must be built the same way as its release. Older releases still have a trimmed font. So the patch workflow reads the build number from the release version and adds the flag only at or above a per-platform cutoff:
+The catch is that a patch must be built exactly like its release, and older releases still have a trimmed font. So the patch workflow reads the build number from the release version and adds the flag only at or above a per-platform cutoff:
 
 ```bash
-BUILD="${RELEASE_VERSION##*+}"          # 677 from 1.0.577+677
+BUILD="${RELEASE_VERSION##*+}"          # "1.0.42+120" -> 120
 if [[ "$BUILD" -ge "$FULL_ICON_FONT_FROM_ANDROID" ]]; then
   ICON_FLAGS="-- --no-tree-shake-icons"
 fi
 ```
 
-When those cutoffs were still 0, patches for build 664 failed on both platforms. A teammate set them to 662 and, in the same fix, made patches for builds 662–664 resolve the same Razorpay version those releases had shipped with.
+Those cutoffs were first left at zero, and patches for the first full-font releases failed on both platforms until a teammate set them, while also making those patches resolve the same Razorpay version their releases shipped with.
 
-One more trap from the same family: a `const bool = false` guarding a widget lets the compiler strip the widget, and with it an icon from the trimmed font. A home-screen carousel is switched off with a feature flag instead of a constant for exactly that reason.
+One more trap from the same family: a `const bool = false` guarding a widget lets the compiler strip that widget, and with it an icon from the trimmed font. A home-screen carousel is switched off with a runtime feature flag instead of a constant for exactly that reason.
 
 ### Native diffs on Android
 
-One of the first patch attempts, on 21 September, was refused for native changes in the Razorpay SDK even though `pubspec.lock` was identical. It looked like R8 producing slightly different bytecode across two CI builds, not a dependency change. I added `allow_native_diffs` as an opt-in checkbox, default off, rather than forcing it on permanently. Shorebird's own warning is that a real native change patched over can crash the app, so someone has to look at the diff first.
+One early patch was refused for native changes in the Razorpay payment SDK, even though the dependency lockfile was identical. It looked like R8, Android's code shrinker, producing slightly different bytecode across two CI builds. I added "allow native diffs" as an opt-in checkbox, off by default. Shorebird warns that patching over a real native change can crash the app, so someone has to read the diff and decide it's noise.
 
 ### iOS build noise
 
-iOS was the harder one. On 19 November my iOS patch was refused with 47 "breaking" native differences, most inside Sentry's iOS SDK. I spent a while on a theory that unpinned Swift packages were drifting between builds. Then a teammate's patch, from a different branch, failed with the same 47 differences. Our code wasn't the cause. The hosted macOS runner doesn't reproduce the release binary byte for byte.
+One of my iOS patches was refused with 47 "breaking" native differences, most inside Sentry's iOS SDK. I spent a while on a theory that unpinned Swift packages were drifting between builds. Then a teammate's patch, from a different branch, failed with the same 47 differences. Our code wasn't the cause: the hosted macOS runner doesn't reproduce the release binary byte for byte.
 
-Since both platforms moved to build 677, the iOS report is small and the same every time:
+After both platforms moved to a fresh release, the iOS report became small and identical every time:
 
 ```text
 Safe differences (2):
@@ -107,38 +112,36 @@ Breaking differences (1):
   - Data section payload changed: __TEXT,__const
 ```
 
-That's build-machine noise, so the standing recipe for iOS on GitHub's runners is `allow_native_diffs=true`, after reading the list to make sure it is still just these. The alternative was a store release for every iOS fix, which defeats the point.
+That's build-machine noise. The standing iOS recipe on GitHub's runners is to allow native diffs after confirming the list is still just these lines; the alternative is a store release for every iOS fix. The lesson from my detour: when a refusal looks like your fault, reproduce it from an unrelated change before chasing a theory.
 
 > [!WARNING]
 > Releases have their own version of this problem. A `shorebird release` without a pinned Flutter version builds with Shorebird's latest Flutter. When Flutter 3.50.1 arrived it needed a newer Gradle than ours, and a deploy failed with no code change. Release builds now pin 3.47.9. Patches don't need the pin, because `shorebird patch` reuses the release's Flutter.
 
-## Which branch to patch from
+## A patch is the whole program, not a diff
 
-A patch isn't a diff. It's the whole Dart program, built from whichever branch you dispatch. Anything that branch lacks disappears for every user on that release.
+This surprised me most. A patch isn't "the changes since the release". It's the entire Dart program, built from whichever branch you point the workflow at. Anything that branch lacks disappears for every user on that release.
 
-In mid-November that nearly happened. On 12 November a staging-to-main promotion was reverted on `main`. The revert deleted about 9,000 lines across 55 files, Monthly Care among them. `main` also differed from the live release in native files: `AndroidManifest.xml`, ProGuard rules and the Podfile. The same day, Android release 671 shipped from a branch that *did* contain Monthly Care.
-
-So a patch from `main` would have deleted a live feature for every Android user, and Shorebird would likely have refused it anyway for the native lines. We patched Android from `staging`, which was a superset of 671. The PR I had opened to prepare a `main`-based patch was left unused.
+We keep two long-lived branches: an integration branch where work lands first, and a production branch promoted from it. You'd expect to patch from production. One day that would have been a serious mistake. A promotion to the production branch had just been reverted, deleting about 9,000 lines across 55 files, including Monthly Care, a feature live in the current Android release. That branch also differed from the release in native files (`AndroidManifest.xml`, ProGuard rules, the Podfile). A patch from it would have deleted a live feature for every Android user, if Shorebird hadn't refused it first. We patched from the integration branch, which contained everything the release had.
 
 <figure>
   <div class="diagram">
-    <div class="node">Release 671<br>has Monthly Care</div>
+    <div class="node">Live release<br>has Monthly Care</div>
     <span class="arrow">→</span>
-    <div class="node accent">Patch from staging<br>superset of 671</div>
-    <div class="node muted-node">Patch from main<br>Monthly Care reverted</div>
+    <div class="node accent">Patch from integration branch<br>superset of the release</div>
+    <div class="node muted-node">Patch from production branch<br>Monthly Care reverted</div>
   </div>
   <figcaption><b>Fig. 2</b> — the same release, two candidate branches. Only one of them contains everything users already had.</figcaption>
 </figure>
 
-iOS was a separate case. It was still on release 669, and `staging` had since gained a new image asset that 669 didn't have, so any iOS patch from `staging` would be an asset diff. The team kept a long-lived `staging-ios-669` branch with Dart-only changes cherry-picked onto it. A teammate cherry-picked my 19 November PRs there and shipped them as an iOS patch the next day.
+iOS at that moment was on an older release, and the integration branch had gained an image asset that release lacked, so any iOS patch from it would be an asset diff. For a while the team kept a branch per iOS release with Dart-only changes cherry-picked onto it, until a new release on both platforms made it unnecessary.
 
-On 23 November a new release, `1.0.577+677`, went out on both platforms. That day `main` and `staging` had identical trees, so patching from either was equivalent, and the iOS branch was no longer needed. The branches drift apart and back again, so this is a check rather than a rule: before dispatching, run `git diff --stat` between the candidate branch and what's live, and look at which release and commit the last patch run used. Patches are dispatched by several of us; teammates run most of them, and I've run about one in seven.
+Branches drift apart and back again, so "always patch from X" doesn't hold. What holds is a check before every dispatch: **diff the candidate branch against what's live** (`git diff --stat` against the release's commit) and look at what the previous patch was built from. If the branch is missing anything the release has, it's the wrong branch.
 
-## Builds a patch can't fix
+## When you need the store anyway
 
-Some changes need native code: a new SDK, a Live Activity, a permission. Those go through the store, and then the question is how to get people onto the new build.
+Some changes need native code: a new SDK, a Live Activity, a permission. Those go through the store, and the question becomes how to get people onto the new build.
 
-The app asks the backend on every launch with its version and build number. An admin sets the latest version per platform and a force switch. If the installed build is older, the app shows an update sheet. Forced, it can't be dismissed. Optional, it has "Maybe later", and a skip hides it for the next 8 launches, resetting when a newer version is published.
+The app sends its version and build number to the backend on every launch. An admin sets the latest version per platform and a force switch. If the installed build is older, the app shows an update sheet. A forced one can't be dismissed; an optional one has "Maybe later", and skipping hides it for the next 8 launches, resetting when a newer version is published.
 
 <figure>
   <div class="screenshot-container">
@@ -148,11 +151,11 @@ The app asks the backend on every launch with its version and build number. An a
   <figcaption><b>In the app</b> — the forced and optional update sheets, from the app's screen-audit goldens.</figcaption>
 </figure>
 
-Forcing everyone is a blunt tool, so for new features we gate on the build instead. Since May the app has sent its build number with every booking. The configurable booking pulse I built (a "how is it going?" push partway through a visit, still behind a flag) has a `gating.min_app_version_code` setting. The scheduler only picks bookings made on a build at or above it, so an older app is never sent a push it can't answer. The update sheet only gets involved when we really want everyone off a build.
+Forcing everyone is blunt, so for new features we **gate on the build** instead. The app sends its build number with every booking. When I built a configurable "how is it going?" push sent partway through a visit, it got a minimum-build setting: the scheduler only picks bookings made on a build at or above it, so an older app never gets a push it can't handle. The forced sheet is for the rare case where we want everyone off a build.
 
-## What it costs
+## The macOS tax
 
-In November we looked at the GitHub Actions bill. The customer app's repo was about 70% of it. The interesting split was by runner:
+Code push moves work from the store to your CI, and CI isn't free. When we looked at the GitHub Actions bill, the interesting split was by runner:
 
 <figure>
   <div class="chart">
@@ -170,34 +173,22 @@ In November we looked at the GitHub Actions bill. The customer app's repo was ab
   <figcaption><b>Fig. 3</b> — November 2026, all repos, as of the 25th. A hosted macOS minute costs about 10× a Linux minute.</figcaption>
 </figure>
 
-Most of those macOS minutes were iOS patches. In November there were 51 iOS patch jobs on hosted `macos-latest`, around 20 minutes each, about three quarters of all macOS minutes. The workflow's default iOS runner is `self-hosted`, meant for a Mac in the office, but that machine isn't registered as a runner, so people pick `github`. Some patches also went to both platforms when the change only mattered on one.
+Six percent of the minutes made up two fifths of compute spend. About three quarters of those macOS minutes were iOS patches, around 20 minutes each, and some patches went to both platforms when the change only mattered on one. The levers follow directly:
 
-The second driver was ordinary CI. Every push to a PR started a full Flutter QA run (about 27 Linux minutes) and nothing cancelled the older one. In mid-November I shipped two small PRs, praja #1206 and sutram #1744, that add a `concurrency` group to cancel superseded PR runs and shorten artifact retention. It's too early to see the effect in the daily numbers.
+- **Patch only the platform that needs it**, and batch fixes instead of patching each one alone.
+- **Build iOS on a self-hosted Mac.** The workflow already supports one; a machine you own makes those minutes nearly free.
+- **Cancel superseded CI runs.** Every push to a pull request started a full Flutter QA run of about 27 Linux minutes, and nothing cancelled the previous one. A GitHub Actions `concurrency` group keyed on the pull request, with `cancel-in-progress`, fixes that in a few lines.
 
-The bigger levers are team decisions and are still open: bring the self-hosted Mac online, patch Android only when a change is Android-only, batch patches, and set a spending limit.
+## Takeaways
 
-## What went wrong
+- **Code push covers more than you'd think.** If most changes live in the Dart (or JavaScript) layer, most fixes can skip store review, within rules the stores publish.
+- **Verify the binary, not the dashboard.** A successfully published patch reaches nobody if the store build isn't the registered one.
+- **Treat refusals as a feature.** More than a quarter of our patch runs failed, mostly refusals doing their job. Keep escape hatches like "allow native diffs" opt-in, and read the diff every time.
+- **Build patches exactly like their release.** Icon tree-shaking, a pinned SDK, the Flutter version: any differing input becomes an asset or native diff.
+- **A patch is the whole program.** Diff the branch against what's live; the wrong branch doesn't fail, it quietly deletes features.
+- **Gate features on the build number** and save forced updates for emergencies.
 
-- **Patches that reached nobody.** Until 26 September, every published patch targeted a binary no user had installed.
-- **The trimmed icon font.** One icon added or removed was enough to block a patch, until releases shipped the whole font.
-- **Cutoffs left at zero.** The full-font releases existed before the patch workflow knew about them, so patches for 664 failed on both platforms.
-- **My wrong iOS theory.** I blamed package drift for the 47-difference refusal. A second failure on a different branch showed it was the runner.
-- **An unpinned Flutter.** A new Flutter release broke a store deploy with no code change.
-
-Of 134 patch runs since 21 September, 77 succeeded, 38 failed and 17 were cancelled. Most failures are refusals doing their job, and I'd rather have those than a bad patch on the stable track.
-
-## Results
-
-- Dart fixes reach users after an Android patch run of under half an hour and an iOS run of about 20 minutes, instead of a store review.
-- Patches are small: about 2.6 MB per Android architecture and 1.4 MB on iOS for recent ones.
-- Both platforms are on the same release, 677, with one documented recipe per platform.
-- The app tells users when a patch is waiting, and new features can require a minimum build without forcing everyone to update.
-
-## What's next
-
-- **Use a staging track.** Shorebird now warns when no `--track` is given. Publishing to `staging` first and promoting after a check would give us the review step we skipped.
-- **A self-hosted Mac**, or at least Android-only patches, to cut the macOS bill.
-- **Wire the minimum supported build into the version check.** The config model already has the field, but the endpoint still forces with a single switch.
+The obvious next step is a staged rollout. Shorebird can publish to a separate track and promote later, which would add a check on real devices before a patch reaches everyone: the one safety step this setup skipped at the start.
 
 ---
 
@@ -213,4 +204,5 @@ Of 134 patch runs since 21 September, 77 succeeded, 38 failed and 17 were cancel
 - [Live Captions for Support Calls, Without a New Service](/blog/famcare-live-call-captions): support-call audio to realtime speech-to-text in the admin panel.
 - [The Demand We Couldn't Serve](/blog/famcare-unserved-demand): measuring families who saw no free slot and left.
 - [CRM as an API](/blog/famcare-crm-as-api): coupons, free minutes and support calls from CleverTap journeys, rules kept in the backend.
+- [Three Outages and the Infrastructure They Left Behind](/blog/famcare-incidents-and-infra): three production incidents, the guardrails each left behind, and how we write up root causes.
 - [All case studies](/case-studies)

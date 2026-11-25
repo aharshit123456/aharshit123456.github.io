@@ -178,8 +178,9 @@ The open question is measurement. A holdout group for CRM offers, customers who 
 - [A Care Marketplace on One Boring Backend](/blog/famcare-system-design): the system design behind the whole platform.
 - [Honest Slots, Priced Idle Time](/blog/famcare-slots-and-pricing): one eligibility rule, 270 YAML scenarios, price drops and flash sales.
 - [A Golden Image for Every Screen](/blog/famcare-golden-screens): every customer-app screen rendered and diffed in CI.
-- [Shipping a Flutter App Without the App Store](/blog/famcare-flutter-ota): Shorebird patches, refused diffs, picking the branch, and CI costs.
+- [Shipping a Flutter App Without the App Store](/blog/famcare-flutter-ota): code push for a Flutter app, why patches get refused, and what CI really costs.
 - [Who Owns This Alert?](/blog/famcare-alert-ownership): business-invariant monitoring that tags the engineer who owns the area.
 - [Live Captions for Support Calls, Without a New Service](/blog/famcare-live-call-captions): support-call audio to realtime speech-to-text in the admin panel.
 - [The Demand We Couldn't Serve](/blog/famcare-unserved-demand): measuring families who saw no free slot and left.
+- [Three Outages and the Infrastructure They Left Behind](/blog/famcare-incidents-and-infra): three production incidents, the guardrails each left behind, and how we write up root causes.
 - [All case studies](/case-studies)
