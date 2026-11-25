@@ -32,6 +32,9 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "https://www.aharshit123456.space",
+    types: {
+      "application/rss+xml": [{ url: "https://www.aharshit123456.space/feed.xml", title: "Harshit Agarwal Tech Blog" }],
+    },
   },
 
   openGraph: {

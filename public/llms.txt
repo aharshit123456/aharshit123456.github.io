@@ -52,4 +52,4 @@ Long-form engineering write-ups by Harshit Agarwal, each with the problem, desig
 - [A Voice Agent That Only Drafts](https://www.aharshit123456.space/blog/famcare-voice-agent): an LLM voice interview that only proposes drafts; cost model (~₹9 per interview), model evals, fallbacks and privacy.
 - [A Care Marketplace on One Boring Backend](https://www.aharshit123456.space/blog/famcare-system-design): FamCare's system design; booking state machine with physical guards, real time over Redis pub/sub, Terraform import, staging, OTA patches, feature flags, monitoring.
 - [Honest Slots, Priced Idle Time](https://www.aharshit123456.space/blog/famcare-slots-and-pricing): one eligibility definition shared by six code paths, 270 YAML scenarios on a real database, price drops and evening flash sales.
-- All posts: https://www.aharshit123456.space/blog
+- All posts: https://www.aharshit123456.space/blog (RSS: https://www.aharshit123456.space/feed.xml)
