@@ -8,7 +8,8 @@ import './../blog.css';
 import { Metadata } from 'next';
 import InteractiveArticle from '@/components/portfolio/InteractiveArticle';
 import { getBlogMeta, SITE_URL } from '../blogMeta';
-import { getPostNeighbors, type PostNeighbors } from '../postNav';
+import { getPostNeighbors, getPostRail, type PostNeighbors, type PostRail } from '../postNav';
+import PostToc from '../PostToc';
 
 // This function tells Next.js which paths to pre-render at build time
 export async function generateStaticParams() {
@@ -99,6 +100,7 @@ export default async function BlogPage({ params }: { params: Promise<{ slug: str
 
   const meta = getBlogMeta(slug, content);
   const neighbors = getPostNeighbors(slug);
+  const rail = getPostRail(slug);
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -143,14 +145,24 @@ export default async function BlogPage({ params }: { params: Promise<{ slug: str
         <div className="nav-logo">TECH_BLOG</div>
       </nav>
       
-      <main className="blog-content">
-        <PostNav neighbors={neighbors} position="top" />
+      <main className="blog-content post-layout">
+        <aside className="post-side post-side--left">
+          <PostToc />
+        </aside>
 
-        <article className="article-card markdown-body">
-          <InteractiveArticle content={content} slug={slug} />
-        </article>
+        <div className="post-main">
+          <PostNav neighbors={neighbors} position="top" />
 
-        <PostNav neighbors={neighbors} position="bottom" />
+          <article className="article-card markdown-body">
+            <InteractiveArticle content={content} slug={slug} />
+          </article>
+
+          <PostNav neighbors={neighbors} position="bottom" />
+        </div>
+
+        <aside className="post-side post-side--right">
+          <PostRailPanel rail={rail} />
+        </aside>
       </main>
 
       <footer className="blog-footer">
@@ -175,6 +187,32 @@ function PostNav({ neighbors, position }: { neighbors: PostNeighbors; position: 
           <span className="post-nav-title">{neighbors.next.title}</span>
         </Link>
       </div>
+    </nav>
+  );
+}
+
+/** Wide screens only: the series (or latest posts) beside the article. */
+function PostRailPanel({ rail }: { rail: PostRail }) {
+  return (
+    <nav className="post-rail" aria-label={rail.heading}>
+      <p className="post-side-heading">{rail.heading}</p>
+      <ol>
+        {rail.items.map((item) => (
+          <li key={item.href}>
+            <Link
+              href={item.href}
+              className={item.current ? 'is-current' : undefined}
+              aria-current={item.current ? 'page' : undefined}
+            >
+              {item.n !== undefined && <span className="post-rail-n">{String(item.n).padStart(2, '0')}</span>}
+              <span>{item.title}</span>
+            </Link>
+          </li>
+        ))}
+      </ol>
+      <Link href="/blog" className="post-rail-all">
+        All posts →
+      </Link>
     </nav>
   );
 }

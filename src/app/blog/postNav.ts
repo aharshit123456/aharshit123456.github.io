@@ -54,3 +54,36 @@ export function getPostNeighbors(slug: string): PostNeighbors {
     i !== -1 && chain[j] ? { href: `/blog/${chain[j].slug}`, title: chain[j].title || chain[j].slug } : ALL_POSTS;
   return { prev: link(i - 1), next: link(i + 1) };
 }
+
+export type PostRail = {
+  heading: string;
+  items: (NavLink & { current: boolean; n?: number })[];
+};
+
+/**
+ * Right-hand panel on wide screens: the whole series for series posts,
+ * otherwise the latest posts (excluding this one).
+ */
+export function getPostRail(slug: string): PostRail {
+  for (const series of JOURNEYS) {
+    const posts = series.stages.flatMap((s) => s.posts).filter((p) => p.slug);
+    if (!posts.some((p) => p.slug === slug)) continue;
+    return {
+      heading: series.title,
+      items: posts.map((p, i) => ({
+        href: `/blog/${p.slug}`,
+        title: p.title,
+        current: p.slug === slug,
+        n: i + 1,
+      })),
+    };
+  }
+  const latest = readIndex()
+    .filter((e) => e.slug !== slug)
+    .sort((a, b) => (b.date || '').localeCompare(a.date || ''))
+    .slice(0, 6);
+  return {
+    heading: 'Latest posts',
+    items: latest.map((e) => ({ href: `/blog/${e.slug}`, title: e.title || e.slug, current: false })),
+  };
+}

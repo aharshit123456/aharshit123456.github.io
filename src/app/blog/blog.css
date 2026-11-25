@@ -441,21 +441,27 @@
   gap: 16px;
   margin: 32px 0;
   max-width: 760px;
+  container-type: inline-size;
 }
 
 .markdown-body .stat {
   flex: 1;
+  min-width: 0;
   border: 1px solid var(--border-color);
   border-radius: 10px;
-  padding: 18px 16px;
+  padding: 18px 14px;
   text-align: center;
 }
 
 .markdown-body .stat-num {
-  font-size: 26px;
+  /* Sized to the row so values like "~3.7 of 10" fit a quarter-width card. */
+  font-size: clamp(14px, calc((25cqi - 44px) / 6.2), 24px);
   font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.3px;
   color: var(--accent-color);
   font-family: var(--mono-font);
+  white-space: nowrap;
 }
 
 .markdown-body .stat-label {
@@ -630,6 +636,10 @@
 
   .markdown-body .stat {
     min-width: 45%;
+  }
+
+  .markdown-body .stat-num {
+    font-size: 20px;
   }
 
   /* Responsive Tables */
@@ -1173,5 +1183,133 @@
 
   .post-nav-next {
     text-align: left;
+  }
+}
+
+
+/* ── Wide screens: contents | article | series ───────────────────── */
+
+.post-side {
+  display: none;
+}
+
+@media (min-width: 1200px) {
+  .blog-content.post-layout {
+    max-width: 1360px;
+    display: grid;
+    grid-template-columns: minmax(0, 220px) minmax(0, 760px) minmax(0, 250px);
+    justify-content: center;
+    column-gap: 56px;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .post-main {
+    min-width: 0;
+  }
+
+  .post-side {
+    display: block;
+    min-width: 0;
+  }
+
+  .post-toc,
+  .post-rail {
+    position: sticky;
+    top: 96px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+
+  .post-side-heading {
+    margin: 0 0 12px;
+    color: var(--muted);
+    font-family: var(--mono-font);
+    font-size: 11.5px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .post-toc ol,
+  .post-rail ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .post-toc li + li,
+  .post-rail li + li {
+    margin-top: 2px;
+  }
+
+  .post-toc a {
+    display: block;
+    padding: 6px 0 6px 12px;
+    border-left: 2px solid var(--border-color);
+    color: var(--muted);
+    font-size: 13.5px;
+    line-height: 1.4;
+    text-decoration: none;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .post-toc a:hover {
+    color: var(--text-primary);
+  }
+
+  .post-toc a.is-active {
+    border-left-color: var(--accent-color);
+    color: var(--accent-color);
+    font-weight: 600;
+  }
+
+  .post-rail a {
+    display: flex;
+    gap: 10px;
+    padding: 7px 10px;
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-size: 13.5px;
+    line-height: 1.4;
+    text-decoration: none;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .post-rail a:hover {
+    background: var(--fig-bg);
+    color: var(--text-primary);
+  }
+
+  .post-rail a.is-current {
+    background: var(--accent-soft);
+    color: var(--accent-color);
+    font-weight: 600;
+  }
+
+  .post-rail-n {
+    flex: none;
+    color: var(--muted);
+    font-family: var(--mono-font);
+    font-size: 12px;
+    padding-top: 1px;
+  }
+
+  .post-rail a.is-current .post-rail-n {
+    color: var(--accent-color);
+  }
+
+  .post-rail .post-rail-all {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 0 10px;
+    color: var(--accent-color);
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .post-rail .post-rail-all:hover {
+    background: none;
+    text-decoration: underline;
   }
 }
