@@ -42,10 +42,17 @@ FamCare is an in-home care marketplace in India (babysitting, elder care) booked
   - [Google Play Store](https://play.google.com/store/apps/details?id=app.shoppin.ios)
   - [Apple App Store](https://apps.apple.com/in/app/shoppin-ai-discovery-try-on/id6738202299)
 
+### SMLab, NISER — Research Intern (May 2024 - Oct 2024)
+- Worked on Swayansaasita, a sensor-data and perception project for autonomous two-wheelers.
+- Built the browser dashboard for the ROS 2 sensor rig (rosbridge, compressed camera streams, rosbag recording and playback, FastAPI backend, browser terminal).
+- Wrote Swift apps streaming iPhone LiDAR depth, motion and GPS over TCP, and an ARKit room scanner.
+- Presented ORB-SLAM3 at SMLab talks (31 May 2024) and wrote the project site's perception articles.
+- Also attended the QuCIS NPTEL workshop on hands-on quantum programming at IISER Bhopal (June 2024).
+
 ## Key Projects
 - **WHAM! OTT:** Hybrid video engine with an immersive comic-book UI, cross-platform video players, and smooth state handling.
 - **PreviouslyOn:** Social TV tracking platform with smart AI recommendations, Trakt.tv integrations, and community features.
-- **ORB-SLAM3:** Implementation of accurate Visual-Inertial SLAM libraries for autonomous navigation.
+- **ORB-SLAM3 talk:** An explainer of ORB features and visual-inertial, multi-map SLAM, presented at SMLab, NISER.
 
 ## Writing: Building FamCare case studies
 Long-form engineering write-ups by Harshit Agarwal, each with the problem, design, rejected alternatives, failures and results.
@@ -59,3 +66,17 @@ Long-form engineering write-ups by Harshit Agarwal, each with the problem, desig
 - [The Demand We Couldn't Serve](https://www.aharshit123456.space/blog/famcare-unserved-demand): measuring families who saw no free slot and left.
 - [CRM as an API](https://www.aharshit123456.space/blog/famcare-crm-as-api): coupons, free minutes and support calls from CleverTap journeys, rules kept in the backend.
 - All posts: https://www.aharshit123456.space/blog (RSS: https://www.aharshit123456.space/feed.xml)
+
+## Writing: Building shoppin'
+
+- [A Google Lens Alternative for a Job Interview, Re-Audited](https://www.aharshit123456.space/blog/shoppin-lens-research): five image similarity search methods (CNN features, ViT, DINOv2, CLIP, LSH), a cosplay lens, and an audit of the metrics.
+
+## Writing: Research at NISER & IISER Bhopal
+
+- [From ORB Features to ORB-SLAM3](https://www.aharshit123456.space/blog/orb-slam3): how ORB features work and how ORB-SLAM3 builds and merges maps.
+- [SLAM from the Bayes Filter Up](https://www.aharshit123456.space/blog/niser-slam-bayes-filter): Bayes filter, Kalman and particle filters, occupancy grids and pose graphs.
+- [Turning an iPhone into a LiDAR, IMU and GPS Sensor](https://www.aharshit123456.space/blog/niser-iphone-sensor-rig): streaming ARKit depth, motion and location over TCP.
+- [A Browser Dashboard for a ROS 2 Sensor Rig](https://www.aharshit123456.space/blog/niser-ros-dashboard): rosbridge, camera streams, rosbag recording and playback in the browser.
+- [Hands-on Quantum Programming at IISER Bhopal](https://www.aharshit123456.space/blog/iiser-bhopal-quantum-workshop): qubits, Bell states and Deutsch–Jozsa derived from scratch.
+- [Field Notes on Perception for Two-Wheeler Autonomy](https://www.aharshit123456.space/blog/niser-perception-notes): computer vision, point clouds and prediction for autonomous two-wheelers.
+- [NISER Internship Retrospective](https://www.aharshit123456.space/blog/niser-internship-retrospective): what NISER taught me outside the lab.

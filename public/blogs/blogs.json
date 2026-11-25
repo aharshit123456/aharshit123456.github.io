@@ -6,7 +6,7 @@
     "date": "2026-11-25",
     "author": "Harshit Agarwal",
     "file": "/blogs/niser-perception-notes.md",
-    "description": "Computer vision, point clouds, motion prediction and the hardware and software stack for autonomous two-wheelers, from the articles I wrote for SMLab NISER's Swayansaasita project.",
+    "description": "Computer vision, point clouds, motion prediction and the sensor stack for autonomous two-wheelers, from my articles for SMLab NISER's Swayansaasita project.",
     "keywords": [
       "autonomous vehicles",
       "two-wheeler autonomy",
@@ -27,7 +27,7 @@
     "date": "2026-11-25",
     "author": "Harshit Agarwal",
     "file": "/blogs/niser-slam-bayes-filter.md",
-    "description": "The probability behind SLAM explained from first principles: Bayes rule, the recursive Bayes filter, Kalman and particle filters, occupancy grids, pose graphs and coordinate frames.",
+    "description": "The probability behind SLAM from first principles: Bayes rule, the recursive Bayes filter, Kalman and particle filters, occupancy grids and pose graphs.",
     "keywords": [
       "SLAM",
       "Bayes filter",
@@ -48,7 +48,7 @@
     "date": "2026-11-25",
     "author": "Harshit Agarwal",
     "file": "/blogs/niser-iphone-sensor-rig.md",
-    "description": "Two Swift apps from SMLab, NISER: streaming iPhone LiDAR depth, motion and GPS over TCP, and scanning rooms into OBJ meshes with ARKit, plus an audit of the streaming code.",
+    "description": "Two Swift apps from SMLab, NISER: streaming iPhone LiDAR depth, motion and GPS over TCP, and scanning rooms into meshes with ARKit.",
     "keywords": [
       "ARKit",
       "iPhone LiDAR",
@@ -69,7 +69,7 @@
     "date": "2026-11-25",
     "author": "Harshit Agarwal",
     "file": "/blogs/niser-ros-dashboard.md",
-    "description": "Building a Vue dashboard for a ROS 2 sensor rig at SMLab, NISER: rosbridge, compressed camera streams, rosbag recording and playback, a FastAPI backend and a browser terminal.",
+    "description": "A Vue dashboard for a ROS 2 sensor rig at SMLab, NISER: rosbridge, compressed camera streams, rosbag recording and playback, and a browser terminal.",
     "keywords": [
       "ROS 2",
       "rosbridge",
@@ -90,7 +90,7 @@
     "date": "2026-11-25",
     "author": "Harshit Agarwal",
     "file": "/blogs/iiser-bhopal-quantum-workshop.md",
-    "description": "Notes from the QuCIS NPTEL quantum programming workshop at IISER Bhopal: qubits, Bell states, universal gates and Deutsch–Jozsa derived from scratch in PennyLane.",
+    "description": "Notes from the QuCIS NPTEL workshop at IISER Bhopal: qubits, Bell states, universal gates and Deutsch–Jozsa derived from scratch in PennyLane.",
     "keywords": [
       "quantum computing",
       "Deutsch-Jozsa algorithm",
@@ -307,7 +307,8 @@
     "title": "NISER Internship Retrospective",
     "date": "2026-06-27",
     "author": "Harshit Agarwal",
-    "file": "/blogs/niser-internship-retrospective.md"
+    "file": "/blogs/niser-internship-retrospective.md",
+    "description": "Looking back on my first research internship at SMLab, NISER (May to October 2024): the lab, the campus at night, and how to land a first internship."
   },
   {
     "id": "shoppin-experience",
