@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://aharshit123456.github.io/sitemap.xml
+Sitemap: https://www.aharshit123456.space/sitemap.xml
