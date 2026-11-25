@@ -1,5 +1,24 @@
 [
   {
+    "id": "iiser-bhopal-quantum-workshop",
+    "slug": "iiser-bhopal-quantum-workshop",
+    "title": "Hands-on Quantum Programming at IISER Bhopal",
+    "date": "2026-11-25",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/iiser-bhopal-quantum-workshop.md",
+    "description": "Notes from the QuCIS NPTEL quantum programming workshop at IISER Bhopal: qubits, Bell states, universal gates and Deutsch–Jozsa derived from scratch in PennyLane.",
+    "keywords": [
+      "quantum computing",
+      "Deutsch-Jozsa algorithm",
+      "PennyLane",
+      "Bell states",
+      "universal gate set",
+      "IISER Bhopal",
+      "NPTEL",
+      "Harshit Agarwal"
+    ]
+  },
+  {
     "id": "shoppin-lens-research",
     "slug": "shoppin-lens-research",
     "title": "A Google Lens Alternative for a Job Interview, Re-Audited",
