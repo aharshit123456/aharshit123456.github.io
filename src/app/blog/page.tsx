@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   description: 'Read the latest blog posts and research articles by Harshit Agarwal.',
   alternates: {
     canonical: 'https://www.aharshit123456.space/blog',
+    types: { 'application/rss+xml': [{ url: 'https://www.aharshit123456.space/feed.xml', title: 'Harshit Agarwal Tech Blog' }] },
   },
 };
 

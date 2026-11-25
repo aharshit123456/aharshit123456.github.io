@@ -57,6 +57,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     description: meta.description,
     alternates: {
       canonical: meta.url,
+      types: { 'application/rss+xml': [{ url: `${SITE_URL}/feed.xml`, title: 'Harshit Agarwal Tech Blog' }] },
     },
     openGraph: {
       title: meta.title,
