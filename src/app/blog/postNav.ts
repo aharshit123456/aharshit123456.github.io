@@ -38,10 +38,13 @@ export function getPostNeighbors(slug: string): PostNeighbors {
     const i = posts.findIndex((p) => p.slug === slug);
     if (i === -1) continue;
     const link = (j: number) => (posts[j] ? { href: `/blog/${posts[j].slug}`, title: posts[j].title } : ALL_POSTS);
+    // Number against the whole planned series, including posts not written yet.
+    const planned = series.stages.flatMap((s) => s.posts);
+    const part = planned.findIndex((p) => p.slug === slug) + 1;
     return {
       prev: link(i - 1),
       next: link(i + 1),
-      context: `${series.title} · Part ${i + 1} of ${posts.length}`,
+      context: `${series.title} · Part ${part} of ${planned.length}`,
     };
   }
 
@@ -57,7 +60,8 @@ export function getPostNeighbors(slug: string): PostNeighbors {
 
 export type PostRail = {
   heading: string;
-  items: (NavLink & { current: boolean; n?: number })[];
+  /** `soon` items are planned posts with no page yet (href is empty). */
+  items: (NavLink & { current: boolean; n?: number; soon?: boolean })[];
 };
 
 /**
@@ -66,15 +70,16 @@ export type PostRail = {
  */
 export function getPostRail(slug: string): PostRail {
   for (const series of JOURNEYS) {
-    const posts = series.stages.flatMap((s) => s.posts).filter((p) => p.slug);
+    const posts = series.stages.flatMap((s) => s.posts);
     if (!posts.some((p) => p.slug === slug)) continue;
     return {
       heading: series.title,
       items: posts.map((p, i) => ({
-        href: `/blog/${p.slug}`,
+        href: p.slug ? `/blog/${p.slug}` : '',
         title: p.title,
         current: p.slug === slug,
         n: i + 1,
+        soon: !p.slug,
       })),
     };
   }

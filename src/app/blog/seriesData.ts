@@ -159,8 +159,8 @@ export const FAMCARE_JOURNEY: SeriesConfig = {
 };
 
 /**
- * shoppin' (Dec 2024 to Nov 2025). Posts are not written yet: these stops
- * render as "coming soon" until each gets a slug.
+ * shoppin' (Dec 2024 to Nov 2025). Stops without a slug render as
+ * "coming soon" until their post is written.
  */
 export const SHOPPIN_JOURNEY: SeriesConfig = {
   id: 'shoppin',
@@ -174,6 +174,22 @@ export const SHOPPIN_JOURNEY: SeriesConfig = {
   greeting: 'Snap a fit. I\'ll find it.',
   finale: 'Found it, 10 sites compared! 🛍️',
   stages: [
+    {
+      id: 'interview',
+      label: 'Stage 0',
+      title: 'The interview',
+      blurb: 'The assignment before the job: a Google Lens alternative, and a cosplay lens.',
+      posts: [
+        {
+          slug: 'shoppin-lens-research',
+          icon: '🔎',
+          quip: 'Spoon in, wrenches out. Hmm.',
+          title: 'A Google Lens Alternative for a Job Interview, Re-Audited',
+          summary:
+            'Five ways to do image similarity search, a scraped cosplay dataset, and an honest audit of my own metrics.',
+        },
+      ],
+    },
     {
       id: 'vision',
       label: 'Stage 1',

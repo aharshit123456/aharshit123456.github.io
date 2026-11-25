@@ -1,5 +1,26 @@
 [
   {
+    "id": "shoppin-lens-research",
+    "slug": "shoppin-lens-research",
+    "title": "A Google Lens Alternative for a Job Interview, Re-Audited",
+    "date": "2026-11-25",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/shoppin-lens-research.md",
+    "description": "Image similarity search five ways (CNN features, ViT, DINOv2, CLIP, LSH, triplet loss), a cosplay lens, and an honest audit of the metrics two years later.",
+    "keywords": [
+      "image similarity search",
+      "content-based image retrieval",
+      "DINOv2",
+      "CLIP",
+      "vision transformer",
+      "locality sensitive hashing",
+      "triplet loss",
+      "Google Lens alternative",
+      "shoppin'",
+      "Harshit Agarwal"
+    ]
+  },
+  {
     "id": "famcare-crm-as-api",
     "slug": "famcare-crm-as-api",
     "title": "CRM as an API",

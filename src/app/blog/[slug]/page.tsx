@@ -197,18 +197,31 @@ function PostRailPanel({ rail }: { rail: PostRail }) {
     <nav className="post-rail" aria-label={rail.heading}>
       <p className="post-side-heading">{rail.heading}</p>
       <ol>
-        {rail.items.map((item) => (
-          <li key={item.href}>
-            <Link
-              href={item.href}
-              className={item.current ? 'is-current' : undefined}
-              aria-current={item.current ? 'page' : undefined}
-            >
+        {rail.items.map((item) => {
+          const label = (
+            <>
               {item.n !== undefined && <span className="post-rail-n">{String(item.n).padStart(2, '0')}</span>}
               <span>{item.title}</span>
-            </Link>
-          </li>
-        ))}
+            </>
+          );
+          return (
+            <li key={item.href || item.title}>
+              {item.soon ? (
+                <span className="post-rail-soon" title="Coming soon">
+                  {label}
+                </span>
+              ) : (
+                <Link
+                  href={item.href}
+                  className={item.current ? 'is-current' : undefined}
+                  aria-current={item.current ? 'page' : undefined}
+                >
+                  {label}
+                </Link>
+              )}
+            </li>
+          );
+        })}
       </ol>
       <Link href="/blog" className="post-rail-all">
         All posts →
