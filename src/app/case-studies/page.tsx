@@ -20,7 +20,7 @@ const FAMCARE_STUDIES = [
   },
   {
     slug: 'system-design',
-    title: '2. A Care Marketplace on One Backend',
+    title: '2. A Care Marketplace on One Boring Backend',
     summary:
       'One backend, four apps, a booking state machine, real-time channels per role, a Terraform import of hand-built production, staging on a shared load balancer, over-the-air patches, and feature flags.',
   },
@@ -49,17 +49,15 @@ export default function CaseStudiesPage() {
 
           <h2>Building FamCare: a three-part series</h2>
           <p>
-            Long-form write-ups of systems I built as Lead Engineer at FamCare, a home-care marketplace.
-            Each one covers the problem, the design, the decisions we rejected, what went wrong, and the results.
+            Long-form write-ups of systems I built as Lead Engineer at FamCare, a home-care marketplace:
+            the problem, the design, the alternatives we rejected, what broke, and what we got out of it.
           </p>
           {FAMCARE_STUDIES.map((study) => (
             <section key={study.slug}>
               <h3>{study.title}</h3>
               <p>{study.summary}</p>
               <p>
-                <a href={`/case-studies/famcare/${study.slug}.html`}>Read online</a>
-                {' · '}
-                <a href={`/case-studies/famcare/famcare-case-study-${study.slug}.pdf`} download>Download PDF</a>
+                <Link href={`/blog/famcare-${study.slug}`}>Read the post</Link>
               </p>
             </section>
           ))}

@@ -1,5 +1,29 @@
 [
   {
+    "id": "famcare-voice-agent",
+    "slug": "famcare-voice-agent",
+    "title": "A Voice Agent That Only Drafts",
+    "date": "2026-11-25",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/famcare-voice-agent.md"
+  },
+  {
+    "id": "famcare-system-design",
+    "slug": "famcare-system-design",
+    "title": "A Care Marketplace on One Boring Backend",
+    "date": "2026-11-25",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/famcare-system-design.md"
+  },
+  {
+    "id": "famcare-slots-and-pricing",
+    "slug": "famcare-slots-and-pricing",
+    "title": "Honest Slots, Priced Idle Time",
+    "date": "2026-11-25",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/famcare-slots-and-pricing.md"
+  },
+  {
     "id": "architecture-decision",
     "slug": "architecture-decision",
     "title": "Architecture Decision (Day 0)",
