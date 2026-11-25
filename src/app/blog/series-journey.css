@@ -1,0 +1,690 @@
+/* Horizontal series journeys on the blog index: a chibi engineer walks a
+   road from 0 to 1 past each post. Each brand supplies its own tokens:
+   .sj--famcare uses FamCare's app tokens (teal, mint, lime fill, Figtree,
+   no 1px borders); .sj--shoppin uses shoppin's dark charcoal and rose. */
+
+.sj {
+  --sj-bg: #f7fbfa;
+  --sj-card: #ffffff;
+  --sj-text: #003934;
+  --sj-muted: #386761;
+  --sj-road: #baece4;
+  --sj-trail: #06555b;
+  --sj-flag-bg: #f1ff85;
+  --sj-flag-text: #06555b;
+  --sj-band: #d9fbf4;
+  --sj-icon-bg: #d9fbf4;
+  --sj-here: #6df5e1;
+  --sj-btn-bg: #06555b;
+  --sj-btn-text: #e2fff8;
+  --sj-btn-hover: #044247;
+  --sj-bubble-bg: #ffffff;
+  --sj-bubble-text: #003934;
+  --sj-shadow: 0 8px 24px rgba(0, 57, 52, 0.06);
+  --sj-shadow-hover: 0 8px 20px rgba(6, 85, 91, 0.22);
+  --sj-c0: #f1ff85;
+  --sj-c1: #6df5e1;
+  --sj-c2: #06555b;
+  --sj-c3: #fa746f;
+  --chibi-hoodie: #06555b;
+  --chibi-dark: #044247;
+  --chibi-badge: #f1ff85;
+  --chibi-trim: #6df5e1;
+  --chibi-laptop: #c6f1ea;
+
+  margin: 28px 0 8px;
+  padding-bottom: 14px;
+  border-radius: 22px;
+  background: var(--sj-bg);
+  color: var(--sj-text);
+  font-family: var(--font-figtree), 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sj + .sj {
+  margin-top: 16px;
+}
+
+.sj--shoppin {
+  /* shoppin.app tokens: --brand-red #ff444f, --bg-primary #1c1c1e,
+     --bg-raised #2c2c2e, --brand-black #1e1e1d; Instrument Sans/Serif. */
+  --sj-bg: #1c1c1e;
+  --sj-card: #2c2c2e;
+  --sj-text: #ffffff;
+  --sj-muted: rgba(255, 255, 255, 0.6);
+  --sj-road: rgba(255, 255, 255, 0.12);
+  --sj-trail: #ff444f;
+  --sj-flag-bg: #ff444f;
+  --sj-flag-text: #ffffff;
+  --sj-band: rgba(255, 255, 255, 0.05);
+  --sj-icon-bg: rgba(255, 255, 255, 0.08);
+  --sj-here: #ff444f;
+  --sj-btn-bg: #ff444f;
+  --sj-btn-text: #ffffff;
+  --sj-btn-hover: #e63a45;
+  --sj-bubble-bg: #ffffff;
+  --sj-bubble-text: #1e1e1d;
+  --sj-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --sj-shadow-hover: 0 10px 26px rgba(255, 68, 79, 0.3);
+  --sj-c0: #ff444f;
+  --sj-c1: #ffffff;
+  --sj-c2: #3c9a4b;
+  --sj-c3: #ffa3a3;
+  --chibi-hoodie: #2c2c2e;
+  --chibi-dark: #141414;
+  --chibi-badge: #ff444f;
+  --chibi-trim: #ff444f;
+  --chibi-laptop: #4a4a4d;
+
+  font-family: var(--font-instrument-sans), 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.sj--shoppin-light {
+  --sj-bg: #f4f4f5;
+  --sj-card: #ffffff;
+  --sj-text: #1e1e1d;
+  --sj-muted: rgba(0, 0, 0, 0.56);
+  --sj-road: rgba(0, 0, 0, 0.1);
+  --sj-band: rgba(0, 0, 0, 0.04);
+  --sj-icon-bg: rgba(0, 0, 0, 0.05);
+  --sj-bubble-bg: #1e1e1d;
+  --sj-bubble-text: #ffffff;
+  --sj-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  --sj-shadow-hover: 0 10px 26px rgba(255, 68, 79, 0.22);
+  --sj-c1: #1e1e1d;
+  --chibi-hoodie: #1e1e1d;
+}
+
+
+
+.sj *,
+.sj *::before,
+.sj *::after {
+  box-sizing: border-box;
+}
+
+.sj h2,
+.sj p,
+.sj ol,
+.sj li {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+  font-family: inherit;
+  background: none;
+  -webkit-text-fill-color: currentColor;
+}
+
+.sj a {
+  text-decoration: none;
+  border: 0;
+}
+
+/* ── Header ───────────────────────────────────────────────────────── */
+
+.sj-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  padding: 16px 18px 4px;
+}
+
+.sj-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.sj-wordmark {
+  display: block;
+  width: auto;
+  height: 22px;
+}
+
+.sj-tile {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  box-shadow: var(--sj-shadow);
+}
+
+.sj--shoppin .sj-wordmark {
+  height: 26px;
+}
+
+.sj-wordmark-text {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+  line-height: 1;
+  text-transform: lowercase;
+  color: var(--sj-text);
+}
+
+.sj .sj-title {
+  color: var(--sj-text) !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.2px;
+}
+
+.sj--shoppin .sj-title {
+  font-family: var(--font-instrument-serif), 'Instrument Serif', Georgia, serif !important;
+  font-style: italic;
+  font-weight: 400 !important;
+  font-size: 19px !important;
+  letter-spacing: 0;
+}
+
+.sj .sj-role {
+  color: var(--sj-muted) !important;
+  font-size: 12.5px !important;
+  font-weight: 600;
+  line-height: 1.3 !important;
+}
+
+.sj-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sj-mode {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--sj-band);
+  color: var(--sj-text);
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.sj-mode:hover,
+.sj-mode:focus-visible {
+  background: var(--sj-icon-bg);
+  outline: 2px solid var(--sj-trail);
+  outline-offset: 1px;
+}
+
+.sj-start,
+.sj-soon-pill {
+  flex: none;
+  padding: 8px 14px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.sj-start {
+  background: var(--sj-btn-bg);
+  color: var(--sj-btn-text) !important;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.sj-start:hover,
+.sj-start:focus-visible {
+  background: var(--sj-btn-hover);
+  transform: translateY(-1px);
+}
+
+.sj-soon-pill {
+  background: var(--sj-band);
+  color: var(--sj-muted);
+}
+
+/* ── Scroller and track ───────────────────────────────────────────── */
+
+.sj-scroller {
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--sj-road) transparent;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 20px, #000 calc(100% - 20px), transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 20px, #000 calc(100% - 20px), transparent);
+}
+
+.sj-scroller::-webkit-scrollbar {
+  height: 6px;
+}
+
+.sj-scroller::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background: var(--sj-road);
+}
+
+.sj-track {
+  position: relative;
+  height: 262px;
+}
+
+.sj-walker {
+  position: absolute;
+  top: 6px;
+  left: 0;
+  z-index: 3;
+  width: 62px;
+  height: 82px;
+}
+
+.sj-bubble {
+  position: absolute;
+  top: -2px;
+  left: 56px;
+  width: max-content;
+  max-width: 190px;
+  padding: 7px 11px;
+  border-radius: 14px 14px 14px 4px;
+  background: var(--sj-bubble-bg);
+  color: var(--sj-bubble-text);
+  box-shadow: var(--sj-shadow);
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.35;
+  transform-origin: 0 100%;
+  pointer-events: none;
+}
+
+.sj-bubble--left {
+  left: auto;
+  right: 56px;
+  border-radius: 14px 14px 4px 14px;
+  transform-origin: 100% 100%;
+}
+
+.sj-confetti {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.sj-confetto {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--sj-c0);
+}
+
+.sj-confetto--sprite {
+  width: 16px;
+  height: 19px;
+  border-radius: 0;
+  background: transparent center / contain no-repeat;
+}
+
+.sj-confetto--1 {
+  background: var(--sj-c1);
+  border-radius: 50%;
+}
+
+.sj-confetto--2 {
+  background: var(--sj-c2);
+}
+
+.sj-confetto--3 {
+  background: var(--sj-c3);
+  border-radius: 50%;
+}
+
+.sj-road {
+  position: absolute;
+  top: 88px;
+  left: 0;
+  right: 0;
+  height: 8px;
+  border-radius: 9999px;
+  background: var(--sj-road);
+}
+
+.sj-road-trail {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: inherit;
+  background: var(--sj-trail);
+}
+
+.sj-flag,
+.sj-mark {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+
+.sj-flag {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  background: var(--sj-flag-bg);
+  color: var(--sj-flag-text);
+  font-size: 13px;
+  font-weight: 800;
+  z-index: 1;
+}
+
+.sj-mark {
+  width: 14px;
+  height: 14px;
+  background: var(--sj-card);
+  box-shadow: 0 0 0 3px var(--sj-road);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sj-mark.is-reached {
+  background: var(--sj-flag-bg);
+  box-shadow: 0 0 0 3px var(--sj-trail);
+}
+
+/* Brand sprite (shoppin's strawberry) replaces a reached mark. */
+.sj-mark.has-sprite.is-reached {
+  width: 22px;
+  height: 26px;
+  margin-top: -3px;
+  border-radius: 0;
+  background-color: transparent;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  box-shadow: none;
+  animation: sj-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes sj-pop {
+  from {
+    transform: translate(-50%, -50%) scale(0.3);
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.sj-stages {
+  position: absolute;
+  top: 106px;
+  left: 0;
+  right: 0;
+  height: 22px;
+}
+
+.sj-stage {
+  position: absolute;
+  top: 0;
+  height: 22px;
+  padding: 0 10px;
+  border-radius: 9999px;
+  background: var(--sj-band);
+  color: var(--sj-muted);
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 22px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sj-stage b {
+  margin-right: 4px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  font-size: 10.5px;
+}
+
+.sj-cards {
+  position: absolute;
+  top: 136px;
+  left: 0;
+  right: 0;
+}
+
+.sj-card-slot {
+  position: absolute;
+  top: 0;
+  width: 158px;
+}
+
+.sj-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  height: 116px;
+  padding: 11px 12px 12px;
+  border-radius: 16px;
+  background: var(--sj-card);
+  box-shadow: var(--sj-shadow);
+  color: var(--sj-text) !important;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+}
+
+.sj-card:hover,
+.sj-card:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: var(--sj-shadow-hover);
+}
+
+.sj-card.is-here {
+  box-shadow: 0 0 0 2px var(--sj-here), var(--sj-shadow);
+}
+
+.sj-card.is-soon {
+  cursor: default;
+}
+
+.sj-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sj-icon {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--sj-icon-bg);
+  font-size: 14px;
+  line-height: 1;
+}
+
+.sj-step {
+  color: var(--sj-muted);
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+}
+
+.sj-card-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.sj-card-meta {
+  margin-top: auto;
+  color: var(--sj-muted);
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+.sj-card.is-soon .sj-card-meta {
+  font-style: italic;
+}
+
+/* ── The chibi ────────────────────────────────────────────────────── */
+
+.chibi {
+  display: block;
+  overflow: visible;
+  transition: transform 0.18s ease;
+}
+
+.chibi .c-hoodie {
+  fill: var(--chibi-hoodie);
+}
+
+.chibi .c-dark {
+  fill: var(--chibi-dark);
+}
+
+.chibi .c-badge {
+  fill: var(--chibi-badge);
+}
+
+.chibi .c-trim {
+  stroke: var(--chibi-trim);
+}
+
+.chibi .c-laptop {
+  fill: var(--chibi-laptop);
+}
+
+.chibi-shadow {
+  fill: rgba(0, 0, 0, 0.14);
+}
+
+.chibi-leg,
+.chibi-arm {
+  transform-box: fill-box;
+  transform-origin: 50% 8%;
+}
+
+.chibi-bob {
+  animation: sj-breathe 2.6s ease-in-out infinite;
+  transform-origin: 32px 80px;
+}
+
+.chibi-head {
+  transform-box: view-box;
+  transform-origin: 32px 42px;
+  animation: sj-tilt 3.8s ease-in-out infinite;
+}
+
+.chibi-eyes {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: sj-blink 4.4s infinite;
+}
+
+.chibi.is-walking .chibi-bob {
+  animation: sj-bob 0.3s ease-in-out infinite alternate;
+}
+
+.chibi.is-walking .chibi-leg-l,
+.chibi.is-walking .chibi-arm-r {
+  animation: sj-swing 0.3s ease-in-out infinite alternate;
+}
+
+.chibi.is-walking .chibi-leg-r,
+.chibi.is-walking .chibi-arm-l {
+  animation: sj-swing 0.3s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes sj-swing {
+  from {
+    transform: rotate(-22deg);
+  }
+  to {
+    transform: rotate(22deg);
+  }
+}
+
+@keyframes sj-bob {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes sj-breathe {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(1.02);
+  }
+}
+
+@keyframes sj-tilt {
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes sj-blink {
+  0%,
+  93%,
+  100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.1);
+  }
+}
+
+@media (max-width: 560px) {
+  .sj {
+    border-radius: 18px;
+  }
+
+  .sj-head {
+    padding: 14px 14px 2px;
+  }
+
+  .sj-wordmark {
+    height: 18px;
+  }
+
+  .sj-bubble {
+    max-width: 150px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chibi-bob,
+  .chibi-head,
+  .chibi-eyes,
+  .chibi.is-walking .chibi-leg-l,
+  .chibi.is-walking .chibi-leg-r,
+  .chibi.is-walking .chibi-arm-l,
+  .chibi.is-walking .chibi-arm-r {
+    animation: none;
+  }
+
+  .sj-card,
+  .sj-start {
+    transition: none;
+  }
+}
