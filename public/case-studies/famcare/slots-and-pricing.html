@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Honest Slots, Priced Idle Time | Harshit Agarwal</title>
+<link rel="canonical" href="https://aharshit123456.space/case-studies/famcare/slots-and-pricing.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Honest Slots, Priced Idle Time">
+<meta property="og:description" content="How FamCare made every screen agree on who can take a booking, proved it with 270 YAML scenarios on a real database, and priced idle hours.">
+<meta property="og:url" content="https://aharshit123456.space/case-studies/famcare/slots-and-pricing.html">
+<meta name="author" content="Harshit Agarwal">
+<link rel="icon" href="/favicon.ico">
+<style>.site-nav{font:600 13px/1.4 var(--sans);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:18px 0 6px;margin-bottom:18px;border-bottom:1px solid var(--rule)}.site-nav a{color:var(--brand);text-decoration:none}.site-nav a:hover{text-decoration:underline}@media print{.site-nav{display:none}}</style>
+
+<meta name="description" content="How FamCare made every screen agree on who can take a booking, proved it with 270 YAML scenarios on a real database, and priced idle hours.">
+<style>
+  :root {
+    --ink: #10282a;
+    --ink-2: #3c5557;
+    --ink-3: #6b8284;
+    --rule: #d6e3e2;
+    --paper: #ffffff;
+    --tint: #f1f8f7;
+    --brand: #06555b;
+    --brand-dim: #044247;
+    --mint: #6df5e1;
+    --mint-soft: #c9f7ef;
+    --warn: #b4441c;
+    --warn-soft: #fbeee8;
+    --serif: "Charter", "Iowan Old Style", Georgia, serif;
+    --sans: "Avenir Next", "Segoe UI", system-ui, -apple-system, sans-serif;
+    --mono: "SF Mono", Menlo, Consolas, monospace;
+  }
+  @page { size: A4; margin: 14mm 17mm 14mm 17mm; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    margin: 0 auto; max-width: 760px; padding: 0 16px 40px;
+    background: var(--paper); color: var(--ink);
+    font: 10.3pt/1.52 var(--serif);
+  }
+  @media print { body { padding: 0; max-width: none; } }
+  h1, h2, h3, .kicker, .byline, figcaption, table, .stat, .callout-title, .tag { font-family: var(--sans); }
+  .kicker { color: var(--brand); font-weight: 700; letter-spacing: .14em; font-size: 8pt; text-transform: uppercase; margin: 0 0 10px; }
+  h1 { font-size: 27pt; line-height: 1.08; letter-spacing: -.01em; margin: 0 0 12px; color: var(--brand-dim); font-weight: 700; }
+  .dek { font-size: 13pt; line-height: 1.4; color: var(--ink-2); margin: 0 0 14px; }
+  .byline { font-size: 8.6pt; color: var(--ink-3); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 7px 0; margin-bottom: 18px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .byline b { color: var(--ink); font-weight: 600; }
+  h2 { font-size: 14.5pt; color: var(--brand-dim); margin: 26px 0 8px; break-after: avoid; }
+  h2 .num { color: var(--brand); opacity: .55; margin-right: 6px; }
+  h3 { font-size: 11pt; margin: 16px 0 4px; color: var(--ink); break-after: avoid; }
+  p { margin: 0 0 9px; }
+  ul, ol { margin: 0 0 10px; padding-left: 20px; }
+  li { margin-bottom: 4px; }
+  code { font-family: var(--mono); font-size: 8.8pt; background: var(--tint); padding: 1px 4px; border-radius: 3px; }
+  pre { font-family: var(--mono); font-size: 8.4pt; line-height: 1.45; background: #0f2f31; color: #dff7f2; padding: 11px 13px; border-radius: 6px; overflow-x: auto; break-inside: avoid; margin: 8px 0 12px; }
+  pre .c { color: #7fb3ae; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 4px 0 18px; break-inside: avoid; }
+  .stat { background: var(--tint); border-radius: 8px; padding: 10px 11px; }
+  .stat .v { font-size: 17pt; font-weight: 700; color: var(--brand); line-height: 1.1; }
+  .stat .l { font-size: 8pt; color: var(--ink-2); line-height: 1.3; margin-top: 3px; }
+  .callout { background: var(--tint); border-left: 3px solid var(--brand); padding: 10px 13px; border-radius: 0 6px 6px 0; margin: 10px 0 14px; break-inside: avoid; }
+  .callout.warn { background: var(--warn-soft); border-left-color: var(--warn); }
+  .callout-title { font-weight: 700; font-size: 9pt; color: var(--brand-dim); margin-bottom: 3px; text-transform: uppercase; letter-spacing: .06em; }
+  .callout.warn .callout-title { color: var(--warn); }
+  .callout p:last-child { margin-bottom: 0; }
+  figure { margin: 12px 0 16px; break-inside: avoid; }
+  figure svg { width: 100%; height: auto; display: block; }
+  figcaption { font-size: 8.3pt; color: var(--ink-3); margin-top: 6px; line-height: 1.4; }
+  table { width: 100%; border-collapse: collapse; font-size: 8.6pt; margin: 8px 0 6px; break-inside: avoid; }
+  th { text-align: left; font-weight: 600; color: var(--ink-2); border-bottom: 1.5px solid var(--ink-3); padding: 5px 6px; }
+  td { border-bottom: 1px solid var(--rule); padding: 5px 6px; vertical-align: top; }
+  td.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tr.bad td { color: var(--warn); }
+  .tag { display: inline-block; font-size: 7.4pt; font-weight: 700; padding: 1px 6px; border-radius: 10px; background: var(--mint-soft); color: var(--brand-dim); }
+  .tag.bad { background: var(--warn-soft); color: var(--warn); }
+  .decision { }
+  .rejected { font-family: var(--sans); font-size: 8.8pt; color: var(--ink-2); background: #fafcfc; border: 1px solid var(--rule); border-radius: 6px; padding: 8px 11px; margin: 6px 0 12px; break-inside: avoid; }
+  .rejected b { color: var(--ink); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .end { margin-top: 26px; padding-top: 10px; border-top: 1px solid var(--rule); font-family: var(--sans); font-size: 8.4pt; color: var(--ink-3); }
+  .pb { break-before: page; }
+  @media (max-width: 620px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .two { grid-template-columns: 1fr; }
+    h1 { font-size: 22pt; }
+  }
+</style>
+</head>
+<body>
+<nav class="site-nav"><a href="/case-studies">← All case studies</a><a href="/case-studies/famcare/famcare-case-study-slots-and-pricing.pdf" download>Download PDF</a></nav>
+<p class="kicker">Building FamCare · Case study 03 · Correctness and pricing</p>
+<h1>Keeping slots honest, and pricing the hours nobody books</h1>
+<p class="dek">How we made every screen give the same answer to "who can go?", proved it with 270 YAML scenarios on a real database, and then put a price on idle time.</p>
+<div class="byline"><span><b>Harshit Agarwal</b> · Lead Engineer, FamCare</span><span>November 2026 · 10 min read</span></div>
+
+<div class="stats">
+  <div class="stat"><div class="v">270</div><div class="l">YAML scenarios, run on a real migrated Postgres</div></div>
+  <div class="stat"><div class="v">6</div><div class="l">code paths now sharing one definition of "eligible"</div></div>
+  <div class="stat"><div class="v">2×</div><div class="l">every scenario runs twice and must give the same answer</div></div>
+  <div class="stat"><div class="v">5 days</div><div class="l">from zero to the first 239 scenarios</div></div>
+</div>
+
+<h2><span class="num">01</span>The problem: a promise made on one screen, kept on another</h2>
+<p>FamCare caregivers work rostered shifts out of hubs across the city, and families book them by the hour. Every booking crosses several pieces of code that each ask the same question: <b>is there a caregiver who can do this visit?</b> The slot list asks it to decide what to show. The instant-booking button asks it. Recurring bookings, the duration picker and checkout ask it before taking money. Then the matching code asks it again to decide who actually goes.</p>
+<p>Each of them had its own SQL. Over months of fixes, rules about account state, check-in and missing roster rows were written slightly differently in each place. The results were the worst kind of bug for a marketplace: <b>a slot shown that checkout then refused</b>, or a slot sold that matching couldn't staff. None of it showed up in unit tests, because each query was correct by its own definition.</p>
+
+<h2><span class="num">02</span>One definition of "eligible"</h2>
+<p>The fix was structural rather than another patch. A single module now owns the definition of who may be considered for a booking, as composable SQL fragments: account state, hub and service, shift fit, the check-in policy, and conflicts with the travel buffer. Every caller builds its <code>WHERE</code> clause from those fragments instead of writing its own.</p>
+
+<figure>
+<svg viewBox="0 0 720 210" role="img" aria-label="One eligibility module in the centre feeds six callers: the matching pool, the assignment gate, checkout capacity, slot lists, batch capacity for recurring bookings, and the admin manual-assign guard.">
+  <defs><marker id="e" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#06555b"/></marker></defs>
+  <style>
+    .ec { fill: #06555b; }
+    .ew { font: 600 12px "Avenir Next", system-ui, sans-serif; fill: #fff; }
+    .es { font: 10px "Avenir Next", system-ui, sans-serif; fill: #c9f7ef; }
+    .eb { fill: #f1f8f7; stroke: #06555b; stroke-width: 1.2; }
+    .et { font: 600 11px "Avenir Next", system-ui, sans-serif; fill: #10282a; }
+    .ed { font: 9.6px "Avenir Next", system-ui, sans-serif; fill: #3c5557; }
+  </style>
+  <rect class="ec" x="250" y="72" width="220" height="70" rx="10"/>
+  <text class="ew" x="360" y="96" text-anchor="middle">One eligibility module</text>
+  <text class="es" x="360" y="113" text-anchor="middle">account · hub + service · shift fit</text>
+  <text class="es" x="360" y="128" text-anchor="middle">check-in policy · conflicts + travel</text>
+  <rect class="eb" x="0" y="10" width="200" height="44" rx="7"/><text class="et" x="12" y="29">Matching pool</text><text class="ed" x="12" y="44">who gets ranked</text>
+  <rect class="eb" x="0" y="84" width="200" height="44" rx="7"/><text class="et" x="12" y="103">Assignment gate</text><text class="ed" x="12" y="118">who may actually be assigned</text>
+  <rect class="eb" x="0" y="158" width="200" height="44" rx="7"/><text class="et" x="12" y="177">Admin manual assign</text><text class="ed" x="12" y="192">guards a human's choice too</text>
+  <rect class="eb" x="520" y="10" width="200" height="44" rx="7"/><text class="et" x="532" y="29">Checkout capacity</text><text class="ed" x="532" y="44">can we sell this visit?</text>
+  <rect class="eb" x="520" y="84" width="200" height="44" rx="7"/><text class="et" x="532" y="103">Slot lists</text><text class="ed" x="532" y="118">single, instant, all services</text>
+  <rect class="eb" x="520" y="158" width="200" height="44" rx="7"/><text class="et" x="532" y="177">Batch capacity</text><text class="ed" x="532" y="192">recurring and back-to-back</text>
+  <path d="M250 90 L203 36" stroke="#06555b" stroke-width="1.4" fill="none" marker-end="url(#e)"/>
+  <path d="M250 107 H203" stroke="#06555b" stroke-width="1.4" fill="none" marker-end="url(#e)"/>
+  <path d="M250 124 L203 178" stroke="#06555b" stroke-width="1.4" fill="none" marker-end="url(#e)"/>
+  <path d="M470 90 L517 36" stroke="#06555b" stroke-width="1.4" fill="none" marker-end="url(#e)"/>
+  <path d="M470 107 H517" stroke="#06555b" stroke-width="1.4" fill="none" marker-end="url(#e)"/>
+  <path d="M470 124 L517 178" stroke="#06555b" stroke-width="1.4" fill="none" marker-end="url(#e)"/>
+</svg>
+<figcaption>Rules about the caregiver live in one place. Rules about the request (pricing tiers, pending demand, slot caps) stay with each caller.</figcaption>
+</figure>
+
+<p style="break-after: avoid">Three details made it stick:</p>
+<ul>
+  <li><b>The policy is written at the top of the module, with the date it was decided.</b> Changing a rule means changing it there, then updating the scenarios. There's no second place to forget.</li>
+  <li><b>Shared numbers are shared constants.</b> "Instant" means a booking that starts within an hour, and both checkout and the slot lists read that one value, so a slot is never offered that checkout then treats differently. The tolerance for a caregiver running over on the same family's previous visit is also one number, used by every conflict check.</li>
+  <li><b>The one deliberate disagreement is written down.</b> A caregiver whose shift has started but who hasn't checked in is skipped by matching but still counts as capacity for a visit later that day. The exception is deliberate (hiding those slots is exactly what emptied a hub's slot list, below), and it's documented in the module and pinned by its own scenarios.</li>
+</ul>
+<div class="rejected"><b>Rejected: fix each query until they agree.</b> That works until the next change to any one of them. Sharing the code is the only agreement that survives new features.</div>
+
+<h2><span class="num">03</span>A test suite written as YAML worlds</h2>
+<p>A shared module only helps if something proves the callers really agree. So alongside it we built a scenario suite. Each scenario is a small world in YAML (caregivers, their rosters and existing bookings, a customer's history, one request) plus the outcome we expect:</p>
+<pre><span class="c"># Later today, the caregiver's shift has started but she hasn't checked in.</span>
+- id: CHECKIN-002
+  title: Not checked in, shift already started -> not matched, but still sold
+  status: pass
+  request: {service: nanny, start: "15:00", hours: 1}
+  caregivers:
+    asha: {checked_in: false}
+  expect: {eligible: [], availability: bookable, browse: bookable,
+           multiservice: bookable, batch_dates: bookable, tier_options: bookable}</pre>
+<p>The runner seeds each world into a <b>real, migrated Postgres</b> and runs the <b>production code</b>, not a re-implementation: the matching pool, ranking and pick, checkout's capacity check, and every slot-list endpoint (single service, all services, recurring dates and times, instant, the duration picker). It also covers back-to-back batches and the admin's one-click group assign.</p>
+
+<h3>Parity is the default assertion</h3>
+<p>Unless a scenario explicitly opts out, every slot endpoint's answer must <b>match checkout's</b>. A scenario written to test a check-in rule also proves that the slot list, the recurring picker and the duration picker agree with checkout about it.</p>
+
+<h3>Deterministic, or it doesn't count</h3>
+<p>Allocation code reads the clock, does travel maths and makes a seeded random choice, so a naive test would be flaky. The harness freezes time on <b>both</b> sides of the database boundary: in Python, and inside SQL by replacing <code>now()</code>. IDs are derived from the scenario ID, routing uses a straight-line estimate instead of a live engine, the random draw is seeded by the request ID, and <b>every scenario runs twice and must give the same answer</b>.</p>
+
+<h3>Known gaps are tests too</h3>
+<p>Some scenarios describe behaviour we want but don't have yet. They're marked <code>known_gap</code> with a sentence explaining why, and run as strict expected failures. If someone fixes the bug, the test goes red until the status is flipped to <code>pass</code>. A gap can't quietly close without being noticed, and a fixed bug can't quietly come back.</p>
+
+<figure>
+<svg viewBox="0 0 720 232" role="img" aria-label="Scenarios by area: check-in rules 71, pool eligibility 30, top pick and language 29, admin overrides and patterns 22, endpoint and availability parity 19, consecutive batches 17, reveal gating 17, preferred-caregiver pacing 14, pre-visit re-check 13, other 38.">
+  <style>
+    .bl { font: 10.4px "Avenir Next", system-ui, sans-serif; fill: #10282a; }
+    .bv { font: 600 10.4px "Avenir Next", system-ui, sans-serif; fill: #06555b; }
+  </style>
+  <g>
+    <text class="bl" x="200" y="15" text-anchor="end">Check-in rules, every combination</text><rect x="210" y="5" width="426" height="14" rx="2" fill="#06555b"/><text class="bv" x="642" y="16">71</text>
+    <text class="bl" x="200" y="37" text-anchor="end">Pool eligibility</text><rect x="210" y="27" width="180" height="14" rx="2" fill="#5bb5ac"/><text class="bv" x="396" y="38">30</text>
+    <text class="bl" x="200" y="59" text-anchor="end">Top pick and language</text><rect x="210" y="49" width="174" height="14" rx="2" fill="#5bb5ac"/><text class="bv" x="390" y="60">29</text>
+    <text class="bl" x="200" y="81" text-anchor="end">Real admin overrides + patterns</text><rect x="210" y="71" width="132" height="14" rx="2" fill="#5bb5ac"/><text class="bv" x="348" y="82">22</text>
+    <text class="bl" x="200" y="103" text-anchor="end">Endpoint and availability parity</text><rect x="210" y="93" width="114" height="14" rx="2" fill="#5bb5ac"/><text class="bv" x="330" y="104">19</text>
+    <text class="bl" x="200" y="125" text-anchor="end">Back-to-back batches</text><rect x="210" y="115" width="102" height="14" rx="2" fill="#5bb5ac"/><text class="bv" x="318" y="126">17</text>
+    <text class="bl" x="200" y="147" text-anchor="end">When the caregiver is revealed</text><rect x="210" y="137" width="102" height="14" rx="2" fill="#5bb5ac"/><text class="bv" x="318" y="148">17</text>
+    <text class="bl" x="200" y="169" text-anchor="end">Preferred-caregiver pacing</text><rect x="210" y="159" width="84" height="14" rx="2" fill="#5bb5ac"/><text class="bv" x="300" y="170">14</text>
+    <text class="bl" x="200" y="191" text-anchor="end">Pre-visit re-check</text><rect x="210" y="181" width="78" height="14" rx="2" fill="#5bb5ac"/><text class="bv" x="294" y="192">13</text>
+    <text class="bl" x="200" y="213" text-anchor="end">Other (ranking, adjacency, tiers…)</text><rect x="210" y="203" width="228" height="14" rx="2" fill="#c9e7e3"/><text class="bv" x="444" y="214">38</text>
+  </g>
+</svg>
+<figcaption>The 270 scenarios by area. The first 136 landed on day one, with the shared module; check-in alone grew to 71 once we wrote out every combination.</figcaption>
+</figure>
+
+<h2><span class="num">04</span>Turning incidents and overrides into scenarios</h2>
+<p>The suite grew fastest when reality pushed back.</p>
+<div class="callout warn">
+<div class="callout-title">The morning a hub showed nothing</div>
+<p>The first version of the shared policy required check-in for any booking dated today. One morning most of a hub's active caregivers hadn't checked in yet, so every service showed no slots, and the app silently fell back to tomorrow. We rewrote the rule within days: check-in is waived until a caregiver's shift starts, availability doesn't look at it at all for later-today visits, and instant visits still need someone checked in and on shift. Then we wrote out <b>every combination</b> as scenarios: booking type × check-in × shift state, capacity, the one-hour edge, other days, and batches. That's 71 scenarios for one rule, because it's the rule that broke.</p>
+</div>
+<p>Admin overrides became data too. We took a month of real cases (over two hundred) where ops overrode the system's suggested caregiver, wrote the distinct ones as scenarios and grouped the rest into patterns, always with <b>the admin's choice as the expected answer</b>. Where the system already agreed, the scenario passes. Where it didn't, the scenario is a <code>known_gap</code> whose text says how many real overrides it explains, so the backlog is ordered by evidence. One pattern, about one in five overrides, was a caregiver running slightly over on the same family's previous visit. That became the shared overrun tolerance above.</p>
+
+<h3>"No slots" is rarely a headcount problem</h3>
+<p>With availability finally trustworthy, we could ask a better question. About a quarter of slot-list views showed no open slots, which looked like a hiring problem. Replaying one hub over twenty days told a different story: only four of those days were a true shortage that an extra floating caregiver would have fixed. Most sell-outs were caregivers who were free but had <b>no gap long enough once travel and buffers were counted</b>. So the fixes were in the product (clear "Full" labels instead of unexplained greyed-out chips, and an "only N left" cue), not in hiring. Almost nine in ten customers who saw an empty day simply picked another date.</p>
+
+<h2><span class="num">05</span>Where the suite sits among our tests</h2>
+<table>
+  <thead><tr><th>Layer</th><th>Real database</th><th>Real HTTP</th><th>Catches</th></tr></thead>
+  <tbody>
+    <tr><td>Unit tests</td><td>no, mocked</td><td>no</td><td>Logic in one function</td></tr>
+    <tr><td>Integration tests</td><td>in-memory fake</td><td>no</td><td>Service and repository chains</td></tr>
+    <tr><td>Schema tests</td><td>yes</td><td>no</td><td>Migrations and constraints</td></tr>
+    <tr><td><b>Scenario suite</b></td><td><b>yes</b></td><td>in-process</td><td><b>Whether every screen and matching agree</b></td></tr>
+  </tbody>
+</table>
+<p>The suite also states what it doesn't cover: its README keeps a coverage map by area and a "not covered yet" list. The next layer we're adding sends real HTTP requests to a running backend. We had a column whose foreign key pointed at the wrong table; every mocked test passed, and the endpoint failed on every call in production. Only a request through the real router against a real schema would have caught it.</p>
+
+<h2><span class="num">06</span>Pricing idle time</h2>
+<p>Rostered caregivers are paid whether or not a family books them, and on average only about half of rostered hours were booked. With availability we could finally trust, the next question was whether price could fill some of the rest.</p>
+
+<h3>Why not surge pricing?</h3>
+<p>Surge was the first idea on the table. The data said no: on average caregivers were about half busy, and no day-and-hour cell reached 80%. The single tight hour, early evening, turned out to be a staffing gap (about a third fewer caregivers on shift), not a rush of demand. App taps also overstated morning demand by 1.5–2×. So surge stays at 1.0 in code, and the real opportunity was the opposite one: <b>discount hours that would otherwise go idle</b>.</p>
+
+<h3>The rule</h3>
+<p>Same-day slots get a drop made of two parts. The first is a <b>gap-to-goal curve</b>: the further a slot's utilisation is below a goal, the deeper the discount, shaped by an exponent <i>k</i>. The second is an <b>idle ramp</b>: each full hour without a new booking in the last hours before the slot adds a small step, and a step once earned is held: a new booking doesn't reset it.</p>
+
+<figure>
+<svg viewBox="0 0 720 230" role="img" aria-label="Discount as a share of the maximum against utilisation as a share of the goal, for k equal 1, 2 and 3. Higher k gives almost nothing to slots that are moderately full.">
+  <style>
+    .gx { stroke: #e3ecec; stroke-width: 1; }
+    .ax2 { stroke: #6b8284; stroke-width: 1; }
+    .tk2 { font: 9.8px "Avenir Next", system-ui, sans-serif; fill: #6b8284; }
+    .ll { font: 600 10.5px "Avenir Next", system-ui, sans-serif; }
+  </style>
+  <!-- plot area x 60..520, y 20..190 -->
+  <line class="gx" x1="60" y1="20" x2="520" y2="20"/><line class="gx" x1="60" y1="62.5" x2="520" y2="62.5"/><line class="gx" x1="60" y1="105" x2="520" y2="105"/><line class="gx" x1="60" y1="147.5" x2="520" y2="147.5"/>
+  <line class="ax2" x1="60" y1="190" x2="520" y2="190"/><line class="ax2" x1="60" y1="20" x2="60" y2="190"/>
+  <text class="tk2" x="54" y="23" text-anchor="end">100%</text><text class="tk2" x="54" y="108" text-anchor="end">50%</text><text class="tk2" x="54" y="193" text-anchor="end">0</text>
+  <text class="tk2" x="60" y="206" text-anchor="middle">0%</text><text class="tk2" x="290" y="206" text-anchor="middle">50%</text><text class="tk2" x="520" y="206" text-anchor="middle">at goal</text>
+  <text class="tk2" x="290" y="224" text-anchor="middle">slot utilisation, as a share of the goal →</text>
+  <text class="tk2" x="14" y="110" transform="rotate(-90 14 110)" text-anchor="middle">discount, share of max</text>
+  <path d="M60 20 L520 190" fill="none" stroke="#9fc4c1" stroke-width="2" stroke-dasharray="5 4"/>
+  <path d="M60.0,20.0 L71.5,28.4 L83.0,36.6 L94.5,44.5 L106.0,52.3 L117.5,59.8 L129.0,67.2 L140.5,74.3 L152.0,81.2 L163.5,87.9 L175.0,94.4 L186.5,100.6 L198.0,106.7 L209.5,112.5 L221.0,118.2 L232.5,123.6 L244.0,128.8 L255.5,133.8 L267.0,138.6 L278.5,143.1 L290.0,147.5 L301.5,151.6 L313.0,155.6 L324.5,159.3 L336.0,162.8 L347.5,166.1 L359.0,169.2 L370.5,172.0 L382.0,174.7 L393.5,177.1 L405.0,179.4 L416.5,181.4 L428.0,183.2 L439.5,184.8 L451.0,186.2 L462.5,187.3 L474.0,188.3 L485.5,189.0 L497.0,189.6 L508.5,189.9 L520.0,190.0" fill="none" stroke="#06555b" stroke-width="3"/>
+  <path d="M60.0,20.0 L71.5,32.4 L83.0,44.2 L94.5,55.5 L106.0,66.1 L117.5,76.1 L129.0,85.6 L140.5,94.5 L152.0,103.0 L163.5,110.9 L175.0,118.3 L186.5,125.2 L198.0,131.7 L209.5,137.7 L221.0,143.3 L232.5,148.5 L244.0,153.3 L255.5,157.7 L267.0,161.7 L278.5,165.4 L290.0,168.8 L301.5,171.8 L313.0,174.5 L324.5,176.9 L336.0,179.1 L347.5,181.0 L359.0,182.7 L370.5,184.2 L382.0,185.4 L393.5,186.5 L405.0,187.3 L416.5,188.1 L428.0,188.6 L439.5,189.1 L451.0,189.4 L462.5,189.7 L474.0,189.8 L485.5,189.9 L497.0,190.0 L508.5,190.0 L520.0,190.0" fill="none" stroke="#b4441c" stroke-width="2"/>
+  <text class="ll" x="540" y="70" fill="#06555b">k = 2 (shipped)</text>
+  <text class="tk2" x="540" y="84">halfway to the goal:</text><text class="tk2" x="540" y="97">¼ of the max drop</text>
+  <text class="ll" x="540" y="130" fill="#b4441c">k = 3</text>
+  <text class="tk2" x="540" y="144">halfway to the goal: ⅛,</text><text class="tk2" x="540" y="157">so it barely moves</text>
+  <text class="ll" x="540" y="36" fill="#6b8284">k = 1 (linear)</text>
+</svg>
+<figcaption>The shape of the gap-to-goal curve, normalised. Every k gives the full drop to an empty slot and nothing at the goal; k decides how fast it falls in between.</figcaption>
+</figure>
+
+<p>Then come the <b>guardrails</b>, which matter more than the curve: a total cap, a per-hour price floor, and a check on the value of each booked hour for the hub's day. That last one replaced an average-order-value guard which, it turned out, blocked every drop on cheap one-hour bookings, even on completely empty slots. Admins can deepen or soften an existing drop but never invent one. Changing a pricing tier needs one-time codes from two phones. And a customer's price is held for ten minutes: a lower price applies silently, a higher one must be accepted.</p>
+
+<h3>Simulate first, with production code</h3>
+<p>Before any customer saw a drop, we replayed real rosters and bookings <b>as they stood at each hour of the day</b>, and priced every slot from 8 AM to 8 PM at every viewing hour from 4 AM. The simulator imports the same pricing engine as production, not a copy, and we checked the replay against the live simulator cell by cell: all 715 matched exactly.</p>
+<table>
+  <thead><tr><th>Variant compared</th><th>What it does</th><th>Outcome</th></tr></thead>
+  <tbody>
+    <tr><td>Gap + flat decay</td><td>A fixed step per idle hour, clock starting at the first same-day booking</td><td>Not shipped</td></tr>
+    <tr><td>Gap + ramped decay</td><td>Steps grow as the slot approaches</td><td>Ramp idea carried forward</td></tr>
+    <tr><td>Pace discount</td><td>Discount only when bookings beat the usual pace</td><td>Not shipped</td></tr>
+    <tr><td>Ramp window, clock from 06:00</td><td>Ramp over the last hours, never before morning</td><td>Shipped</td></tr>
+    <tr><td>Minimum-utilisation gate, k = 2 vs 3</td><td>Regular slots stay at full price until some demand shows up</td><td><span class="tag">k = 2 shipped</span></td></tr>
+  </tbody>
+</table>
+<p>The simulator is honest about what it doesn't know: it prices slots, but it can't say how customers react to a price. So we used it to bound the downside instead of predicting the upside. Replayed over two weeks with zero new demand, about a third of same-day orders would have received a drop, at an average depth of about 6%. To break even, dropped slots needed about 7% more booked hours, against a large pool of idle hours to fill. Production then started more conservatively than the defaults, hub by hub.</p>
+
+<h2><span class="num">07</span>What went wrong in pricing, and what we changed</h2>
+<div class="callout warn">
+<div class="callout-title">The discount went to the wrong people</div>
+<p>In the first eleven days, about half the discount went to customers who would have booked anyway, and a dozen daily regulars took over a third of all drops. Six in ten drop bookings were made less than two hours out, and nearly half came from customers on their eleventh booking or later. Only a handful were genuine win-backs.</p>
+</div>
+<p>Version 2 made drops <b>about the customer, not just the slot</b>: regulars don't get them, there's a lifetime cap per customer, and depth scales by behaviour cohort. Replayed on the same history, the same budget goes about <b>2× deeper to about half as many customers</b>. We also set KPIs before claiming success: return on discount above 1.0, discount under a small share of revenue, idle hours down by at least 10%, and "price changed at checkout" errors kept rare. Without a holdout group, uplift is still unproven, and we say so.</p>
+<p>One more lesson: the engine reads only the first hour's utilisation, so a three-hour window that's mostly empty can get nothing. That redesign is next.</p>
+
+<h2><span class="num">08</span>Making a drop visible, and keeping it</h2>
+<p>A discount the customer doesn't notice is just lost margin, and a discount that disappears between screens is worse: it reads as a bait-and-switch. Most of the app work went into the second problem. The server <b>holds</b> a customer's drop for ten minutes, and the app has to carry that held price through every step that can re-price a booking.</p>
+<ul>
+  <li><b>On the slot grid:</b> each slot chip carries its drop, and the duration chips and the checkout strip show the drop for the length chosen.</li>
+  <li><b>Through the flow:</b> the held price survives adding to cart, stepping the duration, editing the time on the payment screen and checkout's own re-pricing. Each of those was a separate bug where the drop quietly vanished.</li>
+  <li><b>At payment:</b> the summary shows the base price and a separate price-drop row, in a receipt-style layout pinned by golden-image tests. If the price moved, a dialog explains it, and a higher price must be accepted.</li>
+  <li><b>The same rules as the server:</b> no drop badge on twin bookings, instant checkout or recurring checkout, and a drop and a coupon never stack. The app clears the coupon and says so.</li>
+  <li><b>Measured end to end:</b> price-drop analytics events across booking and checkout, including why a checkout failed and which price the customer was shown.</li>
+</ul>
+<p>To decide how a chip should show a drop, I rendered <b>four options as golden images from real slot data</b>, so the team compared real prices rather than mock-ups: a small saving label (what shipped first), the price you pay with the old one struck through, a percentage tag, and the best price with a "Lowest" flag and a one-line reason above the grid. The review also caught two gaps worth fixing: the ten-minute hold had no visible countdown, and clearing a coupon had no explanation.</p>
+<p>Notifications got the same treatment as pricing in version 2. The server sends one <code>price_drop_available</code> event per customer, carrying their cohort, their own drop percentage, how many drops they have left and whether this is the last one. The CleverTap campaign picks one of five messages from that, for example "we missed you" for a lapsed customer, a "plans changed?" note for someone who usually books a day ahead, or "last chance" when it's the final drop. No message has to guess who it's talking to.</p>
+
+<h2><span class="num">09</span>Flash sales: rarer, deeper, louder</h2>
+<p>The gradual engine tops out at a modest discount, and that's too weak to fill an evening slot that is still mostly empty a few hours out. So the next design does the opposite of the gradual engine. It's <b>rare, deep and time-boxed</b>, and it's loud about it.</p>
+
+<figure>
+<svg viewBox="0 0 720 150" role="img" aria-label="Timeline for a 7 PM slot: the sale may open between 4 and 5 PM if the slot is still mostly empty, a push and the Home strip announce it with a countdown, and it closes at 6 PM, one hour before the slot, or earlier if it sells out or is killed.">
+  <style>
+    .fl { font: 10.2px "Avenir Next", system-ui, sans-serif; fill: #3c5557; }
+    .fb { font: 600 10.6px "Avenir Next", system-ui, sans-serif; fill: #10282a; }
+    .fw { font: 600 10.6px "Avenir Next", system-ui, sans-serif; fill: #fff; }
+  </style>
+  <line x1="20" y1="96" x2="700" y2="96" stroke="#9fc4c1" stroke-width="1.5"/>
+  <g class="fl">
+    <text x="60" y="114" text-anchor="middle">3 PM</text><text x="200" y="114" text-anchor="middle">4 PM</text>
+    <text x="340" y="114" text-anchor="middle">5 PM</text><text x="480" y="114" text-anchor="middle">6 PM</text><text x="620" y="114" text-anchor="middle">7 PM</text>
+  </g>
+  <rect x="200" y="60" width="140" height="22" rx="4" fill="#c9f7ef" stroke="#06555b"/>
+  <text class="fb" x="270" y="75" text-anchor="middle">may open, on the hour</text>
+  <rect x="340" y="60" width="140" height="22" rx="4" fill="#06555b"/>
+  <text class="fw" x="410" y="75" text-anchor="middle">selling · countdown</text>
+  <line x1="480" y1="52" x2="480" y2="100" stroke="#b4441c" stroke-width="2"/>
+  <text class="fb" x="486" y="62" fill="#b4441c">closes 1 h before</text>
+  <text class="fl" x="486" y="76">or sold out, or killed</text>
+  <rect x="606" y="66" width="28" height="22" rx="3" fill="#044247"/>
+  <text class="fw" x="620" y="81" text-anchor="middle">slot</text>
+  <text class="fl" x="200" y="24">Opens only if the slot is still mostly empty. 50–60% off depending on how empty,</text>
+  <text class="fl" x="200" y="38">fixed at open, so the push and the countdown never lie. Spots come from free capacity.</text>
+  <text class="fl" x="20" y="140">Example for a 7 PM evening slot. Bookings of 2 hours or more; scheduled only.</text>
+</svg>
+<figcaption>Every number here is a per-hub setting with defaults; an admin can kill a live sale or force-open one.</figcaption>
+</figure>
+
+<p><b>Who gets it.</b> Everyone except families who already book evenings regularly, since they would book anyway. That's the lesson of the first price drops, applied up front. Each customer gets at most one flash booking a fortnight, and at most one flash push a day and two a week.</p>
+
+<p><b>Stored sales, not computed prices.</b> A sale is a database row with its depth, spots and close time, not a price computed on the fly and not a coupon. The sale's ID is <b>signed into the ten-minute price hold</b>, so a client can't strip it to dodge the spot count or the fortnightly cap, and a customer who got the price in time keeps it even if the sale closes mid-checkout.</p>
+
+<p><b>Where the customer sees it.</b> The server emits a <code>flash_sale_live</code> event and a CleverTap journey sends the push ("⚡ 55% off tonight's 7 PM slot. Ends 6:00 PM, only 3 caregivers left"). In the app, a slim <b>sticky strip</b> is pinned under the Home header with a live countdown. The countdown runs on server time with the app's existing clock-skew correction, so it ends when the sale ends, not when the phone thinks it should. The strip refetches on open, on resume, when the countdown ends and every two minutes. Tapping it, or the push's deep link, opens booking for today with the sale slot already selected.</p>
+<figure>
+<svg viewBox="0 0 330 150" style="max-width: 400px; margin: 0 auto;" role="img" aria-label="Mock-up of the Home screen strip: a slim teal bar under the header reading 55 percent off tonight's 7 PM slot, ends in 42 minutes, 3 caregivers left.">
+  <rect x="1" y="1" width="328" height="148" rx="16" fill="#f7fbfb" stroke="#d6e3e2"/>
+  <rect x="16" y="16" width="120" height="10" rx="5" fill="#d6e3e2"/><circle cx="300" cy="21" r="9" fill="#d6e3e2"/>
+  <rect x="12" y="38" width="306" height="36" rx="9" fill="#06555b"/>
+  <text x="26" y="55" style="font: 600 11.5px 'Avenir Next', system-ui, sans-serif" fill="#ffffff">⚡ 55% off tonight's 7 PM</text>
+  <text x="26" y="68" style="font: 10px 'Avenir Next', system-ui, sans-serif" fill="#c9f7ef">only 3 caregivers left</text>
+  <rect x="226" y="45" width="82" height="22" rx="11" fill="#6df5e1"/>
+  <text x="267" y="60" text-anchor="middle" style="font: 600 11px 'SF Mono', Menlo, monospace" fill="#044247">ends 42:10</text>
+  <rect x="16" y="86" width="140" height="48" rx="8" fill="#eaf3f2"/><rect x="172" y="86" width="140" height="48" rx="8" fill="#eaf3f2"/>
+</svg>
+<figcaption style="text-align:center">The Home strip (mock-up): pinned under the header, live countdown, one tap to booking with the slot preselected.</figcaption>
+</figure>
+
+
+<p><b>Why the strip comes before a sticky notification.</b> The app strip ships as an over-the-air patch, so it can reach customers in days. A sticky notification in the phone's notification shade (an Android ongoing notification with a countdown, or an iOS Live Activity) needs new native code, which a patch can't carry, so it went out in a store release, driven by the same sale record and event as the push and the strip.</p>
+<p><b>Status.</b> Every part has shipped behind a feature flag: the backend (sale rules, data model, pricing hook with the signed sale ID, scheduler, APIs), the admin section (live sales, kill, force-open, per-hub settings, flash bookings labelled), the app strip with the booking and checkout UI and blanket golden coverage, and the sticky notification and Live Activity. Rollout goes to the team first, then one hub for a week, then the rest.</p>
+
+<h2><span class="num">10</span>What's next</h2>
+<ul>
+  <li><b>Tests on the wire:</b> the HTTP regression layer, so every bug fix adds a case that a real client request would hit.</li>
+  <li><b>Close the known gaps</b> in order of how many real overrides each one explains.</li>
+  <li><b>Widen flash sales</b> from the first hub to every hub, and tune depth and timing from what the first weeks show.</li>
+  <li>A real holdout group, so the next pricing result is a measured uplift rather than a replay.</li>
+</ul>
+
+<div class="callout">
+<div class="callout-title">The idea worth stealing</div>
+<p>When several screens answer the same question, give them one function to ask, and write your tests as small worlds that assert they all agree. Then make every surprise from production, whether an incident or an admin override, into one more world. The suite becomes a record of everything your marketplace has promised.</p>
+</div>
+
+<div class="end">Building FamCare is a series on the engineering behind FamCare's in-home care platform. Stack in this piece: Python, FastAPI, Postgres, pytest with YAML scenario specs, freezegun. Figures are ratios and counts from the backend repository and internal analyses in October and November 2026; no prices or revenue are shown.</div>
+
+</body>
+</html>
