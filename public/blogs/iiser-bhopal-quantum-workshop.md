@@ -487,4 +487,4 @@ The workshop "Hands on programming on Quantum computers" was organised by the Qu
 - [SLAM from the Bayes Filter Up](/blog/niser-slam-bayes-filter): the probabilistic foundations under localization and mapping.
 - [A Browser Dashboard for a ROS 2 Sensor Rig](/blog/niser-ros-dashboard): watching live sensor topics from a web page.
 - [Turning an iPhone into a LiDAR, IMU and GPS Sensor](/blog/niser-iphone-sensor-rig): using a phone as a cheap multi-sensor rig.
-- [Field Notes on Perception for Two-Wheeler Autonomy](/blog/niser-perception-notes): notes on what perception has to handle on two wheels.
+- [Field Notes on Perception for Two-Wheeler Autonomy](/blog/niser-perception-notes): computer vision, point clouds and prediction for autonomous two-wheelers, written for the Swayansaasita project site.

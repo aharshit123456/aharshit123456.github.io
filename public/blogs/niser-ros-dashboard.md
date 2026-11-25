@@ -308,5 +308,5 @@ The lesson that stuck: the hard parts weren't Vue or D3. They were bytes (what o
 - [From ORB Features to ORB-SLAM3](/blog/orb-slam3): the lab talk on feature extraction, matching and ORB-SLAM3.
 - [SLAM from the Bayes Filter Up](/blog/niser-slam-bayes-filter): the probabilistic basics behind SLAM.
 - [Turning an iPhone into a LiDAR, IMU and GPS Sensor](/blog/niser-iphone-sensor-rig): streaming phone sensors over TCP, and an ARKit scanner that exports meshes.
-- [Field Notes on Perception for Two-Wheeler Autonomy](/blog/niser-perception-notes): notes on perception for an autonomous motorcycle.
-- [Hands-on Quantum Programming at IISER Bhopal](/blog/iiser-bhopal-quantum-workshop): a hands-on quantum programming workshop.
+- [Field Notes on Perception for Two-Wheeler Autonomy](/blog/niser-perception-notes): computer vision, point clouds and prediction for autonomous two-wheelers, written for the Swayansaasita project site.
+- [Hands-on Quantum Programming at IISER Bhopal](/blog/iiser-bhopal-quantum-workshop): qubits, Bell states and Deutsch–Jozsa worked through from scratch at the QuCIS workshop.

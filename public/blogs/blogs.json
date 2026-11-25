@@ -1,5 +1,47 @@
 [
   {
+    "id": "niser-perception-notes",
+    "slug": "niser-perception-notes",
+    "title": "Field Notes on Perception for Two-Wheeler Autonomy",
+    "date": "2026-11-25",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/niser-perception-notes.md",
+    "description": "Computer vision, point clouds, motion prediction and the hardware and software stack for autonomous two-wheelers, from the articles I wrote for SMLab NISER's Swayansaasita project.",
+    "keywords": [
+      "autonomous vehicles",
+      "two-wheeler autonomy",
+      "point clouds",
+      "computer vision",
+      "Kalman filter",
+      "trajectory prediction",
+      "ROS",
+      "Swayansaasita",
+      "NISER",
+      "Harshit Agarwal"
+    ]
+  },
+  {
+    "id": "niser-slam-bayes-filter",
+    "slug": "niser-slam-bayes-filter",
+    "title": "SLAM from the Bayes Filter Up",
+    "date": "2026-11-25",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/niser-slam-bayes-filter.md",
+    "description": "The probability behind SLAM explained from first principles: Bayes rule, the recursive Bayes filter, Kalman and particle filters, occupancy grids, pose graphs and coordinate frames.",
+    "keywords": [
+      "SLAM",
+      "Bayes filter",
+      "Kalman filter",
+      "particle filter",
+      "occupancy grid",
+      "pose graph optimization",
+      "robotics",
+      "localization and mapping",
+      "NISER",
+      "Harshit Agarwal"
+    ]
+  },
+  {
     "id": "niser-iphone-sensor-rig",
     "slug": "niser-iphone-sensor-rig",
     "title": "Turning an iPhone into a LiDAR, IMU and GPS Sensor",
@@ -342,9 +384,22 @@
   {
     "id": "orb-slam3",
     "slug": "orb-slam3",
-    "title": "ORB-SLAM3: Accurate Open-Source SLAM",
+    "title": "From ORB Features to ORB-SLAM3",
     "date": "2024-05-31",
     "author": "Harshit Agarwal",
-    "file": "/blogs/orb-slam3.md"
+    "file": "/blogs/orb-slam3.md",
+    "updated": "2026-11-25",
+    "description": "How ORB features work (FAST, oriented BRIEF, Hamming matching) and how ORB-SLAM3 builds and merges maps, from my SMLab NISER talk.",
+    "keywords": [
+      "ORB features",
+      "ORB-SLAM3",
+      "visual SLAM",
+      "FAST",
+      "BRIEF",
+      "feature matching",
+      "visual-inertial SLAM",
+      "NISER",
+      "Harshit Agarwal"
+    ]
   }
 ]
