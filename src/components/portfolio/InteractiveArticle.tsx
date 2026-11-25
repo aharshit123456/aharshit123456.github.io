@@ -348,7 +348,11 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
           blockquote: ({ children }) => renderInteractiveBlock('blockquote', children),
           img: ({ src, alt }) => {
             if (!src || typeof src !== 'string') return null;
-            const isScreenshot = src.includes('/assets/famcare') || src.includes('/assets/shoppin');
+            // Phone-app screenshots get the phone-frame treatment; figures (charts,
+            // diagrams, photos) under /assets/shoppin/lens/ render at full width.
+            const isScreenshot =
+              src.includes('/assets/famcare') ||
+              (src.includes('/assets/shoppin') && !src.includes('/assets/shoppin/lens/'));
             if (isScreenshot) {
               return (
                 <Image

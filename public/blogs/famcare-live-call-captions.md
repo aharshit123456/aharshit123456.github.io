@@ -2,36 +2,52 @@
 
 *By Harshit Agarwal*
 
-Our support team phones customers from the FamCare admin panel all day. Until recently, the words of those calls only became text after the call had ended. This post is about the small build that puts the words on screen while the call is still going: a phone provider's audio stream, a realtime speech-to-text socket, a Redis list and a polling React panel. It's also about the AI-coupon assistant we planned on top of it and then decided not to build.
+A support agent is on the phone with a parent whose caregiver hasn't turned up. The parent is talking fast, switching between Hindi and English, and the agent is juggling three admin tabs while trying to remember what was said thirty seconds ago. A transcript of the call will exist, but only after everyone has hung up. How little infrastructure does it take to put the words on the agent's screen while the call is still going?
+
+At FamCare the answer was a phone provider's audio stream, a realtime speech-to-text websocket, a Redis list and a React panel that polls once a second. No new service. This post covers how streaming speech-to-text works, how the relay is built, the security and storage decisions that let it fit inside an existing API, and the AI assistant we planned on top and chose not to build.
 
 <div class="stat-row">
-  <div class="stat"><div class="stat-num">~1 s</div><div class="stat-label">caption delay in our test calls</div></div>
+  <div class="stat"><div class="stat-num">~1 s</div><div class="stat-label">from speech to caption on screen</div></div>
   <div class="stat"><div class="stat-num">₹0.49</div><div class="stat-label">per streamed minute, Sarvam list price</div></div>
-  <div class="stat"><div class="stat-num">~490</div><div class="stat-label">lines across backend, admin and tests</div></div>
+  <div class="stat"><div class="stat-num">0</div><div class="stat-label">new services to deploy</div></div>
   <div class="stat"><div class="stat-num">0</div><div class="stat-label">account actions the feature can take</div></div>
 </div>
 
-## The problem
+## Why after-call transcripts arrive too late
 
-FamCare sends trained caregivers into homes to look after babies and elders, booked by the hour from an app. When something goes wrong, like a late caregiver, a cancelled booking or a refund question, a person on our support team calls the customer. The team's existing click-to-call bridges the agent's phone and the customer's phone through Exotel, straight from the customer's page in the admin panel.
+FamCare is an in-home care marketplace in India: families book trained caregivers for babies and elders by the hour from an app. When something goes wrong, like a late caregiver, a cancelled booking or a refund question, a person on our support team calls the customer. Click-to-call in our admin panel bridges the agent's phone and the customer's phone through Exotel, a telephony provider, straight from the customer's page.
 
-During that call, the agent works from memory and from several open admin tabs. A few days before this project I'd built an after-call pipeline: recordings go to Sarvam's batch speech-to-text with speaker labels, then an analysis step turns them into call issues and follow-ups. Useful, but it all lands after the customer has hung up. The help is needed while they're still talking.
+We already had an after-call pipeline. Recordings go to Sarvam's batch speech-to-text with speaker labels, and an analysis step turns the transcript into call issues and follow-ups. That's useful for the record, but it all lands after the customer has hung up. The help is needed while they're still talking.
 
-So the goal for phase 1 was narrow. Show what's being said, about a second behind, in the call popup the agent already has open. Change nothing else.
+So the first goal was deliberately narrow: show what's being said, about a second behind, in the call popup the agent already has open. Change nothing else.
 
-## What the test calls showed
+## How streaming speech-to-text works
 
-On the day we built it, I made test calls to check the parts I didn't control:
+Batch transcription is simple: upload a file, wait, get text back. Streaming is a conversation over a websocket, with a few properties that shape everything built on top.
 
-*   **Exotel can stream live audio** through the same call API we already used, by passing a `StreamUrl` when placing the call. No new phone setup.
-*   **The audio is 16-bit PCM at 8 kHz.** Sarvam's realtime socket accepts that as-is, so there's no resampling or transcoding on our side.
-*   **Captions arrive in about a second.** A 63-second Hinglish test call came back as 15 clean final sentences. Early partial guesses that were wrong got corrected in the final text.
-*   **Speaker labels only work after the call.** Sarvam's batch diarization kept two speakers consistent across 12 turns. The realtime socket has no speaker field.
-*   **Exotel sent one mixed channel**, not separate agent and customer tracks. And the stream started before the customer picked up.
+**Audio goes in as small frames.** The client opens a socket and keeps sending chunks of raw audio, typically a few tens of milliseconds each. There's no "file"; the model sees a continuous stream and has to decide on the fly where words and sentences begin and end.
 
-The last two points shaped the UI more than anything else, and they're still open.
+**Text comes back twice.** While someone is mid-sentence, the service sends *partial* results: its best guess so far, which it's allowed to revise. When it decides the sentence is over, it sends a *final* result that won't change. A good UI shows the partial as provisional and only commits the final. In practice early partial guesses are sometimes wrong and get corrected in the final text, which is exactly why the two are kept apart.
 
-## The design
+**Something has to decide when a sentence ends.** This is called endpointing. We ask Sarvam to use voice activity detection and close a sentence after half a second of silence. Shorter, and sentences get chopped mid-thought; longer, and the caption lags.
+
+**Speaker labels are usually a batch feature.** Working out who said what (diarization) is much easier when the model can see the whole recording. Sarvam's batch diarization kept two speakers consistent across 12 turns in one of our calls. Its realtime socket has no speaker field at all.
+
+That last point mattered more than any latency number, as we'll see.
+
+## What the phone line actually sends
+
+Before writing much code I made test calls to check the parts we don't control. A few things fell out:
+
+*   **Exotel can stream live audio through the call API we already used.** Passing a `StreamUrl` when placing the call makes Exotel open a websocket to that URL and send the call audio as base64-encoded media frames. No new phone setup.
+*   **The audio is 16-bit PCM at 8 kHz**, standard telephone quality. Sarvam's realtime socket accepts that as-is, so there's no resampling or transcoding on our side. The relay just forwards bytes.
+*   **Captions arrive in about a second.** A 63-second Hindi-English test call came back as 15 clean final sentences.
+*   **It's one mixed channel.** Exotel sends agent and customer as a single track, not two.
+*   **The stream starts early.** We ask Exotel to start streaming when the second leg connects, but the stream began before the customer picked up, so the first seconds are ringing.
+
+Mixed audio plus a realtime socket with no speaker field means the live panel can't say who said what. Rather than guess, the panel header says so plainly: *both sides, not labelled by speaker*. The after-call batch transcript, with proper speaker labels, stays the durable record. And because the stream includes ringing, the cost estimate assumes about a third more audio than actual talk time.
+
+## A relay is two loops and a deadline
 
 <figure>
   <div class="diagram">
@@ -48,40 +64,54 @@ The last two points shaped the UI more than anything else, and they're still ope
   <figcaption><b>Fig. 1</b> — the caption path. Audio goes in on the left, text comes out on the right, and nothing on the way touches a customer's account.</figcaption>
 </figure>
 
-When an agent places a support call, the backend checks the `live_call_assist` feature flag. If it's on, the call request to Exotel carries two extra fields: a stream URL pointing at our backend, and an instruction to start streaming when the second leg connects.
+When an agent places a support call, the backend adds two fields to the request it sends Exotel: a stream URL pointing at our backend, and an instruction to start streaming when the second leg connects. Exotel then connects to that URL and starts sending frames.
 
-Exotel then opens a websocket to `/api/live-call/stream/{call_id}/{sig}` and sends the call audio as base64 media frames. The handler opens a second websocket to Sarvam's realtime speech-to-text and runs two small tasks side by side:
+The handler on our side opens a second websocket, this time outbound to Sarvam, and runs two small async tasks side by side. Stripped down, it looks like this:
 
-*   **Upstream** reads Exotel's frames and forwards each audio payload to Sarvam. On Exotel's `stop` event it tells Sarvam the stream has ended.
-*   **Downstream** reads Sarvam's results. Partial text goes into a short-lived Redis key. Final sentences, with their start and end times, are appended to a Redis list for that call.
+```python
+async def upstream():
+    # Exotel -> Sarvam: forward each audio payload as-is
+    while True:
+        data = json.loads(await exotel_ws.receive_text())
+        if data.get("event") == "media":
+            await sarvam.send(json.dumps({"event": "audio_input",
+                                          "audio": data["media"]["payload"]}))
+        elif data.get("event") == "stop":
+            break
+    await sarvam.send(json.dumps({"event": "end"}))
 
-When either side closes, the handler gives Sarvam up to five seconds to flush the last sentence, then marks the call as ended.
+async def downstream():
+    # Sarvam -> Redis: partials overwrite, finals append
+    async for raw in sarvam:
+        data = json.loads(raw)
+        if data["event"] == "transcript.partial":
+            await set_partial(call_id, data["text"])
+        elif data["event"] == "transcript.final":
+            await push_final(call_id, data["text"], data["start_s"], data["end_s"])
 
-On the admin side, a `LiveCaptions` component sits inside the existing call popup. Once a second it calls `GET /admin/calls/{id}/live-captions?after=N` and appends whatever is new. The partial line shows in grey italics under the final ones. The header says plainly what the panel can't do: *both sides, not labelled by speaker*.
+up, down = create_task(upstream()), create_task(downstream())
+await asyncio.wait({up, down}, return_when=FIRST_COMPLETED)
+if up.done():
+    await asyncio.wait_for(down, timeout=5)  # let the last sentence flush
+```
 
-| Piece | Where it runs | Size |
-|---|---|---|
-| Stream websocket + caption endpoint | Existing FastAPI router | ~50 lines |
-| Sarvam relay + Redis storage | New `live_call` module | ~180 lines |
-| Stream URL on the Exotel call | Existing Exotel client and service | ~20 lines |
-| `LiveCaptions` panel + popup wiring | Existing admin call popup | ~125 lines |
-| Unit tests | Backend | 6 tests |
+The interesting part is the shutdown. When the call ends, Exotel sends `stop`, the upstream loop tells Sarvam the audio is over, and then the relay waits up to five seconds for Sarvam to finish the sentence it was still working on. Without that grace period the last thing anyone said, which is often the most important ("so you'll call me back at four?"), would be lost. After that, both tasks are cancelled and the call is marked as ended.
 
-I built the backend and admin pieces in one pass and merged them on the same day, behind the flag.
+A relay that mostly waits on two sockets is light work for an async Python process. That fact drove the next decision.
 
-## Four decisions that mattered
+## No new service
 
-### No new service
+The written proposal for this feature costed a small always-on container just for streaming, and it was the single largest line in the estimate. In the code, the websocket fitted into the existing FastAPI app instead. Our API already runs as several autoscaled tasks behind a load balancer that speaks websockets, so adding one more route was all it took.
 
-My written proposal costed a small always-on container just for streaming, and it was the single largest line in the estimate. In the code, the websocket fitted into the existing API instead. Our API already runs as several autoscaled tasks behind a load balancer that speaks websockets. A relay that mostly waits on two sockets is light work for an async Python process.
+That removed a deploy target, a health check and a bill. The trade-off is real: a live call is now tied to whichever API task received it, so a deploy that replaces that task ends the stream. Calls here average just over a minute, which makes that an easy trade. For hour-long calls I'd want a dedicated process with graceful draining.
 
-That removed a deploy target, a health check and a bill. The cost is that a long call is now tied to an API task, so a deploy that replaces the task ends the stream. For calls that average just over a minute, that's a trade I'm happy with.
+The whole feature came to roughly 490 lines across backend, admin panel and tests.
 
-### Redis, because the poll lands somewhere else
+## Captions live in Redis, because the poll lands somewhere else
 
-The websocket from Exotel arrives at one API task. The admin's poll can land on any of them. So the captions can't live in the memory of the process that received them.
+Exotel's websocket arrives at one API task. The agent's poll, a plain HTTP request, can land on any of them. So captions can't live in the memory of the process that received them; they need a shared store that every task can read.
 
-Each call gets three Redis keys, all prefixed by environment like everything else we store there:
+Each call gets three Redis keys:
 
 | Key | Holds | Lifetime |
 |---|---|---|
@@ -89,21 +119,46 @@ Each call gets three Redis keys, all prefixed by environment like everything els
 | `partial` | The sentence still being spoken | 30 seconds |
 | `ended` | A marker that the stream has closed | 6 hours |
 
-The read uses the list index as a cursor. The panel sends `after=N`, the backend returns items from N onward plus the next cursor, and a missed poll costs nothing because the next one catches up. If Redis isn't connected, the endpoint answers with an empty, unavailable result instead of an error.
+Finals are appended with `RPUSH` and trimmed to the cap; the partial is a single key that each new guess overwrites and each final deletes. The short TTL on the partial means a crashed relay can't leave a ghost sentence on screen.
 
-I didn't put captions in Postgres. They're a live view, not the record of the call. The after-call batch transcript, with speaker labels, is still the durable copy.
+The read uses the list index as a cursor. The panel asks for `GET /admin/calls/{id}/live-captions?after=N`, the backend returns items from N onward plus the next cursor, and the panel appends them. A missed poll costs nothing because the next one catches up. If Redis isn't connected, the endpoint answers with an empty, unavailable result instead of an error, and the panel simply shows nothing.
 
-### A signature in the path, because Exotel can't send headers
+Why polling and not a second websocket to the browser? Because a once-a-second poll against a Redis list is trivially cheap, survives load-balancer hops and reconnects without any session state, and a one-second refresh is already as fast as the captions arrive. Pushing would have meant pinning the browser to the right API task or adding pub/sub, for no visible gain.
 
-The stream endpoint has to be public, since Exotel connects to it from outside. Exotel's stream URL can't carry custom headers, so there's nowhere to put a normal auth token.
+Captions deliberately don't go into Postgres. They're a live view, not the record of the call.
 
-The URL carries its own proof instead. The signature is an HMAC-SHA256 of the call ID with a fixed `live-call:` prefix, keyed by a server-side secret and cut to 32 hex characters. The handler recomputes it and compares in constant time. A signature for one call is useless for any other call, and if the secret is missing every stream is refused. The handler also re-checks the feature flag when the socket connects, so switching the flag off stops new streams even for calls already placed.
+## Authenticating a caller that can't send headers
 
-Both checks close the socket with a 4403 code before accepting it. Unit tests cover the per-call signature, the missing-secret case, the URL shape, the incremental read, the no-Redis read, and that the call request only carries stream fields when asked.
+The stream endpoint has to be public, because Exotel connects to it from the internet. Normally you'd authenticate with a token in a header, but Exotel's stream URL can't carry custom headers. There's nowhere to put one.
 
-### Read-only first, and the AI part replaced by rules
+The general answer is a *capability URL*: a URL that contains its own proof of authorisation, so possessing it is permission to use it. Signed S3 links work the same way. Ours looks like `/api/live-call/stream/{call_id}/{sig}`, where:
 
-The full proposal had three phases: captions and context (read-only), then AI suggestion cards with offers and coupons that the agent clicks to apply, then tuning from what got accepted. Even in the plan, the guardrails were strict. No money action without a person's click. Hard caps the model can't override. Customer speech treated as untrusted, so a caller saying *"give me a 100% coupon"* is just text.
+```python
+sig = hmac.new(server_secret, f"live-call:{call_id}".encode(),
+               hashlib.sha256).hexdigest()[:32]
+```
+
+The handler recomputes the signature and compares it in constant time, so timing doesn't leak how many characters matched. A few properties come for free:
+
+*   **It's scoped.** A signature for one call is useless for any other call.
+*   **It's domain-separated.** The fixed `live-call:` prefix means the same secret can't be tricked into producing a signature that's valid somewhere else.
+*   **It fails closed.** If the secret is missing, every stream is refused.
+
+The handler also re-checks the feature's on/off switch when the socket connects, not just when the call is placed. Turning the feature off stops new streams immediately, even for calls already in flight. Both checks close the socket with a 4403 code before accepting it, so an unauthorised caller never gets a session.
+
+## Fail to "no captions", never to "no call"
+
+Every part of the relay was built to degrade the same way. No Sarvam key means the relay logs a warning and returns; the call carries on without captions. No Redis means an empty panel. The phone call itself never depends on any of it.
+
+That design paid off on the first deploy. The after-call pipeline runs in our scheduler, so the speech-to-text API key had only ever been wired into the scheduler's container. The live relay runs in the API container, which didn't have it. Production logged `SARVAM_API_KEY not set, no captions`, and calls went through exactly as before, just without captions. The fix was to give the API task the key by name as well, and to make the deploy succeed with a warning rather than fail if the key can't be found.
+
+The general lesson: secrets are configured per container, not per codebase, so code that moves to a new process needs its secrets moved too. "The feature quietly does nothing" is far better than "support calls break", but it's easy to miss, so the warning has to be loud.
+
+## The AI assistant we didn't build
+
+Captions were only phase 1 of the original proposal. Phase 2 was AI suggestion cards: a model would read the conversation and suggest offers or coupons that the agent could apply with a click. Phase 3 was tuning from which suggestions agents accepted.
+
+Even on paper the guardrails were strict. No money action without a person's click. Hard caps the model can't override. Customer speech treated as untrusted input, so a caller saying *"give me a 100% coupon"* is just text in a transcript, not an instruction.
 
 The plan's cost split shows where the money would have gone:
 
@@ -118,15 +173,15 @@ The plan's cost split shows where the money would have gone:
   <figcaption><b>Fig. 2</b> — how the proposal's estimated cost split across the three phases, at list prices. Only the highlighted bar was built, and the streaming container turned out to be unnecessary.</figcaption>
 </figure>
 
-The model choice in that plan was the usual one. A fast, cheap model reads every customer sentence, and a stronger model runs only when an offer is needed, on about a quarter of sentences. Running the stronger model on every sentence would have cost about 20 times as much as the fast one.
+The model plan followed the usual tiering pattern. A fast, cheap model reads every customer sentence and decides whether anything needs doing; a stronger model runs only when an offer is needed, on about a quarter of sentences. Running the stronger model on every sentence would have cost about 20 times as much as the fast one.
 
-We built phase 1 and stopped. When we looked at the offers problem with live data the next day, it wasn't a language problem. Coupons had never been granted from the support side. What the business actually needed was to give a fair, capped offer to the right customer at a price we choose. That's a table of rules, not a model.
+We built phase 1 and stopped. When we looked at the offers problem with real data, it wasn't a language problem. Coupons had never been granted from the support side at all. What the business needed was to give a fair, capped offer to the right customer at a price we choose. That's a table of rules, not a model.
 
-So phase 2 became rules-based per-customer offers, which I built separately: a price-per-hour floor per customer tier, checked when the agent assigns an offer, and hard caps per agent per day and per customer per month. It sits on the customer's support page, behind its own flag. The caption panel stays read-only. It's there so the agent can follow the call, not to decide anything.
+So the "phase 2" that got built is rules-based per-customer offers on the customer's support page: a price-per-hour floor per customer tier, checked when the agent assigns an offer, and hard caps per agent per day and per customer per month. The caption panel stays read-only. It's there so the agent can follow the call, not to decide anything.
 
 ## Build or buy
 
-We did look at buying. Contact-centre tools do real-time agent assist well, and they're ahead of us on QA scoring, coaching and multi-channel inboxes.
+We did look at buying. Contact-centre tools do real-time agent assist well, and they're well ahead of anything we'd build on QA scoring, coaching and multi-channel inboxes.
 
 | Tool | What it does for calls | List price (approx., USD) |
 |---|---|---|
@@ -135,32 +190,18 @@ We did look at buying. Contact-centre tools do real-time agent assist well, and 
 | Zendesk | Copilot add-on, per-resolution AI pricing | ~$50 per agent per month on top of the plan |
 | Salesforce Agentforce | AI agents and copilot inside Service Cloud | ~$550 per user per month |
 
-Vendor prices change often and third-party sources disagree, so treat these as rough. Even two seats on a per-agent tool at list price would cost more than our estimate for the whole three-phase plan. But none of them knows our bookings, wallets or coupons. They also aren't tuned for Hindi-English mixed speech, and they charge per seat rather than per call. For captions alone, a realtime speech-to-text API at under a rupee a call was the obvious answer.
+Vendor prices change often and third-party sources disagree, so treat these as rough. Even two seats on a per-agent tool at list price would cost more than our estimate for the whole three-phase plan. And none of them knows our bookings, wallets or coupons, they aren't tuned for Hindi-English mixed speech, and they charge per seat rather than per call. For captions alone, a realtime speech-to-text API at well under a rupee per typical call was the obvious answer.
 
-## What went wrong
+## Takeaways
 
-> [!WARNING]
-> **The key that only one container had.** The after-call pipeline runs in the scheduler, so the Sarvam API key had only been wired into the scheduler's task definition. The live relay runs in the API. Once the first version was deployed, production logged `SARVAM_API_KEY not set, no captions` and calls went through without captions. I fixed the deploy workflow to give the API task the key by name too. If the key can't be found, the deploy still succeeds, with a warning, and captions stay off. The relay had been built to fail the same way: no key means no captions, never a failed call.
+*   **Streaming speech-to-text is two streams, not one.** Keep partial and final results apart: overwrite the partial, append the final, and give the service a few seconds to flush the last sentence when the audio stops.
+*   **A websocket relay doesn't need its own service.** If your API already runs async behind a websocket-capable load balancer, a relay that mostly waits on I/O fits inside it. The price is that deploys end in-flight streams.
+*   **When the writer and the reader land on different machines, put the state in between.** A Redis list with the index as a cursor gives you incremental, idempotent polling with no session state.
+*   **If a caller can't send headers, sign the URL.** An HMAC of the resource ID with a purpose prefix, compared in constant time and failing closed, is a small, solid capability URL.
+*   **Be honest in the UI about what the data can't tell you.** A one-line "not labelled by speaker" beats guessing who said what.
+*   **Check whether the "AI problem" is a rules problem.** Our offer assistant turned into a table of floors and caps, and is easier to trust because of it.
 
-*   **One mixed channel.** Exotel sends agent and customer as a single track, and Sarvam's realtime socket has no speaker field. So the live panel can't say who said what. We label that honestly in the UI and rely on the after-call transcript for speaker labels.
-*   **The stream starts before the customer answers.** We ask Exotel to start at the second leg's connection, but in testing the stream began before the customer picked up, so the first seconds are ringing. That costs a little Sarvam time per call. The cost estimate already assumed about a third more audio than actual talk time for this.
-*   **`dev_only` doesn't mean developers here.** On most of our flags, `dev_only` limits a feature to developer accounts. This code path has no per-customer check, so the backend treats `dev_only` the same as `live`, and every support call streams. The code says so, but the name invites the wrong assumption.
-*   **Testing on real phones needed a real customer.** Developer accounts are hidden from the support customer list. A small follow-up lets a superadmin tick *show developer accounts*, so we can call a test customer from the same screen the support team uses.
-
-## Results
-
-Phase 1 is merged into both staging and main: the stream websocket, the Redis caption store, the caption endpoint, the admin panel and the deploy fix. The backend deploys that carried them succeeded the same day. It's behind the `live_call_assist` flag, and with the flag off, calls are placed exactly as before and the panel never appears.
-
-In our test calls, captions arrived about a second behind speech and handled Hindi-English mixing well. At Sarvam's list price of ₹0.49 per minute, captions cost well under a rupee for a typical call. They add no new service to run.
-
-> [!NOTE]
-> I haven't yet seen captions on a production support call since the key fix went out. The test calls proved the pipeline. A full end-to-end check on a live support call is still on the list.
-
-## What's next
-
-*   One end-to-end production call with captions, checked against the CloudWatch logs for the stream.
-*   Ask Exotel for separate agent and customer tracks, and a stream that starts only once the customer answers.
-*   The read-only customer context from the original phase 1 plan (recent bookings, open tickets, wallet) next to the captions.
+Where this goes next is mostly about better inputs: separate agent and customer audio tracks would make live speaker labels possible, and the same panel could show the customer's recent bookings and open tickets next to the words.
 
 ---
 

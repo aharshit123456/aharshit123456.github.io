@@ -94,6 +94,33 @@ function convertStatRow(html: string): string {
     .join('\n');
 }
 
+/** Terminal window -> fenced code block with its title as a comment line. */
+function convertTerminal(html: string): string {
+  const title = inline((html.match(/<div class="terminal-bar">[\s\S]*?<span>([\s\S]*?)<\/span>/) || [])[1] || '');
+  const code = decode(((html.match(/<pre[^>]*>([\s\S]*?)<\/pre>/) || [])[1] || '').replace(/<[^>]+>/g, '')).replace(/\n+$/, '');
+  return ['```text', ...(title ? [`# ${title}`] : []), code, '```'].join('\n');
+}
+
+/** Incident chat -> blockquote, one bold speaker per line. */
+function convertChat(html: string): string {
+  const head = inline((html.match(/<div class="chat-head">([\s\S]*?)<\/div>/) || [])[1] || '');
+  const lines = divs(html, 'chat-msg').map((m) => {
+    const who = inline((m.match(/<span class="who[^"]*">([\s\S]*?)<\/span>/) || [])[1] || '');
+    // The text span can contain nested tags (e.g. a P1 tag), so take everything after it.
+    const raw = m.split('<span class="text">')[1] || '';
+    const text = inline(raw.replace(/<\/span>\s*$/, '').replace(/<span class="tag[^"]*">([\s\S]*?)<\/span>/g, '[$1] '));
+    return `> **${who}:** ${text}`;
+  });
+  return [...(head ? [`> *${head}*`, '>'] : []), ...lines.flatMap((l, i) => (i ? ['>', l] : [l]))].join('\n');
+}
+
+/** Big number -> one bold line. */
+function convertBigStat(html: string): string {
+  const pick = (cls: string) => inline((html.match(new RegExp(`<div class="${cls}[^"]*">([\\s\\S]*?)<\\/div>`)) || [])[1] || '');
+  const sub = pick('big-stat-sub');
+  return `**${pick('big-stat-label')}: ${pick('big-stat-num')}**${sub ? ` (${sub})` : ''}`;
+}
+
 export type PortableOptions = {
   /** Drop the leading "# Title" (platforms that take the title separately). */
   dropTitle?: boolean;
@@ -110,6 +137,16 @@ export function toPortableMarkdown(content: string, opts: PortableOptions = {}):
   while ((i = md.indexOf('<div class="stat-row"')) !== -1) {
     const end = closingDiv(md, i);
     md = md.slice(0, i) + convertStatRow(md.slice(i, end)) + md.slice(end);
+  }
+  for (const [cls, fn] of [
+    ['terminal', convertTerminal],
+    ['chat', convertChat],
+    ['big-stat', convertBigStat],
+  ] as const) {
+    while ((i = md.indexOf(`<div class="${cls}"`)) !== -1) {
+      const end = closingDiv(md, i);
+      md = md.slice(0, i) + fn(md.slice(i, end)) + md.slice(end);
+    }
   }
   while ((i = md.indexOf('<div class="screenshot-container"')) !== -1) {
     const end = closingDiv(md, i);
