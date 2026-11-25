@@ -80,3 +80,12 @@ Long-form engineering write-ups by Harshit Agarwal, each with the problem, desig
 - [Hands-on Quantum Programming at IISER Bhopal](https://www.aharshit123456.space/blog/iiser-bhopal-quantum-workshop): qubits, Bell states and Deutsch–Jozsa derived from scratch.
 - [Field Notes on Perception for Two-Wheeler Autonomy](https://www.aharshit123456.space/blog/niser-perception-notes): computer vision, point clouds and prediction for autonomous two-wheelers.
 - [NISER Internship Retrospective](https://www.aharshit123456.space/blog/niser-internship-retrospective): what NISER taught me outside the lab.
+
+## Writing: Building at CosQ
+
+- [Kurukuru: A Ride-Sharing Game on One Go Binary](https://www.aharshit123456.space/blog/kurukuru-architecture): the architecture of a college ride-sharing game in one Go monolith.
+- [Matching Riders in Real Time over WebSockets](https://www.aharshit123456.space/blog/kurukuru-realtime-matching): live and scheduled ride matching over a Go WebSocket hub.
+- [Fog of War on a Real Map with PostGIS](https://www.aharshit123456.space/blog/kurukuru-fog-of-war): turning GPS trails into an explorable, game-like map.
+- [Turning a Real Map into a Pixel World](https://www.aharshit123456.space/blog/kurukuru-pixel-map-app): the Kurukuru app's map, 3D world and pixel UI in Flutter.
+- [Quest Books, an In-App Editor and Road Watch](https://www.aharshit123456.space/blog/kurukuru-quests-and-road-watch): game content you can edit in the app, and road safety reports.
+- [Everything Else I Built at CosQ](https://www.aharshit123456.space/blog/cosq-ecosystem): WHAM! OTT, MemoChan, PreviouslyOn, Gothicco and more.

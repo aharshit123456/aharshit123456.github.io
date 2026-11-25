@@ -1,5 +1,124 @@
 [
   {
+    "id": "kurukuru-architecture",
+    "slug": "kurukuru-architecture",
+    "title": "Kurukuru: A Ride-Sharing Game on One Go Binary",
+    "date": "2026-11-26",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/kurukuru-architecture.md",
+    "description": "How Kurukuru, a college-only ride-sharing game, runs on one Go binary and Postgres: walled-garden auth, a compare-and-set trip lifecycle and PostGIS.",
+    "keywords": [
+      "Go",
+      "golang monolith",
+      "PostgreSQL",
+      "PostGIS",
+      "Supabase auth",
+      "system design",
+      "ride sharing",
+      "Kurukuru",
+      "CosQ",
+      "Harshit Agarwal"
+    ]
+  },
+  {
+    "id": "kurukuru-realtime-matching",
+    "slug": "kurukuru-realtime-matching",
+    "title": "Matching Riders in Real Time over WebSockets",
+    "date": "2026-11-26",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/kurukuru-realtime-matching.md",
+    "description": "Live and scheduled ride matching for Kurukuru in Go: a WebSocket hub that can't crash the process, advisory locks, and race-proof confirmations.",
+    "keywords": [
+      "WebSockets",
+      "Go",
+      "gorilla websocket",
+      "real-time matching",
+      "concurrency",
+      "advisory locks",
+      "ride sharing",
+      "Kurukuru",
+      "Harshit Agarwal"
+    ]
+  },
+  {
+    "id": "kurukuru-fog-of-war",
+    "slug": "kurukuru-fog-of-war",
+    "title": "Fog of War on a Real Map with PostGIS",
+    "date": "2026-11-26",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/kurukuru-fog-of-war.md",
+    "description": "Building a fog-of-war game layer on a real city map: geohash tiles, PostGIS unions, exploration from noisy GPS, and serving it all as GeoJSON.",
+    "keywords": [
+      "PostGIS",
+      "fog of war",
+      "geohash",
+      "GPS",
+      "GeoJSON",
+      "game design",
+      "maps",
+      "Kurukuru",
+      "Harshit Agarwal"
+    ]
+  },
+  {
+    "id": "kurukuru-pixel-map-app",
+    "slug": "kurukuru-pixel-map-app",
+    "title": "Turning a Real Map into a Pixel World",
+    "date": "2026-11-26",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/kurukuru-pixel-map-app.md",
+    "description": "How the Kurukuru Flutter app turns a real map into a pixel world: three map engines in eight months, server-baked tiles, a 3D campus and all-day GPS.",
+    "keywords": [
+      "Flutter",
+      "maps",
+      "pixel art",
+      "vector tiles",
+      "WebView",
+      "GPS",
+      "golden tests",
+      "Kurukuru",
+      "Harshit Agarwal"
+    ]
+  },
+  {
+    "id": "kurukuru-quests-and-road-watch",
+    "slug": "kurukuru-quests-and-road-watch",
+    "title": "Quest Books, an In-App Editor and Road Watch",
+    "date": "2026-11-26",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/kurukuru-quests-and-road-watch.md",
+    "description": "Quest books that turn real places into collectible stamps, an in-app editor that changes game content without a release, and Road Watch road reports.",
+    "keywords": [
+      "Flutter",
+      "Go",
+      "game content",
+      "content editor",
+      "road safety",
+      "photo upload",
+      "Kurukuru",
+      "Harshit Agarwal"
+    ]
+  },
+  {
+    "id": "cosq-ecosystem",
+    "slug": "cosq-ecosystem",
+    "title": "Everything Else I Built at CosQ",
+    "date": "2026-11-26",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/cosq-ecosystem.md",
+    "description": "The rest of my work at CosQ, a pop-culture studio: the event site, WHAM! OTT, PreviouslyOn, MemoChan, Gothicco, Tea & Tab and a satire runner game.",
+    "keywords": [
+      "CosQ",
+      "full stack",
+      "Next.js",
+      "Whisper",
+      "LLM",
+      "Three.js",
+      "side projects",
+      "Harshit Agarwal"
+    ]
+  },
+  {
     "id": "famcare-incidents-and-infra",
     "slug": "famcare-incidents-and-infra",
     "title": "Three Outages and the Infrastructure They Left Behind",
