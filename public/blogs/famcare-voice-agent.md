@@ -26,6 +26,17 @@ Four constraints shaped everything after that:
 *   **Cost.** It has to be cheap enough to offer to every parent, free.
 *   **A small team.** We can't babysit a real-time system. Any part of it can fail, and the parent should barely notice.
 
+
+<figure>
+  <div class="screenshot-container">
+    <img src="/assets/famcare/case-studies/voice-entry.webp" alt="Baby Passport entry sheet offering a three-minute chat with FamCare AI" />
+    <img src="/assets/famcare/case-studies/voice-live.webp" alt="Live voice interview with chips for what has been captured so far" />
+    <img src="/assets/famcare/case-studies/voice-review.webp" alt="Review screen titled Here is what I heard, with each answer quoting the parent" />
+    <img src="/assets/famcare/case-studies/voice-care-card.webp" alt="Care instructions card the caregiver sees, with allergies confirmed by the parent" />
+  </div>
+  <figcaption><b>In the app</b> — starting a chat from the Baby Passport, chips filling in while the parent talks, the review screen where nothing is shared until they save, and the card the caregiver finally reads.</figcaption>
+</figure>
+
 ## The design
 
 The parent taps *Start talking* in the app. Our backend opens a session, mints a room token and dispatches a voice worker into a LiveKit room. From then on, audio flows only between the phone, LiveKit and the worker. It never passes through our own servers.

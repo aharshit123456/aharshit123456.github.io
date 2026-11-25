@@ -234,6 +234,17 @@ A discount the customer doesn't notice is just lost margin. A discount that disa
 - **Same rules as the server:** no drop badge on twin bookings, instant checkout or recurring checkout. A drop and a coupon never stack; the app clears the coupon and says so.
 - **Measured end to end:** price-drop analytics events across booking and checkout, including why a checkout failed and which price the customer was shown.
 
+<figure>
+  <div class="screenshot-container">
+    <img src="/assets/famcare/case-studies/pd-slot.webp" alt="Slot grid with a price drop on the selected slot" />
+    <img src="/assets/famcare/case-studies/pd-held.webp" alt="Checkout carrying the held price-drop price" />
+    <img src="/assets/famcare/case-studies/pd-price-changed.webp" alt="Dialog explaining that the price has changed" />
+    <img src="/assets/famcare/case-studies/pd-receipt.webp" alt="Payment summary with separate price drop and coupon rows" />
+  </div>
+  <figcaption><b>In the app</b> — a drop on the slot grid, the held price at checkout, the price-changed dialog, and the receipt-style payment summary.</figcaption>
+</figure>
+
+
 To decide how a chip should show a drop, I rendered **four options as golden images from real slot data**, so the team compared real prices rather than mock-ups:
 
 1. a small saving label (what shipped first)
@@ -267,6 +278,15 @@ The gradual engine tops out at a modest discount, which is too weak to fill an e
 **Stored sales, not computed prices.** A sale is a database row with its depth, spots and close time. It isn't a price computed on the fly, and it isn't a coupon. The sale's ID is **signed into the ten-minute price hold**, so a client can't strip it to dodge the spot count or the fortnightly cap. A customer who got the price in time keeps it even if the sale closes mid-checkout.
 
 **Where the customer sees it.** The server emits a `flash_sale_live` event and a CleverTap journey sends the push ("⚡ 55% off tonight's 7 PM slot. Ends 6:00 PM, only 3 caregivers left"). In the app, a slim **sticky strip** is pinned under the Home header: a teal bar with the offer, how many caregivers are left, and a live countdown. The countdown runs on server time with the app's existing clock-skew correction, so it ends when the sale ends, not when the phone thinks it should. The strip refetches on open, on resume, when the countdown ends and every two minutes. Tapping it, or the push's deep link, opens booking for today with the sale slot already selected.
+
+<figure>
+  <div class="screenshot-container">
+    <img src="/assets/famcare/case-studies/flash-home-strip.webp" alt="Home screen with the flash sale strip pinned under the header and a live countdown" />
+    <img src="/assets/famcare/case-studies/flash-slot-picker.webp" alt="Slot picker with a 55 percent off flash chip on the 7 PM slot and spots left" />
+  </div>
+  <figcaption><b>In the app</b> — the sticky strip on Home, and the slot picker with the flash slot, its countdown and spots left.</figcaption>
+</figure>
+
 
 **Why the strip came before a sticky notification.** The app strip ships as an over-the-air patch, so it can reach customers in days. A sticky notification in the phone's notification shade (an Android ongoing notification with a countdown, or an iOS Live Activity) needs new native code, which a patch can't carry. So that went out in a store release, driven by the same sale record and event as the push and the strip.
 

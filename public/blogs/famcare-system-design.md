@@ -63,6 +63,15 @@ Inside the cancellation window, cancelling needs an explicit fee confirmation. C
 
 The allowed moves live in one explicit transition table. Every transition first takes a **row lock** on the booking, so two phones tapping at once can't both win. The guards are physical as well as logical. A caregiver can't mark *arrived* from across town, and a visit can't *start* until a face check passes and the family reads out a one-time code. Admins can override the table, and middleware writes every admin action to an audit log.
 
+<figure>
+  <div class="screenshot-container">
+    <img src="/assets/famcare/case-studies/sys-booked.webp" alt="Booking confirmed screen before the caregiver is revealed" />
+    <img src="/assets/famcare/case-studies/sys-in-progress.webp" alt="Visit in progress with a countdown timer and the PIN to end the visit" />
+  </div>
+  <figcaption><b>In the app</b> — a confirmed booking before the caregiver is revealed, and a visit in progress with its timer and the one-time PIN.</figcaption>
+</figure>
+
+
 ### Money gets three layers of defence
 
 Payment providers don't always tell you what happened, so:
@@ -136,6 +145,14 @@ App store review takes days, so production builds are made with Shorebird, which
 
 For changes a patch can't carry, the backend can mark old builds as unsupported. The app then shows an update sheet that can't be dismissed. Individual features can also require a minimum app build.
 
+<figure>
+  <div class="screenshot-container">
+    <img src="/assets/famcare/case-studies/sys-force-update.webp" alt="Update available sheet that cannot be dismissed" />
+  </div>
+  <figcaption><b>In the app</b> — the update sheet an unsupported build gets. It can't be dismissed.</figcaption>
+</figure>
+
+
 ## Watching it: monitor the business, not just the servers
 
 The monitor is its own service, not a job inside the scheduler. If the scheduler is what broke, the monitor still runs. Every minute it checks:
@@ -151,6 +168,14 @@ Alerts are debounced (two failures to go red, two passes to recover). They go to
 
 > [!WARNING]
 > Safety is a feature with its own budget. When a caregiver presses SOS, the backend opens a live voice conference. The caregiver's microphone goes live, and admins get alerted in the dashboard and join muted to listen. The call ends itself after seven minutes. That cap is deliberate, so a forgotten SOS can't run up a telephony bill.
+
+<figure>
+  <div class="screenshot-container">
+    <img src="/assets/famcare/case-studies/sys-crisis.webp" alt="Urgent banner on the live visit screen: caregiver flagged an issue, support team being alerted" />
+  </div>
+  <figcaption><b>In the app</b> — when a caregiver flags an issue mid-visit, the family's screen says so and shows that support is being alerted.</figcaption>
+</figure>
+
 
 ## What I'd tell a team starting out
 
