@@ -8,6 +8,7 @@ import './../blog.css';
 import { Metadata } from 'next';
 import InteractiveArticle from '@/components/portfolio/InteractiveArticle';
 import { getBlogMeta, SITE_URL } from '../blogMeta';
+import { getPostNeighbors } from '../postNav';
 
 // This function tells Next.js which paths to pre-render at build time
 export async function generateStaticParams() {
@@ -97,6 +98,7 @@ export default async function BlogPage({ params }: { params: Promise<{ slug: str
   }
 
   const meta = getBlogMeta(slug, content);
+  const neighbors = getPostNeighbors(slug);
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -145,6 +147,20 @@ export default async function BlogPage({ params }: { params: Promise<{ slug: str
         <article className="article-card markdown-body">
           <InteractiveArticle content={content} slug={slug} />
         </article>
+
+        <nav className="post-nav" aria-label="More posts">
+          {neighbors.context && <p className="post-nav-context">{neighbors.context}</p>}
+          <div className="post-nav-row">
+            <Link href={neighbors.prev.href} className="post-nav-link post-nav-prev" rel="prev">
+              <span className="post-nav-dir">← Previous</span>
+              <span className="post-nav-title">{neighbors.prev.title}</span>
+            </Link>
+            <Link href={neighbors.next.href} className="post-nav-link post-nav-next" rel="next">
+              <span className="post-nav-dir">Next →</span>
+              <span className="post-nav-title">{neighbors.next.title}</span>
+            </Link>
+          </div>
+        </nav>
       </main>
 
       <footer className="blog-footer">
