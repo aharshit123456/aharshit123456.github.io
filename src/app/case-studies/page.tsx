@@ -2,17 +2,21 @@ import React from 'react';
 import Link from 'next/link';
 import '../blog/blog.css';
 import { Metadata } from 'next';
-import { FAMCARE_SERIES } from '../blog/seriesData';
+import { liveJourneys } from '../blog/postNav';
 
 export const metadata: Metadata = {
   title: 'Case Studies',
-  description: 'Deep-dive case studies: the nine-part Building FamCare series (system design, slots and pricing, golden screens, Flutter OTA, alerting, voice AI, live captions, demand analytics, CRM), plus the FamCARE marketplace, shoppin\' AI discovery, and WHAM! OTT video engine.',
+  description: 'Deep-dive case studies: the Building FamCare series (system design, slots and pricing, golden screens, Flutter OTA, alerting, voice AI, live captions, demand analytics, CRM, incidents and AWS infrastructure), plus the FamCARE marketplace, shoppin\' AI discovery, and WHAM! OTT video engine.',
   alternates: {
     canonical: 'https://www.aharshit123456.space/case-studies',
   },
 };
 
-const FAMCARE_STUDIES = FAMCARE_SERIES.map((post, i) => ({ ...post, title: `${i + 1}. ${post.title}` }));
+// Only posts that exist, numbered in series order.
+const FAMCARE_STUDIES = (liveJourneys().find((j) => j.id === 'famcare')?.stages ?? [])
+  .flatMap((s) => s.posts)
+  .filter((p): p is typeof p & { slug: string } => Boolean(p.slug))
+  .map((post, i) => ({ ...post, title: `${i + 1}. ${post.title}` }));
 
 export default function CaseStudiesPage() {
   return (
@@ -29,7 +33,7 @@ export default function CaseStudiesPage() {
           <h1>Case Studies</h1>
           <p>Architectural deep dives into production-grade systems and AI infrastructure.</p>
 
-          <h2>Building FamCare: a nine-part series</h2>
+          <h2>Building FamCare: a {FAMCARE_STUDIES.length}-part series</h2>
           <p>
             Long-form write-ups of systems I built as Lead Engineer at FamCare, a home-care marketplace:
             the problem, the design, the alternatives we rejected, what broke, and what we got out of it.

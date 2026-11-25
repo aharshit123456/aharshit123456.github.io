@@ -123,6 +123,22 @@ export const FAMCARE_STAGES: SeriesStage[] = [
       },
     ],
   },
+  {
+    id: 'operate',
+    label: 'Stage 4',
+    title: 'Run it in production',
+    blurb: 'Incidents, root-cause write-ups, and an AWS setup that grew up with them.',
+    posts: [
+      {
+        slug: 'famcare-incidents-and-infra',
+        icon: '🧯',
+        quip: 'Root cause found. Postmortem filed.',
+        title: 'Three Outages and the Infrastructure They Left Behind',
+        summary:
+          'Three production outages, the guardrails each one left behind, and how we write up root causes.',
+      },
+    ],
+  },
 ];
 
 /** All series posts in journey order. */

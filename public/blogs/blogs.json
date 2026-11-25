@@ -1,5 +1,26 @@
 [
   {
+    "id": "famcare-incidents-and-infra",
+    "slug": "famcare-incidents-and-infra",
+    "title": "Three Outages and the Infrastructure They Left Behind",
+    "date": "2026-11-26",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/famcare-incidents-and-infra.md",
+    "description": "Three production outages on AWS ECS and Aurora, from a stuck service to a full connection pool, the guardrails each left behind, and how we write root causes.",
+    "keywords": [
+      "incident postmortem",
+      "root cause analysis",
+      "AWS ECS",
+      "Aurora PostgreSQL",
+      "connection pool",
+      "Terraform",
+      "autoscaling",
+      "SRE",
+      "FamCare",
+      "Harshit Agarwal"
+    ]
+  },
+  {
     "id": "niser-perception-notes",
     "slug": "niser-perception-notes",
     "title": "Field Notes on Perception for Two-Wheeler Autonomy",
