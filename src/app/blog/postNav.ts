@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { JOURNEYS } from './seriesData';
+import { JOURNEYS, type SeriesConfig } from './seriesData';
 
 export type NavLink = { href: string; title: string };
 
@@ -14,6 +14,23 @@ export type PostNeighbors = {
 type IndexEntry = { slug: string; title?: string; date?: string };
 
 const ALL_POSTS: NavLink = { href: '/blog', title: 'All posts' };
+
+/**
+ * The series with any stop whose post file doesn't exist yet turned back into
+ * a "coming soon" stop (slug removed), so nothing links to a missing page.
+ */
+export function liveJourneys(): SeriesConfig[] {
+  const dir = path.join(process.cwd(), 'public/blogs');
+  return JOURNEYS.map((series) => ({
+    ...series,
+    stages: series.stages.map((stage) => ({
+      ...stage,
+      posts: stage.posts.map((p) =>
+        p.slug && !fs.existsSync(path.join(dir, `${p.slug}.md`)) ? { ...p, slug: undefined } : p,
+      ),
+    })),
+  }));
+}
 
 function readIndex(): IndexEntry[] {
   try {
@@ -31,7 +48,7 @@ function readIndex(): IndexEntry[] {
  * published earlier). A missing side links back to the blog index.
  */
 export function getPostNeighbors(slug: string): PostNeighbors {
-  for (const series of JOURNEYS) {
+  for (const series of liveJourneys()) {
     const posts = series.stages
       .flatMap((s) => s.posts)
       .filter((p): p is typeof p & { slug: string } => Boolean(p.slug));
@@ -48,7 +65,7 @@ export function getPostNeighbors(slug: string): PostNeighbors {
     };
   }
 
-  const seriesSlugs = new Set(JOURNEYS.flatMap((j) => j.stages.flatMap((s) => s.posts.map((p) => p.slug))));
+  const seriesSlugs = new Set(liveJourneys().flatMap((j) => j.stages.flatMap((s) => s.posts.map((p) => p.slug))));
   const chain = readIndex()
     .filter((e) => !seriesSlugs.has(e.slug))
     .sort((a, b) => (a.date || '').localeCompare(b.date || ''));
@@ -69,7 +86,7 @@ export type PostRail = {
  * otherwise the latest posts (excluding this one).
  */
 export function getPostRail(slug: string): PostRail {
-  for (const series of JOURNEYS) {
+  for (const series of liveJourneys()) {
     const posts = series.stages.flatMap((s) => s.posts);
     if (!posts.some((p) => p.slug === slug)) continue;
     return {

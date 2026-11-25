@@ -131,7 +131,7 @@ export const FAMCARE_SERIES = FAMCARE_STAGES.flatMap((s) => s.posts) as (SeriesP
 export type SeriesConfig = {
   id: string;
   /** Visual theme class: colours, type and the character's outfit. */
-  theme: 'famcare' | 'shoppin';
+  theme: 'famcare' | 'shoppin' | 'niser';
   title: string;
   role: string;
   /** Brand mark in the header. `tile` renders it as a rounded app icon. */
@@ -142,7 +142,7 @@ export type SeriesConfig = {
   /** Small brand image used for reached road marks and confetti. */
   sprite?: string;
   /** Character accessory. */
-  hat?: 'strawberry';
+  hat?: 'strawberry' | 'helmet';
   /** Offer the brand's light and dark themes with a toggle (dark first). */
   modes?: boolean;
 };
@@ -247,4 +247,99 @@ export const SHOPPIN_JOURNEY: SeriesConfig = {
   ],
 };
 
-export const JOURNEYS: SeriesConfig[] = [FAMCARE_JOURNEY, SHOPPIN_JOURNEY];
+/** Research internship at SMLab, NISER (May–Oct 2024), plus the IISER Bhopal quantum workshop. */
+export const NISER_JOURNEY: SeriesConfig = {
+  id: 'niser',
+  theme: 'niser',
+  title: 'Research at NISER & IISER Bhopal',
+  role: 'Research Intern, SMLab NISER · May–Oct 2024',
+  wordmark: { src: '/assets/niser/niser-iiserb-marks.webp', alt: 'NISER and IISER Bhopal', width: 422, height: 200 },
+  hat: 'helmet',
+  greeting: 'Sensors on. Let\'s map this place.',
+  finale: 'Loop closed! 🎉',
+  stages: [
+    {
+      id: 'learn',
+      label: 'Stage 1',
+      title: 'Learn the field',
+      blurb: 'Feature matching, SLAM and the probability underneath it.',
+      posts: [
+        {
+          slug: 'orb-slam3',
+          icon: '🗺️',
+          quip: 'FAST corners, rotated BRIEF. Matched!',
+          title: 'From ORB Features to ORB-SLAM3',
+          summary: 'How ORB features work, and how ORB-SLAM3 builds maps from them. From my SMLab talk.',
+        },
+        {
+          slug: 'niser-slam-bayes-filter',
+          icon: '🎲',
+          quip: 'Predict, update, repeat.',
+          title: 'SLAM from the Bayes Filter Up',
+          summary: 'The probability behind localisation and mapping, from Bayes rule to pose graphs.',
+        },
+      ],
+    },
+    {
+      id: 'build',
+      label: 'Stage 2',
+      title: 'Build the rig',
+      blurb: 'Getting camera, LiDAR, GPS and IMU data off the sensors and onto a screen.',
+      posts: [
+        {
+          slug: 'niser-iphone-sensor-rig',
+          icon: '📱',
+          quip: 'My phone has LiDAR. Who knew?',
+          title: 'Turning an iPhone into a LiDAR, IMU and GPS Sensor',
+          summary: 'Swift apps that stream ARKit depth, motion and location over TCP.',
+        },
+        {
+          slug: 'niser-ros-dashboard',
+          icon: '🖥️',
+          quip: 'rosbridge up, every topic live.',
+          title: 'A Browser Dashboard for a ROS 2 Sensor Rig',
+          summary: 'Live camera, point cloud and sensor feeds, recording and playback in the browser.',
+        },
+      ],
+    },
+    {
+      id: 'quantum',
+      label: 'Side quest',
+      title: 'IISER Bhopal',
+      blurb: 'A hands-on quantum programming workshop.',
+      posts: [
+        {
+          slug: 'iiser-bhopal-quantum-workshop',
+          icon: '⚛️',
+          quip: 'Superposition: here and there.',
+          title: 'Hands-on Quantum Programming at IISER Bhopal',
+          summary: 'Qubits, Bell states and Deutsch–Jozsa worked through from scratch.',
+        },
+      ],
+    },
+    {
+      id: 'wrap',
+      label: 'Stage 3',
+      title: 'Write it up',
+      blurb: 'Perception notes for the project site, and looking back.',
+      posts: [
+        {
+          slug: 'niser-perception-notes',
+          icon: '🛵',
+          quip: 'Point clouds everywhere.',
+          title: 'Field Notes on Perception for Two-Wheeler Autonomy',
+          summary: 'Computer vision, point clouds and prediction, written for the Swayansaasita project.',
+        },
+        {
+          slug: 'niser-internship-retrospective',
+          icon: '🌙',
+          quip: 'Night canteen, then the lab.',
+          title: 'NISER Internship Retrospective',
+          summary: 'What NISER taught me outside the lab.',
+        },
+      ],
+    },
+  ],
+};
+
+export const JOURNEYS: SeriesConfig[] = [FAMCARE_JOURNEY, SHOPPIN_JOURNEY, NISER_JOURNEY];

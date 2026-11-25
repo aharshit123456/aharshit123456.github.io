@@ -99,6 +99,54 @@
 
 
 
+.sj--niser {
+  /* NISER blue (#0242c1) with IISER Bhopal red (#a62320) as the accent. */
+  --sj-bg: #f3f6fd;
+  --sj-card: #ffffff;
+  --sj-text: #0b1b3f;
+  --sj-muted: #4a5a7a;
+  --sj-road: #d4def6;
+  --sj-trail: #0242c1;
+  --sj-flag-bg: #a62320;
+  --sj-flag-text: #ffffff;
+  --sj-band: #e3eafb;
+  --sj-icon-bg: #e8eefc;
+  --sj-here: #0242c1;
+  --sj-btn-bg: #0242c1;
+  --sj-btn-text: #ffffff;
+  --sj-btn-hover: #01339a;
+  --sj-bubble-bg: #ffffff;
+  --sj-bubble-text: #0b1b3f;
+  --sj-shadow: 0 8px 24px rgba(11, 27, 63, 0.07);
+  --sj-shadow-hover: 0 10px 26px rgba(2, 66, 193, 0.2);
+  --sj-c0: #0242c1;
+  --sj-c1: #a62320;
+  --sj-c2: #30a4dd;
+  --sj-c3: #f3c34f;
+  --chibi-hoodie: #0242c1;
+  --chibi-dark: #0b1b3f;
+  --chibi-badge: #a62320;
+  --chibi-trim: #30a4dd;
+  --chibi-laptop: #d4def6;
+
+  font-family: var(--font-plex-sans), 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.sj--niser .sj-wordmark {
+  height: 46px;
+}
+
+.sj--niser .sj-title,
+.sj--niser .sj-step,
+.sj--niser .sj-stage b {
+  font-family: var(--font-plex-mono), 'IBM Plex Mono', ui-monospace, monospace !important;
+}
+
+.sj--niser .sj-title {
+  font-size: 14.5px !important;
+  letter-spacing: -0.3px;
+}
+
 .sj *,
 .sj *::before,
 .sj *::after {

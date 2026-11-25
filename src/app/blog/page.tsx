@@ -4,18 +4,20 @@ import fs from 'fs';
 import path from 'path';
 import './blog.css';
 import { Metadata } from 'next';
-import { Figtree, Instrument_Sans, Instrument_Serif } from 'next/font/google';
+import { Figtree, IBM_Plex_Mono, IBM_Plex_Sans, Instrument_Sans, Instrument_Serif } from 'next/font/google';
 import SeriesJourney from './SeriesJourney';
-import { JOURNEYS } from './seriesData';
+import { liveJourneys } from './postNav';
 
 const figtree = Figtree({ subsets: ['latin'], weight: ['400', '600', '700', '800'], variable: '--font-figtree' });
 const instrumentSans = Instrument_Sans({ subsets: ['latin'], weight: ['400', '600', '700'], variable: '--font-instrument-sans' });
 const instrumentSerif = Instrument_Serif({ subsets: ['latin'], weight: '400', style: 'italic', variable: '--font-instrument-serif' });
+const plexSans = IBM_Plex_Sans({ subsets: ['latin'], weight: ['400', '600', '700'], variable: '--font-plex-sans' });
+const plexMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['500', '700'], variable: '--font-plex-mono' });
 
 /** Reading time per series post (about 230 words a minute). */
 function seriesReadMinutes(blogsDirectory: string): Record<string, number> {
   const minutes: Record<string, number> = {};
-  const slugs = JOURNEYS.flatMap((j) => j.stages.flatMap((s) => s.posts.map((p) => p.slug)));
+  const slugs = liveJourneys().flatMap((j) => j.stages.flatMap((s) => s.posts.map((p) => p.slug)));
   for (const slug of slugs) {
     if (!slug) continue;
     try {
@@ -77,12 +79,12 @@ export default async function BlogIndexPage() {
           <p>Writing about fullstack systems, artificial intelligence, computer vision, and theoretical physics.</p>
         </article>
 
-        {JOURNEYS.map((series) => (
+        {liveJourneys().map((series) => (
           <SeriesJourney
             key={series.id}
             series={series}
             readMinutes={readMinutes}
-            fontClassName={`${figtree.variable} ${instrumentSans.variable} ${instrumentSerif.variable}`}
+            fontClassName={`${figtree.variable} ${instrumentSans.variable} ${instrumentSerif.variable} ${plexSans.variable} ${plexMono.variable}`}
           />
         ))}
 
