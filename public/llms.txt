@@ -49,7 +49,13 @@ FamCare is an in-home care marketplace in India (babysitting, elder care) booked
 
 ## Writing: Building FamCare case studies
 Long-form engineering write-ups by Harshit Agarwal, each with the problem, design, rejected alternatives, failures and results.
-- [A Voice Agent That Only Drafts](https://www.aharshit123456.space/blog/famcare-voice-agent): an LLM voice interview that only proposes drafts; cost model (~₹9 per interview), model evals, fallbacks and privacy.
-- [A Care Marketplace on One Boring Backend](https://www.aharshit123456.space/blog/famcare-system-design): FamCare's system design; booking state machine with physical guards, real time over Redis pub/sub, Terraform import, staging, OTA patches, feature flags, monitoring.
-- [Honest Slots, Priced Idle Time](https://www.aharshit123456.space/blog/famcare-slots-and-pricing): one eligibility definition shared by six code paths, 270 YAML scenarios on a real database, price drops and evening flash sales.
+- [A Voice Agent That Only Drafts](https://www.aharshit123456.space/blog/famcare-voice-agent): an LLM voice interview that can only propose drafts.
+- [A Care Marketplace on One Boring Backend](https://www.aharshit123456.space/blog/famcare-system-design): the system design behind the whole platform.
+- [Honest Slots, Priced Idle Time](https://www.aharshit123456.space/blog/famcare-slots-and-pricing): one eligibility rule, 270 YAML scenarios, price drops and flash sales.
+- [A Golden Image for Every Screen](https://www.aharshit123456.space/blog/famcare-golden-screens): every customer-app screen rendered and diffed in CI.
+- [Shipping a Flutter App Without the App Store](https://www.aharshit123456.space/blog/famcare-flutter-ota): Shorebird patches, refused diffs, picking the branch, and CI costs.
+- [Who Owns This Alert?](https://www.aharshit123456.space/blog/famcare-alert-ownership): business-invariant monitoring that tags the engineer who owns the area.
+- [Live Captions for Support Calls, Without a New Service](https://www.aharshit123456.space/blog/famcare-live-call-captions): support-call audio to realtime speech-to-text in the admin panel.
+- [The Demand We Couldn't Serve](https://www.aharshit123456.space/blog/famcare-unserved-demand): measuring families who saw no free slot and left.
+- [CRM as an API](https://www.aharshit123456.space/blog/famcare-crm-as-api): coupons, free minutes and support calls from CleverTap journeys, rules kept in the backend.
 - All posts: https://www.aharshit123456.space/blog (RSS: https://www.aharshit123456.space/feed.xml)

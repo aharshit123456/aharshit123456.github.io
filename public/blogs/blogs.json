@@ -59,6 +59,117 @@
     ]
   },
   {
+    "id": "famcare-golden-screens",
+    "slug": "famcare-golden-screens",
+    "title": "A Golden Image for Every Screen",
+    "date": "2026-11-25",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/famcare-golden-screens.md",
+    "description": "How FamCare renders every customer-app screen as a golden image on Linux CI, with captured API data, a frozen clock and a label to accept changes.",
+    "keywords": [
+      "Flutter golden tests",
+      "screenshot testing",
+      "visual regression",
+      "GitHub Actions",
+      "UI review",
+      "FamCare",
+      "Harshit Agarwal"
+    ]
+  },
+  {
+    "id": "famcare-flutter-ota",
+    "slug": "famcare-flutter-ota",
+    "title": "Shipping a Flutter App Without the App Store",
+    "date": "2026-11-25",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/famcare-flutter-ota.md",
+    "description": "How FamCare ships Flutter fixes over the air with Shorebird: release vs patch workflows, why patches get refused, picking the branch, and CI costs.",
+    "keywords": [
+      "Flutter",
+      "Shorebird",
+      "code push",
+      "over-the-air updates",
+      "GitHub Actions",
+      "CI costs",
+      "FamCare",
+      "Harshit Agarwal"
+    ]
+  },
+  {
+    "id": "famcare-alert-ownership",
+    "slug": "famcare-alert-ownership",
+    "title": "Who Owns This Alert?",
+    "date": "2026-11-25",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/famcare-alert-ownership.md",
+    "description": "How FamCare checks business rules every minute, debounces alerts, tags the engineer who owns each area in Slack, and shows team work from git.",
+    "keywords": [
+      "business invariant monitoring",
+      "alert debouncing",
+      "alert ownership",
+      "Slack alerts",
+      "on-call routing",
+      "FamCare",
+      "Harshit Agarwal"
+    ]
+  },
+  {
+    "id": "famcare-live-call-captions",
+    "slug": "famcare-live-call-captions",
+    "title": "Live Captions for Support Calls, Without a New Service",
+    "date": "2026-11-25",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/famcare-live-call-captions.md",
+    "description": "How FamCare streams support-call audio from Exotel through Sarvam realtime speech-to-text into Redis to show live captions in the admin panel.",
+    "keywords": [
+      "live captions",
+      "speech-to-text",
+      "Sarvam",
+      "Exotel",
+      "websockets",
+      "Redis",
+      "FamCare",
+      "Harshit Agarwal"
+    ]
+  },
+  {
+    "id": "famcare-unserved-demand",
+    "slug": "famcare-unserved-demand",
+    "title": "The Demand We Couldn't Serve",
+    "date": "2026-11-25",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/famcare-unserved-demand.md",
+    "description": "How we measured families who saw no free slot and left, by joining app events to a server log of every slot grid shown, and why timing mattered.",
+    "keywords": [
+      "unmet demand",
+      "availability logging",
+      "Mixpanel",
+      "analytics join",
+      "marketplace supply",
+      "FamCare",
+      "Harshit Agarwal"
+    ]
+  },
+  {
+    "id": "famcare-crm-as-api",
+    "slug": "famcare-crm-as-api",
+    "title": "CRM as an API",
+    "date": "2026-11-25",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/famcare-crm-as-api.md",
+    "description": "How FamCare's CRM team hands out coupons, free minutes and support calls from CleverTap journeys while the backend keeps every rule on money.",
+    "keywords": [
+      "CleverTap",
+      "CRM",
+      "webhooks",
+      "idempotency",
+      "coupons",
+      "growth engineering",
+      "FamCare",
+      "Harshit Agarwal"
+    ]
+  },
+  {
     "id": "architecture-decision",
     "slug": "architecture-decision",
     "title": "Architecture Decision (Day 0)",

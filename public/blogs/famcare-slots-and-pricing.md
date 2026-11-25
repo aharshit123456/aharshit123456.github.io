@@ -131,7 +131,7 @@ With availability finally trustworthy, we could ask a better question. About a q
   <figcaption><b>Fig. 2</b> — one hub, twenty days. Only four had a shortage an extra floating caregiver would have fixed.</figcaption>
 </figure>
 
-So the fixes went into the product, not hiring: clear "Full" labels instead of unexplained greyed-out chips, and an "only N left" cue. Almost nine in ten customers who saw an empty day simply picked another date.
+So the fix pointed at the product, not hiring: clear "Full" labels instead of unexplained greyed-out chips, and an "only N left" cue, which I built as a change still in review. On one day we checked, almost nine in ten customers who saw an empty day simply picked another date.
 
 ## Where the suite sits among our tests
 
@@ -314,4 +314,10 @@ Rollout goes to the team first, then one hub for a week, then the rest.
 
 - [A Voice Agent That Only Drafts](/blog/famcare-voice-agent): an LLM voice interview that can only propose drafts.
 - [A Care Marketplace on One Boring Backend](/blog/famcare-system-design): the system design behind the whole platform.
+- [A Golden Image for Every Screen](/blog/famcare-golden-screens): every customer-app screen rendered and diffed in CI.
+- [Shipping a Flutter App Without the App Store](/blog/famcare-flutter-ota): Shorebird patches, refused diffs, picking the branch, and CI costs.
+- [Who Owns This Alert?](/blog/famcare-alert-ownership): business-invariant monitoring that tags the engineer who owns the area.
+- [Live Captions for Support Calls, Without a New Service](/blog/famcare-live-call-captions): support-call audio to realtime speech-to-text in the admin panel.
+- [The Demand We Couldn't Serve](/blog/famcare-unserved-demand): measuring families who saw no free slot and left.
+- [CRM as an API](/blog/famcare-crm-as-api): coupons, free minutes and support calls from CleverTap journeys, rules kept in the backend.
 - [All case studies](/case-studies)

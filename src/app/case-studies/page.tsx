@@ -30,6 +30,42 @@ const FAMCARE_STUDIES = [
     summary:
       'Making every screen agree on who can take a booking, proving it with 270 YAML scenarios on a real database, then pricing idle hours with price drops and evening flash sales.',
   },
+  {
+    slug: 'golden-screens',
+    title: '4. A Golden Image for Every Screen',
+    summary:
+      'Every customer-app screen rendered in CI from captured API data with a frozen clock, so UI review means comparing pictures. Includes what broke when the baseline drifted.',
+  },
+  {
+    slug: 'flutter-ota',
+    title: '5. Shipping a Flutter App Without the App Store',
+    summary:
+      'Shipping Dart fixes over the air with Shorebird: release vs patch, why patches get refused on native diffs, which branch to patch from, and what macOS CI minutes really cost.',
+  },
+  {
+    slug: 'alert-ownership',
+    title: '6. Who Owns This Alert?',
+    summary:
+      'A separate monitor checks business invariants every minute, debounces alerts and tags the engineer who owns the area in Slack, plus an activity view built from git.',
+  },
+  {
+    slug: 'live-call-captions',
+    title: '7. Live Captions for Support Calls, Without a New Service',
+    summary:
+      'Support-call audio streamed from the telephony provider through realtime speech-to-text into the admin panel, and why the AI-offers phase became plain rules.',
+  },
+  {
+    slug: 'unserved-demand',
+    title: '8. The Demand We Couldn\'t Serve',
+    summary:
+      'Joining app analytics to a server log of every slot grid shown, to count families who found no slot and left, and what the numbers said about staffing.',
+  },
+  {
+    slug: 'crm-as-api',
+    title: '9. CRM as an API',
+    summary:
+      'Letting the CRM team grant coupons, free minutes and support calls from CleverTap journeys while the backend keeps every money rule, plus server-side ad conversions.',
+  },
 ];
 
 export default function CaseStudiesPage() {
@@ -47,7 +83,7 @@ export default function CaseStudiesPage() {
           <h1>Case Studies</h1>
           <p>Architectural deep dives into production-grade systems and AI infrastructure.</p>
 
-          <h2>Building FamCare: a three-part series</h2>
+          <h2>Building FamCare: a nine-part series</h2>
           <p>
             Long-form write-ups of systems I built as Lead Engineer at FamCare, a home-care marketplace:
             the problem, the design, the alternatives we rejected, what broke, and what we got out of it.
