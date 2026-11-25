@@ -24,7 +24,9 @@
   top: 0 !important;
   left: 0 !important;
   display: block !important;
-  overflow-x: hidden !important;
+  /* clip, not hidden: hidden makes this a scroll container and breaks the
+     sticky sidebars on wide screens. */
+  overflow-x: clip !important;
   box-sizing: border-box !important;
 }
 
