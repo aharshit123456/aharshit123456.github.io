@@ -1,5 +1,47 @@
 [
   {
+    "id": "niser-iphone-sensor-rig",
+    "slug": "niser-iphone-sensor-rig",
+    "title": "Turning an iPhone into a LiDAR, IMU and GPS Sensor",
+    "date": "2026-11-25",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/niser-iphone-sensor-rig.md",
+    "description": "Two Swift apps from SMLab, NISER: streaming iPhone LiDAR depth, motion and GPS over TCP, and scanning rooms into OBJ meshes with ARKit, plus an audit of the streaming code.",
+    "keywords": [
+      "ARKit",
+      "iPhone LiDAR",
+      "CoreMotion",
+      "CoreLocation",
+      "TCP sockets",
+      "Swift",
+      "sensor streaming",
+      "SLAM",
+      "NISER",
+      "Harshit Agarwal"
+    ]
+  },
+  {
+    "id": "niser-ros-dashboard",
+    "slug": "niser-ros-dashboard",
+    "title": "A Browser Dashboard for a ROS 2 Sensor Rig",
+    "date": "2026-11-25",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/niser-ros-dashboard.md",
+    "description": "Building a Vue dashboard for a ROS 2 sensor rig at SMLab, NISER: rosbridge, compressed camera streams, rosbag recording and playback, a FastAPI backend and a browser terminal.",
+    "keywords": [
+      "ROS 2",
+      "rosbridge",
+      "roslibjs",
+      "Vue",
+      "rosbag",
+      "FastAPI",
+      "xterm.js",
+      "robotics dashboard",
+      "NISER",
+      "Harshit Agarwal"
+    ]
+  },
+  {
     "id": "iiser-bhopal-quantum-workshop",
     "slug": "iiser-bhopal-quantum-workshop",
     "title": "Hands-on Quantum Programming at IISER Bhopal",
