@@ -2,7 +2,7 @@
 
 > Expert Fullstack Engineer, AI Researcher, and Product Architect specializing in high-performance backend systems, cross-platform mobile ecosystems, and advanced Machine Learning pipelines.
 
-- **Main Portfolio:** https://aharshit123456.space/
+- **Main Portfolio:** https://www.aharshit123456.space/
 - **GitHub:** https://github.com/aharshit123456
 - **LinkedIn:** https://www.linkedin.com/in/aharshit123456/
 - **Twitter:** https://twitter.com/aharshit123456
@@ -17,13 +17,14 @@
 
 ## Work Experience & Major Accomplishments
 
-### Famcare — Fullstack Architect & Lead (April 2026 - Present)
-- Architected and delivered the entire FamCARE full-stack ecosystem, scaling a modular FastAPI backend and 3 cross-platform Flutter apps from zero to production.
-- Engineered high-throughput modular monolith architecture with 15+ decoupled services designed for the Strangler Pattern.
-- Developed Order/Booking flows, Razorpay checkout, and multi-channel notification engine (FCM, Fast2SMS, MSG91).
-- Optimized operational velocity, reducing deployment cycles by 70% using Fastlane CI/CD and automating caregiver background checks via SpringVerify.
-- Handled 2,000+ requests/minute and 100 concurrent users with a 100% success rate under stress testing.
-- **Live Links:** 
+### Famcare — Founding Engineer & Tech Lead (April 2026 - Present)
+FamCare is an in-home care marketplace in India (babysitting, elder care) booked by the hour from an app.
+- Architected and delivered the platform from zero to production: one FastAPI + PostgreSQL backend (a modular monolith of about 100 domain packages and 1,400+ API routes) serving four clients (a Flutter customer app, a React + Capacitor caregiver app, a Next.js admin dashboard, and a public live-tracking page).
+- Built a voice agent (LiveKit, speech-to-text, LLM extractor) that drafts a child's care profile from a three-minute conversation; nothing is saved until a parent confirms it.
+- Wrote the shared caregiver-eligibility module and a suite of 270 YAML scenarios run against a real Postgres database, so every screen agrees on who can take a booking.
+- Designed price drops for idle caregiver hours and evening flash sales (stored, signed sale records with push notifications and an in-app countdown strip).
+- Imported hand-built AWS production into Terraform with zero drift, set up staging on a shared load balancer, Shorebird over-the-air app patches, in-house feature flags and business-invariant monitoring.
+- **Live Links:**
   - [Google Play Store](https://play.google.com/store/apps/details?id=com.famcare.praja&pcampaignid=web_share)
   - [Apple App Store](https://apps.apple.com/in/app/famcare-caregiver-in-minutes/id6761720384)
 
@@ -45,3 +46,10 @@
 - **WHAM! OTT:** Hybrid video engine with an immersive comic-book UI, cross-platform video players, and smooth state handling.
 - **PreviouslyOn:** Social TV tracking platform with smart AI recommendations, Trakt.tv integrations, and community features.
 - **ORB-SLAM3:** Implementation of accurate Visual-Inertial SLAM libraries for autonomous navigation.
+
+## Writing: Building FamCare case studies
+Long-form engineering write-ups by Harshit Agarwal, each with the problem, design, rejected alternatives, failures and results.
+- [A Voice Agent That Only Drafts](https://www.aharshit123456.space/blog/famcare-voice-agent): an LLM voice interview that only proposes drafts; cost model (~₹9 per interview), model evals, fallbacks and privacy.
+- [A Care Marketplace on One Boring Backend](https://www.aharshit123456.space/blog/famcare-system-design): FamCare's system design; booking state machine with physical guards, real time over Redis pub/sub, Terraform import, staging, OTA patches, feature flags, monitoring.
+- [Honest Slots, Priced Idle Time](https://www.aharshit123456.space/blog/famcare-slots-and-pricing): one eligibility definition shared by six code paths, 270 YAML scenarios on a real database, price drops and evening flash sales.
+- All posts: https://www.aharshit123456.space/blog

@@ -4,10 +4,10 @@ import '../blog/blog.css';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Publications & Papers | Harshit Agarwal Portfolio',
+  title: 'Publications & Papers',
   description: 'Academic papers, conference publications, and journal submissions by Harshit Agarwal.',
   alternates: {
-    canonical: 'https://aharshit123456.space/papers',
+    canonical: 'https://www.aharshit123456.space/papers',
   },
 };
 

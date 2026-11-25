@@ -4,10 +4,10 @@ import '../blog/blog.css';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Uses & Stack | Harshit Agarwal Portfolio',
+  title: 'Uses & Stack',
   description: 'Hardware, software, IDE setup, and hosting stack used by Harshit Agarwal.',
   alternates: {
-    canonical: 'https://aharshit123456.space/uses',
+    canonical: 'https://www.aharshit123456.space/uses',
   },
 };
 

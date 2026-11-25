@@ -4,10 +4,10 @@ import '../blog/blog.css';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Datasets | Harshit Agarwal Portfolio',
+  title: 'Datasets',
   description: 'Curated and published datasets for AI research, gait analysis, and exploit forecasting.',
   alternates: {
-    canonical: 'https://aharshit123456.space/datasets',
+    canonical: 'https://www.aharshit123456.space/datasets',
   },
 };
 

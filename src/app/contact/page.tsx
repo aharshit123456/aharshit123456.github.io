@@ -4,10 +4,10 @@ import '../blog/blog.css';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Contact | Harshit Agarwal Portfolio',
+  title: 'Contact',
   description: 'How to contact and connect with Harshit Agarwal.',
   alternates: {
-    canonical: 'https://aharshit123456.space/contact',
+    canonical: 'https://www.aharshit123456.space/contact',
   },
 };
 

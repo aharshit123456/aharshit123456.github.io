@@ -94,3 +94,10 @@ Instead of modifying the original request, we implemented a **Linked-Node Archit
     <div class="stat-label">payment experience for session extensions</div>
   </div>
 </div>
+
+---
+
+**Related reading:**
+
+- [Honest Slots, Priced Idle Time](/blog/famcare-slots-and-pricing): one eligibility rule, 270 YAML scenarios, price drops and flash sales.
+- [A Care Marketplace on One Boring Backend](/blog/famcare-system-design): the system design behind the whole platform.

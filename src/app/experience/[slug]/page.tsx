@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   
   if (!content) {
     return {
-      title: 'Experience Not Found | Harshit Agarwal',
+      title: 'Experience Not Found',
       description: 'The requested experience details could not be found.',
     };
   }
@@ -65,16 +65,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const description = overviewLine ? overviewLine.trim().substring(0, 155).replace(/[*_#`\n\r]/g, '').replace(/&/g, 'and') + '...' : 'Read details about Harshit Agarwal\'s professional experience and accomplishments.';
 
   return {
-    title: `${title} | Harshit Agarwal Portfolio`,
+    title: `${title}`,
     description: description,
     alternates: {
-      canonical: `https://aharshit123456.space/experience/${slug}`,
+      canonical: `https://www.aharshit123456.space/experience/${slug}`,
     },
     openGraph: {
       title: title,
       description: description,
       type: 'article',
-      url: `https://aharshit123456.space/experience/${slug}`,
+      url: `https://www.aharshit123456.space/experience/${slug}`,
       siteName: 'Harshit Agarwal Portfolio',
     },
     twitter: {
@@ -118,12 +118,12 @@ export default async function ExperiencePage({ params }: { params: Promise<{ slu
             "@type": "TechArticle",
             "headline": title,
             "description": description,
-            "url": `https://aharshit123456.space/experience/${slug}`,
+            "url": `https://www.aharshit123456.space/experience/${slug}`,
             "inLanguage": "en-US",
             "author": {
               "@type": "Person",
               "name": "Harshit Agarwal",
-              "url": "https://aharshit123456.space/"
+              "url": "https://www.aharshit123456.space/"
             },
             "publisher": {
               "@type": "Person",

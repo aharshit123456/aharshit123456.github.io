@@ -4,10 +4,10 @@ import '../blog/blog.css';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Speaking & Talks | Harshit Agarwal Portfolio',
+  title: 'Speaking & Talks',
   description: 'Lectures, tech talks, and conference presentations by Harshit Agarwal.',
   alternates: {
-    canonical: 'https://aharshit123456.space/speaking',
+    canonical: 'https://www.aharshit123456.space/speaking',
   },
 };
 

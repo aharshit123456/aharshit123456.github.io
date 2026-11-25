@@ -6,7 +6,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://aharshit123456.space"),
+  metadataBase: new URL("https://www.aharshit123456.space"),
 
   title: {
     default: "Harshit Agarwal | AI Researcher | Computational Neuroscience",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     "Computational Neuroscience", "Alzheimer's Research", "Foundation Models",
     "Distributed Systems", "Multimodal Search", "Gait Analysis", "Robotics", "Rancher on EKS"
   ],
-  authors: [{ name: "Harshit Agarwal", url: "https://aharshit123456.space/" }],
+  authors: [{ name: "Harshit Agarwal", url: "https://www.aharshit123456.space/" }],
   creator: "Harshit Agarwal",
   publisher: "Harshit Agarwal",
   category: "technology",
@@ -31,13 +31,13 @@ export const metadata: Metadata = {
     telephone: false,
   },
   alternates: {
-    canonical: "https://aharshit123456.space",
+    canonical: "https://www.aharshit123456.space",
   },
 
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://aharshit123456.space/",
+    url: "https://www.aharshit123456.space/",
     siteName: "Harshit Agarwal | The Space",
     title: "Harshit Agarwal | AI Researcher | Computational Neuroscience",
     description: "AI Researcher & Software Engineer specializing in Computational Neuroscience, Distributed Systems, Multimodal Search, and ML Infrastructure.",
@@ -103,27 +103,27 @@ export default function RootLayout({
               "@graph": [
                 {
                   "@type": "WebSite",
-                  "@id": "https://aharshit123456.space/#website",
-                  "url": "https://aharshit123456.space/",
+                  "@id": "https://www.aharshit123456.space/#website",
+                  "url": "https://www.aharshit123456.space/",
                   "name": "Harshit Agarwal | The Space",
                   "description": "Scientific Research portfolio and tech blog of Harshit Agarwal"
                 },
                 {
                   "@type": "ProfilePage",
-                  "@id": "https://aharshit123456.space/#profilepage",
-                  "url": "https://aharshit123456.space/",
+                  "@id": "https://www.aharshit123456.space/#profilepage",
+                  "url": "https://www.aharshit123456.space/",
                   "name": "Harshit Agarwal | Fullstack Engineer & AI Researcher Portfolio",
                   "description": "Professional space and portfolio of Harshit Agarwal, Fullstack Architect & AI Specialist.",
                   "mainEntity": {
-                    "@id": "https://aharshit123456.space/#person"
+                    "@id": "https://www.aharshit123456.space/#person"
                   }
                 },
                 {
                   "@type": "Person",
-                  "@id": "https://aharshit123456.space/#person",
+                  "@id": "https://www.aharshit123456.space/#person",
                   "name": "Harshit Agarwal",
-                  "url": "https://aharshit123456.space/",
-                  "image": "https://aharshit123456.space/profile_new.jpg",
+                  "url": "https://www.aharshit123456.space/",
+                  "image": "https://www.aharshit123456.space/profile_new.jpg",
                   "sameAs": [
                     "https://github.com/aharshit123456",
                     "https://www.linkedin.com/in/aharshit123456/",
@@ -169,7 +169,7 @@ export default function RootLayout({
                 },
                 {
                   "@type": "FAQPage",
-                  "@id": "https://aharshit123456.space/#faq",
+                  "@id": "https://www.aharshit123456.space/#faq",
                   "mainEntity": [
                     {
                       "@type": "Question",

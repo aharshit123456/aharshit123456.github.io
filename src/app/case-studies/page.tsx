@@ -4,10 +4,10 @@ import '../blog/blog.css';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Case Studies | Harshit Agarwal Portfolio',
+  title: 'Case Studies',
   description: 'Deep-dive case studies: the Building FamCare series (voice agent, system design, slots and pricing), plus the FamCARE marketplace, shoppin\' AI discovery, and WHAM! OTT video engine.',
   alternates: {
-    canonical: 'https://aharshit123456.space/case-studies',
+    canonical: 'https://www.aharshit123456.space/case-studies',
   },
 };
 

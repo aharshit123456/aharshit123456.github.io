@@ -4,10 +4,10 @@ import '../blog/blog.css';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Artificial Intelligence | Harshit Agarwal Portfolio',
+  title: 'Artificial Intelligence',
   description: 'AI research, machine learning pipelines, and deep neural network developments by Harshit Agarwal.',
   alternates: {
-    canonical: 'https://aharshit123456.space/ai',
+    canonical: 'https://www.aharshit123456.space/ai',
   },
 };
 

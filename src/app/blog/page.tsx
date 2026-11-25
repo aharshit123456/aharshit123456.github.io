@@ -6,10 +6,10 @@ import './blog.css';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Blog | Harshit Agarwal Tech Blog',
+  title: 'Blog',
   description: 'Read the latest blog posts and research articles by Harshit Agarwal.',
   alternates: {
-    canonical: 'https://aharshit123456.space/blog',
+    canonical: 'https://www.aharshit123456.space/blog',
   },
 };
 

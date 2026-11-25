@@ -4,10 +4,10 @@ import '../../blog/blog.css';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Drug Discovery Research | Harshit Agarwal',
+  title: 'Drug Discovery Research',
   description: 'AI-driven molecular generation, graph neural networks for target binding affinity prediction.',
   alternates: {
-    canonical: 'https://aharshit123456.space/research/drug-discovery',
+    canonical: 'https://www.aharshit123456.space/research/drug-discovery',
   },
 };
 

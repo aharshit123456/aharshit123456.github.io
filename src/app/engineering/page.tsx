@@ -4,10 +4,10 @@ import '../blog/blog.css';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Software Engineering | Harshit Agarwal Portfolio',
+  title: 'Software Engineering',
   description: 'Software engineering practices, clean code architectures, and developer velocity optimizations by Harshit Agarwal.',
   alternates: {
-    canonical: 'https://aharshit123456.space/engineering',
+    canonical: 'https://www.aharshit123456.space/engineering',
   },
 };
 

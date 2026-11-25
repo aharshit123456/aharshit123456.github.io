@@ -4,10 +4,10 @@ import '../../blog/blog.css';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Foundation Models Research | Harshit Agarwal',
+  title: 'Foundation Models Research',
   description: 'Optimizing transformers, rewiring self-attention mechanisms, and scaling multimodal VLLM systems.',
   alternates: {
-    canonical: 'https://aharshit123456.space/research/foundation-models',
+    canonical: 'https://www.aharshit123456.space/research/foundation-models',
   },
 };
 

@@ -50,3 +50,9 @@ What fast moving consumer startups forget is that features aren't slowed down by
 Good software isn't about writing code fast and shipping fast. It's about writing good code that gets tested by a thousand real users before the first bug makes it to production.
 
 Speed without discipline just gets you to broken faster.
+
+---
+
+**Related reading:**
+
+- [A Care Marketplace on One Boring Backend](/blog/famcare-system-design): the system design behind the whole platform.

@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://aharshit123456.space';
+  const baseUrl = 'https://www.aharshit123456.space';
   
   const staticRoutes: MetadataRoute.Sitemap = [
     {

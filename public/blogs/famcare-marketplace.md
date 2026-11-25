@@ -129,3 +129,10 @@ Speed of delivery is a feature. I automated the entire mobile deployment pipelin
 ---
 
 *If you’re interested in the code behind these patterns, reach out to discuss distributed systems.*
+
+---
+
+**Related reading:**
+
+- [A Care Marketplace on One Boring Backend](/blog/famcare-system-design): the system design behind the whole platform.
+- [Honest Slots, Priced Idle Time](/blog/famcare-slots-and-pricing): one eligibility rule, 270 YAML scenarios, price drops and flash sales.

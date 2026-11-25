@@ -4,10 +4,10 @@ import '../blog/blog.css';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Open Source | Harshit Agarwal Portfolio',
+  title: 'Open Source',
   description: 'Open source packages, libraries, and generative video tools authored by Harshit Agarwal.',
   alternates: {
-    canonical: 'https://aharshit123456.space/open-source',
+    canonical: 'https://www.aharshit123456.space/open-source',
   },
 };
 

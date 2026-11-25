@@ -4,10 +4,10 @@ import '../blog/blog.css';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Systems Engineering | Harshit Agarwal Portfolio',
+  title: 'Systems Engineering',
   description: 'Distributed systems, high-performance backends, and cloud orchestration architectures by Harshit Agarwal.',
   alternates: {
-    canonical: 'https://aharshit123456.space/systems',
+    canonical: 'https://www.aharshit123456.space/systems',
   },
 };
 

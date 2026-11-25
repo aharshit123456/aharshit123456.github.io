@@ -4,10 +4,10 @@ import '../blog/blog.css';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Research | Harshit Agarwal Portfolio',
+  title: 'Research',
   description: 'AI Research interests and publications of Harshit Agarwal, specializing in Computational Neuroscience, Protein Engineering, Drug Discovery, Cybersecurity, and Foundation Models.',
   alternates: {
-    canonical: 'https://aharshit123456.space/research',
+    canonical: 'https://www.aharshit123456.space/research',
   },
 };
 

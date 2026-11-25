@@ -186,3 +186,9 @@ Alerts are debounced (two failures to go red, two passes to recover). They go to
 ---
 
 *Stack in this post: Python, FastAPI, asyncpg, Postgres (Aurora Serverless v2), Redis, AWS ECS Fargate, Terraform, Flutter with Shorebird, React with Capacitor, Next.js, Sentry, Prometheus, Grafana. Counts are from the backend repository in November 2026.*
+
+## More from Building FamCare
+
+- [A Voice Agent That Only Drafts](/blog/famcare-voice-agent): an LLM voice interview that can only propose drafts.
+- [Honest Slots, Priced Idle Time](/blog/famcare-slots-and-pricing): one eligibility rule, 270 YAML scenarios, price drops and flash sales.
+- [All case studies](/case-studies)

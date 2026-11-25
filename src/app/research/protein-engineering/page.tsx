@@ -4,10 +4,10 @@ import '../../blog/blog.css';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Protein Engineering Research | Harshit Agarwal',
+  title: 'Protein Engineering Research',
   description: 'Deep generative models applied to protein structure prediction, fold analysis, and synthetic design.',
   alternates: {
-    canonical: 'https://aharshit123456.space/research/protein-engineering',
+    canonical: 'https://www.aharshit123456.space/research/protein-engineering',
   },
 };
 

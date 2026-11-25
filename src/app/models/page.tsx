@@ -4,10 +4,10 @@ import '../blog/blog.css';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Models | Harshit Agarwal Portfolio',
+  title: 'Models',
   description: 'Trained deep learning model weights, fine-tuned transformer checkpoints, and inference pipelines.',
   alternates: {
-    canonical: 'https://aharshit123456.space/models',
+    canonical: 'https://www.aharshit123456.space/models',
   },
 };
 

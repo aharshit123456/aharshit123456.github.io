@@ -309,3 +309,9 @@ Rollout goes to the team first, then one hub for a week, then the rest.
 ---
 
 *Stack in this piece: Python, FastAPI, Postgres, pytest with YAML scenario specs, freezegun. Figures are ratios and counts from the backend repository and internal analyses in October and November 2026; no prices or revenue are shown.*
+
+## More from Building FamCare
+
+- [A Voice Agent That Only Drafts](/blog/famcare-voice-agent): an LLM voice interview that can only propose drafts.
+- [A Care Marketplace on One Boring Backend](/blog/famcare-system-design): the system design behind the whole platform.
+- [All case studies](/case-studies)

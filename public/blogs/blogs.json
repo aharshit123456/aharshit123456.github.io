@@ -5,7 +5,18 @@
     "title": "A Voice Agent That Only Drafts",
     "date": "2026-11-25",
     "author": "Harshit Agarwal",
-    "file": "/blogs/famcare-voice-agent.md"
+    "file": "/blogs/famcare-voice-agent.md",
+    "description": "How I built FamCare's voice agent: parents talk for three minutes, an LLM drafts the Baby Passport, and nothing is saved until a parent confirms it.",
+    "keywords": [
+      "voice AI agent",
+      "LLM safety",
+      "LiveKit",
+      "speech-to-text",
+      "LLM evals",
+      "human in the loop",
+      "FamCare",
+      "Harshit Agarwal"
+    ]
   },
   {
     "id": "famcare-system-design",
@@ -13,7 +24,20 @@
     "title": "A Care Marketplace on One Boring Backend",
     "date": "2026-11-25",
     "author": "Harshit Agarwal",
-    "file": "/blogs/famcare-system-design.md"
+    "file": "/blogs/famcare-system-design.md",
+    "description": "System design of FamCare's home-care marketplace: one FastAPI backend, four apps, a booking state machine, Terraform import, OTA patches and flags.",
+    "keywords": [
+      "system design",
+      "FastAPI",
+      "PostgreSQL",
+      "state machine",
+      "Terraform import",
+      "AWS ECS",
+      "feature flags",
+      "Shorebird",
+      "FamCare",
+      "Harshit Agarwal"
+    ]
   },
   {
     "id": "famcare-slots-and-pricing",
@@ -21,7 +45,18 @@
     "title": "Honest Slots, Priced Idle Time",
     "date": "2026-11-25",
     "author": "Harshit Agarwal",
-    "file": "/blogs/famcare-slots-and-pricing.md"
+    "file": "/blogs/famcare-slots-and-pricing.md",
+    "description": "How FamCare made every screen agree on who can take a booking, proved it with 270 YAML scenarios, then priced idle hours with drops and flash sales.",
+    "keywords": [
+      "scenario testing",
+      "YAML test suite",
+      "dynamic pricing",
+      "price drops",
+      "flash sales",
+      "marketplace capacity",
+      "FamCare",
+      "Harshit Agarwal"
+    ]
   },
   {
     "id": "architecture-decision",

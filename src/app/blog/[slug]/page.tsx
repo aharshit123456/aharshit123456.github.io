@@ -7,6 +7,7 @@ import path from 'path';
 import './../blog.css';
 import { Metadata } from 'next';
 import InteractiveArticle from '@/components/portfolio/InteractiveArticle';
+import { getBlogMeta, SITE_URL } from '../blogMeta';
 
 // This function tells Next.js which paths to pre-render at build time
 export async function generateStaticParams() {
@@ -43,49 +44,40 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   
   if (!content) {
     return {
-      title: 'Blog Not Found | Harshit Agarwal',
+      title: 'Blog Not Found',
       description: 'The requested blog post could not be found.',
     };
   }
 
-  // Extract the first H1 for the title
-  const titleMatch = content.match(/^# (.*)/m);
-  const title = titleMatch ? titleMatch[1].replace(/&/g, 'and') : 'Blog Post';
-  
-  // Extract the first paragraph for the description using our advanced crawler
-  const lines = content.split('\n');
-  const overviewLine = lines.find(line => {
-    const trimmed = line.trim();
-    return trimmed.length > 0 && 
-           !trimmed.startsWith('#') && 
-           !trimmed.startsWith('*') && 
-           !trimmed.startsWith('-') &&
-           !trimmed.includes('Duration:') &&
-           !trimmed.includes('Role:') &&
-           !trimmed.includes('Website:');
-  });
-  const description = overviewLine ? overviewLine.trim().substring(0, 155).replace(/[*_#`\n\r]/g, '').replace(/&/g, 'and') + '...' : 'Read this latest blog post on Harshit Agarwal\'s Tech Blog.';
+  const meta = getBlogMeta(slug, content);
+  const ogImage = `${meta.url}/opengraph-image`;
 
   return {
-    title: `${title} | Harshit Agarwal Tech Blog`,
-    description: description,
+    title: meta.title,
+    description: meta.description,
     alternates: {
-      canonical: `https://aharshit123456.space/blog/${slug}`,
+      canonical: meta.url,
     },
     openGraph: {
-      title: title,
-      description: description,
+      title: meta.title,
+      description: meta.description,
       type: 'article',
-      url: `https://aharshit123456.space/blog/${slug}`,
+      url: meta.url,
       siteName: 'Harshit Agarwal Portfolio',
+      publishedTime: meta.datePublished,
+      modifiedTime: meta.dateModified,
+      authors: [SITE_URL],
+      tags: meta.keywords,
     },
     twitter: {
       card: 'summary_large_image',
-      title: title,
-      description: description,
+      title: meta.title,
+      description: meta.description,
+      creator: '@aharshit123456',
+      images: [ogImage],
     },
-    keywords: ['Tech Blog', 'Software Engineering', 'System Architecture', 'Harshit Agarwal', 'AI'],
-    authors: [{ name: 'Harshit Agarwal' }],
+    keywords: meta.keywords,
+    authors: [{ name: 'Harshit Agarwal', url: SITE_URL }],
   };
 }
 
@@ -103,35 +95,42 @@ export default async function BlogPage({ params }: { params: Promise<{ slug: str
     );
   }
 
-  // Dynamic JSON-LD structured data parameters
-  const titleMatch = content.match(/^# (.*)/m);
-  const title = titleMatch ? titleMatch[1] : 'Blog Post';
-  
-  const descriptionMatch = content.match(/^(?!#)(.*)/m);
-  const description = descriptionMatch ? descriptionMatch[1].substring(0, 160).replace(/[*_#`\n\r]/g, '') : 'Read this latest blog post on Harshit Agarwal\'s Tech Blog.';
+  const meta = getBlogMeta(slug, content);
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "@id": `${meta.url}#article`,
+    "headline": meta.title,
+    "description": meta.description,
+    "url": meta.url,
+    "mainEntityOfPage": { "@type": "WebPage", "@id": meta.url },
+    "image": `${meta.url}/opengraph-image`,
+    "inLanguage": "en-US",
+    ...(meta.datePublished ? { "datePublished": meta.datePublished } : {}),
+    ...(meta.dateModified ? { "dateModified": meta.dateModified } : {}),
+    "keywords": meta.keywords.join(', '),
+    "wordCount": meta.wordCount,
+    "author": {
+      "@type": "Person",
+      "@id": `${SITE_URL}/#person`,
+      "name": "Harshit Agarwal",
+      "url": `${SITE_URL}/`,
+      "sameAs": [
+        "https://github.com/aharshit123456",
+        "https://www.linkedin.com/in/aharshit123456/",
+        "https://twitter.com/aharshit123456"
+      ]
+    },
+    "publisher": { "@id": `${SITE_URL}/#person` },
+    "isPartOf": { "@type": "Blog", "@id": `${SITE_URL}/blog`, "name": "Harshit Agarwal Tech Blog" }
+  };
 
   return (
     <div className="blog-outer">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BlogPosting",
-            "headline": title,
-            "description": description,
-            "url": `https://aharshit123456.space/blog/${slug}`,
-            "inLanguage": "en-US",
-            "author": {
-              "@type": "Person",
-              "name": "Harshit Agarwal",
-              "url": "https://aharshit123456.space/"
-            },
-            "publisher": {
-              "@type": "Person",
-              "name": "Harshit Agarwal"
-            }
-          })
+          __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c')
         }}
       />
       <nav className="blog-nav">

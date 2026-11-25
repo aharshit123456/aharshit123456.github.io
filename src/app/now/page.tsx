@@ -4,10 +4,10 @@ import '../blog/blog.css';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Now | Harshit Agarwal Portfolio',
+  title: 'Now',
   description: 'What Harshit Agarwal is working on and learning right now.',
   alternates: {
-    canonical: 'https://aharshit123456.space/now',
+    canonical: 'https://www.aharshit123456.space/now',
   },
 };
 

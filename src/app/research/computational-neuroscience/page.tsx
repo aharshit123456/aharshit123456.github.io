@@ -4,10 +4,10 @@ import '../../blog/blog.css';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Computational Neuroscience Research | Harshit Agarwal',
+  title: 'Computational Neuroscience Research',
   description: 'Deep Learning models applied to Parkinson\'s gait analysis, Alzheimer\'s progression, and EEG signal decoding.',
   alternates: {
-    canonical: 'https://aharshit123456.space/research/computational-neuroscience',
+    canonical: 'https://www.aharshit123456.space/research/computational-neuroscience',
   },
 };
 

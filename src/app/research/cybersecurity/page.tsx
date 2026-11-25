@@ -4,10 +4,10 @@ import '../../blog/blog.css';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Cybersecurity Research | Harshit Agarwal',
+  title: 'Cybersecurity Research',
   description: 'Vulnerability exploitability prediction models, fine-tuned transformer networks, and CTF achievements.',
   alternates: {
-    canonical: 'https://aharshit123456.space/research/cybersecurity',
+    canonical: 'https://www.aharshit123456.space/research/cybersecurity',
   },
 };
 

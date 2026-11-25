@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/private/', '/api/'],
     },
-    sitemap: 'https://aharshit123456.space/sitemap.xml',
+    sitemap: 'https://www.aharshit123456.space/sitemap.xml',
   };
 }

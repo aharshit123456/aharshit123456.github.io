@@ -213,3 +213,9 @@ We went from a spike to a feature-flagged build in under a week, and shipped it 
 ---
 
 *Stack: Flutter, FastAPI, Postgres, LiveKit Agents, ElevenLabs, Gemini, Amazon Bedrock, AWS ECS Fargate. Prices are public list prices as of November 2026.*
+
+## More from Building FamCare
+
+- [A Care Marketplace on One Boring Backend](/blog/famcare-system-design): the system design behind the whole platform.
+- [Honest Slots, Priced Idle Time](/blog/famcare-slots-and-pricing): one eligibility rule, 270 YAML scenarios, price drops and flash sales.
+- [All case studies](/case-studies)

@@ -6,10 +6,10 @@ import '../blog/blog.css';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Work Experience | Harshit Agarwal Portfolio',
+  title: 'Work Experience',
   description: 'Read the detailed professional work experience history of Harshit Agarwal.',
   alternates: {
-    canonical: 'https://aharshit123456.space/experience',
+    canonical: 'https://www.aharshit123456.space/experience',
   },
 };
 
