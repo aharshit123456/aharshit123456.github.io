@@ -8,7 +8,7 @@ type Props = {
   facing: 1 | -1;
   /** Open, happy mouth. */
   cheer: boolean;
-  hat?: 'strawberry' | 'helmet';
+  hat?: 'strawberry' | 'helmet' | 'catmask';
 };
 
 /**
@@ -86,6 +86,20 @@ export default function ChibiEngineer({ walking, facing, cheer, hat }: Props) {
             <path d="M28.6 33.6 Q32 34.4 35.4 33.6 Q34.8 38.4 32 38.4 Q29.2 38.4 28.6 33.6 Z" fill="#7a2e2b" />
           ) : (
             <path d="M29 34 Q32 36.8 35 34" fill="none" stroke="#1d1a19" strokeWidth="1.6" strokeLinecap="round" />
+          )}
+          {hat === 'catmask' && (
+            <g className="chibi-hat">
+              {/* cat ears and a domino mask, after the CosQ logo */}
+              <path d="M15 14 L13.5 1.5 L25 9.5 Z" className="c-badge" />
+              <path d="M49 14 L50.5 1.5 L39 9.5 Z" className="c-badge" />
+              <path d="M16.6 11.5 L16 5 L21.5 9 Z" className="c-trim" />
+              <path d="M47.4 11.5 L48 5 L42.5 9 Z" className="c-trim" />
+              <path
+                fillRule="evenodd"
+                d="M15 24 C18 21 26 21 32 24 C38 21 46 21 49 24 C49.5 29 47 33.5 40 33 C36 32.6 34 30 32 29 C30 30 28 32.6 24 33 C17 33.5 14.5 29 15 24 Z M21.6 28 a3.4 4 0 1 0 6.8 0 a3.4 4 0 1 0 -6.8 0 Z M35.6 28 a3.4 4 0 1 0 6.8 0 a3.4 4 0 1 0 -6.8 0 Z"
+                className="c-badge"
+              />
+            </g>
           )}
           {hat === 'helmet' && (
             <g className="chibi-hat">

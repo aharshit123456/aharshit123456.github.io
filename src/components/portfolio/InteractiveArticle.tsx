@@ -352,6 +352,7 @@ export default function InteractiveArticle({ content, slug }: InteractiveArticle
             // diagrams, photos) under /assets/shoppin/lens/ render at full width.
             const isScreenshot =
               src.includes('/assets/famcare') ||
+              src.includes('/assets/cosq/screens/') ||
               (src.includes('/assets/shoppin') && !src.includes('/assets/shoppin/lens/'));
             if (isScreenshot) {
               return (

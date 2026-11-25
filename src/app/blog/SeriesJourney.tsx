@@ -257,7 +257,7 @@ export default function SeriesJourney({ series, readMinutes, fontClassName = '' 
           <motion.div className="sj-walker" style={{ x }}>
             {bubble && !walking && (
               <motion.div
-                key={bubble + at}
+                key={`bubble-${at}-${bubble}`}
                 className={`sj-bubble${bubbleLeft ? ' sj-bubble--left' : ''}`}
                 initial={{ opacity: 0, scale: 0.6, y: 6 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -268,14 +268,14 @@ export default function SeriesJourney({ series, readMinutes, fontClassName = '' 
               </motion.div>
             )}
             <motion.div
-              key={jumpKey}
+              key={`hop-${jumpKey}`}
               animate={jumpKey && !reduce ? { y: [0, -20, 0, -8, 0] } : { y: 0 }}
               transition={{ duration: 0.65, ease: 'easeOut' }}
             >
               <ChibiEngineer walking={walking} facing={facing} cheer={!!bubble && !walking} hat={series.hat} />
             </motion.div>
             {party > 0 && !reduce && (
-              <div className="sj-confetti" key={party} aria-hidden="true">
+              <div className="sj-confetti" key={`party-${party}`} aria-hidden="true">
                 {Array.from({ length: 16 }, (_, k) => {
                   const angle = (k / 16) * Math.PI * 2;
                   const r = 46 + (k % 4) * 12;

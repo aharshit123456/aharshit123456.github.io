@@ -147,7 +147,7 @@ export const FAMCARE_SERIES = FAMCARE_STAGES.flatMap((s) => s.posts) as (SeriesP
 export type SeriesConfig = {
   id: string;
   /** Visual theme class: colours, type and the character's outfit. */
-  theme: 'famcare' | 'shoppin' | 'niser';
+  theme: 'famcare' | 'shoppin' | 'niser' | 'cosq';
   title: string;
   role: string;
   /** Brand mark in the header. `tile` renders it as a rounded app icon. */
@@ -158,7 +158,7 @@ export type SeriesConfig = {
   /** Small brand image used for reached road marks and confetti. */
   sprite?: string;
   /** Character accessory. */
-  hat?: 'strawberry' | 'helmet';
+  hat?: 'strawberry' | 'helmet' | 'catmask';
   /** Offer the brand's light and dark themes with a toggle (dark first). */
   modes?: boolean;
 };
@@ -358,4 +358,84 @@ export const NISER_JOURNEY: SeriesConfig = {
   ],
 };
 
-export const JOURNEYS: SeriesConfig[] = [FAMCARE_JOURNEY, SHOPPIN_JOURNEY, NISER_JOURNEY];
+/** CosQ (Full-Stack & AI Product Lead), centred on Kurukuru, a college ride-sharing game. */
+export const COSQ_JOURNEY: SeriesConfig = {
+  id: 'cosq',
+  theme: 'cosq',
+  title: 'Building at CosQ',
+  role: 'Full-Stack & AI Product Lead · Kurukuru, Go + Flutter',
+  wordmark: { src: '/assets/cosq/cosq-kurukuru-marks.webp', alt: 'CosQ and Kurukuru', width: 491, height: 200 },
+  hat: 'catmask',
+  greeting: 'Hop on. Let\'s clear some fog.',
+  finale: 'Map explored! 🎉',
+  stages: [
+    {
+      id: 'engine',
+      label: 'Stage 1',
+      title: 'The engine',
+      blurb: 'One Go binary: auth, trips, live matching and the explorable map.',
+      posts: [
+        {
+          slug: 'kurukuru-architecture',
+          icon: '🧱',
+          quip: 'One binary. Every feature.',
+          title: 'Kurukuru: A Ride-Sharing Game on One Go Binary',
+          summary: 'The architecture of a college-only ride-sharing game, in one Go monolith.',
+        },
+        {
+          slug: 'kurukuru-realtime-matching',
+          icon: '🛵',
+          quip: 'Rider found. Pilot on the way!',
+          title: 'Matching Riders in Real Time over WebSockets',
+          summary: 'Live and scheduled ride matching over a Go socket hub.',
+        },
+        {
+          slug: 'kurukuru-fog-of-war',
+          icon: '🌫️',
+          quip: 'New tile uncovered!',
+          title: 'Fog of War on a Real Map with PostGIS',
+          summary: 'Turning GPS trails into an explorable, game-like map.',
+        },
+      ],
+    },
+    {
+      id: 'app',
+      label: 'Stage 2',
+      title: 'The app',
+      blurb: 'A pixel-art Flutter app, quests, and road safety reports.',
+      posts: [
+        {
+          slug: 'kurukuru-pixel-map-app',
+          icon: '🗺️',
+          quip: 'Real streets, pixel grass.',
+          title: 'A Pixel-Art Map App in Flutter',
+          summary: 'The map, the world screen and the parchment pixel UI.',
+        },
+        {
+          slug: 'kurukuru-quests-and-road-watch',
+          icon: '📜',
+          quip: 'Quest accepted. Pothole reported.',
+          title: 'Quests, a Quest Editor and Road Watch',
+          summary: 'Game content you can edit in the app, and road safety reports.',
+        },
+      ],
+    },
+    {
+      id: 'studio',
+      label: 'Stage 3',
+      title: 'The rest of the studio',
+      blurb: 'Streaming, AI transcription, discovery, games and more.',
+      posts: [
+        {
+          slug: 'cosq-ecosystem',
+          icon: '🎬',
+          quip: 'WHAM! Next project!',
+          title: 'Everything Else I Built at CosQ',
+          summary: 'WHAM! OTT, MemoChan, PreviouslyOn and the rest of the CosQ ecosystem.',
+        },
+      ],
+    },
+  ],
+};
+
+export const JOURNEYS: SeriesConfig[] = [FAMCARE_JOURNEY, SHOPPIN_JOURNEY, NISER_JOURNEY, COSQ_JOURNEY];

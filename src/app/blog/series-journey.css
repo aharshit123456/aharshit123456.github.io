@@ -147,6 +147,73 @@
   letter-spacing: -0.3px;
 }
 
+.sj--cosq {
+  /* cosq.in: night purple, pink, purple; comic hard shadows; Outfit type. */
+  --sj-bg: #fff2fa;
+  --sj-card: #ffffff;
+  --sj-text: #1a0630;
+  --sj-muted: #5d4470;
+  --sj-road: #f3c6e2;
+  --sj-trail: #e94fa8;
+  --sj-flag-bg: #6a1b8f;
+  --sj-flag-text: #ffffff;
+  --sj-band: #fbd9ee;
+  --sj-icon-bg: #fff2fa;
+  --sj-here: #6a1b8f;
+  --sj-btn-bg: #e94fa8;
+  --sj-btn-text: #ffffff;
+  --sj-btn-hover: #6a1b8f;
+  --sj-bubble-bg: #ffffff;
+  --sj-bubble-text: #1a0630;
+  --sj-shadow: 4px 4px 0 #6a1b8f;
+  --sj-shadow-hover: 6px 6px 0 #6a1b8f;
+  --sj-c0: #e94fa8;
+  --sj-c1: #6a1b8f;
+  --sj-c2: #a8d8ea;
+  --sj-c3: #ff8ff6;
+  --chibi-hoodie: #1a0630;
+  --chibi-dark: #2b2a66;
+  --chibi-badge: #ff5eb5;
+  --chibi-trim: #ff8ff6;
+  --chibi-laptop: #a8d8ea;
+
+  font-family: var(--font-outfit), 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-image: radial-gradient(rgba(233, 79, 168, 0.13) 1.2px, transparent 1.3px);
+  background-size: 14px 14px;
+}
+
+.sj--cosq .sj-card,
+.sj--cosq .sj-bubble {
+  border: 2px solid #6a1b8f;
+  border-radius: 6px;
+}
+
+.sj--cosq .sj-start {
+  border: 2px solid #1a0630;
+  border-radius: 6px;
+  box-shadow: 3px 3px 0 #6a1b8f;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.sj--cosq .sj-wordmark {
+  height: 44px;
+}
+
+.sj--cosq .sj-title {
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #e94fa8 !important;
+  -webkit-text-fill-color: #e94fa8;
+  text-shadow: 1.5px 1.5px 0 #6a1b8f;
+}
+
+.sj--cosq .sj-stage {
+  border-radius: 6px;
+}
+
 .sj *,
 .sj *::before,
 .sj *::after {

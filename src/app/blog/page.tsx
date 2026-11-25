@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import './blog.css';
 import { Metadata } from 'next';
-import { Figtree, IBM_Plex_Mono, IBM_Plex_Sans, Instrument_Sans, Instrument_Serif } from 'next/font/google';
+import { Figtree, IBM_Plex_Mono, IBM_Plex_Sans, Instrument_Sans, Instrument_Serif, Outfit } from 'next/font/google';
 import SeriesJourney from './SeriesJourney';
 import { liveJourneys } from './postNav';
 
@@ -13,6 +13,7 @@ const instrumentSans = Instrument_Sans({ subsets: ['latin'], weight: ['400', '60
 const instrumentSerif = Instrument_Serif({ subsets: ['latin'], weight: '400', style: 'italic', variable: '--font-instrument-serif' });
 const plexSans = IBM_Plex_Sans({ subsets: ['latin'], weight: ['400', '600', '700'], variable: '--font-plex-sans' });
 const plexMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['500', '700'], variable: '--font-plex-mono' });
+const outfit = Outfit({ subsets: ['latin'], weight: ['400', '600', '800'], variable: '--font-outfit' });
 
 /** Reading time per series post (about 230 words a minute). */
 function seriesReadMinutes(blogsDirectory: string): Record<string, number> {
@@ -79,12 +80,15 @@ export default async function BlogIndexPage() {
           <p>Writing about fullstack systems, artificial intelligence, computer vision, and theoretical physics.</p>
         </article>
 
-        {liveJourneys().map((series) => (
+        {liveJourneys()
+          // Hide a series until at least one of its posts exists.
+          .filter((series) => series.stages.some((stage) => stage.posts.some((p) => p.slug)))
+          .map((series) => (
           <SeriesJourney
             key={series.id}
             series={series}
             readMinutes={readMinutes}
-            fontClassName={`${figtree.variable} ${instrumentSans.variable} ${instrumentSerif.variable} ${plexSans.variable} ${plexMono.variable}`}
+            fontClassName={`${figtree.variable} ${instrumentSans.variable} ${instrumentSerif.variable} ${plexSans.variable} ${plexMono.variable} ${outfit.variable}`}
           />
         ))}
 
