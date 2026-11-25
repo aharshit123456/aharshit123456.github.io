@@ -1128,9 +1128,47 @@
   line-height: 1.4;
 }
 
+/* Compact copy above the article. */
+.post-nav--top {
+  margin: 0 0 32px;
+  padding: 0 0 20px;
+  border-top: none;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.post-nav--top .post-nav-context {
+  margin-bottom: 10px;
+}
+
+.post-nav--top .post-nav-link {
+  gap: 2px;
+  padding: 10px 14px;
+}
+
+.post-nav--top .post-nav-dir {
+  font-size: 12px;
+}
+
+.post-nav--top .post-nav-title {
+  font-size: 13.5px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 @media (max-width: 560px) {
   .post-nav-row {
     grid-template-columns: 1fr;
+  }
+
+  /* Keep the top links side by side on phones so they stay compact. */
+  .post-nav--top .post-nav-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .post-nav--top .post-nav-next {
+    text-align: right;
   }
 
   .post-nav-next {
