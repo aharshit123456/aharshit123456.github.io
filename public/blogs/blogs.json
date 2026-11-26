@@ -264,6 +264,69 @@
     ]
   },
   {
+    "id": "shoppin-object-detection",
+    "slug": "shoppin-object-detection",
+    "title": "Teaching a Model to See Clothes",
+    "date": "2026-11-26",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/shoppin-object-detection.md",
+    "description": "Training YOLO to find every garment in a photo: merging DeepFashion2, ModaNet, Fashionpedia and hand-annotated data into one taxonomy, and why the label schema matters more than the model.",
+    "keywords": [
+      "object detection",
+      "YOLO",
+      "fashion AI",
+      "computer vision",
+      "DeepFashion2",
+      "dataset annotation",
+      "data augmentation",
+      "Roboflow",
+      "shoppin'",
+      "Harshit Agarwal"
+    ]
+  },
+  {
+    "id": "shoppin-infra-terraform",
+    "slug": "shoppin-infra-terraform",
+    "title": "The Day I Moved a Cluster to Another Continent",
+    "date": "2026-11-26",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/shoppin-infra-terraform.md",
+    "description": "Describing a visual-search backend as Terraform, migrating a Kubernetes cluster from India to the US, and turning a crash-prone pipeline into queues and scheduled pods.",
+    "keywords": [
+      "infrastructure as code",
+      "Terraform",
+      "Kubernetes",
+      "cross-region migration",
+      "Rancher",
+      "message queue",
+      "dead letter queue",
+      "strangler pattern",
+      "shoppin'",
+      "Harshit Agarwal"
+    ]
+  },
+  {
+    "id": "shoppin-scrapers",
+    "slug": "shoppin-scrapers",
+    "title": "The Scraper That Learned Every Store's Language",
+    "date": "2026-11-26",
+    "author": "Harshit Agarwal",
+    "file": "/blogs/shoppin-scrapers.md",
+    "description": "How a visual search engine fills its catalogue: a multi-entry scraper that normalises many stores into one table, crops garments with detection and segmentation, and embeds them into a vector database.",
+    "keywords": [
+      "web scraping",
+      "data pipeline",
+      "product catalogue",
+      "data normalization",
+      "image embeddings",
+      "vector database",
+      "object detection",
+      "segmentation",
+      "shoppin'",
+      "Harshit Agarwal"
+    ]
+  },
+  {
     "id": "famcare-crm-as-api",
     "slug": "famcare-crm-as-api",
     "title": "CRM as an API",

@@ -399,4 +399,6 @@ The assignment also asked for "4–5 methods". I attempted twelve, and five work
 ## More from Building shoppin'
 
 - [shoppin' Experience](/blog/shoppin-experience): how I found shoppin', the strange application email, and the interview.
-- The next posts cover object detection, segmentation, image-search embeddings, infrastructure and Terraform, and the scrapers.
+- [The Day I Moved a Cluster to Another Continent](/blog/shoppin-infra-terraform): the cloud setup behind search, written as code, and the day it crossed an ocean.
+- [The Scraper That Learned Every Store's Language](/blog/shoppin-scrapers): how product data from many kinds of shopping sites becomes one searchable catalogue.
+- The detection, segmentation and image-search embedding posts are still coming.

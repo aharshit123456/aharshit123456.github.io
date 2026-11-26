@@ -213,10 +213,11 @@ export const SHOPPIN_JOURNEY: SeriesConfig = {
       blurb: 'Detection and segmentation models that find each garment in a photo.',
       posts: [
         {
+          slug: 'shoppin-object-detection',
           icon: '🔍',
           quip: 'Spotted: baggy jeans, two o\'clock.',
-          title: 'Object detection for fashion photos',
-          summary: 'Finding every garment in a street photo or screenshot.',
+          title: 'Teaching a Model to See Clothes',
+          summary: 'Finding every garment in a street photo or screenshot with YOLO.',
         },
         {
           icon: '✂️',
@@ -247,16 +248,18 @@ export const SHOPPIN_JOURNEY: SeriesConfig = {
       blurb: 'Infrastructure as code, and scrapers that keep the catalogue fresh.',
       posts: [
         {
+          slug: 'shoppin-infra-terraform',
           icon: '🧱',
           quip: 'terraform apply… and breathe.',
-          title: 'Infra and Terraform setup',
-          summary: 'The cloud setup behind search, written as code.',
+          title: 'The Day I Moved a Cluster to Another Continent',
+          summary: 'The cloud setup behind search, written as code, and the day it crossed an ocean.',
         },
         {
+          slug: 'shoppin-scrapers',
           icon: '🕸️',
           quip: 'Every store speaks a different API.',
-          title: 'Scraper mechanics',
-          summary: 'Scrapers that pull product data from the APIs of many kinds of shopping sites.',
+          title: "The Scraper That Learned Every Store's Language",
+          summary: 'Turning many kinds of shopping sites into one clean, searchable product catalogue.',
         },
       ],
     },
