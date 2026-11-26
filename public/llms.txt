@@ -70,6 +70,9 @@ Long-form engineering write-ups by Harshit Agarwal, each with the problem, desig
 ## Writing: Building shoppin'
 
 - [A Google Lens Alternative for a Job Interview, Re-Audited](https://www.aharshit123456.space/blog/shoppin-lens-research): five image similarity search methods (CNN features, ViT, DINOv2, CLIP, LSH), a cosplay lens, and an audit of the metrics.
+- [Teaching a Model to See Clothes](https://www.aharshit123456.space/blog/shoppin-object-detection): training YOLO for fashion object detection, merging DeepFashion2, ModaNet and Fashionpedia into one taxonomy, and why the label schema matters more than the model.
+- [The Day I Moved a Cluster to Another Continent](https://www.aharshit123456.space/blog/shoppin-infra-terraform): infrastructure as code with Terraform, migrating a Kubernetes cluster from India to the US, and turning a pipeline into queues and scheduled pods.
+- [The Scraper That Learned Every Store's Language](https://www.aharshit123456.space/blog/shoppin-scrapers): a multi-source scraper that normalises many Shopify catalogues into one table, attributes gender and product type, crops garments and embeds them into a vector database.
 
 ## Writing: Research at NISER & IISER Bhopal
 
