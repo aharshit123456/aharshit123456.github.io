@@ -6,6 +6,11 @@ To search across online stores, you first have to own a copy of what they sell. 
 
 At shoppin', a fashion visual search app, I spent a good deal of my time on that pipeline. This post is about what it takes to turn many stores, each speaking its own dialect, into one clean catalogue a model can search. It is a tour of a data pipeline that starts at a web request and ends at a vector in a database.
 
+<figure>
+  <img src="/assets/shoppin/archive/vibe-search.webp" alt="shoppin' search: a text query over a grid of outfit results" style="width:100%" />
+  <figcaption><b>Fig. 0</b> — the part users see: search by vibe or by photo, get matching outfits. Everything in this post is the catalogue those results are drawn from.</figcaption>
+</figure>
+
 ## Every store speaks a different language
 
 There is no universal format for "here are my products." Some stores hand it to you politely. A large family of shops runs on the same commerce platform, and that platform exposes a tidy machine-readable feed: ask for a store's product listing as structured data, page through it, and you get clean records with titles, prices, variants and image URLs. That is the easy case, and a surprising number of stores fall into it.
@@ -122,6 +127,11 @@ The harder, and more valuable, grouping happens across stores. The whole promise
 <figure><div class="diagram"><div class="node muted-node">Product<br>(many variants)</div><span class="arrow">→</span><div class="node">one listing<br>per variant</div><span class="arrow">→</span><div class="node">grouped by source product</div><span class="arrow">→</span><div class="node accent">clustered across stores<br>by visual similarity</div></div><figcaption><b>Fig. 4</b> — variants fan out into listings, regroup by product, then cluster across websites by how alike the clothes look. That cross-store cluster is "ten sites compared."</figcaption></figure>
 
 This is where all the earlier care pays off. Grouping by appearance only works if every listing was cropped to the garment and embedded faithfully; a similarity score between two cluttered scenes is noise. Clean inputs upstream are what make a trustworthy grouping downstream.
+
+<figure>
+  <img src="/assets/shoppin/archive/style-discover.webp" alt="shoppin' style discovery: outfits grouped under style labels like 'brenton stripes' and 'old money aesthetics'" style="width:100%" />
+  <figcaption><b>Fig. 5</b> — the payoff of grouping: looks clustered under styles a shopper can browse, every tile a real product drawn from the normalised catalogue.</figcaption>
+</figure>
 
 ## When sites would rather you didn't
 
