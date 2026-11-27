@@ -19,6 +19,11 @@ The CB350 is that bike. Heavier, torquier, the kind of machine that settles into
 
 > The honest case for renting a touring bike: you get the machine that fits the ride, not the one that fits your garage and your EMI. The catch, as I found out at drop-off, is that somebody is counting your kilometres.
 
+<figure class="ride-bike">
+  <img src="/assets/rides/cb350-static.png" alt="The rented maroon Honda CB350" />
+  <figcaption>The bike for the day: a rented Honda CB350, in maroon.</figcaption>
+</figure>
+
 ## The church that drowns
 
 The reason for all of it is the **Shettihalli Rosary Church**, near Hassan, about 220 km west. People call it the floating church, which is a kind lie. It doesn't float. It drowns. Built in the 1860s, abandoned when the Hemavati reservoir came up and the backwaters rose to swallow it. For a few months a year the water is high and only the top of its Gothic shell breaks the surface. As the reservoir recedes, the whole roofless ruin walks back out of the water, streaked and silent, and you can stand inside what used to be a nave with the sky where the ceiling should be.

@@ -51,8 +51,8 @@ export default function RideMap({ stops, fit }: { stops: Stop[]; fit?: [[number,
     // the riding bike
     const bikeIcon = L.divIcon({
       className: 'map-bike',
-      html: `<img src="/assets/rides/cb350.gif" alt="" class="map-bike-img" style="width:70px;height:44px;image-rendering:pixelated;display:block;filter:drop-shadow(1px 2px 2px rgba(0,0,0,.35));"/>`,
-      iconSize: [70, 44], iconAnchor: [35, 38],
+      html: `<img src="/assets/rides/cb350.gif" alt="" class="map-bike-img" style="width:78px;height:55px;image-rendering:pixelated;display:block;filter:drop-shadow(1px 2px 2px rgba(0,0,0,.35));"/>`,
+      iconSize: [78, 55], iconAnchor: [39, 48],
     });
     const bike = L.marker([stops[0].lat, stops[0].lng], { icon: bikeIcon, interactive: false, zIndexOffset: 1000 }).addTo(map);
 
