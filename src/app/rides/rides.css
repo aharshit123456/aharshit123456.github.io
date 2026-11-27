@@ -25,6 +25,11 @@
   font-size: 17px;
   line-height: 1.6;
   min-height: 100vh;
+  /* the global body is display:flex/center for the desktop OS homepage;
+     stretch the rides sheet so the paper fills the viewport instead of
+     shrinking to its content width and leaving dark side gutters */
+  width: 100%;
+  align-self: stretch;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
