@@ -1,15 +1,6 @@
 # A Borrowed CB350 and a Submerged Church
 
-*By Harshit Agarwal*
-
 Some people spend their birthday in a restaurant. I spent mine on a motorcycle I didn't own, chasing a church that spends half the year underwater. The whole loop and every stop on it are mapped up top. This is the story around it.
-
-<div class="stat-row">
-  <div class="stat"><div class="stat-num">600</div><div class="stat-label">km in a day</div></div>
-  <div class="stat"><div class="stat-num">48h</div><div class="stat-label">the bike was mine</div></div>
-  <div class="stat"><div class="stat-num">₹4,033</div><div class="stat-label">all-in, fine included</div></div>
-  <div class="stat"><div class="stat-num">1</div><div class="stat-label">drowned church</div></div>
-</div>
 
 ## Why a rental, and why a CB350
 
@@ -19,20 +10,29 @@ The CB350 is that bike. Heavier, torquier, the kind of machine that settles into
 
 > The honest case for renting a touring bike: you get the machine that fits the ride, not the one that fits your garage and your EMI. The catch, as I found out at drop-off, is that somebody is counting your kilometres.
 
-<figure class="ride-bike">
-  <img src="/assets/rides/cb350-static.png" alt="The rented maroon Honda CB350" />
-  <figcaption>The bike for the day: a rented Honda CB350, in maroon.</figcaption>
-</figure>
-
 ## The church that drowns
 
 The reason for all of it is the **Shettihalli Rosary Church**, near Hassan, about 220 km west. People call it the floating church, which is a kind lie. It doesn't float. It drowns. Built in the 1860s, abandoned when the Hemavati reservoir came up and the backwaters rose to swallow it. For a few months a year the water is high and only the top of its Gothic shell breaks the surface. As the reservoir recedes, the whole roofless ruin walks back out of the water, streaked and silent, and you can stand inside what used to be a nave with the sky where the ceiling should be.
 
 A building that disappears and comes back, every single year, on a schedule. Riding to it on the morning I turned a year older felt like the right kind of symbolism without having to say it out loud. I mostly just wanted to see it. The pre-dawn run out of Bengaluru is the best part of any trip from this city, and the roads around Hassan are green and underrated. I reached, I walked the ruin, rolled out onto the bridge for the full view, poked around the village behind it, and then turned around and rode all the way back the same day, because the whole point was that it fit in a day.
 
+## I planned where to quit before I planned where to go
+
+The night before, this wasn't even a one-church trip. I'd picked up the CB350 on the evening of the 6th and sketched out something more ambitious: Devarayanadurga hills first, up through the boulders around sunrise, then cut west to Shettihalli, then home. Two destinations in one day, on a bike I'd had for all of a few hours.
+
+By morning the plan was already negotiating with me. The forecast wasn't clean — there was rain in it, and wet hill roads on an unfamiliar rented bike are exactly the combination you're meant to respect. So DD Hills quietly fell off the list before I'd even started the engine, and the ride shrank to the one thing I actually cared about: the church.
+
+Even then I didn't fully commit. Somewhere in the late morning I caught myself doing the thing cautious riders do — building escape hatches. I gave myself turn-around points. **Yediyur**, if I was already tired. **Channarayapatna**, if I was having second thoughts. **Hassan** was the real line: reach it still feeling fresh and I'd earned the last push to Shettihalli; roll in tired and I'd turn around with no shame and call it a good morning out.
+
+Then there was the fuel. Somewhere past halfway the needle was sitting on two pegs, and the question quietly changed from *will I reach* to *will I reach and still get home.* That second clause is the one that actually matters on a day ride, and it's the one I'd been ignoring.
+
+> It's a funny thing to admit about a 600 km day: it started with me planning exactly where I'd give up.
+
+I didn't give up at any of them. Yediyur came and went, Channarayapatna came and went, and by Hassan the question had answered itself. But I'm glad the doubt was there. A ride you're certain about from start to finish is just a commute. This one I had to keep choosing to finish.
+
 ## The one number that surprised me
 
-When I handed the bike back, the total was higher than the sticker price, and the reason is the only bit of this ride worth doing maths on.
+When I handed the bike back, the total was higher than the sticker price — and then I actually did the maths and realised it wasn't the rip-off it looked like.
 
 <div class="receipt">
   <h4>🧾 Drop-off receipt</h4>
@@ -43,16 +43,26 @@ When I handed the bike back, the total was higher than the sticker price, and th
   <div class="row total"><span>TOTAL</span><span class="amt">₹4,033</span></div>
 </div>
 
-The rental itself was genuinely cheap. The thing that bit me was the **kilometre allowance**. Rentals come with a daily free-kilometre cap, and everything past it is charged per kilometre. My ₹1,400 fine, at roughly ₹4 a kilometre, means I rode about **350 km past the allowance** baked into a two-day booking. A 600 km round trip against an allowance of a couple hundred kilometres was always going to spill over. I just didn't do the maths before I left.
+That ₹1,400 line is the one that makes you wince. It's the **excess-kilometre charge**: the rental comes with a distance cap baked into the price, and everything past it is billed per kilometre — here, ₹4. At that rate the fine works out to roughly 350 km past my allowance, which tracks for a 600 km day.
 
-> Had I booked a higher-kilometre package up front, the same ride lands near **₹2,600**. I paid the difference for not reading the tariff.
+But here's the part I only worked out afterward, staring at the booking page. The CB350 is sold in distance tiers — on a two-day booking, something like ₹1,350 for ~145 km, ₹2,700 for ~420 km, ₹4,600 for ~780 km, each with ₹4/km beyond. Push a 600 km day through all three:
+
+- Smallest tier + excess: ₹1,350 + 455 × ₹4 ≈ **₹3,180**
+- Middle tier + excess: ₹2,700 + 180 × ₹4 ≈ **₹3,420**
+- Biggest tier, no excess at all: **₹4,600**
+
+The "safe" instinct — buy the big kilometre package up front so you never see an excess charge — is the *most* expensive way to ride 600 km. The scary-looking fine turned out to be roughly the cheapest path through the pricing. So I didn't actually overpay for not reading the tariff. A 600 km day on a rented CB350 just costs about three grand before fuel, however you slice the tiers. The excess line only *looks* like a penalty.
+
+And the base rate wasn't a robbery to begin with. My ₹1,833 for two days is about ₹900 a day, which sits at the cheap end of what a 350 goes for in this city — a Classic 350 or a CB350 here runs anywhere from roughly ₹900 to ₹1,700 a day depending on who you rent from. I wasn't paying a tourist tax. I was paying the going rate, and a kind one.
+
+> I spent the ride home bracing for a rip-off at drop-off. The maths says the opposite: padding the booking to dodge that fine would've cost more, not less.
 
 Was it worth it? Completely. That money bought me the exact bike I wanted, 600 km of road, and a drowned church on my birthday, with zero commitment the morning after. As a transport decision it would've been silly. But this was never about transport.
 
 ## If you ride this
 
 - **Rent the ride, not the garage.** For a one-off long haul, the right rented bike beats owning the wrong one. You pay for the experience, not the depreciation.
-- **Buy the kilometres up front.** Free-km caps are where rentals make their margin; the excess rate is always worse. On a 600 km day, price the distance package, not the day rate.
+- **Do the kilometre maths — but don't assume the big package is cheaper.** Rentals bill distance in tiers plus a per-km excess rate. For a long one-day haul, the smallest tier plus excess often beats padding the booking with kilometres you're overpaying for anyway. Price both before you book.
 - **It fits in a day.** Bengaluru to Shettihalli and back is one long, early start. You don't need a week of leave to feel like you went somewhere. The chai cabins and the breakfast and lunch spots worth pulling over at are all marked on the map above.
 - **Pick a destination with a little poetry.** A church that drowns and resurfaces every year beats a restaurant. You remember the ones that mean something.
 

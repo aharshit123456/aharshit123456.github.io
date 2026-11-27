@@ -59,14 +59,6 @@
           "label": "Toll gate"
         },
         {
-          "name": "Kadamba Veg, Bellur Cross",
-          "kind": "food",
-          "lat": 12.96307,
-          "lng": 76.77213,
-          "label": "Lunch / dinner",
-          "treat": "The sit-down veg thali, right by the toll gate — ideal on the way back."
-        },
-        {
           "name": "Channarayapatna Toll",
           "kind": "toll",
           "lat": 12.905,
@@ -111,6 +103,14 @@
           "lng": 76.0046051,
           "label": "Village offroad",
           "note": "Dropped off the tarmac and picked my way around the village to the little Masti Gudi shrine."
+        },
+        {
+          "name": "Kadamba Veg, Bellur Cross",
+          "kind": "food",
+          "lat": 12.96307,
+          "lng": 76.77213,
+          "label": "Dinner · on the way back",
+          "note": "The proper sit-down veg thali at Bellur Cross, caught on the ride home."
         },
         {
           "name": "Kunigal",

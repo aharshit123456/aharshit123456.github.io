@@ -23,14 +23,14 @@ export default function RideGallery({ shots }: { shots: Shot[] }) {
   if (!shots?.length) return null;
 
   return (
-    <section className="gal-wrap">
+    <section className="gal-wrap reveal">
       <div className="gal-inner">
         <p className="rt-kick">From the road</p>
         <h2 className="rt-title">The gallery</h2>
       </div>
       <div className="gal-grid">
         {shots.map((s, idx) => (
-          <button key={idx} className="gal-item" onClick={() => setI(idx)} aria-label={s.cap}>
+          <button key={idx} className="gal-item reveal" onClick={() => setI(idx)} aria-label={s.cap}>
             <img src={s.type === 'video' ? s.poster : s.src} alt={s.cap} loading="lazy" />
             {s.type === 'video' && <span className="gal-play" aria-hidden="true">▶</span>}
             <span className="gal-cap">{s.cap}</span>

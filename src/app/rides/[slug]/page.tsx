@@ -6,8 +6,7 @@ import { Metadata } from 'next';
 import '../../blog/blog.css';
 import '../rides.css';
 import InteractiveArticle from '@/components/portfolio/InteractiveArticle';
-import MapHero from '../MapHero';
-import RideTimeline from '../RideTimeline';
+import JourneyClient from '../JourneyClient';
 import RideGallery, { type Shot } from '../RideGallery';
 import type { Stop } from '../RideMap';
 
@@ -93,35 +92,66 @@ export default async function RidePage({ params }: { params: Promise<{ slug: str
       <script type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
 
-      {/* full-bleed real map hero */}
-      <section className="ride-hero">
-        {ride.meta?.map && <MapHero stops={ride.meta.map.stops} fit={ride.meta.map.fit} />}
-        <div className="ride-hero-top">
-          <Link href="/rides" className="ride-back">← All rides</Link>
-          <span className="ride-badge">THE RIDE LOG</span>
+      {/* clean editorial hero */}
+      <header className="ed-hero">
+        <div className="ed-hero-inner">
+          <div className="ed-hero-text">
+            <Link href="/rides" className="ed-back">← All rides</Link>
+            <p className="ed-kick"><span>Ride Log 01</span>{dateStr}</p>
+            <h1>{ride.meta?.title}</h1>
+            <p className="ed-sub">A solo birthday ride from a sleeping Bengaluru out to the church at Shettihalli and back &mdash; {ride.meta?.distance}, on a rented {ride.meta?.bike}.</p>
+            <dl className="ed-meta">
+              <div><dt>{ride.meta?.distance}</dt><dd>in a day</dd></div>
+              <div><dt>13</dt><dd>stops</dd></div>
+              <div><dt>1</dt><dd>drowned church</dd></div>
+            </dl>
+          </div>
+          <div className="ed-hero-bike">
+            <img src="/assets/rides/cb350-static.png" alt="The rented Honda CB350" />
+            <span className="ed-bike-cap">The ride for the day</span>
+          </div>
         </div>
-        <div className="ride-hero-title">
-          {dateStr && <p className="ride-kick">{dateStr} · {ride.meta?.route}</p>}
-          <h1>{ride.meta?.title}</h1>
-          <p className="ride-hero-sub">{ride.meta?.distance} · on a {ride.meta?.bike} · tap a pin, or scroll for the stops worth making</p>
-          {dirUrl && (
+      </header>
+
+      {/* INTERACTIVE JOURNEY: step through the route, stop by stop */}
+      <section className="journey-section reveal" id="ride-route">
+        {ride.meta?.map && <JourneyClient stops={ride.meta.map.stops} fit={ride.meta.map.fit} />}
+        {dirUrl && (
+          <div className="journey-foot">
+            <span className="map-foot-hint">prefer to just ride it?</span>
             <a className="ride-dir" href={dirUrl} target="_blank" rel="noopener noreferrer">
-              🧭 Open the full route in Google Maps →
+              Open the full route in Google Maps →
             </a>
-          )}
-        </div>
+          </div>
+        )}
       </section>
 
-      {ride.meta?.map?.stops && <RideTimeline stops={ride.meta.map.stops} />}
+      {/* STORY SPREAD: article column + data sidebar */}
+      <section className="story-spread reveal">
+        <article className="ride-body">
+          <div className="markdown-body">
+            <InteractiveArticle content={ride.content.replace(/^#\s.*\r?\n/, '')} slug={slug} />
+          </div>
+          <p className="ride-foot"><Link href="/rides">← back to all rides</Link></p>
+        </article>
+        <aside className="story-side">
+          <div className="side-card reveal side-bike">
+            <img src="/assets/rides/cb350-static.png" alt="The rented Honda CB350" />
+            <span className="side-cap">The ride for the day — a rented Honda CB350</span>
+          </div>
+          <div className="side-card reveal side-facts">
+            <h4>The run</h4>
+            <ul>
+              <li><b>~600</b><span>km in a day</span></li>
+              <li><b>48 h</b><span>rental window</span></li>
+              <li><b>₹4,033</b><span>all-in, fine included</span></li>
+              <li><b>1</b><span>drowned church</span></li>
+            </ul>
+          </div>
+        </aside>
+      </section>
 
       {ride.meta?.gallery && <RideGallery shots={ride.meta.gallery} />}
-
-      <article className="ride-body">
-        <div className="markdown-body">
-          <InteractiveArticle content={ride.content.replace(/^#\s.*\r?\n/, '')} slug={slug} />
-        </div>
-        <p className="ride-foot"><Link href="/rides">← back to all rides</Link></p>
-      </article>
     </div>
   );
 }
