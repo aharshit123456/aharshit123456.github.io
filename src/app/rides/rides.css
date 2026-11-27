@@ -1,0 +1,487 @@
+/* ================================================================== *
+ *  RIDES — a biker's journal. Asphalt, amber, grit. Not a tech blog.  *
+ * ================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Figtree:wght@400;500;700;800&display=swap');
+
+.rides-outer {
+  --r-asphalt: #121318;
+  --r-asphalt-2: #1a1c22;
+  --r-ink: #f4efe6;
+  --r-muted: #9a9183;
+  --r-amber: #f5a524;
+  --r-amber-2: #ff7a1a;
+  --r-green: #3fae89;     /* tank */
+  --r-line: #2a2c33;
+  --r-card: #191b21;
+  --disp: 'Anton', 'Arial Narrow', sans-serif;
+  --body: 'Figtree', system-ui, sans-serif;
+  min-height: 100vh;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 46px, rgba(255,255,255,.012) 46px 48px),
+    radial-gradient(900px 360px at 50% -120px, #23262f 0, transparent 70%),
+    var(--r-asphalt);
+  color: var(--r-ink);
+  font-family: var(--body);
+}
+
+.rides-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  max-width: 1060px; margin: 0 auto; padding: 18px 20px 0;
+}
+.rides-nav .back-link { color: var(--r-muted); text-decoration: none; font-size: 13px; font-weight: 700;
+  letter-spacing: .5px; text-transform: uppercase; }
+.rides-nav .back-link:hover { color: var(--r-amber); }
+.rides-logo { font-family: var(--disp); letter-spacing: 3px; font-size: 15px; color: var(--r-amber);
+  border: 2px solid var(--r-amber); padding: 2px 8px; transform: skewX(-6deg); }
+
+/* ---------------- hero ---------------- */
+.rides-hero { max-width: 1060px; margin: 0 auto; padding: 14px 20px 0; }
+.rides-hero .kick { font-family: var(--disp); color: var(--r-amber-2); letter-spacing: 4px;
+  font-size: 13px; margin: 14px 0 0; text-transform: uppercase; }
+.rides-hero h1 {
+  font-family: var(--disp); font-weight: 400; text-transform: uppercase;
+  font-size: clamp(44px, 12vw, 104px); line-height: .9; letter-spacing: 1px; margin: 4px 0 8px;
+  color: #fff; text-shadow: 4px 4px 0 var(--r-amber-2);
+}
+.rides-hero .rides-sub { color: var(--r-muted); font-size: 16px; max-width: 52ch; margin: 0; line-height: 1.5; }
+
+/* the road the bike rides across */
+.pxcb-track {
+  position: relative; width: 100%; height: 92px; margin-top: 14px; overflow: hidden;
+  background: var(--r-asphalt-2);
+  border-top: 3px solid #0c0d10; border-bottom: 3px solid #0c0d10;
+  box-shadow: inset 0 0 40px rgba(0,0,0,.5);
+}
+.pxcb-track::after {   /* dashed centre line */
+  content: ''; position: absolute; left: 0; right: 0; bottom: 14px; height: 4px;
+  background: repeating-linear-gradient(90deg, var(--r-amber) 0 26px, transparent 26px 52px);
+  opacity: .55;
+}
+.pxcb { position: absolute; bottom: 16px; left: -160px; }
+.pxcb-img {
+  display: block; image-rendering: pixelated;
+  width: calc(128px * var(--pxcb-scale, 1)); height: auto;
+  animation: pxcb-bob .22s steps(2) infinite;
+}
+.pxcb { animation: pxcb-ride 2.6s cubic-bezier(.3,.03,.16,1) .25s forwards; }
+@keyframes pxcb-ride { from { left: -160px; } to { left: calc(100% - 118px); } }
+@keyframes pxcb-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-1.5px); } }
+.pxcb-dust {
+  position: absolute; left: -6px; bottom: 6px; width: 10px; height: 10px; border-radius: 50%;
+  background: rgba(190,185,175,.5); animation: pxcb-dust .4s ease-out .25s 8 forwards; opacity: 0;
+}
+@keyframes pxcb-dust { 0% { opacity: .55; transform: translate(0,0) scale(.5);} 100% { opacity: 0; transform: translate(-22px,-4px) scale(2);} }
+@media (prefers-reduced-motion: reduce) {
+  .pxcb { left: calc(100% - 118px); animation: none; }
+  .pxcb-img, .pxcb-dust { animation: none; } .pxcb-dust { opacity: 0; }
+}
+
+/* ---------------- index cards ---------------- */
+.rides-list { max-width: 1060px; margin: 20px auto 0; padding: 10px 20px 70px;
+  display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); }
+.ride-card {
+  position: relative; display: block; text-decoration: none; color: inherit; background: var(--r-card);
+  border: 1px solid var(--r-line); border-left: 5px solid var(--r-amber); border-radius: 4px;
+  padding: 20px 20px 16px; transition: transform .12s ease, border-color .12s ease, background .12s ease;
+}
+.ride-card:hover { transform: translate(-2px,-2px); background: #1f222a; box-shadow: 6px 6px 0 var(--r-amber-2); }
+.ride-card .ride-emoji { font-size: 24px; }
+.ride-card h2 { font-family: var(--disp); font-weight: 400; text-transform: uppercase; letter-spacing: .5px;
+  font-size: 24px; line-height: 1; margin: 10px 0 8px; color: #fff; }
+.ride-card p { color: var(--r-muted); font-size: 14px; margin: 0 0 14px; line-height: 1.5; }
+.ride-meta { display: flex; flex-wrap: wrap; gap: 7px; }
+.ride-chip { font-size: 11px; font-weight: 800; letter-spacing: .4px; text-transform: uppercase;
+  color: #121318; background: var(--r-amber); border-radius: 3px; padding: 3px 8px; transform: skewX(-6deg); }
+.ride-chip.alt { background: var(--r-green); }
+.ride-chip.gray { background: #3a3d46; color: var(--r-ink); }
+
+/* ---------------- post page ---------------- */
+.rides-article { max-width: 780px; margin: 0 auto; padding: 8px 22px 40px; }
+.rides-article .ride-date { font-family: var(--disp); letter-spacing: 2px; color: var(--r-amber);
+  font-size: 13px; text-transform: uppercase; margin: 6px 0 0; }
+
+/* restyle the rendered markdown into a biker layout */
+.rides-article .markdown-body { color: var(--r-ink); font-size: 17px; line-height: 1.72; }
+.rides-article .markdown-body h1 {
+  font-family: var(--disp); font-weight: 400; text-transform: uppercase; color: #fff;
+  font-size: clamp(34px, 8vw, 60px); line-height: .92; letter-spacing: 1px; margin: 6px 0 18px;
+  text-shadow: 3px 3px 0 var(--r-amber-2); border: 0;
+}
+.rides-article .markdown-body h2 {
+  font-family: var(--disp); font-weight: 400; text-transform: uppercase; color: var(--r-amber);
+  font-size: clamp(22px, 5vw, 32px); letter-spacing: .6px; margin: 40px 0 10px; border: 0;
+  padding-left: 16px; border-left: 5px solid var(--r-amber-2);
+}
+.rides-article .markdown-body p { margin: 0 0 16px; }
+.rides-article .markdown-body p > em:first-child { color: var(--r-muted); }
+.rides-article .markdown-body a { color: var(--r-amber); text-decoration: underline; text-underline-offset: 2px; }
+.rides-article .markdown-body strong { color: #fff; }
+.rides-article .markdown-body ul { list-style: none; padding: 0; margin: 0 0 16px; }
+.rides-article .markdown-body ul li { position: relative; padding: 4px 0 4px 30px; border-bottom: 1px dashed var(--r-line); }
+.rides-article .markdown-body ul li::before { content: '🏍'; position: absolute; left: 0; top: 3px; font-size: 15px; }
+
+/* blockquote / NOTE -> road sign pull-quote */
+.rides-article .markdown-body blockquote {
+  background: var(--r-asphalt-2); border: 0; border-left: 6px solid var(--r-amber);
+  margin: 22px 0; padding: 16px 18px; border-radius: 4px; color: var(--r-ink);
+  font-size: 18px; box-shadow: 4px 4px 0 rgba(0,0,0,.4);
+}
+.rides-article .markdown-body blockquote p { margin: 0; }
+
+/* odometer stat row */
+.rides-article .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px,1fr));
+  gap: 10px; margin: 22px 0 26px; }
+.rides-article .stat { background: #0d0e12; border: 1px solid var(--r-line); border-radius: 6px;
+  padding: 12px 10px; text-align: center; box-shadow: inset 0 0 18px rgba(0,0,0,.6); }
+.rides-article .stat-num { font-family: var(--disp); color: var(--r-amber); font-size: 30px; line-height: 1;
+  letter-spacing: 1px; }
+.rides-article .stat-label { color: var(--r-muted); font-size: 11px; text-transform: uppercase;
+  letter-spacing: .6px; margin-top: 6px; }
+
+/* route strip */
+.rides-article .route {
+  font-family: var(--disp); text-transform: uppercase; letter-spacing: 2px; color: #fff;
+  background: linear-gradient(90deg, var(--r-amber-2), var(--r-amber)); color: #121318;
+  padding: 12px 16px; border-radius: 4px; margin: 22px 0; font-size: clamp(14px,3.5vw,20px);
+  display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; box-shadow: 5px 5px 0 rgba(0,0,0,.4);
+}
+.rides-article .route .dot { opacity: .7; }
+.rides-article .route .km { margin-left: auto; background: #121318; color: var(--r-amber);
+  padding: 2px 8px; border-radius: 3px; font-size: .8em; }
+
+/* fuel receipt */
+.rides-article .receipt {
+  font-family: 'Courier New', monospace; background: #0d0e12; border: 1px dashed #3a3d46;
+  border-radius: 6px; padding: 18px 18px 14px; margin: 22px 0; max-width: 420px; color: var(--r-ink);
+}
+.rides-article .receipt h4 { font-family: var(--disp); color: var(--r-amber); letter-spacing: 2px;
+  margin: 0 0 10px; font-size: 15px; text-transform: uppercase; }
+.rides-article .receipt .row { display: flex; justify-content: space-between; padding: 4px 0;
+  border-bottom: 1px dotted #2a2c33; font-size: 14px; }
+.rides-article .receipt .row.total { border-top: 2px solid var(--r-amber); border-bottom: 0;
+  margin-top: 6px; padding-top: 8px; font-weight: 700; color: #fff; }
+.rides-article .receipt .row.total .amt { color: var(--r-amber); font-size: 18px; }
+
+/* images / figures: thick framed polaroid-ish */
+.rides-article .markdown-body img, .rides-article .markdown-body figure img {
+  border-radius: 4px; border: 3px solid #0c0d10; box-shadow: 6px 6px 0 rgba(0,0,0,.4); width: 100%; }
+.rides-article .markdown-body figcaption { color: var(--r-muted); font-size: 13px; text-align: center; margin-top: 6px; }
+
+/* tables (fallback) */
+.rides-article .markdown-body table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 15px; }
+.rides-article .markdown-body th { background: var(--r-amber); color: #121318; text-align: left; padding: 8px 10px;
+  font-family: var(--disp); letter-spacing: .5px; text-transform: uppercase; font-weight: 400; }
+.rides-article .markdown-body td { padding: 8px 10px; border-bottom: 1px solid var(--r-line); }
+
+.rides-more { max-width: 780px; margin: 0 auto; padding: 0 22px; }
+.rides-more a { font-family: var(--disp); letter-spacing: 1px; color: var(--r-amber); text-transform: uppercase;
+  text-decoration: none; font-size: 15px; }
+.rides-footer { text-align: center; color: var(--r-muted); font-size: 12px; letter-spacing: 1px;
+  text-transform: uppercase; padding: 26px 20px 44px; }
+
+/* ================================================================== *
+ *  MAP CANVAS — full-bleed vintage route map (index). No blog bits.   *
+ * ================================================================== */
+.map-outer { position: fixed; inset: 0; overflow: hidden; background: #e4d8ba;
+  font-family: 'Figtree', system-ui, sans-serif; }
+.map-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+/* overlay chrome */
+.map-top { position: absolute; top: 0; left: 0; right: 0; display: flex; align-items: flex-start;
+  justify-content: space-between; padding: 22px 26px; z-index: 5; pointer-events: none; }
+.map-top a, .map-top .stamp { pointer-events: auto; }
+.map-back { color: #4a4034; text-decoration: none; font-weight: 800; font-size: 13px;
+  letter-spacing: .5px; text-transform: uppercase; }
+.map-back:hover { color: #b23a2a; }
+.map-title { text-align: right; }
+.map-title h1 { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase;
+  font-size: clamp(30px, 5vw, 58px); line-height: .88; color: #2c2622; margin: 0; letter-spacing: 1px; }
+.map-title p { margin: 4px 0 0; color: #6a5d4c; font-size: 14px; font-weight: 600; }
+
+/* corner stamp */
+.map-stamp { position: absolute; bottom: 26px; left: 26px; z-index: 5; max-width: 300px;
+  background: rgba(247,240,224,.82); border: 2px solid #c7b48a; border-radius: 6px; padding: 14px 16px;
+  box-shadow: 4px 4px 0 rgba(120,100,70,.25); }
+.map-stamp h2 { font-family: 'Anton', sans-serif; font-weight: 400; text-transform: uppercase;
+  color: #b23a2a; margin: 0 0 4px; font-size: 20px; letter-spacing: .5px; }
+.map-stamp p { margin: 0; color: #5a4f41; font-size: 13.5px; line-height: 1.45; }
+.map-stamp .go { display: inline-block; margin-top: 10px; font-weight: 800; color: #2c2622;
+  text-decoration: none; font-size: 13px; text-transform: uppercase; letter-spacing: .5px;
+  border-bottom: 2px solid #b23a2a; }
+
+.map-hint { position: absolute; bottom: 26px; right: 26px; z-index: 5; color: #6a5d4c;
+  font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: .8; }
+
+/* SVG route + pins */
+.route-line { fill: none; stroke: #b23a2a; stroke-width: 5; stroke-linecap: round;
+  stroke-dasharray: 2 16; animation: route-dash 20s linear infinite; }
+@keyframes route-dash { to { stroke-dashoffset: -360; } }
+.route-base { fill: none; stroke: #e7dcc0; stroke-width: 11; stroke-linecap: round; }
+.pin-label { font-family: 'Anton', sans-serif; fill: #2c2622; letter-spacing: .5px; text-transform: uppercase; }
+.pin-sub { fill: #8a7a62; font-weight: 700; }
+.pin-dot { fill: #f4ecd6; stroke: #2c2622; stroke-width: 3; }
+.pin-dot.dest { stroke: #b23a2a; }
+.pin-hit { cursor: pointer; }
+.pin-hit:hover .pin-dot { fill: #b23a2a; }
+.pin-hit:hover .pin-label { fill: #b23a2a; }
+.cb-rider { animation: cb-bob .28s steps(2) infinite; }
+@keyframes cb-bob { 0%,100% { transform: translateY(0);} 50% { transform: translateY(-2px);} }
+@media (prefers-reduced-motion: reduce) { .route-line, .cb-rider { animation: none; } }
+
+/* ================================================================== *
+ *  RIDE PAGE — real map hero + journal body. Vintage paper palette.   *
+ * ================================================================== */
+:root { }
+.ride-page, .ridelog {
+  --ink: #2c2622; --paper: #e9dfc6; --paper-2: #fbf6ec; --muted: #7a6d57;
+  --red: #b23a2a; --green: #3f7a5f; --line: #ddd0b2;
+  --disp: 'Anton','Arial Narrow',sans-serif; --body:'Figtree',system-ui,sans-serif;
+  background: var(--paper); color: var(--ink); font-family: var(--body); min-height: 100vh;
+}
+
+/* hero */
+.ride-hero { position: relative; width: 100%; height: 78vh; min-height: 460px; overflow: hidden;
+  border-bottom: 4px solid var(--ink); }
+.ride-map { position: absolute; inset: 0; width: 100%; height: 100%; background: #e7dcc0; }
+.ride-map--loading { display: grid; place-items: center; color: #7a6d57; font-weight: 700; letter-spacing: 1px; }
+.ride-hero-top { position: absolute; top: 0; left: 0; right: 0; z-index: 500; display: flex;
+  justify-content: space-between; align-items: flex-start; padding: 18px 22px; pointer-events: none; }
+.ride-hero-top a, .ride-hero-top .ride-badge { pointer-events: auto; }
+.ride-back { color: var(--ink); background: rgba(251,246,236,.9); border: 2px solid var(--ink);
+  text-decoration: none; font-weight: 800; font-size: 12px; letter-spacing: .5px; text-transform: uppercase;
+  padding: 5px 10px; border-radius: 4px; }
+.ride-back:hover { background: var(--red); color: #fff; border-color: var(--red); }
+.ride-badge { font-family: var(--disp); letter-spacing: 3px; font-size: 14px; color: #fff; background: var(--red);
+  padding: 5px 10px; transform: skewX(-6deg); }
+.ride-hero-title { position: absolute; left: 0; right: 0; bottom: 0; z-index: 500;
+  padding: 22px max(26px, calc((100vw - 1080px) / 2)) 22px;
+  pointer-events: none;
+  background: linear-gradient(0deg, rgba(233,223,198,.96) 40%, rgba(233,223,198,0)); }
+.ride-hero-title > * { max-width: 760px; }
+.ride-kick { font-family: var(--disp); color: var(--red); letter-spacing: 2px; text-transform: uppercase;
+  margin: 0; font-size: clamp(12px,2.4vw,15px); }
+.ride-hero-title h1 { font-family: var(--disp); font-weight: 400; text-transform: uppercase; color: var(--ink);
+  font-size: clamp(30px,6.5vw,66px); line-height: .9; margin: 4px 0 6px; letter-spacing: 1px;
+  text-shadow: 3px 3px 0 var(--red); }
+.ride-hero-sub { margin: 0; color: var(--muted); font-weight: 600; font-size: clamp(13px,2.6vw,16px); }
+
+/* leaflet pins + bike */
+.map-pin { background: none; border: 0; }
+.map-pin-ball { width: 100%; height: 100%; display: grid; place-items: center; border-radius: 50%;
+  background: #fbf6ec; border: 2.5px solid var(--ink); font-size: 15px; box-shadow: 2px 2px 0 rgba(90,70,40,.35); }
+.map-pin-ball.toll { border-color: var(--red); }
+.map-pin-ball.dest { border-color: var(--red); background: var(--red); }
+.map-pin-ball.start { background: var(--ink); }
+.map-bike { background: none; border: 0; }
+.map-bike-img { width: 84px; height: auto; image-rendering: pixelated;
+  filter: drop-shadow(2px 3px 2px rgba(0,0,0,.3)); }
+.leaflet-popup-content-wrapper { border-radius: 6px; }
+.leaflet-popup-content { font-family: var(--body); font-size: 13.5px; }
+.leaflet-popup-content .pop-treat { color: var(--red); font-weight: 800; }
+.leaflet-popup-content .pop-note { color: var(--muted); font-style: italic; }
+
+/* journal body: aligned to the same left gutter as the hero, one uniform sheet */
+.ride-body { padding: 60px max(26px, calc((100vw - 1080px) / 2)) 80px; }
+.ride-body .markdown-body, .ride-body .ride-foot { max-width: 700px; }
+.ride-foot { margin: 20px 0 0; }
+.ride-foot a, .ridelog-foot { color: var(--red); font-weight: 800; text-decoration: none; text-transform: uppercase;
+  letter-spacing: .5px; font-size: 13px; }
+
+/* re-theme the rendered markdown to vintage (overrides earlier amber rules) */
+.ride-body .markdown-body { color: var(--ink); font-size: 17px; line-height: 1.75; }
+.ride-body .markdown-body h1 { font-family: var(--disp); font-weight: 400; text-transform: uppercase; color: var(--ink);
+  font-size: clamp(30px,6vw,52px); line-height: .92; letter-spacing: 1px; margin: 0 0 16px; border: 0;
+  text-shadow: 3px 3px 0 var(--red); }
+.ride-body .markdown-body h2 { font-family: var(--disp); font-weight: 400; text-transform: uppercase; color: var(--red);
+  font-size: clamp(22px,4.5vw,32px); letter-spacing: .5px; margin: 38px 0 10px; border: 0;
+  padding-left: 14px; border-left: 5px solid var(--red); }
+.ride-body .markdown-body a { color: var(--red); text-decoration: underline; text-underline-offset: 2px; }
+.ride-body .markdown-body strong { color: var(--ink); }
+.ride-body .markdown-body blockquote { background: #f2ead6; border: 0; border-left: 6px solid var(--red);
+  margin: 22px 0; padding: 14px 18px; border-radius: 4px; font-size: 18px; color: var(--ink);
+  box-shadow: 3px 3px 0 rgba(120,100,70,.2); }
+.ride-body .markdown-body blockquote p { margin: 0; }
+.ride-body .markdown-body ul { list-style: none; padding: 0; }
+.ride-body .markdown-body ul li { position: relative; padding: 5px 0 5px 28px; border-bottom: 1px dashed var(--line); }
+.ride-body .markdown-body ul li::before { content: '🏍'; position: absolute; left: 0; top: 4px; font-size: 14px; }
+.ride-body .stat-row { display: grid; grid-template-columns: repeat(auto-fit,minmax(110px,1fr)); gap: 10px; margin: 22px 0; }
+.ride-body .stat { background: var(--ink); border-radius: 6px; padding: 12px 8px; text-align: center; }
+.ride-body .stat-num { font-family: var(--disp); color: #f1e3c4; font-size: 28px; line-height: 1; }
+.ride-body .stat-label { color: #c9b89a; font-size: 10.5px; text-transform: uppercase; letter-spacing: .5px; margin-top: 5px; }
+.ride-body .route { font-family: var(--disp); text-transform: uppercase; letter-spacing: 2px;
+  background: var(--red); color: #fff; padding: 12px 16px; border-radius: 4px; margin: 20px 0;
+  display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; box-shadow: 4px 4px 0 rgba(120,100,70,.25); font-size: clamp(14px,3vw,19px); }
+.ride-body .route .km { margin-left: auto; background: var(--ink); padding: 2px 8px; border-radius: 3px; font-size: .82em; }
+.ride-body .receipt { font-family: 'Courier New', monospace; background: #fffdf7; border: 1px dashed #bda77d; border-radius: 6px; padding: 16px 18px; margin: 22px 0; max-width: 420px; }
+.ride-body .receipt h4 { font-family: var(--disp); color: var(--red); letter-spacing: 1.5px; margin: 0 0 10px; font-size: 15px; }
+.ride-body .receipt .row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px dotted #d8c8a4; font-size: 14px; }
+.ride-body .receipt .row.total { border-top: 2px solid var(--red); border-bottom: 0; margin-top: 6px; padding-top: 8px; font-weight: 700; }
+.ride-body .receipt .row.total .amt { color: var(--red); font-size: 18px; }
+.ride-body .markdown-body img { border-radius: 6px; border: 3px solid var(--ink); box-shadow: 5px 5px 0 rgba(120,100,70,.25); width: 100%; }
+.ride-body .markdown-body figcaption { color: var(--muted); font-size: 13px; text-align: center; margin-top: 6px; }
+
+/* ---------------- index list ---------------- */
+.ridelog-nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 26px 0; max-width: 1000px; margin: 0 auto; }
+.ridelog-head { max-width: 1000px; margin: 0 auto; padding: 24px 26px 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; flex-wrap: wrap; }
+.ridelog-head-text { flex: 1 1 340px; }
+.ridelog-head h1 { font-family: var(--disp); font-weight: 400; text-transform: uppercase; font-size: clamp(40px,9vw,88px);
+  line-height: .9; margin: 10px 0 6px; color: var(--ink); text-shadow: 4px 4px 0 var(--red); }
+.ridelog-head p { color: var(--muted); font-size: 16px; max-width: 46ch; margin: 0; }
+.ridelog-bike { position: absolute; right: 20px; bottom: 0; width: 180px; image-rendering: pixelated; display: none; }
+@media (min-width: 720px) { .ridelog-bike { display: block; } }
+.ridelog-list { max-width: 1000px; margin: 20px auto 0; padding: 0 26px 70px; display: flex; flex-direction: column; gap: 14px; }
+.ridelog-card { display: flex; gap: 18px; align-items: flex-start; text-decoration: none; color: inherit;
+  background: var(--paper-2); border: 1px solid var(--line); border-left: 6px solid var(--red); border-radius: 6px;
+  padding: 20px 22px; transition: transform .12s ease, box-shadow .12s ease; }
+.ridelog-card:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--red); }
+.ridelog-no { font-family: var(--disp); font-size: 40px; color: var(--line); line-height: 1; }
+.ridelog-card h2 { font-family: var(--disp); font-weight: 400; text-transform: uppercase; font-size: clamp(22px,4vw,30px);
+  margin: 0 0 6px; color: var(--ink); letter-spacing: .5px; }
+.ridelog-card p { color: var(--muted); font-size: 14.5px; margin: 0 0 12px; line-height: 1.5; }
+.ridelog-meta { display: flex; flex-wrap: wrap; gap: 7px; }
+.ridelog-chip { font-size: 11px; font-weight: 800; letter-spacing: .4px; text-transform: uppercase; color: #fff;
+  background: var(--ink); border-radius: 3px; padding: 3px 9px; transform: skewX(-6deg); }
+.ridelog-chip.red { background: var(--red); }
+.ridelog-foot { display: block; text-align: center; padding: 10px 0 40px; }
+
+/* vintage tint on the real map tiles */
+.ride-map .leaflet-tile { filter: sepia(0.38) saturate(0.82) contrast(0.95) brightness(1.04); }
+.ride-map .leaflet-container { background: #e7dcc0; }
+
+/* true full-bleed: break out of any centered wrapper, fill the desktop */
+.ride-page, .ridelog { width: 100vw; margin-left: calc(50% - 50vw); overflow-x: hidden; }
+
+/* extra map pin kinds */
+.map-pin-ball.end { background: var(--ink); }
+.map-pin-ball.detour { border-color: #c98a1a; background: #f6e2b4; }
+.map-pin-ball.offroad { border-color: #7a5a2a; }
+.leaflet-popup-content .pop-label { font-family: var(--disp); color: var(--red); letter-spacing: 1px; text-transform: uppercase; font-size: 11px; }
+
+/* ================================================================== *
+ *  STEP-BY-STEP TIMELINE — scannable ride log under the map.          *
+ * ================================================================== */
+.rt-wrap { background: #efe6cf; border-top: 4px solid var(--ink); padding: 46px 0 50px; }
+.rt-inner { padding: 0 max(26px, calc((100vw - 1080px) / 2)); }
+.rt-kick { font-family: var(--disp); color: var(--red); letter-spacing: 3px; text-transform: uppercase; margin: 0; font-size: 13px; }
+.rt-title { font-family: var(--disp); font-weight: 400; text-transform: uppercase; color: var(--ink);
+  font-size: clamp(26px,5.5vw,42px); line-height: .92; margin: 4px 0 20px; letter-spacing: 1px; text-shadow: 2px 2px 0 var(--red); }
+/* full-width horizontal scroll strip (heading is gutter-aligned, strip runs edge to edge) */
+.rt-list { list-style: none; margin: 0; display: flex; gap: 0; overflow-x: auto; overflow-y: hidden;
+  scroll-snap-type: x proximity; padding: 6px 24px 18px max(26px, calc((100vw - 1080px) / 2)); }
+.rt-step { flex: 0 0 240px; scroll-snap-align: start; padding-right: 14px; display: flex; }
+.rt-step:last-child { flex-basis: 254px; padding-right: 0; }
+/* thin strip scrollbar */
+.rt-list::-webkit-scrollbar, .gal-grid::-webkit-scrollbar { height: 8px; }
+.rt-list::-webkit-scrollbar-thumb, .gal-grid::-webkit-scrollbar-thumb { background: var(--line); border-radius: 8px; }
+.rt-ic { font-size: 24px; line-height: 1; display: block; margin-bottom: 6px; }
+.rt-card { flex: 1; display: flex; flex-direction: column; background: #fffdf7; border: 1px solid var(--line);
+  border-top: 4px solid var(--red); border-radius: 8px; padding: 14px 16px 16px; box-shadow: 3px 3px 0 rgba(120,100,70,.14); }
+.rt-step.rt-detour .rt-card { border-top-color: #c98a1a; }
+.rt-step.rt-dest .rt-card { border-top-color: var(--red); }
+.rt-step.rt-offroad .rt-card { border-top-color: #7a5a2a; }
+.rt-step.rt-city .rt-card { border-top-color: var(--green); }
+.rt-step.rt-detour .rt-card { border-left-color: #c98a1a; }
+.rt-step.rt-offroad .rt-card { border-left-color: #7a5a2a; }
+.rt-label { display: block; font-family: var(--disp); color: var(--red); text-transform: uppercase; font-size: 12px; letter-spacing: 1px; }
+.rt-step.rt-city .rt-label { color: var(--green); }
+.rt-step.rt-offroad .rt-label { color: #7a5a2a; }
+.rt-name { display: block; font-weight: 800; color: var(--ink); font-size: 16px; line-height: 1.2; margin-top: 2px; }
+.rt-note { margin: 8px 0 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+
+/* food pin + receipt-log timeline bits */
+.map-pin-ball.food { border-color: #c98a1a; }
+.rt-lede { color: var(--muted); margin: -14px 0 26px; max-width: 58ch; font-size: 15px; line-height: 1.55; }
+.rt-amt { margin-left: auto; font-family: var(--disp); color: var(--red); font-size: 17px; letter-spacing: .5px; }
+.rt-step.rt-fuel .rt-dot { border-color: #2c6e49; background: #dff0e6; }
+.rt-step.rt-chai .rt-dot { border-color: #8a5a2a; }
+.rt-step.rt-meal .rt-dot { border-color: var(--red); }
+.rt-step.rt-snack .rt-dot { border-color: #c98a1a; }
+.rt-step.rt-fuel .rt-card { border-left-color: #2c6e49; }
+.rt-step.rt-chai .rt-card { border-left-color: #8a5a2a; }
+.rt-step.rt-snack .rt-card { border-left-color: #c98a1a; }
+.rt-tally { display: flex; gap: 24px; flex-wrap: wrap; align-items: baseline; margin-top: 24px;
+  padding-top: 16px; border-top: 3px solid var(--ink); font-size: 13px; text-transform: uppercase;
+  letter-spacing: .5px; color: var(--muted); }
+.rt-tally b { font-family: var(--disp); color: var(--ink); font-size: 22px; margin-right: 5px; letter-spacing: 1px; }
+.rt-tally-total b { color: var(--red); }
+
+/* google-maps links */
+.ride-dir { pointer-events: auto; display: inline-block; margin-top: 12px; font-family: var(--disp);
+  text-transform: uppercase; letter-spacing: 1px; font-size: 14px; color: #fff; background: var(--red);
+  padding: 8px 14px; border-radius: 4px; text-decoration: none; box-shadow: 3px 3px 0 rgba(0,0,0,.25); }
+.ride-dir:hover { background: #8f2c1f; }
+.leaflet-popup-content .pop-maps { display: inline-block; margin-top: 6px; color: var(--red); font-weight: 800;
+  text-decoration: none; font-size: 12.5px; }
+
+/* ================================================================== *
+ *  SP160 SHOWCASE — current bike on the index, click to center it.    *
+ * ================================================================== */
+.sp160-wrap { max-width: 1000px; margin: 20px auto 0; padding: 0 26px; }
+.sp160-card { display: flex; align-items: center; gap: 22px; width: 100%; text-align: left; cursor: pointer;
+  background: radial-gradient(420px 180px at 18% 40%, #23202c, #121117); border: 1px solid #2d2a36;
+  border-radius: 16px; padding: 14px 24px 14px 16px; color: #efe7d8; overflow: hidden;
+  box-shadow: 0 10px 28px rgba(60,40,20,.16); transition: transform .12s ease, box-shadow .12s ease; }
+.sp160-card:hover { transform: translateY(-2px); box-shadow: 0 16px 34px rgba(60,40,20,.26); }
+.sp160-thumb { height: 128px; width: auto; image-rendering: pixelated; border-radius: 10px; flex: none; }
+.sp160-cardtext { display: flex; flex-direction: column; gap: 4px; }
+.sp160-kick { font-family: var(--disp); color: var(--red); letter-spacing: 2px; text-transform: uppercase; font-size: 12px; }
+.sp160-name { font-family: var(--disp); color: #fff; font-size: clamp(26px,5vw,36px); letter-spacing: .5px; text-transform: uppercase; line-height: .95; }
+.sp160-tap { color: #9a9183; font-size: 13px; letter-spacing: .3px; }
+@media (max-width: 560px) { .sp160-card { flex-direction: column; text-align: center; } .sp160-thumb { height: 150px; } }
+
+.sp160-modal { position: fixed; inset: 0; z-index: 3000; background: rgba(10,10,14,.92);
+  display: grid; place-items: center; padding: 20px; -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+.sp160-stage { position: relative; max-width: 940px; width: 100%;
+  background: radial-gradient(640px 320px at 38% 28%, #271f30, #111016); border: 1px solid #34303d;
+  border-radius: 18px; padding: 30px; display: grid; grid-template-columns: 1.25fr 1fr; gap: 26px;
+  align-items: center; box-shadow: 0 30px 90px rgba(0,0,0,.6); }
+@media (max-width: 760px) { .sp160-stage { grid-template-columns: 1fr; padding: 22px; } }
+.sp160-big { width: 100%; image-rendering: pixelated; border-radius: 12px;
+  filter: drop-shadow(0 14px 34px rgba(0,0,0,.55)); }
+.sp160-specs { color: #efe7d8; }
+.sp160-specs .sp160-kick { color: var(--red); margin: 0; }
+.sp160-specs h3 { font-family: var(--disp); font-weight: 400; text-transform: uppercase;
+  font-size: clamp(30px,5vw,48px); line-height: .92; margin: 2px 0 10px; color: #fff; text-shadow: 3px 3px 0 var(--red); }
+.sp160-sub { color: #b4ab99; font-size: 15px; line-height: 1.55; margin: 0 0 16px; }
+.sp160-stats { list-style: none; padding: 0; margin: 0 0 18px; display: flex; gap: 24px; flex-wrap: wrap; }
+.sp160-stats li { display: flex; flex-direction: column; }
+.sp160-stats b { font-family: var(--disp); color: var(--red); font-size: 28px; line-height: 1; letter-spacing: 1px; }
+.sp160-stats span { color: #9a9183; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; margin-top: 4px; }
+.sp160-pred { display: flex; align-items: center; gap: 16px; border-top: 1px solid #34303d; padding-top: 16px; }
+.sp160-pred img { width: 128px; image-rendering: pixelated; flex: none; }
+.sp160-pred b { display: block; color: #fff; font-size: 14.5px; }
+.sp160-pred span { color: #9a9183; font-size: 13px; line-height: 1.4; }
+.sp160-close { position: absolute; top: 10px; right: 16px; background: none; border: 0; color: #9a9183;
+  font-size: 32px; line-height: 1; cursor: pointer; }
+.sp160-close:hover { color: #fff; }
+
+/* ================================================================== *
+ *  RIDE GALLERY — real photos, masonry grid + lightbox.               *
+ * ================================================================== */
+.gal-wrap { background: var(--paper); border-top: 4px solid var(--ink); padding: 46px 0 54px; }
+.gal-inner { padding: 0 max(26px, calc((100vw - 1080px) / 2)); }
+/* full-width horizontal film strip */
+.gal-grid { display: flex; gap: 14px; margin: 22px 0 0; overflow-x: auto; overflow-y: hidden;
+  padding: 0 24px 14px max(26px, calc((100vw - 1080px) / 2)); scroll-snap-type: x proximity; }
+.gal-item { flex: 0 0 auto; height: 300px; margin: 0; padding: 0; border: 3px solid var(--ink);
+  border-radius: 8px; overflow: hidden; cursor: pointer; position: relative; scroll-snap-align: start;
+  background: #000; box-shadow: 4px 4px 0 rgba(120,100,70,.2); transition: transform .12s ease; }
+.gal-item:hover { transform: translateY(-2px); }
+.gal-item img { height: 100%; width: auto; display: block; }
+@media (max-width: 560px) { .gal-item { height: 230px; } }
+.gal-cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 22px 12px 9px; color: #fff;
+  font-size: 12.5px; line-height: 1.35; text-align: left; opacity: 0; transition: opacity .15s ease;
+  background: linear-gradient(0deg, rgba(0,0,0,.8), transparent); }
+.gal-item:hover .gal-cap { opacity: 1; }
+
+.gal-modal { position: fixed; inset: 0; z-index: 3000; background: rgba(8,8,12,.94); display: grid; place-items: center; padding: 20px; }
+.gal-figure { margin: 0; }
+.gal-figure img { max-width: 92vw; max-height: 82vh; border-radius: 6px; display: block; margin: 0 auto; box-shadow: 0 20px 60px rgba(0,0,0,.6); }
+.gal-figure figcaption { color: #cfc6b4; text-align: center; margin-top: 12px; font-size: 14px; }
+.gal-figure figcaption span { color: #8a8070; }
+.gal-close { position: fixed; top: 16px; right: 24px; background: none; border: 0; color: #cfc6b4; font-size: 38px; line-height: 1; cursor: pointer; }
+.gal-close:hover { color: #fff; }
+.gal-arrow { position: fixed; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,.45);
+  border: 1px solid #44403a; color: #fff; width: 50px; height: 64px; font-size: 34px; cursor: pointer; border-radius: 8px; }
+.gal-prev { left: 16px; } .gal-next { right: 16px; }
+.gal-arrow:hover { background: var(--red); border-color: var(--red); }

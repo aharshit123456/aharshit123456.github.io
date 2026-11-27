@@ -1,0 +1,179 @@
+[
+  {
+    "slug": "cb350-birthday-ride",
+    "title": "A Borrowed CB350 and a Submerged Church",
+    "date": "2026-10-07",
+    "description": "A solo birthday ride from Bengaluru to the Shettihalli church near Hassan on a rented Honda CB350: four toll gates, a long string of chai-and-snack stops, one tank of fuel, a drowned church and a village offroad.",
+    "distance": "~600 km",
+    "route": "S.G. Palya → Shettihalli → home",
+    "bike": "Honda CB350",
+    "emoji": "🏍️",
+    "map": {
+      "fit": [
+        [
+          12.8,
+          75.95
+        ],
+        [
+          13.14,
+          77.66
+        ]
+      ],
+      "stops": [
+        {
+          "name": "S.G. Palya, Bengaluru",
+          "kind": "start",
+          "lat": 12.9309175,
+          "lng": 77.6097156,
+          "label": "Home · 05:30",
+          "note": "Tank full, nobody awake. Rolled out before sunrise."
+        },
+        {
+          "name": "Nelamangala Toll",
+          "kind": "toll",
+          "lat": 13.0997,
+          "lng": 77.3936,
+          "label": "Toll gate"
+        },
+        {
+          "name": "Sri Maruthi Family Restaurant, Kunigal",
+          "kind": "food",
+          "lat": 13.02559,
+          "lng": 77.02822,
+          "label": "Morning meal",
+          "treat": "A proper South-Indian breakfast if you rolled out before yours."
+        },
+        {
+          "name": "N R Gowdru Tea Cafe, Hurkehalli",
+          "kind": "food",
+          "lat": 13.00475,
+          "lng": 76.97765,
+          "label": "Chai stop",
+          "treat": "A no-fuss highway chai cabin — the first good break out of the city."
+        },
+        {
+          "name": "Bellur Cross Toll",
+          "kind": "toll",
+          "lat": 12.9633,
+          "lng": 76.762,
+          "label": "Toll gate"
+        },
+        {
+          "name": "Kadamba Veg, Bellur Cross",
+          "kind": "food",
+          "lat": 12.96307,
+          "lng": 76.77213,
+          "label": "Lunch / dinner",
+          "treat": "The sit-down veg thali, right by the toll gate — ideal on the way back."
+        },
+        {
+          "name": "Channarayapatna Toll",
+          "kind": "toll",
+          "lat": 12.905,
+          "lng": 76.39,
+          "label": "Toll gate"
+        },
+        {
+          "name": "Shanthigrama Toll",
+          "kind": "toll",
+          "lat": 13.02,
+          "lng": 76.25,
+          "label": "Toll gate"
+        },
+        {
+          "name": "Hassan",
+          "kind": "city",
+          "lat": 13.0302,
+          "lng": 76.1745,
+          "label": "Hassan",
+          "note": "Rolled through Hassan on the way to the church."
+        },
+        {
+          "name": "Shettihalli Rosary Church",
+          "kind": "dest",
+          "lat": 12.8696556,
+          "lng": 76.018144,
+          "label": "The church",
+          "note": "The reason for all of it — the Gothic ruin that drowns and resurfaces every year."
+        },
+        {
+          "name": "Shettihalli Bridge",
+          "kind": "offroad",
+          "lat": 12.8691515,
+          "lng": 76.0118998,
+          "label": "The bridge",
+          "note": "Out onto the bridge over the Hemavati backwaters for the full view of the ruin."
+        },
+        {
+          "name": "Masti Gudi, Ganjigere",
+          "kind": "offroad",
+          "lat": 12.858912,
+          "lng": 76.0046051,
+          "label": "Village offroad",
+          "note": "Dropped off the tarmac and picked my way around the village to the little Masti Gudi shrine."
+        },
+        {
+          "name": "Kunigal",
+          "kind": "via",
+          "lat": 13.026,
+          "lng": 77.0223
+        },
+        {
+          "name": "Home — S.G. Palya",
+          "kind": "end",
+          "lat": 12.930918,
+          "lng": 77.609716,
+          "label": "Home · dusk",
+          "note": "Same NH75 back east, through Nagasandra and Majestic. 600 km, one drowned church, ₹1,400 lighter, and not even slightly sorry."
+        }
+      ]
+    },
+    "keywords": [
+      "motorcycle touring",
+      "Honda CB350",
+      "Shettihalli church",
+      "Bengaluru rides",
+      "NH75 toll plazas",
+      "Hassan",
+      "Harshit Agarwal"
+    ],
+    "gallery": [
+      {
+        "src": "/assets/rides/gallery/church-wide.webp",
+        "cap": "The ruin across the sand, the water pulled back."
+      },
+      {
+        "src": "/assets/rides/gallery/church-facade.webp",
+        "cap": "The Gothic facade, still standing after 160 years."
+      },
+      {
+        "src": "/assets/rides/gallery/interior-arches.webp",
+        "cap": "Inside the nave, sky where the roof should be."
+      },
+      {
+        "src": "/assets/rides/gallery/interior-up.webp",
+        "cap": "Looking up through the arches."
+      },
+      {
+        "src": "/assets/rides/gallery/tower.webp",
+        "cap": "The tower and the old doorway."
+      },
+      {
+        "src": "/assets/rides/gallery/in-the-ruins.webp",
+        "cap": "Me, for scale."
+      },
+      {
+        "src": "/assets/rides/gallery/bike-sand.webp",
+        "cap": "The CB350 out on the backwater sand."
+      },
+      {
+        "src": "/assets/rides/gallery/bike-water.webp",
+        "cap": "Parked at the water's edge."
+      },
+      {
+        "src": "/assets/rides/gallery/backwaters.webp",
+        "cap": "The Hemavati backwaters that drown it every year."
+      }
+    ]
+  }
+]
