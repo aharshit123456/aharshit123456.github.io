@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 
-export type Shot = { src: string; cap: string };
+export type Shot = { src: string; cap: string; type?: 'video'; poster?: string };
 
 export default function RideGallery({ shots }: { shots: Shot[] }) {
   const [i, setI] = useState<number | null>(null);
@@ -31,7 +31,8 @@ export default function RideGallery({ shots }: { shots: Shot[] }) {
       <div className="gal-grid">
         {shots.map((s, idx) => (
           <button key={idx} className="gal-item" onClick={() => setI(idx)} aria-label={s.cap}>
-            <img src={s.src} alt={s.cap} loading="lazy" />
+            <img src={s.type === 'video' ? s.poster : s.src} alt={s.cap} loading="lazy" />
+            {s.type === 'video' && <span className="gal-play" aria-hidden="true">▶</span>}
             <span className="gal-cap">{s.cap}</span>
           </button>
         ))}
@@ -42,7 +43,9 @@ export default function RideGallery({ shots }: { shots: Shot[] }) {
           <button className="gal-close" onClick={() => setI(null)} aria-label="Close">×</button>
           <button className="gal-arrow gal-prev" onClick={(e) => { e.stopPropagation(); go(-1); }} aria-label="Previous">‹</button>
           <figure className="gal-figure" onClick={(e) => e.stopPropagation()}>
-            <img src={shots[i].src} alt={shots[i].cap} />
+            {shots[i].type === 'video'
+              ? <video src={shots[i].src} poster={shots[i].poster} controls autoPlay playsInline className="gal-video" />
+              : <img src={shots[i].src} alt={shots[i].cap} />}
             <figcaption>{shots[i].cap} <span>({i + 1}/{shots.length})</span></figcaption>
           </figure>
           <button className="gal-arrow gal-next" onClick={(e) => { e.stopPropagation(); go(1); }} aria-label="Next">›</button>

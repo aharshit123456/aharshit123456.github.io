@@ -81,6 +81,7 @@ export default function Home() {
           <li><Link href="/about">About Page</Link></li>
           <li><Link href="/links">Links Page</Link></li>
           <li><Link href="/blog">All Blogs</Link></li>
+          <li><Link href="/rides">Rides (Motorcycle Journal)</Link></li>
           <li><Link href="/experience">All Experiences</Link></li>
           <li><Link href="/research">AI & Scientific Research</Link></li>
           <li><Link href="/research/computational-neuroscience">Computational Neuroscience Research</Link></li>

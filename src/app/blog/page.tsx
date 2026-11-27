@@ -78,6 +78,11 @@ export default async function BlogIndexPage() {
         <article className="article-card markdown-body">
           <h1>Tech Blog</h1>
           <p>Writing about fullstack systems, artificial intelligence, computer vision, and theoretical physics.</p>
+          <p style={{ marginTop: '8px' }}>
+            <Link href="/rides" style={{ color: '#b23a2a', fontWeight: 700, textDecoration: 'none' }}>
+              🏍️ Off the clock? See my motorcycle journal →
+            </Link>
+          </p>
         </article>
 
         {liveJourneys()

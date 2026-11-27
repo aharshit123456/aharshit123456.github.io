@@ -139,6 +139,24 @@
     ],
     "gallery": [
       {
+        "type": "video",
+        "src": "/assets/rides/gallery/riding.mp4",
+        "poster": "/assets/rides/gallery/riding.webp",
+        "cap": "On the highway — the open road out of the city."
+      },
+      {
+        "type": "video",
+        "src": "/assets/rides/gallery/bike-walkaround.mp4",
+        "poster": "/assets/rides/gallery/bike-walkaround.webp",
+        "cap": "The rented CB350, before rolling out."
+      },
+      {
+        "type": "video",
+        "src": "/assets/rides/gallery/fields.mp4",
+        "poster": "/assets/rides/gallery/fields.webp",
+        "cap": "Green fields on the way west."
+      },
+      {
         "src": "/assets/rides/gallery/church-wide.webp",
         "cap": "The ruin across the sand, the water pulled back."
       },
