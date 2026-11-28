@@ -2274,7 +2274,7 @@ export default function Portfolio() {
       {/* Fixed UI Components (Outside transformed container) */}
       
       {/* Persistent Herta with Walking Transition */}
-      {!isMobile && (
+      {!isMobile && activeSpace === 0 && (
         <motion.div
           initial={false}
           animate={{
@@ -2427,7 +2427,7 @@ export default function Portfolio() {
         ]}
       />
 
-      <SecretBoss isActive={isBossActive} onClose={() => setIsBossActive(false)} />
+      <SecretBoss isActive={isBossActive && activeSpace === 0} onClose={() => setIsBossActive(false)} />
 
       {/* Dynamic Island (Mobile Only) - Outside container to fix fixed positioning with transform */}
       {isMobile && (
@@ -2463,9 +2463,13 @@ export default function Portfolio() {
       {isMobile && (
         <div className="home-indicator" onClick={minimizeAllWindows}></div>
       )}
-      <DesktopPet type="cat" trigger={isPetTriggered} />
-      <DesktopPet type="frog" trigger={isMatrixActive} />
-      <DesktopPet type="crab" trigger={isCrabTriggered} />
+      {activeSpace === 0 && (
+        <>
+          <DesktopPet type="cat" trigger={isPetTriggered} />
+          <DesktopPet type="frog" trigger={isMatrixActive} />
+          <DesktopPet type="crab" trigger={isCrabTriggered} />
+        </>
+      )}
 
       {/* Low Battery Warning Notification */}
       {showLowBatteryWarning && !isShutDown && (
