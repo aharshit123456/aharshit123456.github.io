@@ -356,7 +356,7 @@ function exitHill(){ field='main'; A=MAIN; addScore(500); flash('BACK ON THE STR
   ball.x=300; ball.y=688; ball.vx=-1; ball.vy=3; }
 
 // ---- ball lifecycle ----
-function newBall(){ field='main'; A=MAIN; ball.x=417;ball.y=838;ball.vx=0;ball.vy=0;ball.spin=0; plunger=0; charging=false; state='launch'; }
+function newBall(){ field='main'; A=MAIN; ball.x=417;ball.y=838;ball.vx=0;ball.vy=0;ball.spin=0;ball.stuckT=0; plunger=0; charging=false; state='launch'; }
 function launch(power){ ball.vy=-(18.5+power*5.0); ball.vx=0; state='play'; blip(140,0.2,'sawtooth',0.08); }
 function loseBall(){
   state='drain'; balls--; combo=0; mult=1; renderWheels(); blip(90,0.3,'sawtooth',0.08);
@@ -411,6 +411,18 @@ function update(){
     collideFlip(A.flippers.L);collideFlip(A.flippers.R);collideFlip(A.flippers.U);
   }
   ball.spin+=ball.vx*0.03;
+
+  // stuck-ball watchdog: no live ball should park in open space (center pit, wall seams)
+  if(state==='play'){
+    if(Math.hypot(ball.vx,ball.vy)<0.7){
+      ball.stuckT=(ball.stuckT||0)+1;
+      if(ball.stuckT>80){                         // ~1.3s wedged → escalating shove
+        const a=Math.random()*6.283, k=2.4+(ball.stuckT-80)*0.03;
+        ball.vx+=Math.cos(a)*k; ball.vy+=Math.abs(Math.sin(a))*k+0.8;  // slight downward bias
+        if(ball.stuckT>260) ball.stuckT=0;          // after a hard shove, start the clock over
+      }
+    } else ball.stuckT=0;
+  }
 
   // saucers / rollovers / spinners (zone checks)
   A.saucers.forEach(s=>{ if(Math.hypot(ball.x-s.x,ball.y-s.y)<s.r+BR) saucerHit(s); });
