@@ -207,8 +207,8 @@ function buildMain(){
   W.push(seg(44,640,44,738)); W.push(seg(70,672,70,740)); W.push(seg(44,738,70,740));
 
   // flippers (3): two lower + one upper-right feed
-  F.flippers.L=Flip(172,706,72,28,60,1);
-  F.flippers.R=Flip(288,706,72,152,60,-1); F.flippers.R.rest=152*Math.PI/180; F.flippers.R.up=(152+60)*Math.PI/180; F.flippers.R.a=F.flippers.R.rest; F.flippers.R.target=F.flippers.R.rest;
+  F.flippers.L=Flip(150,710,74,30,58,1);
+  F.flippers.R=Flip(310,710,74,150,58,-1); F.flippers.R.rest=150*Math.PI/180; F.flippers.R.up=(150+58)*Math.PI/180; F.flippers.R.a=F.flippers.R.rest; F.flippers.R.target=F.flippers.R.rest;
   F.flippers.U=Flip(356,452,54,150,54,-1); F.flippers.U.rest=150*Math.PI/180; F.flippers.U.up=(150+54)*Math.PI/180; F.flippers.U.a=F.flippers.U.rest; F.flippers.U.target=F.flippers.U.rest;
 
   // pop bumpers (3) — on the art's upper circles
@@ -255,8 +255,8 @@ function buildHill(){
   // the King captive ball (top center)
   F.captive={x:230,y:150,r:17,hits:0,flash:0,king:true};
   // hill flippers (2) guarding hill drain
-  F.flippers.L=Flip(186,800,66,28,58,1);
-  F.flippers.R=Flip(274,800,66,152,58,-1); F.flippers.R.rest=152*Math.PI/180; F.flippers.R.up=(152+58)*Math.PI/180; F.flippers.R.a=F.flippers.R.rest; F.flippers.R.target=F.flippers.R.rest;
+  F.flippers.L=Flip(160,802,66,30,58,1);
+  F.flippers.R=Flip(300,802,66,150,58,-1); F.flippers.R.rest=150*Math.PI/180; F.flippers.R.up=(150+58)*Math.PI/180; F.flippers.R.a=F.flippers.R.rest; F.flippers.R.target=F.flippers.R.rest;
   return F;
 }
 
@@ -526,7 +526,7 @@ function drawFlip(f){
   const img=SPR.flipper, tip=tipOf(f);
   if(ready(img)){
     const ang=Math.atan2(tip.y-f.py,tip.x-f.px);
-    const s=(f.len*1.2)/(img.naturalWidth*0.80), w=img.naturalWidth*s, h=img.naturalHeight*s;
+    const s=(f.len*1.06)/(img.naturalWidth*0.78), w=img.naturalWidth*s, h=img.naturalHeight*s;
     ctx.save();ctx.translate(f.px,f.py);ctx.rotate(ang);if(f.dir===-1)ctx.scale(1,-1);
     ctx.drawImage(img,-0.17*w,-0.5*h,w,h);ctx.restore();
   } else {

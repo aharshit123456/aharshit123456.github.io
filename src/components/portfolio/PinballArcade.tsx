@@ -11,8 +11,8 @@ type Table = {
 
 const TABLES: Table[] = [
   { id: 'sabzi', name: 'Sabzi Market Run', tag: 'CB350 · Bengaluru street dash', src: '/arcade/sabzi-run/index.html' },
-  { id: 'banzai', name: 'Banzai Run', tag: 'Stern replica · vertical backbox', src: '/arcade/banzai-run/index.html' },
-  { id: 'redline', name: 'Redline', tag: 'Biker-themed original', src: '/arcade/redline/index.html' },
+  { id: 'banzai', name: 'Banzai Run', tag: 'Williams 1988 replica · Banzai Hill', src: '/arcade/banzai-run/index.html' },
+  { id: 'harley', name: 'Harley-Davidson', tag: 'Milwaukee Iron · V-Twin · the Strip', src: '/arcade/harley-run/index.html' },
 ];
 
 export default function PinballArcade() {
