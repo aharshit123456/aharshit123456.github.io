@@ -235,7 +235,7 @@ export default function Portfolio() {
 
 
   const [activeSpace, setActiveSpace] = useState(0); // 0: Desktop, 1: Fullscreen
-  const [fullscreenWindow, setFullscreenWindow] = useState<'main' | 'freelance' | 'terminal' | null>(null);
+  const [fullscreenWindow, setFullscreenWindow] = useState<'main' | 'freelance' | 'terminal' | 'pinball' | null>(null);
 
   const contentContainerRef = useRef<HTMLDivElement>(null);
 
@@ -1878,7 +1878,7 @@ export default function Portfolio() {
                 <div className="buttons">
                   <div className="close" title="Close" onClick={(e) => { e.stopPropagation(); setIsPinballOpen(false); }}></div>
                   <div className="minimize" title="Minimize" onClick={(e) => { e.stopPropagation(); setIsPinballMinimized(true); }}></div>
-                  <div className="maximize" title="Maximize"></div>
+                  <div className="maximize" title="Maximize" onClick={(e) => { e.stopPropagation(); setFullscreenWindow('pinball'); setActiveSpace(1); }}></div>
                 </div>
                 <div className="window-title">Pinball.app</div>
               </div>
@@ -2243,6 +2243,21 @@ export default function Portfolio() {
               </div>
               <div className="content-container" style={{ background: '#0c0c0c' }}>
                 <TerminalView onCommand={handleTerminalCommand} isMobile={isMobile} />
+              </div>
+            </div>
+          )}
+          {fullscreenWindow === 'pinball' && (
+            <div className="mac-window fullscreen-view">
+              <div className="title-bar">
+                <div className="buttons">
+                  <div className="close" title="Close" onClick={() => { setIsPinballOpen(false); setActiveSpace(0); }}></div>
+                  <div className="minimize" title="Minimize" onClick={() => setActiveSpace(0)}></div>
+                  <div className="maximize" title="Exit Fullscreen" onClick={() => setActiveSpace(0)}></div>
+                </div>
+                <div className="window-title">Pinball.app — Fullscreen</div>
+              </div>
+              <div className="content-container" style={{ padding: 0, background: '#0c0814' }}>
+                <PinballArcade />
               </div>
             </div>
           )}
