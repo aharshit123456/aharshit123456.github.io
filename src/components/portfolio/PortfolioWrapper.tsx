@@ -2348,7 +2348,7 @@ export default function Portfolio() {
           { id: 'browser', name: 'Safari', icon: 'https://img.icons8.com/color/512/safari.png', onClick: () => { playSound('funk'); setIsBrowserOpen(true); setIsBrowserMinimized(false); }, isOpen: isBrowserOpen && !isBrowserMinimized },
           { id: 'gallery', name: 'Gallery', icon: 'https://img.icons8.com/fluency/512/image.png', onClick: () => { playSound('funk'); setIsGalleryOpen(true); setIsGalleryMinimized(false); }, isOpen: isGalleryOpen && !isGalleryMinimized },
           { id: 'bubblewrap', name: 'PopIt', icon: 'https://img.icons8.com/fluency/512/bubble.png', onClick: () => { playSound('funk'); setIsBubbleWrapOpen(true); setIsBubbleWrapMinimized(false); }, isOpen: isBubbleWrapOpen && !isBubbleWrapMinimized },
-          { id: 'pinball', name: 'Pinball', icon: 'https://img.icons8.com/color/512/game-controller.png', onClick: () => { playSound('funk'); setIsPinballOpen(true); setIsPinballMinimized(false); }, isOpen: isPinballOpen && !isPinballMinimized },
+          { id: 'pinball', name: 'Pinball', icon: 'https://img.icons8.com/color/512/controller.png', onClick: () => { playSound('funk'); setIsPinballOpen(true); setIsPinballMinimized(false); }, isOpen: isPinballOpen && !isPinballMinimized },
           { id: 'settings', name: 'System Settings', icon: '/apps_icon.png', onClick: () => { playSound('funk'); setIsWallpaperSwitcherOpen(true); } },
 
           { id: 'github', name: 'GitHub', icon: '/git.png', onClick: () => window.open('https://github.com/aharshit123456', '_blank') },
@@ -2368,7 +2368,7 @@ export default function Portfolio() {
           { id: 'browser', name: 'Safari', icon: 'https://img.icons8.com/color/512/safari.png', onClick: () => setIsBrowserOpen(true) },
           { id: 'gallery', name: 'Gallery', icon: 'https://img.icons8.com/fluency/512/image.png', onClick: () => { setIsGalleryOpen(true); setIsGalleryMinimized(false); } },
           { id: 'linkedin', name: 'LinkedIn', icon: '/linkedin.png', onClick: () => window.open('https://www.linkedin.com/in/aharshit123456/', '_blank') },
-          { id: 'pinball', name: 'Pinball', icon: 'https://img.icons8.com/color/512/game-controller.png', onClick: () => { setIsPinballOpen(true); setIsPinballMinimized(false); } },
+          { id: 'pinball', name: 'Pinball', icon: 'https://img.icons8.com/color/512/controller.png', onClick: () => { setIsPinballOpen(true); setIsPinballMinimized(false); } },
 
           { id: 'spotify', name: 'Spotify', icon: 'https://img.icons8.com/color/512/spotify.png', onClick: () => {
             setActiveTabId('main'); 
@@ -2422,7 +2422,7 @@ export default function Portfolio() {
           { id: 'browser', name: 'Safari', icon: 'https://img.icons8.com/color/512/safari.png', onClick: () => setIsBrowserOpen(true) },
           { id: 'gallery', name: 'Gallery', icon: 'https://img.icons8.com/fluency/512/image.png', onClick: () => { setIsGalleryOpen(true); setIsGalleryMinimized(false); } },
           { id: 'github', name: 'GitHub', icon: '/git.png', onClick: () => window.open('https://github.com/aharshit123456', '_blank') },
-          { id: 'pinball', name: 'Pinball', icon: 'https://img.icons8.com/color/512/game-controller.png', onClick: () => { setIsPinballOpen(true); setIsPinballMinimized(false); } },
+          { id: 'pinball', name: 'Pinball', icon: 'https://img.icons8.com/color/512/controller.png', onClick: () => { setIsPinballOpen(true); setIsPinballMinimized(false); } },
 
         ]}
       />
