@@ -30,6 +30,10 @@ const DMGInstaller = dynamic(
   () => import('@/components/portfolio/DMGInstaller'),
   { ssr: false }
 );
+const PinballArcade = dynamic(
+  () => import('@/components/portfolio/PinballArcade'),
+  { ssr: false }
+);
 const WallpaperSwitcher = dynamic(
   () => import('@/components/portfolio/WallpaperSwitcher'),
   { ssr: false }
@@ -135,6 +139,8 @@ export default function Portfolio() {
   const [isBrowserMinimized, setIsBrowserMinimized] = useState(false);
   const [isBubbleWrapOpen, setIsBubbleWrapOpen] = useState(false);
   const [isBubbleWrapMinimized, setIsBubbleWrapMinimized] = useState(false);
+  const [isPinballOpen, setIsPinballOpen] = useState(false);
+  const [isPinballMinimized, setIsPinballMinimized] = useState(false);
   const [browserIconPosition, setBrowserIconPosition] = useState({ x: 40, y: 440 });
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [isGalleryMinimized, setIsGalleryMinimized] = useState(false);
@@ -181,6 +187,7 @@ export default function Portfolio() {
     messages: { x: 100, y: 100 },
     browser: { x: 80, y: 80 },
     bubblewrap: { x: 200, y: 150 },
+    pinball: { x: 170, y: 90 },
     gallery: { x: 140, y: 140 },
     ql: { x: 0, y: 0 }
   });
@@ -211,7 +218,7 @@ export default function Portfolio() {
     }
     return () => clearInterval(timer);
   }, [isReadingArticle, isPetTriggered]);
-  const activeDragWindow = useRef<'terminal' | 'freelance' | 'dmg' | 'main' | 'docs' | 'messages' | 'browser' | 'bubblewrap' | 'gallery' | 'ql' | null>(null);
+  const activeDragWindow = useRef<'terminal' | 'freelance' | 'dmg' | 'main' | 'docs' | 'messages' | 'browser' | 'bubblewrap' | 'pinball' | 'gallery' | 'ql' | null>(null);
 
   const windowDragOffset = useRef({ x: 0, y: 0 });
   const [contextMenu, setContextMenu] = useState<{ visible: boolean; x: number; y: number; type?: string; data?: any }>({ visible: false, x: 0, y: 0 });
@@ -1857,6 +1864,30 @@ export default function Portfolio() {
             </div>
           )}
 
+          {/* Pinball Arcade Window */}
+          {isPinballOpen && (
+            <div className={`mac-window pinball-window ${isPinballMinimized ? 'minimized' : ''} ${isMobile ? 'fullscreen-view' : ''}`} style={!isMobile ? {
+              position: 'absolute',
+              top: `${windowPositions.pinball.y}px`,
+              left: `${windowPositions.pinball.x}px`,
+              zIndex: 66,
+              width: '520px',
+              height: '720px'
+            } : { zIndex: 66 }}>
+              <div className="title-bar" onMouseDown={(e) => handleWindowMouseDown(e, 'pinball')}>
+                <div className="buttons">
+                  <div className="close" title="Close" onClick={(e) => { e.stopPropagation(); setIsPinballOpen(false); }}></div>
+                  <div className="minimize" title="Minimize" onClick={(e) => { e.stopPropagation(); setIsPinballMinimized(true); }}></div>
+                  <div className="maximize" title="Maximize"></div>
+                </div>
+                <div className="window-title">Pinball.app</div>
+              </div>
+              <div className="content-container" style={{ padding: 0, height: 'calc(100% - 35px)' }}>
+                <PinballArcade />
+              </div>
+            </div>
+          )}
+
           {/* Gallery Window */}
           {isGalleryOpen && (
             <div className={`mac-window gallery-window ${isGalleryMinimized ? 'minimized' : ''} ${isMobile ? 'fullscreen-view' : ''}`} style={!isMobile ? {
@@ -2302,6 +2333,7 @@ export default function Portfolio() {
           { id: 'browser', name: 'Safari', icon: 'https://img.icons8.com/color/512/safari.png', onClick: () => { playSound('funk'); setIsBrowserOpen(true); setIsBrowserMinimized(false); }, isOpen: isBrowserOpen && !isBrowserMinimized },
           { id: 'gallery', name: 'Gallery', icon: 'https://img.icons8.com/fluency/512/image.png', onClick: () => { playSound('funk'); setIsGalleryOpen(true); setIsGalleryMinimized(false); }, isOpen: isGalleryOpen && !isGalleryMinimized },
           { id: 'bubblewrap', name: 'PopIt', icon: 'https://img.icons8.com/fluency/512/bubble.png', onClick: () => { playSound('funk'); setIsBubbleWrapOpen(true); setIsBubbleWrapMinimized(false); }, isOpen: isBubbleWrapOpen && !isBubbleWrapMinimized },
+          { id: 'pinball', name: 'Pinball', icon: 'https://img.icons8.com/color/512/game-controller.png', onClick: () => { playSound('funk'); setIsPinballOpen(true); setIsPinballMinimized(false); }, isOpen: isPinballOpen && !isPinballMinimized },
           { id: 'settings', name: 'System Settings', icon: '/apps_icon.png', onClick: () => { playSound('funk'); setIsWallpaperSwitcherOpen(true); } },
 
           { id: 'github', name: 'GitHub', icon: '/git.png', onClick: () => window.open('https://github.com/aharshit123456', '_blank') },
@@ -2321,8 +2353,9 @@ export default function Portfolio() {
           { id: 'browser', name: 'Safari', icon: 'https://img.icons8.com/color/512/safari.png', onClick: () => setIsBrowserOpen(true) },
           { id: 'gallery', name: 'Gallery', icon: 'https://img.icons8.com/fluency/512/image.png', onClick: () => { setIsGalleryOpen(true); setIsGalleryMinimized(false); } },
           { id: 'linkedin', name: 'LinkedIn', icon: '/linkedin.png', onClick: () => window.open('https://www.linkedin.com/in/aharshit123456/', '_blank') },
+          { id: 'pinball', name: 'Pinball', icon: 'https://img.icons8.com/color/512/game-controller.png', onClick: () => { setIsPinballOpen(true); setIsPinballMinimized(false); } },
 
-          { id: 'spotify', name: 'Spotify', icon: 'https://img.icons8.com/color/512/spotify.png', onClick: () => { 
+          { id: 'spotify', name: 'Spotify', icon: 'https://img.icons8.com/color/512/spotify.png', onClick: () => {
             setActiveTabId('main'); 
             setIsMinimized(false); 
             setTimeout(() => {
@@ -2374,6 +2407,7 @@ export default function Portfolio() {
           { id: 'browser', name: 'Safari', icon: 'https://img.icons8.com/color/512/safari.png', onClick: () => setIsBrowserOpen(true) },
           { id: 'gallery', name: 'Gallery', icon: 'https://img.icons8.com/fluency/512/image.png', onClick: () => { setIsGalleryOpen(true); setIsGalleryMinimized(false); } },
           { id: 'github', name: 'GitHub', icon: '/git.png', onClick: () => window.open('https://github.com/aharshit123456', '_blank') },
+          { id: 'pinball', name: 'Pinball', icon: 'https://img.icons8.com/color/512/game-controller.png', onClick: () => { setIsPinballOpen(true); setIsPinballMinimized(false); } },
 
         ]}
       />
